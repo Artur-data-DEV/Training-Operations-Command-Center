@@ -1,5 +1,5 @@
 import { Acl } from '@servicenow/sdk/core'
-import { toccAdminRole, toccManagerRole } from './roles.now'
+import { toccAdminRole, toccBackofficeRole, toccInstructorRole, toccManagerRole, toccStudentRole } from './roles.now'
 
 Acl({
     $id: Now.ID['admin_x_783010_tocc_a1_room_create'],
@@ -604,5 +604,23 @@ Acl({
     decisionType: 'allow',
     localOrExisting: 'Local',
     adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['execute_x_783010_tocc_a1_training_context_ajax'],
+    type: 'client_callable_script_include',
+    name: 'x_783010_tocc_a1.TrainingContextAjax',
+    operation: 'execute',
+    roles: [
+        toccAdminRole.name,
+        toccBackofficeRole.name,
+        toccInstructorRole.name,
+        toccManagerRole.name,
+        toccStudentRole.name,
+    ],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+    active: true,
 })
 

@@ -195,6 +195,10 @@ declare global {
                         id: '6db20a0006724a418c21fc4efe9193f6'
                         deleted: true
                     }
+                    execute_x_783010_tocc_a1_training_context_ajax: {
+                        table: 'sys_security_acl'
+                        id: '804df1980bec412f8e563f1276c87bdd'
+                    }
                     manager_x_783010_tocc_a1_attendance_read: {
                         table: 'sys_security_acl'
                         id: '35dcd9d86e7a49148ae3eb00911490da'
@@ -401,6 +405,10 @@ declare global {
                         table: 'sys_script_include'
                         id: '9fb53dd6cc404c32856c1acf3d59fbd8'
                     }
+                    x_783010_tocc_a1_script_include_training_context_ajax: {
+                        table: 'sys_script_include'
+                        id: 'ec6de78c7d6547e18968799bea006742'
+                    }
                     x_783010_tocc_a1_script_include_training_session_service: {
                         table: 'sys_script_include'
                         id: 'da160ae18c204e2c98ac962caabd1515'
@@ -488,6 +496,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_room_resource'
                             element: 'resource_name'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '088c716f95794dbb8715c4172a8904ea'
+                        key: {
+                            sys_security_acl: '804df1980bec412f8e563f1276c87bdd'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
