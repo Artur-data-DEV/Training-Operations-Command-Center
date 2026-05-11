@@ -493,6 +493,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_index'
+                        id: '28027069028d4de7b83e74bb89fe88e5'
+                        key: {
+                            logical_table_name: 'x_783010_tocc_a1_student_enrollment'
+                            col_name_string: 'student,training_session'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '283327420c3549d39617bb704d51f4fd'
                         key: {

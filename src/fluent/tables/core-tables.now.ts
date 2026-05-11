@@ -182,6 +182,13 @@ export const x_783010_tocc_a1_student_enrollment = Table({
         number: 1,
         numberOfDigits: 7,
     },
+    index: [
+        {
+            name: 'u_student_training_session',
+            unique: true,
+            element: ['student', 'training_session'],
+        },
+    ],
 })
 
 export const x_783010_tocc_a1_attendance = Table({
