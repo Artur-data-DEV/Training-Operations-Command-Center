@@ -607,6 +607,336 @@ Acl({
 })
 
 Acl({
+    $id: Now.ID['student_x_783010_tocc_a1_room_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_room',
+    operation: 'read',
+    roles: [toccStudentRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['instructor_x_783010_tocc_a1_room_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_room',
+    operation: 'read',
+    roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_room_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_room',
+    operation: 'read',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['student_x_783010_tocc_a1_course_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_course',
+    operation: 'read',
+    roles: [toccStudentRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['instructor_x_783010_tocc_a1_course_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_course',
+    operation: 'read',
+    roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_course_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_course',
+    operation: 'read',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['instructor_x_783010_tocc_a1_room_reservation_create'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_room_reservation',
+    operation: 'create',
+    roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['instructor_x_783010_tocc_a1_room_reservation_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_room_reservation',
+    operation: 'read',
+    roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['instructor_x_783010_tocc_a1_room_reservation_write'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_room_reservation',
+    operation: 'write',
+    roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_room_reservation_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_room_reservation',
+    operation: 'read',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_room_reservation_write'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_room_reservation',
+    operation: 'write',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['student_x_783010_tocc_a1_training_session_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_training_session',
+    operation: 'read',
+    roles: [toccStudentRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['instructor_x_783010_tocc_a1_training_session_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_training_session',
+    operation: 'read',
+    roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['instructor_x_783010_tocc_a1_training_session_write'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_training_session',
+    operation: 'write',
+    roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_training_session_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_training_session',
+    operation: 'read',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_training_session_write'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_training_session',
+    operation: 'write',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['student_x_783010_tocc_a1_student_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_student',
+    operation: 'read',
+    roles: [toccStudentRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_student_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_student',
+    operation: 'read',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_student_write'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_student',
+    operation: 'write',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['student_x_783010_tocc_a1_student_enrollment_create'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_student_enrollment',
+    operation: 'create',
+    roles: [toccStudentRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['student_x_783010_tocc_a1_student_enrollment_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_student_enrollment',
+    operation: 'read',
+    roles: [toccStudentRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['student_x_783010_tocc_a1_student_enrollment_write'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_student_enrollment',
+    operation: 'write',
+    roles: [toccStudentRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['instructor_x_783010_tocc_a1_student_enrollment_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_student_enrollment',
+    operation: 'read',
+    roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['instructor_x_783010_tocc_a1_student_enrollment_write'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_student_enrollment',
+    operation: 'write',
+    roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_student_enrollment_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_student_enrollment',
+    operation: 'read',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_student_enrollment_write'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_student_enrollment',
+    operation: 'write',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['student_x_783010_tocc_a1_training_feedback_create'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_training_feedback',
+    operation: 'create',
+    roles: [toccStudentRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['student_x_783010_tocc_a1_training_feedback_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_training_feedback',
+    operation: 'read',
+    roles: [toccStudentRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['instructor_x_783010_tocc_a1_training_feedback_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_training_feedback',
+    operation: 'read',
+    roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_training_feedback_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_training_feedback',
+    operation: 'read',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
     $id: Now.ID['execute_x_783010_tocc_a1_training_context_ajax'],
     type: 'client_callable_script_include',
     name: 'x_783010_tocc_a1.TrainingContextAjax',
