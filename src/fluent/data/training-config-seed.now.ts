@@ -1,0 +1,56 @@
+import { Record } from '@servicenow/sdk/core'
+
+export const seed_training_config_001 = Record({
+    $id: 'seed_training_config_001',
+    table: 'x_783010_tocc_a1_training_config',
+    data: {
+        name: 'minimum_advance_notice_hours',
+        value: '24',
+        active: true,
+        description: 'Minimum lead time required to submit a room reservation.',
+    },
+})
+
+export const seed_training_config_002 = Record({
+    $id: 'seed_training_config_002',
+    table: 'x_783010_tocc_a1_training_config',
+    data: {
+        name: 'late_cancellation_window_hours',
+        value: '4',
+        active: true,
+        description: 'Cancellation lock window before training start.',
+    },
+})
+
+export const seed_training_config_003 = Record({
+    $id: 'seed_training_config_003',
+    table: 'x_783010_tocc_a1_training_config',
+    data: {
+        name: 'waitlist_mode',
+        value: 'waitlist',
+        active: true,
+        description: 'Behavior when session has no seats: waitlist or block.',
+    },
+})
+
+export const seed_training_config_004 = Record({
+    $id: 'seed_training_config_004',
+    table: 'x_783010_tocc_a1_training_config',
+    data: {
+        name: 'enrollment_approval_mode',
+        value: 'direct',
+        active: true,
+        description: 'Enrollment mode: direct auto-approval or instructor approval.',
+    },
+})
+
+export const seed_training_config_005 = Record({
+    $id: 'seed_training_config_005',
+    table: 'x_783010_tocc_a1_training_config',
+    data: {
+        name: 'confirmation_lead_hours',
+        value: '24',
+        active: true,
+        description: 'Lead time before session start to request attendance confirmation.',
+    },
+})

@@ -12,6 +12,7 @@ RoomService.prototype = {
     initialize: function() {
         this.roomTable = 'x_783010_tocc_a1_room';
         this.reservationTable = 'x_783010_tocc_a1_room_reservation';
+        this.config = new TrainingConfigService();
     },
 
     hasConflict: function(roomId, startDateTime, endDateTime, excludeId) {
@@ -52,13 +53,25 @@ RoomService.prototype = {
         var end = current.getValue('end_datetime');
         var participants = current.getValue('expected_participants');
         var currentId = current.getUniqueValue();
+        var status = current.getValue('status');
+
+        if (status == 'cancelled' || status == 'rejected') {
+            return '';
+        }
 
         if (!roomId || !start || !end) {
             return 'Room, start date/time and end date/time are required.';
         }
 
-        if (end <= start) {
+        var startGdt = new GlideDateTime(start);
+        var endGdt = new GlideDateTime(end);
+        if (endGdt.compareTo(startGdt) <= 0) {
             return 'End date/time must be greater than start date/time.';
+        }
+
+        var advanceNoticeError = this.validateAdvanceNotice(start);
+        if (advanceNoticeError) {
+            return advanceNoticeError;
         }
 
         var capacityError = this.validateCapacity(roomId, participants);
@@ -68,6 +81,24 @@ RoomService.prototype = {
 
         if (this.hasConflict(roomId, start, end, currentId)) {
             return 'There is already a reservation for this room in the selected period.';
+        }
+
+        return '';
+    },
+
+    validateAdvanceNotice: function(startDateTime) {
+        var minimumAdvanceHours = this.config.getMinimumAdvanceNoticeHours();
+        if (minimumAdvanceHours <= 0) {
+            return '';
+        }
+
+        var now = new GlideDateTime();
+        var minimumAllowedStart = new GlideDateTime(now.getValue());
+        minimumAllowedStart.addSeconds(minimumAdvanceHours * 3600);
+
+        var requestedStart = new GlideDateTime(startDateTime);
+        if (requestedStart.compareTo(minimumAllowedStart) < 0) {
+            return 'Reservations must be submitted at least ' + minimumAdvanceHours + ' hours in advance.';
         }
 
         return '';

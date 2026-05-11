@@ -332,10 +332,34 @@ declare global {
                         table: 'x_783010_tocc_a1_course'
                         id: '25ef6a187e924efa9d1dbe6a2ec7cd42'
                     }
+                    seed_training_config_001: {
+                        table: 'x_783010_tocc_a1_training_config'
+                        id: '19f653a6acbf4af981b98d9259561075'
+                    }
+                    seed_training_config_002: {
+                        table: 'x_783010_tocc_a1_training_config'
+                        id: 'cb8f9b8e95c24e5993c6b7770aafafe8'
+                    }
+                    seed_training_config_003: {
+                        table: 'x_783010_tocc_a1_training_config'
+                        id: 'b78b40b7136844b9a7a5dc2fbc247326'
+                    }
+                    seed_training_config_004: {
+                        table: 'x_783010_tocc_a1_training_config'
+                        id: '1196bbde4ff44a3da208622cacd2ca8c'
+                    }
+                    seed_training_config_005: {
+                        table: 'x_783010_tocc_a1_training_config'
+                        id: 'f2a38626361c4ceaab6151ecd952399c'
+                    }
                     src_server_script_ts: {
                         table: 'sys_module'
                         id: 'eeb02c692f60454788ee903e84693fff'
                         deleted: true
+                    }
+                    x_783010_tocc_a1_br_sync_seats_from_enrollment: {
+                        table: 'sys_script'
+                        id: 'f78f5956e9224fb986a46cb951a35b33'
                     }
                     x_783010_tocc_a1_br_sync_session_from_reservation: {
                         table: 'sys_script'
@@ -349,9 +373,21 @@ declare global {
                         table: 'sys_script'
                         id: 'ef5a29c3b3ef4293ba56ea7e9287d046'
                     }
+                    x_783010_tocc_a1_script_include_enrollment_service: {
+                        table: 'sys_script_include'
+                        id: '29cfacb5822244ee9a42fbeb253b68cd'
+                    }
                     x_783010_tocc_a1_script_include_room_service: {
                         table: 'sys_script_include'
                         id: '4ca70a1141bd4c84823c66aae8400b12'
+                    }
+                    x_783010_tocc_a1_script_include_training_config_service: {
+                        table: 'sys_script_include'
+                        id: '9fb53dd6cc404c32856c1acf3d59fbd8'
+                    }
+                    x_783010_tocc_a1_script_include_training_session_service: {
+                        table: 'sys_script_include'
+                        id: 'da160ae18c204e2c98ac962caabd1515'
                     }
                 }
                 composite: [
