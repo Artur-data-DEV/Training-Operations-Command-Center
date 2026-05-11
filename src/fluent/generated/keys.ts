@@ -357,6 +357,10 @@ declare global {
                         id: 'eeb02c692f60454788ee903e84693fff'
                         deleted: true
                     }
+                    x_783010_tocc_a1_br_autofill_student_from_logged_user: {
+                        table: 'sys_script'
+                        id: '81ed99116cf34de1bb89274a4061e446'
+                    }
                     x_783010_tocc_a1_br_log_enrollment_status_transition: {
                         table: 'sys_script'
                         id: '5ea3b1b40de2438b82525b79c7d2a533'
@@ -372,6 +376,10 @@ declare global {
                     x_783010_tocc_a1_br_sync_session_from_reservation: {
                         table: 'sys_script'
                         id: '838e4f0672454298a771b2ac3b37a730'
+                    }
+                    x_783010_tocc_a1_br_validate_feedback_rating: {
+                        table: 'sys_script'
+                        id: 'fdc5065f3aa14020bbd85c9594bd2045'
                     }
                     x_783010_tocc_a1_br_validate_room_reservation: {
                         table: 'sys_script'

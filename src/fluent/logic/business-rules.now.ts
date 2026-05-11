@@ -123,3 +123,102 @@ BusinessRule({
     );
 })(current, previous);`,
 })
+
+BusinessRule({
+    $id: Now.ID['x_783010_tocc_a1_br_autofill_student_from_logged_user'],
+    table: 'x_783010_tocc_a1_student_enrollment',
+    name: 'Auto Fill Student From Logged User',
+    when: 'before',
+    action: ['insert'],
+    active: true,
+    order: 50,
+    script: `(function executeRule(current, previous) {
+    if (!gs.nil(current.getValue('student'))) {
+        return;
+    }
+
+    var grStudent = new GlideRecord('x_783010_tocc_a1_student');
+    grStudent.addQuery('user', gs.getUserID());
+    grStudent.addQuery('active', true);
+    grStudent.setLimit(1);
+    grStudent.query();
+
+    if (grStudent.next()) {
+        current.setValue('student', grStudent.getUniqueValue());
+        return;
+    }
+
+    gs.addErrorMessage('No active student profile was found for the logged-in user.');
+    current.setAbortAction(true);
+})(current, previous);`,
+})
+
+BusinessRule({
+    $id: Now.ID['x_783010_tocc_a1_br_validate_feedback_rating'],
+    table: 'x_783010_tocc_a1_training_feedback',
+    name: 'Validate Feedback Rating',
+    when: 'before',
+    action: ['insert', 'update'],
+    active: true,
+    order: 100,
+    script: `(function executeRule(current, previous) {
+    var rating = parseInt(current.getValue('rating'), 10);
+    if (isNaN(rating) || rating < 1 || rating > 5) {
+        gs.addErrorMessage('Feedback rating must be between 1 and 5.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    var enrollmentId = current.getValue('enrollment');
+    if (!enrollmentId) {
+        gs.addErrorMessage('Enrollment is required.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+    if (!enrollment.get(enrollmentId)) {
+        gs.addErrorMessage('Enrollment not found.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    var duplicate = new GlideRecord('x_783010_tocc_a1_training_feedback');
+    duplicate.addQuery('enrollment', enrollmentId);
+    duplicate.addQuery('sys_id', '!=', current.getUniqueValue());
+    duplicate.setLimit(1);
+    duplicate.query();
+
+    if (duplicate.next()) {
+        gs.addErrorMessage('Feedback has already been submitted for this enrollment.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    var enrollmentStatus = enrollment.getValue('status');
+    if (enrollmentStatus != 'approved') {
+        gs.addErrorMessage('Feedback is only allowed for approved enrollments.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    var sessionId = enrollment.getValue('training_session');
+    if (!sessionId) {
+        gs.addErrorMessage('Training session was not found for this enrollment.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    var session = new GlideRecord('x_783010_tocc_a1_training_session');
+    if (!session.get(sessionId)) {
+        gs.addErrorMessage('Training session was not found for this enrollment.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    if (session.getValue('status') != 'completed') {
+        gs.addErrorMessage('Feedback is available only after the training session is completed.');
+        current.setAbortAction(true);
+    }
+})(current, previous);`,
+})
