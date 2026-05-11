@@ -357,6 +357,14 @@ declare global {
                         id: 'eeb02c692f60454788ee903e84693fff'
                         deleted: true
                     }
+                    x_783010_tocc_a1_br_log_enrollment_status_transition: {
+                        table: 'sys_script'
+                        id: '5ea3b1b40de2438b82525b79c7d2a533'
+                    }
+                    x_783010_tocc_a1_br_log_reservation_status_transition: {
+                        table: 'sys_script'
+                        id: '9fbfd9fe49ae4051b9e8149c0dc994b7'
+                    }
                     x_783010_tocc_a1_br_sync_seats_from_enrollment: {
                         table: 'sys_script'
                         id: 'f78f5956e9224fb986a46cb951a35b33'

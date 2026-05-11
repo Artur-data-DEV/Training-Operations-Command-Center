@@ -91,9 +91,20 @@ EnrollmentService.prototype = {
             availableSeats = 0;
         }
 
+        var currentStatus = session.getValue('status');
+        if (availableSeats > 0 && currentStatus != 'cancelled' && currentStatus != 'completed' && currentStatus != 'in_progress') {
+            var promoted = this._promoteWaitlistedEnrollments(sessionId, availableSeats);
+            if (promoted > 0) {
+                approvedCount = approvedCount + promoted;
+                availableSeats = totalSeats - approvedCount;
+                if (availableSeats < 0) {
+                    availableSeats = 0;
+                }
+            }
+        }
+
         session.setValue('available_seats', availableSeats);
 
-        var currentStatus = session.getValue('status');
         if (currentStatus != 'cancelled' && currentStatus != 'completed' && currentStatus != 'in_progress') {
             if (availableSeats <= 0) {
                 session.setValue('status', 'full');
@@ -160,6 +171,29 @@ EnrollmentService.prototype = {
         }
 
         return count;
+    },
+
+    _promoteWaitlistedEnrollments: function(sessionId, maxPromotions) {
+        if (!sessionId || maxPromotions <= 0) {
+            return 0;
+        }
+
+        var promoted = 0;
+        var waitlisted = new GlideRecord(this.enrollmentTable);
+        waitlisted.addQuery('training_session', sessionId);
+        waitlisted.addQuery('status', 'waitlisted');
+        waitlisted.orderBy('sys_created_on');
+        waitlisted.query();
+
+        while (waitlisted.next() && promoted < maxPromotions) {
+            waitlisted.setValue('status', 'approved');
+            waitlisted.setValue('work_notes', 'Promoted from waitlist after seat became available.');
+            waitlisted.setWorkflow(false);
+            waitlisted.update();
+            promoted = promoted + 1;
+        }
+
+        return promoted;
     },
 
     _validateLateCancellation: function(session) {

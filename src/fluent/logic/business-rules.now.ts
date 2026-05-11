@@ -83,3 +83,43 @@ BusinessRule({
     svc.syncSessionAfterEnrollmentChange(sessionId);
 })(current, previous);`,
 })
+
+BusinessRule({
+    $id: Now.ID['x_783010_tocc_a1_br_log_reservation_status_transition'],
+    table: 'x_783010_tocc_a1_room_reservation',
+    name: 'Log Reservation Status Transition',
+    when: 'before',
+    action: ['update'],
+    active: true,
+    order: 300,
+    script: `(function executeRule(current, previous) {
+    if (!current.status.changes()) {
+        return;
+    }
+
+    current.setValue(
+        'work_notes',
+        'Status changed from "' + previous.getDisplayValue('status') + '" to "' + current.getDisplayValue('status') + '".'
+    );
+})(current, previous);`,
+})
+
+BusinessRule({
+    $id: Now.ID['x_783010_tocc_a1_br_log_enrollment_status_transition'],
+    table: 'x_783010_tocc_a1_student_enrollment',
+    name: 'Log Enrollment Status Transition',
+    when: 'before',
+    action: ['update'],
+    active: true,
+    order: 300,
+    script: `(function executeRule(current, previous) {
+    if (!current.status.changes()) {
+        return;
+    }
+
+    current.setValue(
+        'work_notes',
+        'Enrollment status changed from "' + previous.getDisplayValue('status') + '" to "' + current.getDisplayValue('status') + '".'
+    );
+})(current, previous);`,
+})
