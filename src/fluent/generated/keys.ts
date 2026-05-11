@@ -21,6 +21,22 @@ declare global {
                         table: 'sys_security_acl'
                         id: '746d4661406442c9a87ef209e7e788df'
                     }
+                    admin_x_783010_tocc_a1_course_create: {
+                        table: 'sys_security_acl'
+                        id: '01cc0803ee9143fa8e0e9bc043ef014d'
+                    }
+                    admin_x_783010_tocc_a1_course_delete: {
+                        table: 'sys_security_acl'
+                        id: 'a13b7b7cf06046f3b8f0719595b82566'
+                    }
+                    admin_x_783010_tocc_a1_course_read: {
+                        table: 'sys_security_acl'
+                        id: 'a537b0a6881448f2879309609e02a5ff'
+                    }
+                    admin_x_783010_tocc_a1_course_write: {
+                        table: 'sys_security_acl'
+                        id: 'f8aea3dbe46048aeb8051a940cc4abac'
+                    }
                     admin_x_783010_tocc_a1_reservation_resource_create: {
                         table: 'sys_security_acl'
                         id: 'c55847f7d4de44f2ba9030a1d87bb3ae'
@@ -183,6 +199,10 @@ declare global {
                         table: 'sys_security_acl'
                         id: '35dcd9d86e7a49148ae3eb00911490da'
                     }
+                    manager_x_783010_tocc_a1_course_read: {
+                        table: 'sys_security_acl'
+                        id: 'c846fafbf45a480ea6c0ac2e9f92a4c0'
+                    }
                     manager_x_783010_tocc_a1_reservation_resource_read: {
                         table: 'sys_security_acl'
                         id: '637a25f8c7e6440a87774300283dc51a'
@@ -224,13 +244,125 @@ declare global {
                         id: '884e06f65bc4402392436527743712f6'
                         deleted: true
                     }
+                    seed_course_001: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: 'd55240e000c14681936012b9ddbfcff4'
+                    }
+                    seed_course_002: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: '55785e12b58745968f40a86e8e232ed0'
+                    }
+                    seed_course_003: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: '95201589ca0e4e369339efe9ec531c32'
+                    }
+                    seed_course_004: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: '435976bb44be47a99fc36cf166a99704'
+                    }
+                    seed_course_005: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: '96c3ad4415f04918b00979ac5e11a38e'
+                    }
+                    seed_course_006: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: '0fb92ff28ac64741a3dbf08c7ae1f356'
+                    }
+                    seed_course_007: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: '7d027af4a2124a8cab4ae84d147e549e'
+                    }
+                    seed_course_008: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: '4ebeddbd46c24962a69470b4846e3219'
+                    }
+                    seed_course_009: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: 'b7d66937026f41b8bac10f547a30aa48'
+                    }
+                    seed_course_010: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: '2d81b4299b0640afb6cd6978c337477c'
+                    }
+                    seed_course_011: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: 'c4b8d8eaaba4472b9e4955ecf8a2b796'
+                    }
+                    seed_course_012: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: 'c804dc5b7d074c7da880e53011f4c9a2'
+                    }
+                    seed_course_013: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: '2f1b2f27c49e450aab9c7a0fb960a867'
+                    }
+                    seed_course_014: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: 'a9473e2d63564e5a89b9ed44b73e2a0f'
+                    }
+                    seed_course_015: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: '1e240ffdf7074cba80db8a9e84944197'
+                    }
+                    seed_course_016: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: 'e168ccc1d8c24147b549d9d4a281a09f'
+                    }
+                    seed_course_017: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: '3142fd8d1e7542e29cca1a92681fec33'
+                    }
+                    seed_course_018: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: '4366b693393a41da9c96ee7e0372af87'
+                    }
+                    seed_course_019: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: 'c65da057d03049399aed3c87e832e6f4'
+                    }
+                    seed_course_020: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: '01d0d4effb9042999ebc86b6353875c3'
+                    }
+                    seed_course_021: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: '94b0c1bf6149419eb92f9f7dfbd0e9d0'
+                    }
+                    seed_course_022: {
+                        table: 'x_783010_tocc_a1_course'
+                        id: '25ef6a187e924efa9d1dbe6a2ec7cd42'
+                    }
                     src_server_script_ts: {
                         table: 'sys_module'
                         id: 'eeb02c692f60454788ee903e84693fff'
                         deleted: true
                     }
+                    x_783010_tocc_a1_br_sync_session_from_reservation: {
+                        table: 'sys_script'
+                        id: '838e4f0672454298a771b2ac3b37a730'
+                    }
+                    x_783010_tocc_a1_br_validate_room_reservation: {
+                        table: 'sys_script'
+                        id: 'c06fd53152c74d40b607c19e09c626eb'
+                    }
+                    x_783010_tocc_a1_br_validate_training_enrollment: {
+                        table: 'sys_script'
+                        id: 'ef5a29c3b3ef4293ba56ea7e9287d046'
+                    }
+                    x_783010_tocc_a1_script_include_room_service: {
+                        table: 'sys_script_include'
+                        id: '4ca70a1141bd4c84823c66aae8400b12'
+                    }
                 }
                 composite: [
+                    {
+                        table: 'sys_dictionary'
+                        id: '02edea34a76a46c5ba9048bb09c65e8b'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'duration_hours'
+                        }
+                    },
                     {
                         table: 'sys_dictionary'
                         id: '03173d1d369e4271814ad63300d701ec'
@@ -287,6 +419,15 @@ declare global {
                             name: 'x_783010_tocc_a1_room'
                             element: 'room_type'
                             value: 'classroom'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '067f6a4f6be34494bdacf46f23858265'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'delivery_category'
+                            value: 'vilt'
                         }
                     },
                     {
@@ -389,6 +530,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '14e8d89147ca46a4953fdfe4b13042b5'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'course_name'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '1754014b2bfd474d9288570639070b8b'
                         key: {
@@ -466,6 +615,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '2338a795db1b4450978c3995c5fdcf90'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'delivery_category'
+                            value: 'in_person'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '243120a18feb44208f44a63f71f97ef7'
                         key: {
@@ -498,6 +656,13 @@ declare global {
                         key: {
                             logical_table_name: 'x_783010_tocc_a1_student_enrollment'
                             col_name_string: 'student,training_session'
+                        }
+                    },
+                    {
+                        table: 'sys_db_object'
+                        id: '281ee9ba6cc846219a5ab0890868abc1'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
                         }
                     },
                     {
@@ -547,6 +712,14 @@ declare global {
                         id: '2d6fcbad92e84c09a83bbc9859674730'
                         key: {
                             name: 'x_783010_tocc_a1_room'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '2d9f3def984d4285a1cd6f501420d831'
+                        key: {
+                            sys_security_acl: 'f8aea3dbe46048aeb8051a940cc4abac'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -881,6 +1054,15 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '48a5f152cb2946d78c3fe581389a0777'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'status'
+                            value: 'inactive'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '48e9d7c8b3c542c19d426076a25aa351'
                         key: {
                             name: 'x_783010_tocc_a1_attendance'
@@ -911,6 +1093,15 @@ declare global {
                         key: {
                             sys_security_acl: '52807b92fd7a41939e2e16a6483a74aa'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '4c64e61dc3064a59909263a7928b7762'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'duration_hours'
+                            language: 'en'
                         }
                     },
                     {
@@ -969,6 +1160,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_training_config'
                             element: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '56a700ce10cd48f293dcb765726ed84f'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'description'
                         }
                     },
                     {
@@ -1049,6 +1248,14 @@ declare global {
                     },
                     {
                         table: 'sys_dictionary'
+                        id: '5e29dab9c260434bb394def7c842ab0f'
+                        key: {
+                            name: 'x_783010_tocc_a1_training_session'
+                            element: 'course'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
                         id: '5ec381a1c32c4fd08483af3d1f6d1d86'
                         key: {
                             name: 'x_783010_tocc_a1_room'
@@ -1061,6 +1268,15 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_room_reservation'
                             element: 'status'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '61769148a16d40fcad595df4cc6381b1'
+                        key: {
+                            name: 'x_783010_tocc_a1_room_reservation'
+                            element: 'training_session'
+                            language: 'en'
                         }
                     },
                     {
@@ -1124,6 +1340,14 @@ declare global {
                         id: '6a2a92d2ddd24b3cbd87a08b33e13dd1'
                         key: {
                             name: 'x_783010_tocc_a1.student'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '6a444d5d0ca4450e81f35b98c01eb0ad'
+                        key: {
+                            sys_security_acl: 'c846fafbf45a480ea6c0ac2e9f92a4c0'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -1194,6 +1418,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_number'
+                        id: '732785c9c8a24f4fa2f36ea9ec99c59d'
+                        key: {
+                            category: 'x_783010_tocc_a1_course'
+                            prefix: 'COU'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '7343f0d47a5c460996d6aec747ea4da0'
                         deleted: true
@@ -1203,10 +1435,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '73449a61aaa54bb7a024925999d2ddd7'
+                        key: {
+                            name: 'x_783010_tocc_a1_room_reservation'
+                            element: 'course'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_user_role'
                         id: '75536d064a9f43848bef7feba7c07011'
                         key: {
                             name: 'x_783010_tocc_a1.backoffice'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '75d09775ed8041f0a38b098a31aaf096'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'course_name'
+                            language: 'en'
                         }
                     },
                     {
@@ -1265,6 +1515,15 @@ declare global {
                             name: 'x_783010_tocc_a1_attendance'
                             element: 'enrollment'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '7c7049ce6adf40c7ac6c669acb750a49'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'status'
+                            value: 'draft'
                         }
                     },
                     {
@@ -1358,12 +1617,45 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '8a147c88d9f04bc9959bb7d724e8f06c'
+                        key: {
+                            name: 'x_783010_tocc_a1_training_session'
+                            element: 'course'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '8acc6f1c34a9489486dadb61ce52c02f'
+                        key: {
+                            sys_security_acl: 'a13b7b7cf06046f3b8f0719595b82566'
+                            sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice_set'
+                        id: '8daee4a233604559b76757581b2cf014'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'status'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '8e445ff046214ac68ff9e7874672bc84'
                         key: {
                             name: 'x_783010_tocc_a1_student_enrollment'
                             element: 'status'
                             value: 'approved'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '8e66ab19a6db460583a1d0f250c00bdd'
+                        key: {
+                            sys_security_acl: '01cc0803ee9143fa8e0e9bc043ef014d'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -1380,6 +1672,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_attendance'
                             element: 'recorded_at'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '9532b165fed0425299fe535c6649eefb'
+                        key: {
+                            name: 'x_783010_tocc_a1_room_reservation'
+                            element: 'training_session'
                         }
                     },
                     {
@@ -1453,6 +1753,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_room_reservation'
                             element: 'end_datetime'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '9cd6588f01314316addc985ee227f65d'
+                        key: {
+                            sys_security_acl: 'a537b0a6881448f2879309609e02a5ff'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -1589,6 +1897,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: 'ab602042c0fe4ce89ecbcda7d0bb077c'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'course_id'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: 'ac25859b22c84469a1ef372572112ae2'
                         key: {
                             name: 'x_783010_tocc_a1_room'
@@ -1644,6 +1961,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: 'af4739ab0531498b99cddb4377644e2e'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'course_id'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'af6f85d6fd10460bae51665c6dfdba29'
                         key: {
@@ -1687,6 +2012,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: 'b10dcb9411cc4ef093acc036db0f0768'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'description'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: 'b1b999f652234bf4ad3b9b0eb1e67b53'
                         key: {
                             name: 'x_783010_tocc_a1_training_config'
@@ -1717,6 +2051,23 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_training_session'
                             element: 'room'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'b7dc0ec817e04acda8794fedfa6b73e7'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'NULL'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'b85a194f8a094f01a3c0f8d151f29ff7'
+                        key: {
+                            name: 'x_783010_tocc_a1_room_reservation'
+                            element: 'course'
                         }
                     },
                     {
@@ -1768,6 +2119,13 @@ declare global {
                         key: {
                             sys_security_acl: '65701bea556f415a96467ea44adc85ee'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'ua_table_licensing_config'
+                        id: 'bf1582d3fb72487b8a057df01ee146b5'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
                         }
                     },
                     {
@@ -1873,6 +2231,23 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice_set'
+                        id: 'c9cdf8a0aff0497e8c80c337a849a4d8'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'delivery_category'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'c9d99fa4f134497ea5194d59dce63213'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'status'
+                            value: 'active'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'caa266244f604b34b4b00c30ea0d6e57'
                         key: {
@@ -1920,6 +2295,14 @@ declare global {
                             name: 'x_783010_tocc_a1_attendance'
                             element: 'NULL'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'ce39c018f18e4ce99c3d19fcb5cd3a0f'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'status'
                         }
                     },
                     {
@@ -1998,6 +2381,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: 'd290620f9d9f4cd99b8b2ed8c548b690'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'd41073c4220141e8b2a14ce98904f7fb'
                         key: {
@@ -2037,6 +2428,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_training_session'
                             element: 'total_seats'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'd75ceac801924c7881266c989b9ec58d'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'delivery_category'
                         }
                     },
                     {
@@ -2111,6 +2510,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'dfffe18fb00b4c848706521325bd1633'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'status'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: 'e10d9ac58455430fb911fa4c91e0accd'
                         key: {
@@ -2173,6 +2581,15 @@ declare global {
                         id: 'ebf2fbc1ecbe4662bbb3dee7f4edabbf'
                         key: {
                             name: 'x_783010_tocc_a1_training_feedback'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'ecda114bf87e42ba8d14be74cc7b6165'
+                        key: {
+                            name: 'x_783010_tocc_a1_course'
+                            element: 'delivery_category'
+                            language: 'en'
                         }
                     },
                     {

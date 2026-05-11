@@ -60,14 +60,51 @@ export const x_783010_tocc_a1_room_resource = Table({
     },
 })
 
+export const x_783010_tocc_a1_course = Table({
+    name: 'x_783010_tocc_a1_course',
+    label: 'Course',
+    display: 'course_name',
+    schema: {
+        course_id: StringColumn({ label: 'Course ID', mandatory: true, unique: true, maxLength: 40 }),
+        course_name: StringColumn({ label: 'Course Name', mandatory: true, maxLength: 160 }),
+        description: StringColumn({ label: 'Description', mandatory: true, maxLength: 4000 }),
+        duration_hours: IntegerColumn({ label: 'Duration (Hours)', mandatory: true }),
+        delivery_category: StringColumn({
+            label: 'Delivery Category',
+            mandatory: true,
+            choices: {
+                vilt: { label: 'VILT' },
+                in_person: { label: 'In Person' },
+            },
+        }),
+        status: StringColumn({
+            label: 'Status',
+            mandatory: true,
+            default: 'draft',
+            choices: {
+                draft: { label: 'Draft' },
+                active: { label: 'Active' },
+                inactive: { label: 'Inactive' },
+            },
+        }),
+    },
+    autoNumber: {
+        prefix: 'COU',
+        number: 1,
+        numberOfDigits: 7,
+    },
+})
+
 export const x_783010_tocc_a1_room_reservation = Table({
     name: 'x_783010_tocc_a1_room_reservation',
     label: 'Room Reservation',
     display: 'number',
     extends: 'task',
     schema: {
+        course: ReferenceColumn({ label: 'Course', referenceTable: 'x_783010_tocc_a1_course', mandatory: true }),
         instructor: ReferenceColumn({ label: 'Instructor', referenceTable: 'sys_user', mandatory: true }),
         room: ReferenceColumn({ label: 'Room', referenceTable: 'x_783010_tocc_a1_room', mandatory: true }),
+        training_session: ReferenceColumn({ label: 'Training Session', referenceTable: 'x_783010_tocc_a1_training_session' }),
         start_datetime: DateTimeColumn({ label: 'Start Date/Time', mandatory: true }),
         end_datetime: DateTimeColumn({ label: 'End Date/Time', mandatory: true }),
         expected_participants: IntegerColumn({ label: 'Expected Participants', mandatory: true }),
@@ -110,6 +147,7 @@ export const x_783010_tocc_a1_training_session = Table({
     extends: 'task',
     schema: {
         reservation: ReferenceColumn({ label: 'Reservation', referenceTable: 'x_783010_tocc_a1_room_reservation' }),
+        course: ReferenceColumn({ label: 'Course', referenceTable: 'x_783010_tocc_a1_course', mandatory: true }),
         room: ReferenceColumn({ label: 'Room', referenceTable: 'x_783010_tocc_a1_room', mandatory: true }),
         title: StringColumn({ label: 'Title', mandatory: true, maxLength: 160 }),
         instructor: ReferenceColumn({ label: 'Instructor', referenceTable: 'sys_user', mandatory: true }),

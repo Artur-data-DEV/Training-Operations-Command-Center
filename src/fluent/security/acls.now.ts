@@ -57,6 +57,61 @@ Acl({
 })
 
 Acl({
+    $id: Now.ID['admin_x_783010_tocc_a1_course_create'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_course',
+    operation: 'create',
+    roles: [toccAdminRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['admin_x_783010_tocc_a1_course_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_course',
+    operation: 'read',
+    roles: [toccAdminRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['admin_x_783010_tocc_a1_course_write'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_course',
+    operation: 'write',
+    roles: [toccAdminRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['admin_x_783010_tocc_a1_course_delete'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_course',
+    operation: 'delete',
+    roles: [toccAdminRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['manager_x_783010_tocc_a1_course_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_course',
+    operation: 'read',
+    roles: [toccManagerRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
     $id: Now.ID['admin_x_783010_tocc_a1_room_resource_create'],
     type: 'record',
     table: 'x_783010_tocc_a1_room_resource',
