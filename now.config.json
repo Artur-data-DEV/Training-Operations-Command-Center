@@ -1,0 +1,7 @@
+{
+  "name": "Training Operations Command Center",
+  "scope": "x_783010_tocc_a1",
+  "scopeId": "c550db709e9c4118920deb53e10aba07",
+  "clientDir": "",
+  "tsconfigPath": "./src/server/tsconfig.json"
+}
