@@ -246,8 +246,8 @@
 
 ### US-27 Publish KB Articles
 **As** Backoffice/Admin, **I want** to publish at least 13 KB articles for all personas.
-**Priority:** Must Have | **Status:** ⬜ Pending (Sprint 7)
-**Components:** Knowledge Base, User Criteria
+**Priority:** Must Have | **Status:** 🟡 In Progress (Sprint 12 - KB bootstrap service + ATF delivered)
+**Components:** Knowledge Base, User Criteria, `KnowledgeBaseBootstrapService`, ATF TEST-031
 **Acceptance Criteria:** Articles KB001–KB013 published and accessible per User Criteria
 
 ---
@@ -313,7 +313,7 @@
 | 4 | Scheduled Jobs, Notifications, UI Actions, Client Scripts, UI Policies | ✅ Complete |
 | 5 | Record Producers, PortalApiService, Service Portal widgets/pages | ✅ Complete |
 | 6 | Cancellation, confirmation, no-show, waitlist | ✅ Covered by Sprint 3–4 services |
-| 7 | Knowledge Base + Virtual Agent | 🟡 In Progress (automation complete; topic/NLU authoring pending) |
+| 7 | Knowledge Base + Virtual Agent | 🟡 In Progress (KB bootstrap automated; VA topic/NLU authoring pending) |
 | 8 | CMDB light | ⬜ Pending |
 | 9 | Platform Analytics + KPIs | ⬜ Pending |
 | 10 | UI Builder / Workspace | ⬜ Pending |
@@ -321,4 +321,5 @@
 
 ---
 
-*Last updated: Sprint 11 in progress - attendance workflow completed and validated via ATF/build.*
+*Last updated: Sprint 12 in progress - KB bootstrap automation delivered and validated via ATF/build.*
+

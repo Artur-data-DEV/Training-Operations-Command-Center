@@ -649,6 +649,14 @@ declare global {
                         table: 'sys_atf_step'
                         id: 'f8527f230eb74122b434012f4c742c31'
                     }
+                    x_783010_tocc_a1_atf_kb_bootstrap_idempotent: {
+                        table: 'sys_atf_test'
+                        id: '09feaae2a0324b07adc703e2838f0a44'
+                    }
+                    x_783010_tocc_a1_atf_kb_bootstrap_idempotent_script: {
+                        table: 'sys_atf_step'
+                        id: 'af146c196c204a2fa769581b9024678d'
+                    }
                     x_783010_tocc_a1_atf_notif_enrollment_decision_events: {
                         table: 'sys_atf_test'
                         id: '7eb7ed4b296a4424b91034e739f22c42'
@@ -1044,6 +1052,10 @@ declare global {
                     x_783010_tocc_a1_script_include_enrollment_service: {
                         table: 'sys_script_include'
                         id: '29cfacb5822244ee9a42fbeb253b68cd'
+                    }
+                    x_783010_tocc_a1_script_include_knowledge_base_bootstrap_service: {
+                        table: 'sys_script_include'
+                        id: 'a22f10de7d614d69bd4abcdbf5a331e2'
                     }
                     x_783010_tocc_a1_script_include_notification_helper: {
                         table: 'sys_script_include'
@@ -2413,6 +2425,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_element_mapping'
+                        id: '3ac38483002749ab974ca962402e9b88'
+                        key: {
+                            field: 'script'
+                            id: 'af146c196c204a2fa769581b9024678d'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: '3b396443f0064b298d14ae188896851a'
                         key: {
@@ -3367,6 +3387,14 @@ declare global {
                         key: {
                             document_key: '1ce058b8975543d8bc296a459558a34e'
                             variable: 'e6e3c7535320220002c6435723dc3496'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: '67dbd773fdcc4255b39fe01388f8f3b2'
+                        key: {
+                            document_key: 'af146c196c204a2fa769581b9024678d'
+                            variable: '42f2564b73031300440211d8faf6a777'
                         }
                     },
                     {
@@ -5211,6 +5239,14 @@ declare global {
                         key: {
                             sys_security_acl: '4522dd92878b4b3d8ba3baf9da4859a9'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: 'c15167c026c34f73ad4a64b2f6ab8846'
+                        key: {
+                            document_key: 'af146c196c204a2fa769581b9024678d'
+                            variable: '989d9e235324220002c6435723dc3484'
                         }
                     },
                     {
