@@ -601,40 +601,17 @@ Test(
                 enrollment.setValue('confirmed', false);
                 var enrollmentId = enrollment.insert();
 
-                // Impersonate student L
+                // Impersonate student L and call the real PortalApiService method.
                 gs.impersonateUser(userLId);
                 var svc = new x_783010_tocc_a1.PortalApiService();
-                var resultJson = svc.confirmMyAttendance();
-                // NOTE: PortalApiService.confirmMyAttendance reads sysparm via this.getParameter()
-                // In server-side ATF we call directly; inject enrollmentId via overriding getParameter
+                svc._testParams = { sysparm_enrollment_id: enrollmentId };
+                var result = JSON.parse(svc.confirmMyAttendance());
                 gs.resetSession();
 
-                // Validate by calling directly with known ID
-                gs.impersonateUser(userLId);
-                var directResult = (function() {
-                    var svcDirect = new x_783010_tocc_a1.PortalApiService();
-                    // Inject parameter manually since not in GlideAjax context
-                    svcDirect._testEnrollmentId = enrollmentId;
-                    var gr = new GlideRecordSecure('x_783010_tocc_a1_student_enrollment');
-                    if (!gr.get(enrollmentId)) { return { success: false, message: 'Not found' }; }
-                    if (gr.getValue('status') !== 'approved') { return { success: false, message: 'Not approved' }; }
-                    var sess = new GlideRecordSecure('x_783010_tocc_a1_training_session');
-                    if (sess.get(gr.getValue('training_session'))) {
-                        var dl = sess.getValue('confirmation_deadline');
-                        if (dl) {
-                            var now = new GlideDateTime();
-                            if (now.compareTo(new GlideDateTime(dl)) > 0) {
-                                return { success: false, message: 'Deadline passed' };
-                            }
-                        }
-                    }
-                    return { success: true };
-                })();
-                gs.resetSession();
-
+                gs.assertTrue(result.success === false, 'Confirmation should be blocked after deadline.');
                 gs.assertTrue(
-                    directResult.success === false,
-                    'Confirmation should be blocked after deadline. Got: ' + JSON.stringify(directResult)
+                    (result.message || '').indexOf('deadline') > -1,
+                    'Expected deadline-related message, got: ' + JSON.stringify(result)
                 );
             `,
         })
@@ -699,24 +676,17 @@ Test(
                 enrollment.setValue('confirmed', false);
                 var enrollmentId = enrollment.insert();
 
-                // Simulate N trying to confirm M's enrollment
+                // Simulate N trying to confirm M's enrollment via the real API method.
                 gs.impersonateUser(userNId);
-                var ownerCheck = (function() {
-                    var svcCheck = new x_783010_tocc_a1.PortalApiService();
-                    // Replicate ownership check from confirmMyAttendance
-                    var gr = new GlideRecordSecure('x_783010_tocc_a1_student_enrollment');
-                    if (!gr.get(enrollmentId)) { return { success: false, message: 'Not found' }; }
-                    var myStudentId = svcCheck._getLoggedStudentId();
-                    if (gr.getValue('student') !== myStudentId) {
-                        return { success: false, message: 'Not your enrollment' };
-                    }
-                    return { success: true };
-                })();
+                var svc = new x_783010_tocc_a1.PortalApiService();
+                svc._testParams = { sysparm_enrollment_id: enrollmentId };
+                var result = JSON.parse(svc.confirmMyAttendance());
                 gs.resetSession();
 
+                gs.assertTrue(result.success === false, 'Expected wrong-student confirmation block.');
                 gs.assertTrue(
-                    ownerCheck.success === false,
-                    'Student N should not be able to confirm Student M\'s enrollment. Got: ' + JSON.stringify(ownerCheck)
+                    (result.message || '').indexOf('own enrollment') > -1,
+                    'Expected ownership-related message, got: ' + JSON.stringify(result)
                 );
             `,
         })
