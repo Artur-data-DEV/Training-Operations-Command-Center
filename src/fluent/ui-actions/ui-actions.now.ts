@@ -319,3 +319,70 @@ UiAction({
     action.setRedirectURL(current);
 })();`,
 })
+
+// ---------------------------------------------------------------------------
+// UI Actions - Attendance
+// ---------------------------------------------------------------------------
+
+UiAction({
+    $id: Now.ID['x_783010_tocc_a1_uia_attendance_mark_present'],
+    name: 'Mark Present',
+    table: 'x_783010_tocc_a1_attendance',
+    active: true,
+    actionName: 'mark_present',
+    hint: 'Set attendance status to Present.',
+    client: { isClient: false },
+    roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.admin'],
+    condition: 'current.attendance_status != "present"',
+    script: `(function markPresent() {
+    current.setValue('attendance_status', 'present');
+    current.setValue('work_notes', 'Attendance marked as Present by ' + gs.getUserDisplayName() + '.');
+    current.setWorkflow(true);
+    current.update();
+
+    gs.addInfoMessage('Attendance marked as Present.');
+    action.setRedirectURL(current);
+})();`,
+})
+
+UiAction({
+    $id: Now.ID['x_783010_tocc_a1_uia_attendance_mark_absent'],
+    name: 'Mark Absent',
+    table: 'x_783010_tocc_a1_attendance',
+    active: true,
+    actionName: 'mark_absent',
+    hint: 'Set attendance status to Absent.',
+    client: { isClient: false },
+    roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.admin'],
+    condition: 'current.attendance_status != "absent"',
+    script: `(function markAbsent() {
+    current.setValue('attendance_status', 'absent');
+    current.setValue('work_notes', 'Attendance marked as Absent by ' + gs.getUserDisplayName() + '.');
+    current.setWorkflow(true);
+    current.update();
+
+    gs.addInfoMessage('Attendance marked as Absent.');
+    action.setRedirectURL(current);
+})();`,
+})
+
+UiAction({
+    $id: Now.ID['x_783010_tocc_a1_uia_attendance_mark_no_show'],
+    name: 'Mark No Show',
+    table: 'x_783010_tocc_a1_attendance',
+    active: true,
+    actionName: 'mark_no_show',
+    hint: 'Set attendance status to No Show.',
+    client: { isClient: false },
+    roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.admin'],
+    condition: 'current.attendance_status != "no_show"',
+    script: `(function markNoShow() {
+    current.setValue('attendance_status', 'no_show');
+    current.setValue('work_notes', 'Attendance marked as No Show by ' + gs.getUserDisplayName() + '.');
+    current.setWorkflow(true);
+    current.update();
+
+    gs.addInfoMessage('Attendance marked as No Show.');
+    action.setRedirectURL(current);
+})();`,
+})

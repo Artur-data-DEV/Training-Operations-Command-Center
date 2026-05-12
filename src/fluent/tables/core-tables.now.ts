@@ -256,6 +256,8 @@ export const x_783010_tocc_a1_attendance = Table({
                 no_show: { label: 'No Show' },
             },
         }),
+        checked_by: ReferenceColumn({ label: 'Checked By', referenceTable: 'sys_user' }),
+        checked_in_datetime: DateTimeColumn({ label: 'Checked In Date/Time' }),
         recorded_by: ReferenceColumn({ label: 'Recorded By', referenceTable: 'sys_user' }),
         recorded_at: DateTimeColumn({ label: 'Recorded At' }),
     },

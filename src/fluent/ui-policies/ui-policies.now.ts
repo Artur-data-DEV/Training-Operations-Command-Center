@@ -24,6 +24,23 @@ UiPolicy({
     reverseIfFalse: true,
 })
 
+// ---------------------------------------------------------------------------
+// UI Policies - Attendance form
+// ---------------------------------------------------------------------------
+
+UiPolicy({
+    $id: Now.ID['x_783010_tocc_a1_uip_attendance_show_checkin_when_present'],
+    shortDescription: 'Attendance - Show check-in metadata when Present',
+    table: 'x_783010_tocc_a1_attendance',
+    active: true,
+    conditions: 'attendance_status=present',
+    actions: [
+        { field: 'checked_by', visible: true, readOnly: true },
+        { field: 'checked_in_datetime', visible: true, readOnly: true },
+    ],
+    reverseIfFalse: true,
+})
+
 // When status is 'approved' or 'rejected', make the form read-only for non-admin users.
 UiPolicy({
     $id: Now.ID['x_783010_tocc_a1_uip_reservation_readonly_when_decided'],

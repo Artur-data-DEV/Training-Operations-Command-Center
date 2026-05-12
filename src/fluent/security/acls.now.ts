@@ -486,6 +486,113 @@ Acl({
 })
 
 Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_attendance_create'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_attendance',
+    operation: 'create',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_attendance_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_attendance',
+    operation: 'read',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_attendance_write'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_attendance',
+    operation: 'write',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['instructor_x_783010_tocc_a1_attendance_read_own_session'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_attendance',
+    operation: 'read',
+    roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+    script: `(function() {
+    var sessionId = current.getValue('training_session');
+    if (!sessionId) {
+        var enrollmentId = current.getValue('enrollment');
+        if (!gs.nil(enrollmentId)) {
+            var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+            if (enrollment.get(enrollmentId)) {
+                sessionId = enrollment.getValue('training_session');
+            }
+        }
+    }
+
+    if (!sessionId) {
+        answer = false;
+        return answer;
+    }
+
+    var session = new GlideRecord('x_783010_tocc_a1_training_session');
+    if (!session.get(sessionId)) {
+        answer = false;
+        return answer;
+    }
+
+    answer = session.getValue('instructor') == gs.getUserID();
+    return answer;
+})();`,
+})
+
+Acl({
+    $id: Now.ID['instructor_x_783010_tocc_a1_attendance_write_own_session'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_attendance',
+    operation: 'write',
+    roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+    script: `(function() {
+    var sessionId = current.getValue('training_session');
+    if (!sessionId) {
+        var enrollmentId = current.getValue('enrollment');
+        if (!gs.nil(enrollmentId)) {
+            var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+            if (enrollment.get(enrollmentId)) {
+                sessionId = enrollment.getValue('training_session');
+            }
+        }
+    }
+
+    if (!sessionId) {
+        answer = false;
+        return answer;
+    }
+
+    var session = new GlideRecord('x_783010_tocc_a1_training_session');
+    if (!session.get(sessionId)) {
+        answer = false;
+        return answer;
+    }
+
+    answer = session.getValue('instructor') == gs.getUserID();
+    return answer;
+})();`,
+})
+
+Acl({
     $id: Now.ID['manager_x_783010_tocc_a1_attendance_read'],
     type: 'record',
     table: 'x_783010_tocc_a1_attendance',

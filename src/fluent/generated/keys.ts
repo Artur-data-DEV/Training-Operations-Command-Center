@@ -181,6 +181,18 @@ declare global {
                         table: 'sys_security_acl'
                         id: '1f8682fbbb8d4af394e389f203b87be1'
                     }
+                    backoffice_x_783010_tocc_a1_attendance_create: {
+                        table: 'sys_security_acl'
+                        id: '4936826e5cf8470093475d6a997ec56c'
+                    }
+                    backoffice_x_783010_tocc_a1_attendance_read: {
+                        table: 'sys_security_acl'
+                        id: '8639d51fd4144b318edc1a0ef3416900'
+                    }
+                    backoffice_x_783010_tocc_a1_attendance_write: {
+                        table: 'sys_security_acl'
+                        id: 'd02b795745044eb5930e3337004a7156'
+                    }
                     backoffice_x_783010_tocc_a1_course_read: {
                         table: 'sys_security_acl'
                         id: '51d594b0d68a4f758c54ab9fe95bfe8f'
@@ -246,6 +258,14 @@ declare global {
                     execute_x_783010_tocc_a1_training_context_ajax: {
                         table: 'sys_security_acl'
                         id: '804df1980bec412f8e563f1276c87bdd'
+                    }
+                    instructor_x_783010_tocc_a1_attendance_read_own_session: {
+                        table: 'sys_security_acl'
+                        id: '354124bb7d694aeaa44433a61b621a15'
+                    }
+                    instructor_x_783010_tocc_a1_attendance_write_own_session: {
+                        table: 'sys_security_acl'
+                        id: '61492df34d09465894818b143f71b345'
                     }
                     instructor_x_783010_tocc_a1_course_read: {
                         table: 'sys_security_acl'
@@ -853,6 +873,10 @@ declare global {
                         table: 'sys_script'
                         id: '9fbfd9fe49ae4051b9e8149c0dc994b7'
                     }
+                    x_783010_tocc_a1_br_stamp_attendance_marking: {
+                        table: 'sys_script'
+                        id: 'ec92076ff61d4840a81f4c9c0e8edc42'
+                    }
                     x_783010_tocc_a1_br_sync_seats_from_enrollment: {
                         table: 'sys_script'
                         id: 'f78f5956e9224fb986a46cb951a35b33'
@@ -860,6 +884,10 @@ declare global {
                     x_783010_tocc_a1_br_sync_session_from_reservation: {
                         table: 'sys_script'
                         id: '838e4f0672454298a771b2ac3b37a730'
+                    }
+                    x_783010_tocc_a1_br_validate_attendance_marking: {
+                        table: 'sys_script'
+                        id: '5bb9238dcba14e9c982a64b0be25aba1'
                     }
                     x_783010_tocc_a1_br_validate_feedback_rating: {
                         table: 'sys_script'
@@ -1001,6 +1029,18 @@ declare global {
                         table: 'sys_ui_action'
                         id: 'f255b83ff78741378a197137819ec7c5'
                     }
+                    x_783010_tocc_a1_uia_attendance_mark_absent: {
+                        table: 'sys_ui_action'
+                        id: '45e94a14fadf4cbf824c645b5b56f541'
+                    }
+                    x_783010_tocc_a1_uia_attendance_mark_no_show: {
+                        table: 'sys_ui_action'
+                        id: '1cb987c441f6428da32eff6c4b50d3bf'
+                    }
+                    x_783010_tocc_a1_uia_attendance_mark_present: {
+                        table: 'sys_ui_action'
+                        id: '0d76cd6f8b3f49edb84fd070e588ea85'
+                    }
                     x_783010_tocc_a1_uia_cancel_reservation: {
                         table: 'sys_ui_action'
                         id: 'e387dd740e0640ba88c5c9af652237c8'
@@ -1061,6 +1101,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_attendance'
                             element: 'recorded_by'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '031d9313fc7e4eec89ad53cfb963f09f'
+                        key: {
+                            sys_security_acl: '61492df34d09465894818b143f71b345'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -1814,6 +1862,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_action_role'
+                        id: '2fcda1ceda7c45188a5114acaa3c8393'
+                        key: {
+                            sys_ui_action: '0d76cd6f8b3f49edb84fd070e588ea85'
+                            sys_user_role: {
+                                id: '75536d064a9f43848bef7feba7c07011'
+                                key: {
+                                    name: 'x_783010_tocc_a1.backoffice'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '2fd556af5b1d4c438cd6e5f8f9d2c0c0'
                         key: {
@@ -2160,6 +2221,14 @@ declare global {
                     },
                     {
                         table: 'sys_dictionary'
+                        id: '3c983b70b1774b8da3cc70b289ea7bb5'
+                        key: {
+                            name: 'x_783010_tocc_a1_attendance'
+                            element: 'checked_by'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
                         id: '3cf74785ef77441398e0cdcac35683aa'
                         key: {
                             name: 'x_783010_tocc_a1_student_enrollment'
@@ -2271,6 +2340,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_policy'
+                        id: '40389bddd9184425883321e19aeeeb5e'
+                        key: {
+                            table: 'x_783010_tocc_a1_attendance'
+                            short_description: 'Attendance - Show check-in metadata when Present'
+                        }
+                    },
+                    {
                         table: 'sys_db_object'
                         id: '40fc77beb50d45b785da13e6340f6b5c'
                         key: {
@@ -2371,6 +2448,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_action_role'
+                        id: '45874d8300a04dbc8eb338ab34f892c2'
+                        key: {
+                            sys_ui_action: '1cb987c441f6428da32eff6c4b50d3bf'
+                            sys_user_role: {
+                                id: 'caf9071c38484fc6a26a7b41a68fbfb3'
+                                key: {
+                                    name: 'x_783010_tocc_a1.admin'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_element_mapping'
                         id: '466d3afb2dfc4b93979d22888610cdcb'
                         key: {
@@ -2432,6 +2522,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_training_session'
                             element: 'start_datetime'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '4823ab6338b4474bb304d35ba1daf171'
+                        key: {
+                            sys_security_acl: '8639d51fd4144b318edc1a0ef3416900'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -2590,6 +2688,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_action_role'
+                        id: '4f1cc92f0b0444348765cb8cb471213d'
+                        key: {
+                            sys_ui_action: '45e94a14fadf4cbf824c645b5b56f541'
+                            sys_user_role: {
+                                id: '75536d064a9f43848bef7feba7c07011'
+                                key: {
+                                    name: 'x_783010_tocc_a1.backoffice'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '4f6e86e62a714927bcb3ef783dfc82fa'
                         key: {
@@ -2705,6 +2816,19 @@ declare global {
                         key: {
                             sys_security_acl: 'f042f8a0f0654bbebe7ce23b873cd3ec'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_action_role'
+                        id: '5869d30efe6047f58b46610184058bd4'
+                        key: {
+                            sys_ui_action: '45e94a14fadf4cbf824c645b5b56f541'
+                            sys_user_role: {
+                                id: 'caf9071c38484fc6a26a7b41a68fbfb3'
+                                key: {
+                                    name: 'x_783010_tocc_a1.admin'
+                                }
+                            }
                         }
                     },
                     {
@@ -2890,6 +3014,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_action_role'
+                        id: '61a27364f7b54eebba68e99581c270ed'
+                        key: {
+                            sys_ui_action: '1cb987c441f6428da32eff6c4b50d3bf'
+                            sys_user_role: {
+                                id: 'fa7cd51e55ce41a18f8f84cba9110ef2'
+                                key: {
+                                    name: 'x_783010_tocc_a1.instructor'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_element_mapping'
                         id: '633bbdb90e78488e8ad9ce256b116524'
                         key: {
@@ -3039,6 +3176,14 @@ declare global {
                             name: 'x_783010_tocc_a1_training_session'
                             element: 'room'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '6ca6d7c3d863423a995fe47fbbc648ee'
+                        key: {
+                            name: 'x_783010_tocc_a1_attendance'
+                            element: 'checked_in_datetime'
                         }
                     },
                     {
@@ -3361,6 +3506,15 @@ declare global {
                         key: {
                             document_key: 'a8ada84f538b4437828dc6a7e8da3a59'
                             variable: '6aad5a575360220002c6435723dc34b0'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '818a6f4f1fa74166891425852ae68452'
+                        key: {
+                            name: 'x_783010_tocc_a1_attendance'
+                            element: 'checked_by'
+                            language: 'en'
                         }
                     },
                     {
@@ -4064,6 +4218,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_action_role'
+                        id: 'a72b47bcc50a4943bbe56843ad534a0d'
+                        key: {
+                            sys_ui_action: '0d76cd6f8b3f49edb84fd070e588ea85'
+                            sys_user_role: {
+                                id: 'fa7cd51e55ce41a18f8f84cba9110ef2'
+                                key: {
+                                    name: 'x_783010_tocc_a1.instructor'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: 'a86a5c15699b4e00961e6044d8eb335e'
                         key: {
@@ -4141,6 +4308,20 @@ declare global {
                         key: {
                             sys_security_acl: '10fee7593a6d400281194974aaf8f806'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_policy_action'
+                        id: 'aae73111561247f897b1e2339b1bbee4'
+                        key: {
+                            ui_policy: {
+                                id: '40389bddd9184425883321e19aeeeb5e'
+                                key: {
+                                    table: 'x_783010_tocc_a1_attendance'
+                                    short_description: 'Attendance - Show check-in metadata when Present'
+                                }
+                            }
+                            field: 'checked_by'
                         }
                     },
                     {
@@ -4255,6 +4436,14 @@ declare global {
                         id: 'aea1d38111fe4fb79f5d387376796b96'
                         key: {
                             name: 'x_783010_tocc_a1_room_resource'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'aea2bf127c784f46b947cfd1f074d75d'
+                        key: {
+                            sys_security_acl: '4936826e5cf8470093475d6a997ec56c'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -4906,6 +5095,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'cb398efa1d1940bfa4752f761e515f7f'
+                        key: {
+                            sys_security_acl: '354124bb7d694aeaa44433a61b621a15'
+                            sys_user_role: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'cd7a0234e56443a1a69fe5967ef68be5'
                         key: {
@@ -5193,6 +5390,19 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_course'
                             element: 'delivery_category'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_action_role'
+                        id: 'd78a2c215adb4dc28d0e39ac96d62acf'
+                        key: {
+                            sys_ui_action: '45e94a14fadf4cbf824c645b5b56f541'
+                            sys_user_role: {
+                                id: 'fa7cd51e55ce41a18f8f84cba9110ef2'
+                                key: {
+                                    name: 'x_783010_tocc_a1.instructor'
+                                }
+                            }
                         }
                     },
                     {
@@ -5611,6 +5821,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_action_role'
+                        id: 'edf8dd55899747049762a97777784fc9'
+                        key: {
+                            sys_ui_action: '0d76cd6f8b3f49edb84fd070e588ea85'
+                            sys_user_role: {
+                                id: 'caf9071c38484fc6a26a7b41a68fbfb3'
+                                key: {
+                                    name: 'x_783010_tocc_a1.admin'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: 'ee26c96ccc604e79b65b1f500c11f507'
                         key: {
@@ -5698,6 +5921,14 @@ declare global {
                             name: 'x_783010_tocc_a1_student_enrollment'
                             element: 'status'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'f35dad31aac942b89b6ccb0151c1a861'
+                        key: {
+                            sys_security_acl: 'd02b795745044eb5930e3337004a7156'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -5802,11 +6033,47 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_policy_action'
+                        id: 'fb22b4ab9b7c4cc2945f4abfb5719953'
+                        key: {
+                            ui_policy: {
+                                id: '40389bddd9184425883321e19aeeeb5e'
+                                key: {
+                                    table: 'x_783010_tocc_a1_attendance'
+                                    short_description: 'Attendance - Show check-in metadata when Present'
+                                }
+                            }
+                            field: 'checked_in_datetime'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'fbe9934a6feb464f813d2a87976f4882'
+                        key: {
+                            name: 'x_783010_tocc_a1_attendance'
+                            element: 'checked_in_datetime'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: 'fe5fbf2e7d0e464e81eb62eef9d98a0c'
                         key: {
                             sys_security_acl: 'e1b880ff4a004160b4fa84bbc2103c4b'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_action_role'
+                        id: 'feb857bb489342aa89e1e7ebb6786a2a'
+                        key: {
+                            sys_ui_action: '1cb987c441f6428da32eff6c4b50d3bf'
+                            sys_user_role: {
+                                id: '75536d064a9f43848bef7feba7c07011'
+                                key: {
+                                    name: 'x_783010_tocc_a1.backoffice'
+                                }
+                            }
                         }
                     },
                     {

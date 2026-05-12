@@ -222,3 +222,96 @@ BusinessRule({
     }
 })(current, previous);`,
 })
+
+BusinessRule({
+    $id: Now.ID['x_783010_tocc_a1_br_validate_attendance_marking'],
+    table: 'x_783010_tocc_a1_attendance',
+    name: 'Validate Attendance Marking',
+    when: 'before',
+    action: ['insert', 'update'],
+    active: true,
+    order: 100,
+    script: `(function executeRule(current, previous) {
+    var status = current.getValue('attendance_status');
+    if (!status || status == 'pending') {
+        return;
+    }
+
+    var sessionId = current.getValue('training_session');
+    if (!sessionId) {
+        var enrollmentId = current.getValue('enrollment');
+        if (!gs.nil(enrollmentId)) {
+            var enrollmentForSession = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+            if (enrollmentForSession.get(enrollmentId)) {
+                sessionId = enrollmentForSession.getValue('training_session');
+                if (!gs.nil(sessionId)) {
+                    current.setValue('training_session', sessionId);
+                }
+            }
+        }
+    }
+
+    if (!sessionId) {
+        gs.addErrorMessage('Attendance requires a valid training session.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    var session = new GlideRecord('x_783010_tocc_a1_training_session');
+    if (!session.get(sessionId)) {
+        gs.addErrorMessage('Training session not found for this attendance record.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    var sessionStatus = session.getValue('status');
+    if (sessionStatus != 'in_progress' && sessionStatus != 'completed') {
+        gs.addErrorMessage('Attendance can be marked only when the session is In Progress or Completed.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    var enrollmentIdForCheck = current.getValue('enrollment');
+    if (!gs.nil(enrollmentIdForCheck)) {
+        var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+        if (enrollment.get(enrollmentIdForCheck) && enrollment.getValue('status') != 'approved') {
+            gs.addErrorMessage('Attendance can be marked only for approved enrollments.');
+            current.setAbortAction(true);
+        }
+    }
+})(current, previous);`,
+})
+
+BusinessRule({
+    $id: Now.ID['x_783010_tocc_a1_br_stamp_attendance_marking'],
+    table: 'x_783010_tocc_a1_attendance',
+    name: 'Stamp Attendance Marking Metadata',
+    when: 'before',
+    action: ['insert', 'update'],
+    active: true,
+    order: 200,
+    script: `(function executeRule(current, previous) {
+    if (current.operation() == 'update' && !current.attendance_status.changes()) {
+        return;
+    }
+
+    var status = current.getValue('attendance_status');
+    if (status == 'pending') {
+        return;
+    }
+
+    var now = new GlideDateTime().getValue();
+    var userId = gs.getUserID();
+
+    current.setValue('recorded_by', userId);
+    current.setValue('recorded_at', now);
+
+    if (status == 'present') {
+        current.setValue('checked_by', userId);
+        current.setValue('checked_in_datetime', now);
+    } else {
+        current.setValue('checked_by', userId);
+        current.setValue('checked_in_datetime', '');
+    }
+})(current, previous);`,
+})
