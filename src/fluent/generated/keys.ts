@@ -1673,6 +1673,14 @@ declare global {
                         table: 'sys_ux_screen_type'
                         id: '5ece67886c44461f90607fb2bdd6f0a4'
                     }
+                    x_783010_tocc_a1_workspace_category_assets: {
+                        table: 'sys_ux_list_category'
+                        id: 'fbfeb456e6d346f4a8af7366c83a4d14'
+                    }
+                    x_783010_tocc_a1_workspace_category_attendance: {
+                        table: 'sys_ux_list_category'
+                        id: '5fe78abf049f4bf4bcc1c82630d6d233'
+                    }
                     x_783010_tocc_a1_workspace_category_enrollments: {
                         table: 'sys_ux_list_category'
                         id: 'd6bb65baa51946e384c1f52a9d93bb1b'
@@ -1684,6 +1692,14 @@ declare global {
                     x_783010_tocc_a1_workspace_category_sessions: {
                         table: 'sys_ux_list_category'
                         id: '3a9f117fa6d445eca9d6942ad904695e'
+                    }
+                    x_783010_tocc_a1_workspace_list_attendance_in_progress: {
+                        table: 'sys_ux_list'
+                        id: 'c6cbf45d04b54cd999d2411bd0b0393a'
+                    }
+                    x_783010_tocc_a1_workspace_list_attendance_pending_today: {
+                        table: 'sys_ux_list'
+                        id: 'b08a2349d1234f0198a6f5090db89247'
                     }
                     x_783010_tocc_a1_workspace_list_enrollments_pending: {
                         table: 'sys_ux_list'
@@ -1700,6 +1716,14 @@ declare global {
                     x_783010_tocc_a1_workspace_list_reservations_submitted: {
                         table: 'sys_ux_list'
                         id: 'b1ad00992948478db33428428c49f039'
+                    }
+                    x_783010_tocc_a1_workspace_list_resources_active: {
+                        table: 'sys_ux_list'
+                        id: '6b0afa6523df408eaaccc57d9f860522'
+                    }
+                    x_783010_tocc_a1_workspace_list_resources_without_ci: {
+                        table: 'sys_ux_list'
+                        id: 'b8d0023933c24bf68406f12028566e03'
                     }
                     x_783010_tocc_a1_workspace_list_sessions_open: {
                         table: 'sys_ux_list'

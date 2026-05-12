@@ -78,6 +78,55 @@ const toccBackofficeListConfig = UxListMenuConfig({
                 },
             ],
         },
+        {
+            $id: Now.ID['x_783010_tocc_a1_workspace_category_attendance'],
+            title: 'Attendance',
+            order: 400,
+            active: true,
+            lists: [
+                {
+                    $id: Now.ID['x_783010_tocc_a1_workspace_list_attendance_in_progress'],
+                    title: 'In-Progress Session Attendance',
+                    order: 100,
+                    table: 'x_783010_tocc_a1_attendance',
+                    columns: 'training_session,student_enrollment,attendance_status,checked_in_datetime,checked_by',
+                    condition: 'training_session.status=in_progress',
+                },
+                {
+                    $id: Now.ID['x_783010_tocc_a1_workspace_list_attendance_pending_today'],
+                    title: 'Pending Attendance Today',
+                    order: 200,
+                    table: 'x_783010_tocc_a1_attendance',
+                    columns: 'training_session,student_enrollment,attendance_status,checked_in_datetime',
+                    condition:
+                        'attendance_status=pending^training_session.start_datetimeONToday@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()',
+                },
+            ],
+        },
+        {
+            $id: Now.ID['x_783010_tocc_a1_workspace_category_assets'],
+            title: 'Assets and Resources',
+            order: 500,
+            active: true,
+            lists: [
+                {
+                    $id: Now.ID['x_783010_tocc_a1_workspace_list_resources_without_ci'],
+                    title: 'Resources Missing CI Link',
+                    order: 100,
+                    table: 'x_783010_tocc_a1_room_resource',
+                    columns: 'resource_name,resource_type,room,ci_reference,status,active',
+                    condition: 'active=true^ci_referenceISEMPTY',
+                },
+                {
+                    $id: Now.ID['x_783010_tocc_a1_workspace_list_resources_active'],
+                    title: 'Active Room Resources',
+                    order: 200,
+                    table: 'x_783010_tocc_a1_room_resource',
+                    columns: 'resource_name,resource_type,room,ci_reference,status,active',
+                    condition: 'active=true',
+                },
+            ],
+        },
     ],
 })
 
@@ -94,5 +143,6 @@ Workspace({
         'x_783010_tocc_a1_training_session',
         'x_783010_tocc_a1_student_enrollment',
         'x_783010_tocc_a1_attendance',
+        'x_783010_tocc_a1_room_resource',
     ],
 })

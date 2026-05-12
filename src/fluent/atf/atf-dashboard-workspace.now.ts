@@ -78,14 +78,14 @@ Test(
                 category.addQuery('configuration', configId);
                 category.query();
                 while (category.next()) { categoryCount++; }
-                gs.assertTrue(categoryCount === 3, 'Expected 3 workspace categories, got: ' + categoryCount);
+                gs.assertTrue(categoryCount === 5, 'Expected 5 workspace categories, got: ' + categoryCount);
 
                 var listCount = 0;
                 var list = new GlideRecord('sys_ux_list');
                 list.addQuery('configuration', configId);
                 list.query();
                 while (list.next()) { listCount++; }
-                gs.assertTrue(listCount === 6, 'Expected 6 workspace lists, got: ' + listCount);
+                gs.assertTrue(listCount === 10, 'Expected 10 workspace lists, got: ' + listCount);
             `,
         })
     }
@@ -119,6 +119,8 @@ Test(
                 assertTableCoverage('x_783010_tocc_a1_room_reservation', 2);
                 assertTableCoverage('x_783010_tocc_a1_training_session', 2);
                 assertTableCoverage('x_783010_tocc_a1_student_enrollment', 2);
+                assertTableCoverage('x_783010_tocc_a1_attendance', 2);
+                assertTableCoverage('x_783010_tocc_a1_room_resource', 2);
             `,
         })
     }

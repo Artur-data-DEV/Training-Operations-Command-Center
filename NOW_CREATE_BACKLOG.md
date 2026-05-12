@@ -286,7 +286,7 @@
 
 ### US-31 Backoffice Operations Workspace
 **As** Backoffice, **I want** a modern workspace to manage reservations, sessions, and enrollments.
-**Priority:** Should Have | **Status:** In Progress (Sprint 12 - workspace SDK scaffold delivered)
+**Priority:** Should Have | **Status:** In Progress (Sprint 13 - workspace list scaffold expanded with attendance and assets)
 **Components:** UI Builder workspace, React components, Performance Analytics widgets
 **Acceptance Criteria:** Workspace has pending reservations, today's sessions, open enrollments, and KPI tiles
 
