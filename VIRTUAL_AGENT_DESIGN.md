@@ -295,10 +295,11 @@ Navigate to **Virtual Agent → Designer → New Topic** for each topic above.
 Set the example utterances listed in each topic spec.
 
 ### Step 3 — Configure Script Actions
-For topics that call `PortalApiService`:
+For topics that call backend services, prefer `VirtualAgentTopicService` as adapter:
 - Add a **Script Action step** in the flow
-- Call the appropriate method via server-side script
+- Call the appropriate adapter method (`getMainMenu`, `findAvailableSessions`, `getMyEnrollments`, `confirmAttendance`, `cancelEnrollment`, `getTrainingPolicies`)
 - Map output to conversation variables
+- Keep `PortalApiService` calls encapsulated in the adapter only
 
 ### Step 4 — Link KB Articles
 In each topic's fallback or "learn more" node, link to the corresponding KB article.
@@ -314,4 +315,4 @@ Set the bot identity to TOCC Assistant.
 
 ---
 
-*Last updated: Sprint 7 — Full topic specs, NLU notes, manual config steps.*
+*Last updated: Sprint 12 — Full topic specs plus backend adapter contract and script-action guidance.*
