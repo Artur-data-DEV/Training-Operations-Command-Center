@@ -521,6 +521,30 @@ declare global {
                         table: 'sys_security_acl'
                         id: '2f0fef1178d147829a8e616dcf712e4a'
                     }
+                    x_783010_tocc_a1_atf_attendance_absent_clears_checkin: {
+                        table: 'sys_atf_test'
+                        id: '3c8963f3e49f4c6eb3307dac4828c1cf'
+                    }
+                    x_783010_tocc_a1_atf_attendance_absent_script: {
+                        table: 'sys_atf_step'
+                        id: '76e76aeeb0ef4fabb08ac04328d34d11'
+                    }
+                    x_783010_tocc_a1_atf_attendance_blocked_script: {
+                        table: 'sys_atf_step'
+                        id: 'a48631a089834199b802e2b7bbc37132'
+                    }
+                    x_783010_tocc_a1_atf_attendance_blocked_when_not_started: {
+                        table: 'sys_atf_test'
+                        id: 'f3b0a46a0f5f4aed8be9a6f2355adb54'
+                    }
+                    x_783010_tocc_a1_atf_attendance_present_script: {
+                        table: 'sys_atf_step'
+                        id: 'd0b8980af04d43ff821f5766cfc2faa9'
+                    }
+                    x_783010_tocc_a1_atf_attendance_present_stamps_metadata: {
+                        table: 'sys_atf_test'
+                        id: '145c9d6043a34f7283bd08cf21f33c7e'
+                    }
                     x_783010_tocc_a1_atf_config_advance_notice_default: {
                         table: 'sys_atf_test'
                         id: 'bad06b27928041dd9d0c18caa0d28abe'
@@ -1665,6 +1689,14 @@ declare global {
                     },
                     {
                         table: 'sys_variable_value'
+                        id: '20c70f7d3bab413b8c6754b1d7e63d1b'
+                        key: {
+                            document_key: 'a48631a089834199b802e2b7bbc37132'
+                            variable: '42f2564b73031300440211d8faf6a777'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
                         id: '21d35a8adc514dc08450c8bbe3f0fd48'
                         key: {
                             document_key: 'b1b78382123e4dce8ff1d6b0c286b991'
@@ -1914,6 +1946,14 @@ declare global {
                             name: 'x_783010_tocc_a1_attendance'
                             element: 'attendance_status'
                             value: 'pending'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: '311e30ed8b234eda90505bb6bb595808'
+                        key: {
+                            document_key: 'a48631a089834199b802e2b7bbc37132'
+                            variable: '989d9e235324220002c6435723dc3484'
                         }
                     },
                     {
@@ -2530,6 +2570,14 @@ declare global {
                         key: {
                             sys_security_acl: '8639d51fd4144b318edc1a0ef3416900'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_element_mapping'
+                        id: '487bcc30eaac41eea7a33b6d9da617b6'
+                        key: {
+                            field: 'script'
+                            id: 'd0b8980af04d43ff821f5766cfc2faa9'
                         }
                     },
                     {
@@ -3697,6 +3745,14 @@ declare global {
                     },
                     {
                         table: 'sys_element_mapping'
+                        id: '892327dee60043da84ce2d7bab8ae9f2'
+                        key: {
+                            field: 'script'
+                            id: '76e76aeeb0ef4fabb08ac04328d34d11'
+                        }
+                    },
+                    {
+                        table: 'sys_element_mapping'
                         id: '89d1bc218fae4357b63b8da10365f727'
                         key: {
                             field: 'script'
@@ -3887,6 +3943,14 @@ declare global {
                         key: {
                             field: 'script'
                             id: '564670f23a134202a9f09374723fe918'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: '96b773aef16b4d12af6cc40c04e03697'
+                        key: {
+                            document_key: '76e76aeeb0ef4fabb08ac04328d34d11'
+                            variable: '989d9e235324220002c6435723dc3484'
                         }
                     },
                     {
@@ -4203,6 +4267,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_variable_value'
+                        id: 'a6642946befe4f7390a726e53bd0f265'
+                        key: {
+                            document_key: 'd0b8980af04d43ff821f5766cfc2faa9'
+                            variable: '989d9e235324220002c6435723dc3484'
+                        }
+                    },
+                    {
                         table: 'sys_db_object'
                         id: 'a66509be0fec48d1913708021c240f1e'
                         key: {
@@ -4452,6 +4524,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_room_resource'
                             element: 'quantity'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: 'af20bb65c2f441a7900f37c758dadb8c'
+                        key: {
+                            document_key: 'd0b8980af04d43ff821f5766cfc2faa9'
+                            variable: '42f2564b73031300440211d8faf6a777'
                         }
                     },
                     {
@@ -4852,6 +4932,14 @@ declare global {
                         key: {
                             document_key: 'ad0c312425214c1a98e14cbdd03b5f50'
                             variable: '9024a37f671003007ba405225685efe5'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: 'c0b4f4ac2ba84686ad60f3ba67d860b4'
+                        key: {
+                            document_key: '76e76aeeb0ef4fabb08ac04328d34d11'
+                            variable: '42f2564b73031300440211d8faf6a777'
                         }
                     },
                     {
@@ -5509,6 +5597,14 @@ declare global {
                         key: {
                             document_key: '36b44165ddbc46a081bc1604ca770f0b'
                             variable: '989d9e235324220002c6435723dc3484'
+                        }
+                    },
+                    {
+                        table: 'sys_element_mapping'
+                        id: 'de91a6c8e7404f938bf3013247c72dff'
+                        key: {
+                            field: 'script'
+                            id: 'a48631a089834199b802e2b7bbc37132'
                         }
                     },
                     {

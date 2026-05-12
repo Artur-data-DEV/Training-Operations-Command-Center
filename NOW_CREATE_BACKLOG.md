@@ -193,7 +193,7 @@
 
 ### US-19 Mark Attendance
 **As** Instructor, **I want** to mark each student as present, absent, or no-show.
-**Priority:** Must Have | **Status:** ⬜ Pending (Sprint 11 — ATF + UI)
+**Priority:** Must Have | **Status:** Done (Sprint 11 - Attendance workflow + ACL + UI + ATF)
 **Components:** `x_783010_tocc_a1_attendance` table, Instructor form
 **Acceptance Criteria:**
 - Attendance records auto-created when session starts
@@ -317,8 +317,8 @@
 | 8 | CMDB light | ⬜ Pending |
 | 9 | Platform Analytics + KPIs | ⬜ Pending |
 | 10 | UI Builder / Workspace | ⬜ Pending |
-| 11 | ATF full suite + QA hardening | 🟡 Smoke tests done; full suite pending |
+| 11 | ATF full suite + QA hardening | In Progress (attendance block done; remaining scenarios pending) |
 
 ---
 
-*Last updated: Sprint 4 complete — 32 user stories, 13 epics, full status tracking.*
+*Last updated: Sprint 11 in progress - attendance workflow completed and validated via ATF/build.*
