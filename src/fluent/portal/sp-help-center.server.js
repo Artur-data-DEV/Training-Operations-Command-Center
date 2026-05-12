@@ -5,7 +5,6 @@
     data.supportEmail = gs.getProperty('x_783010_tocc_a1.portal.support_email', 'training-ops@company.com');
     data.supportCatalogUrl = gs.getProperty(
         'x_783010_tocc_a1.portal.support_catalog_url',
-        '?id=sc_cat_item&sys_id=-1'
+        '?id=tocc_sessions'
     );
 })();
-
