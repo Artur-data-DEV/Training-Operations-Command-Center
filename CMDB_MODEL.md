@@ -10,7 +10,7 @@
 
 - **Minimal CMDB footprint.** Over-engineering the CMDB creates maintenance overhead without operational value for a training management application.
 - **Rooms are NOT CMDB CIs.** Room operational data lives in `x_783010_tocc_a1_room`. Only physical assets inside rooms (projector, AV system, etc.) are tracked as CIs.
-- **Assets linked, not owned.** Room resources in `x_783010_tocc_a1_room_resource` have an optional `related_ci` reference to `cmdb_ci` — the CMDB record is the source of truth for asset lifecycle; the app record is the operational view.
+- **Assets linked, not owned.** Room resources in `x_783010_tocc_a1_room_resource` have an optional `ci_reference` reference to `cmdb_ci` — the CMDB record is the source of truth for asset lifecycle; the app record is the operational view.
 - **Location hierarchy uses platform standard.** `cmn_location` is used directly — no custom location table.
 
 ---
@@ -56,7 +56,9 @@ Only assets directly tied to room function are tracked as CIs:
 | Microphone / Sound | `cmdb_ci_hardware` | Shure wireless mic set |
 | Wi-Fi Access Point | `cmdb_ci_hardware` | Ubiquiti AP in Conference Hall |
 
-Each CI is related to its room via the `x_783010_tocc_a1_room_resource.related_ci` reference field.
+Each CI is related to its room via the `x_783010_tocc_a1_room_resource.ci_reference` reference field.
+
+Automation status: CI reference validation and enrichment are enforced by `CmdbResourceService` + `Validate Room Resource CI Reference` business rule.
 
 ---
 
@@ -104,7 +106,7 @@ For each physical asset in a training room:
 ### Step 3 — Link CIs to Room Resources
 For each `x_783010_tocc_a1_room_resource` record:
 - Open the record
-- Set `related_ci` field to the corresponding `cmdb_ci` record
+- Set `ci_reference` field to the corresponding `cmdb_ci` record
 
 ### Step 4 — Create Business Service (Optional)
 Navigate to **Configuration → Business Services → New**
@@ -119,3 +121,4 @@ Run a CI relationship report for one room asset and confirm the chain:
 ---
 
 *Last updated: Sprint 8 — CMDB light model, service model, location hierarchy, CI types.*
+

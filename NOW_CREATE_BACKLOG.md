@@ -266,7 +266,7 @@
 
 ### US-29 Training Operations KPI Dashboard
 **As** Manager, **I want** a dashboard with 16 operational KPIs to track program health.
-**Priority:** Must Have | **Status:** ⬜ Pending (Sprint 9)
+**Priority:** Must Have | **Status:** In Progress (Sprint 12 - dashboard SDK scaffold + KPI mapping ready)
 **Components:** Platform Analytics indicators, dashboard, data collectors
 **Acceptance Criteria:** All 16 KPIs defined and collecting data; dashboard visible to Manager role
 
@@ -276,9 +276,9 @@
 
 ### US-30 Track Room Assets in CMDB
 **As** Admin, **I want** room equipment (projectors, AV, etc.) tracked as CMDB CIs.
-**Priority:** Should Have | **Status:** ⬜ Pending (Sprint 8)
-**Components:** `cmdb_ci`, `x_783010_tocc_a1_room_resource.related_ci`
-**Acceptance Criteria:** At least 3 CIs created and linked to room resources via related_ci field
+**Priority:** Should Have | **Status:** In Progress (Sprint 12 - CMDB validation/enrichment automation delivered)
+**Components:** `cmdb_ci`, `x_783010_tocc_a1_room_resource.ci_reference`
+**Acceptance Criteria:** At least 3 CIs created and linked to room resources via ci_reference field
 
 ---
 
@@ -286,7 +286,7 @@
 
 ### US-31 Backoffice Operations Workspace
 **As** Backoffice, **I want** a modern workspace to manage reservations, sessions, and enrollments.
-**Priority:** Should Have | **Status:** ⬜ Pending (Sprint 10)
+**Priority:** Should Have | **Status:** In Progress (Sprint 12 - workspace SDK scaffold delivered)
 **Components:** UI Builder workspace, React components, Performance Analytics widgets
 **Acceptance Criteria:** Workspace has pending reservations, today's sessions, open enrollments, and KPI tiles
 
@@ -314,12 +314,14 @@
 | 5 | Record Producers, PortalApiService, Service Portal widgets/pages | ✅ Complete |
 | 6 | Cancellation, confirmation, no-show, waitlist | ✅ Covered by Sprint 3–4 services |
 | 7 | Knowledge Base + Virtual Agent | 🟡 In Progress (KB bootstrap automated; VA topic/NLU authoring pending) |
-| 8 | CMDB light | ⬜ Pending |
-| 9 | Platform Analytics + KPIs | ⬜ Pending |
-| 10 | UI Builder / Workspace | ⬜ Pending |
+| 8 | CMDB light | In Progress (CI reference validation + enrichment automation delivered) |
+| 9 | Platform Analytics + KPIs | In Progress (dashboard SDK scaffold delivered; indicator formulas pending collection) |
+| 10 | UI Builder / Workspace | In Progress (workspace SDK scaffold delivered; UI composition pending) |
 | 11 | ATF full suite + QA hardening | In Progress (attendance block done; remaining scenarios pending) |
 
 ---
 
-*Last updated: Sprint 12 in progress - KB bootstrap automation delivered and validated via ATF/build.*
+*Last updated: Sprint 12 in progress - KB, CMDB, Dashboard, and Workspace scaffolds automated via SDK and validated by build/deploy.*
+
+
 
