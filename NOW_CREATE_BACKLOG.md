@@ -256,7 +256,7 @@
 
 ### US-28 VA Topics for Student Self-Service
 **As** Student, **I want** to interact with a bot to browse sessions, view enrollments, confirm, or cancel.
-**Priority:** Must Have | **Status:** 🟡 In Progress (Sprint 12 - topic backend adapter + ATF contract delivered; Designer/NLU publication pending)
+**Priority:** Must Have | **Status:** 🟡 In Progress (Sprint 12 - topic backend adapter + ATF contract + flow orchestration scaffolds delivered; Designer/NLU publication pending)
 **Components:** VA Topics 1–6, `PortalApiService`, `VirtualAgentTopicService`, NLU model
 **Acceptance Criteria:** 6 topics configured, NLU trained, bot linked to portal
 
@@ -266,7 +266,7 @@
 
 ### US-29 Training Operations KPI Dashboard
 **As** Manager, **I want** a dashboard with 16 operational KPIs to track program health.
-**Priority:** Must Have | **Status:** In Progress (Sprint 12 - dashboard scaffold + automated KPI snapshot collector + ATF)
+**Priority:** Must Have | **Status:** In Progress (Sprint 12 - dashboard scaffold + automated KPI snapshot collector + flow signal scaffold + ATF)
 **Components:** Platform Analytics indicators, dashboard, `TrainingKpiService`, `x_783010_tocc_a1_kpi_snapshot`, scheduled data collector
 **Acceptance Criteria:** All 16 KPIs defined and collecting data; dashboard visible to Manager role; daily collector is idempotent
 
@@ -296,8 +296,8 @@
 
 ### US-32 ATF Suite — Core Logic Coverage
 **As** Developer, **I want** automated tests covering all core Script Include methods.
-**Priority:** Must Have | **Status:** In Progress (Sprint 12 - expanded to dashboard/workspace/CMDB bootstrap scaffolds)
-**Components:** ATF tests TEST-001 to TEST-042
+**Priority:** Must Have | **Status:** In Progress (Sprint 12 - expanded to dashboard/workspace/CMDB bootstrap/flow scaffolds)
+**Components:** ATF tests TEST-001 to TEST-045
 **Acceptance Criteria:** >= 70% coverage across core services and scaffolds; all tests green after deploy
 
 ---
@@ -313,15 +313,16 @@
 | 4 | Scheduled Jobs, Notifications, UI Actions, Client Scripts, UI Policies | ✅ Complete |
 | 5 | Record Producers, PortalApiService, Service Portal widgets/pages | ✅ Complete |
 | 6 | Cancellation, confirmation, no-show, waitlist | ✅ Covered by Sprint 3–4 services |
-| 7 | Knowledge Base + Virtual Agent | 🟡 In Progress (KB bootstrap automated; VA backend adapter + ATF delivered; topic/NLU authoring pending) |
+| 7 | Knowledge Base + Virtual Agent | 🟡 In Progress (KB bootstrap automated; VA backend adapter + flow scaffolds + ATF delivered; topic/NLU authoring pending) |
 | 8 | CMDB light | In Progress (CI reference validation + enrichment + bootstrap automation delivered) |
-| 9 | Platform Analytics + KPIs | In Progress (dashboard scaffold + daily KPI snapshot collector delivered; indicator widgets still need final PA wiring) |
+| 9 | Platform Analytics + KPIs | In Progress (dashboard scaffold + daily KPI snapshot collector + flow signal scaffold delivered; indicator widgets still need final PA wiring) |
 | 10 | UI Builder / Workspace | In Progress (workspace SDK scaffold delivered; UI composition pending) |
-| 11 | ATF full suite + QA hardening | In Progress (attendance + KB + CMDB bootstrap + KPI collector + VA adapter + dashboard/workspace ATF blocks delivered) |
+| 11 | ATF full suite + QA hardening | In Progress (attendance + KB + CMDB bootstrap + KPI collector + VA adapter + flow scaffolds + dashboard/workspace ATF blocks delivered) |
 
 ---
 
-*Last updated: Sprint 12 in progress - KB, CMDB (including bootstrap), KPI collector, VA adapter, Dashboard, and Workspace scaffolds automated via SDK and validated by build/deploy.*
+*Last updated: Sprint 12 in progress - KB, CMDB (including bootstrap), KPI collector, VA adapter, Flow scaffolds, Dashboard, and Workspace scaffolds automated via SDK and validated by build/deploy.*
+
 
 
 

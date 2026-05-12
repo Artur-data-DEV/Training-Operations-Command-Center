@@ -689,6 +689,22 @@ declare global {
                         table: 'sys_atf_step'
                         id: 'f8527f230eb74122b434012f4c742c31'
                     }
+                    x_783010_tocc_a1_atf_flow_scaffold_count: {
+                        table: 'sys_atf_test'
+                        id: 'e55a580d3c254ea488c1425732087cfa'
+                    }
+                    x_783010_tocc_a1_atf_flow_scaffold_count_script: {
+                        table: 'sys_atf_step'
+                        id: '6ea67a9b867d4f43af18c24232d39e26'
+                    }
+                    x_783010_tocc_a1_atf_flow_scaffold_presence: {
+                        table: 'sys_atf_test'
+                        id: '4d1717529a844a3da41ee900879ea65d'
+                    }
+                    x_783010_tocc_a1_atf_flow_scaffold_presence_script: {
+                        table: 'sys_atf_step'
+                        id: 'e0efb8cf888f4bd8a58f1cd85e36a9c7'
+                    }
                     x_783010_tocc_a1_atf_kb_bootstrap_idempotent: {
                         table: 'sys_atf_test'
                         id: '09feaae2a0324b07adc703e2838f0a44'
@@ -973,6 +989,14 @@ declare global {
                         table: 'sys_atf_step'
                         id: 'a8ada84f538b4437828dc6a7e8da3a59'
                     }
+                    x_783010_tocc_a1_atf_subflow_scaffold_presence: {
+                        table: 'sys_atf_test'
+                        id: 'b2babf670b63487dbbacefb1984305ab'
+                    }
+                    x_783010_tocc_a1_atf_subflow_scaffold_presence_script: {
+                        table: 'sys_atf_step'
+                        id: 'ec015678dbb0401fad19cd42bd1a72a7'
+                    }
                     x_783010_tocc_a1_atf_va_topic_menu_contract: {
                         table: 'sys_atf_test'
                         id: '3eed0c716cdd4ec0a05c5c3b1f2dc0cc'
@@ -1120,6 +1144,50 @@ declare global {
                     x_783010_tocc_a1_dashboard_widget_sessions_by_status: {
                         table: 'par_dashboard_widget'
                         id: 'b4555dbfd0524e19ad0317141eacb126'
+                    }
+                    x_783010_tocc_a1_flow_daily_kpi_refresh_signal: {
+                        table: 'sys_hub_flow'
+                        id: '7023a693996b40f0aeedae8b85625ced'
+                    }
+                    x_783010_tocc_a1_flow_daily_kpi_refresh_signal_log: {
+                        table: 'sys_hub_action_instance_v2'
+                        id: '20537b87e49547ff914bfce2721ff4f5'
+                    }
+                    x_783010_tocc_a1_flow_daily_kpi_refresh_signal_trigger: {
+                        table: 'sys_hub_trigger_instance_v2'
+                        id: 'c873ca87fb864384bc8e683e0efde9f8'
+                    }
+                    x_783010_tocc_a1_flow_reservation_intake_signal: {
+                        table: 'sys_hub_flow'
+                        id: 'bf000d1aa46b4f9199a946ead193ed00'
+                    }
+                    x_783010_tocc_a1_flow_reservation_intake_signal_log: {
+                        table: 'sys_hub_action_instance_v2'
+                        id: 'b8eafa4320a3497789c1d8acd3583ce0'
+                    }
+                    x_783010_tocc_a1_flow_reservation_intake_signal_subflow_call: {
+                        table: 'sys_hub_sub_flow_instance_v2'
+                        id: '763414db6ef04806b42d54eca2d6f262'
+                    }
+                    x_783010_tocc_a1_flow_reservation_intake_signal_trigger: {
+                        table: 'sys_hub_trigger_instance_v2'
+                        id: '1c44aafee8f34a0d9687c978f6d587ed'
+                    }
+                    x_783010_tocc_a1_flow_session_cancelled_signal: {
+                        table: 'sys_hub_flow'
+                        id: '43e6220820be49f8b762171f722feea1'
+                    }
+                    x_783010_tocc_a1_flow_session_cancelled_signal_log: {
+                        table: 'sys_hub_action_instance_v2'
+                        id: 'e76cef3d17ad4f28a018878320628342'
+                    }
+                    x_783010_tocc_a1_flow_session_cancelled_signal_subflow_call: {
+                        table: 'sys_hub_sub_flow_instance_v2'
+                        id: '1516e325a93b43fda09a10e789477977'
+                    }
+                    x_783010_tocc_a1_flow_session_cancelled_signal_trigger: {
+                        table: 'sys_hub_trigger_instance_v2'
+                        id: 'b7e91fea8bc84d05ab6222593b9e0bdf'
                     }
                     x_783010_tocc_a1_notif_enrollment_approved: {
                         table: 'sysevent_email_action'
@@ -1376,6 +1444,22 @@ declare global {
                     x_783010_tocc_a1_sp_widget_session_browser: {
                         table: 'sp_widget'
                         id: 'cea89959ad4141c3bb52cdc43d674b9a'
+                    }
+                    x_783010_tocc_a1_subflow_reservation_intake_fire_event: {
+                        table: 'sys_hub_action_instance_v2'
+                        id: '2e7715316ffe441495434dcf353337c2'
+                    }
+                    x_783010_tocc_a1_subflow_reservation_intake_signal: {
+                        table: 'sys_hub_flow'
+                        id: '92487f8cbb294a8ea0eb267a32cab763'
+                    }
+                    x_783010_tocc_a1_subflow_session_cancelled_fire_event: {
+                        table: 'sys_hub_action_instance_v2'
+                        id: '50d56076a299430780867789fcba46d3'
+                    }
+                    x_783010_tocc_a1_subflow_session_cancelled_signal: {
+                        table: 'sys_hub_flow'
+                        id: 'facb845294fe44adb1721ad8ed3b2837'
                     }
                     x_783010_tocc_a1_uia_approve_enrollment: {
                         table: 'sys_ui_action'
@@ -1844,6 +1928,14 @@ declare global {
                         id: '0ab93e99e7c64a77aa4f081a11b8c2dc'
                         key: {
                             name: 'x_783010_tocc_a1_training_config'
+                        }
+                    },
+                    {
+                        table: 'sys_element_mapping'
+                        id: '0ada34ed663649f8bce2ab33618e3814'
+                        key: {
+                            field: 'script'
+                            id: 'ec015678dbb0401fad19cd42bd1a72a7'
                         }
                     },
                     {
@@ -3116,6 +3208,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_element_mapping'
+                        id: '433065cec74e46eaa46df50e7105ee3d'
+                        key: {
+                            field: 'script'
+                            id: '6ea67a9b867d4f43af18c24232d39e26'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: '4344c401c4f8493fbbf98e512cb8b1a5'
                         key: {
@@ -3160,6 +3260,14 @@ declare global {
                         key: {
                             document_key: 'f2443f9d5f904a64aeaf5d82c3c0ac21'
                             variable: '90144b535320220002c6435723dc3488'
+                        }
+                    },
+                    {
+                        table: 'sys_hub_flow_input'
+                        id: '4456330d0f1a43fa97fa44fd6b3756e5'
+                        key: {
+                            model: 'facb845294fe44adb1721ad8ed3b2837'
+                            element: 'sessionRecord'
                         }
                     },
                     {
@@ -3288,6 +3396,14 @@ declare global {
                             name: 'x_783010_tocc_a1_attendance'
                             element: 'attendance_status'
                             value: 'no_show'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: '48eb3f0ff9ed450693f4bcad4cb6944e'
+                        key: {
+                            document_key: 'ec015678dbb0401fad19cd42bd1a72a7'
+                            variable: '989d9e235324220002c6435723dc3484'
                         }
                     },
                     {
@@ -3509,6 +3625,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '5399b6eb2d97438c9dbc5a1f1e735f2c'
+                        key: {
+                            name: 'var__m_sys_hub_flow_input_facb845294fe44adb1721ad8ed3b2837'
+                            element: 'sessionRecord'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: '5436f7d78d7446388402f20d88b47230'
                         key: {
@@ -3584,6 +3709,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_training_session'
                             element: 'end_datetime'
+                        }
+                    },
+                    {
+                        table: 'sys_element_mapping'
+                        id: '57a86a401e314d4aaaa2baf5c1e20baa'
+                        key: {
+                            field: 'script'
+                            id: 'e0efb8cf888f4bd8a58f1cd85e36a9c7'
                         }
                     },
                     {
@@ -3897,6 +4030,14 @@ declare global {
                         id: '64a569433e004ef79974fcf9d6dda0c8'
                         key: {
                             name: 'x_783010_tocc_a1_training_config'
+                        }
+                    },
+                    {
+                        table: 'sys_hub_flow_input'
+                        id: '64aa2c0e79444f8e9279a268a501c408'
+                        key: {
+                            model: '92487f8cbb294a8ea0eb267a32cab763'
+                            element: 'reservationRecord'
                         }
                     },
                     {
@@ -4297,6 +4438,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '785f8a25b07844a98a96a9653d4ff6ac'
+                        key: {
+                            name: 'var__m_sys_hub_flow_input_92487f8cbb294a8ea0eb267a32cab763'
+                            element: 'reservationRecord'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '78a25042935546fcabc2d14aed32c5fa'
                         key: {
@@ -4393,6 +4543,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_room'
                             element: 'status'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: '7d7aa4f61bfb45b1b259f55d70aaceca'
+                        key: {
+                            document_key: '6ea67a9b867d4f43af18c24232d39e26'
+                            variable: '989d9e235324220002c6435723dc3484'
                         }
                     },
                     {
@@ -4897,6 +5055,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_variable_value'
+                        id: '95641c20ab4448deb2e310957f85126a'
+                        key: {
+                            document_key: 'e0efb8cf888f4bd8a58f1cd85e36a9c7'
+                            variable: '989d9e235324220002c6435723dc3484'
+                        }
+                    },
+                    {
                         table: 'sys_db_object'
                         id: '95e7ab13f08549e48bef6ad573288c9c'
                         key: {
@@ -4978,6 +5144,14 @@ declare global {
                         id: '984f3af580354932aad87f49ec0ebede'
                         key: {
                             document_key: '1a9b50bc3f9544f7bd2371d2e0b7bb02'
+                            variable: '42f2564b73031300440211d8faf6a777'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: '985f22d5e9ec443290beed3271b3572d'
+                        key: {
+                            document_key: '6ea67a9b867d4f43af18c24232d39e26'
                             variable: '42f2564b73031300440211d8faf6a777'
                         }
                     },
@@ -5492,6 +5666,14 @@ declare global {
                             name: 'x_783010_tocc_a1_course'
                             element: 'course_id'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: 'ab94f28483ac4352990c8d3c76a862d2'
+                        key: {
+                            document_key: 'ec015678dbb0401fad19cd42bd1a72a7'
+                            variable: '42f2564b73031300440211d8faf6a777'
                         }
                     },
                     {
@@ -6543,6 +6725,14 @@ declare global {
                         key: {
                             field: 'script'
                             id: 'f49b67b5d79e448d9c74215481ad43f5'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: 'd1f4e1a55d5c4d74ba3c68ff29298ed0'
+                        key: {
+                            document_key: 'e0efb8cf888f4bd8a58f1cd85e36a9c7'
+                            variable: '42f2564b73031300440211d8faf6a777'
                         }
                     },
                     {

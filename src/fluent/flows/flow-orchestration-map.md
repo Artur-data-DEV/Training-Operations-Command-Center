@@ -1,8 +1,8 @@
 # TOCC Flow Orchestration Map
 
-This folder is now used as the flow implementation map for handoff and upcoming Fluent Flow objects.
+This folder now contains both the orchestration design map and SDK materialized flow scaffolds.
 
-## Current (Implemented in Script Includes + BR + Scheduled Jobs)
+## Current runtime path (Script Includes + BR + Scheduled Jobs)
 
 ```mermaid
 flowchart TD
@@ -15,22 +15,17 @@ flowchart TD
     G --> H[PortalApiService / VA consume status]
 ```
 
-## Next (Planned Fluent Flow API Objects)
+## SDK materialized flow scaffolds
 
 ```mermaid
 flowchart LR
-    P1[Flow: Reservation Intake] --> P2[Action: Conflict Audit Tagging]
-    P2 --> P3[Action: Approval SLA Timer]
-    P3 --> P4[Action: Backoffice Escalation]
-
-    Q1[Flow: Session Lifecycle] --> Q2[Action: Attendance Window Release]
-    Q2 --> Q3[Action: Feedback Request Dispatch]
-
-    R1[Flow: Self-Service Signals] --> R2[Action: KB Engagement Snapshot]
-    R2 --> R3[Action: KPI Refresh Trigger]
+    F1[[[TOCC][FLOW] Reservation Intake Signal]] --> SF1[[[TOCC][SF] Emit Reservation Intake Signal]]
+    F2[[[TOCC][FLOW] Session Cancelled Signal]] --> SF2[[[TOCC][SF] Emit Session Cancelled Signal]]
+    F3[[[TOCC][FLOW] Daily KPI Refresh Signal]]
 ```
 
-## Rationale
+## Source of truth
 
-- Keep runtime logic stable in Script Includes while Flow API coverage evolves by release.
-- Use this map as implementation sequencing for US-28, US-29, and US-31 automation.
+- Flows and subflows are defined in `training-orchestration-flows.now.ts`.
+- Activation and smoke checks are documented in `docs/manual-config/flow-scaffold-activation.md`.
+- Core business rules remain implemented in Script Includes/BRs to avoid logic duplication.
