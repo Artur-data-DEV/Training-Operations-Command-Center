@@ -1,6 +1,6 @@
 # Training Operations Command Center
 
-Baseline for scoped app `x_tocc` on ServiceNow instance:
+Baseline for scoped app `x_783010_tocc_a1` on ServiceNow instance:
 
 - Instance: `https://dev372264.service-now.com`
 - Release: `Australia Patch 1 (build 2026-03-31)`
@@ -20,7 +20,7 @@ Baseline for scoped app `x_tocc` on ServiceNow instance:
 
 - Sprint 0 documentation imported.
 - Project structure scaffolded.
-- Scope `x_tocc` is not yet present on the target instance (see runbook).
+- Scope `x_783010_tocc_a1` is registered on the target instance (see runbook).
 
 ## Runbooks
 
