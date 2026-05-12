@@ -150,8 +150,8 @@ Your attendance for [Session Title] on [Date] has been confirmed. See you there!
 
 **Backend:**
 - Calls `PortalApiService.getMyEnrollments()` filtered to cancelable statuses
-- On confirm: opens the enrollment record in portal (links to My Enrollments page with cancel action)
-- Note: late cancellation validation is enforced server-side by `EnrollmentService`
+- On confirm: calls `PortalApiService.cancelMyEnrollment(enrollmentId)`
+- Note: late cancellation validation is enforced server-side by `EnrollmentService` through PortalApiService
 
 **Response format:**
 ```
@@ -230,7 +230,7 @@ Would you like me to open a support request on your behalf? (Yes / No)
 
 **Inputs collected:** None
 
-**Backend:** Static response with policy summary; values pulled from KB013.
+**Backend:** Calls `PortalApiService.getTrainingPolicies()` to return dynamic policy values.
 
 **Response format:**
 ```

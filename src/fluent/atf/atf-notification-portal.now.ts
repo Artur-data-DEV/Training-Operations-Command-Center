@@ -67,6 +67,211 @@ Test(
 
 Test(
     {
+        $id: Now.ID['x_783010_tocc_a1_atf_portal_cancel_enrollment_success'],
+        name: '[TOCC][PORTAL] cancelMyEnrollment cancels own enrollment and syncs seats',
+        description: 'PortalApiService must cancel the logged student enrollment and sync session seats/status.',
+        active: true,
+        failOnServerError: true,
+    },
+    (atf) => {
+        atf.server.runServerSideScript({
+            $id: Now.ID['x_783010_tocc_a1_atf_portal_cancel_success_script'],
+            script: `
+                var suffix = new GlideDateTime().getNumericValue() + '';
+
+                var room = new GlideRecord('x_783010_tocc_a1_room');
+                room.initialize();
+                room.setValue('name', 'ATF-Room-CANCEL-' + suffix);
+                room.setValue('code', 'ATF-CANCEL-' + suffix);
+                room.setValue('capacity', 10);
+                room.setValue('room_type', 'classroom');
+                room.setValue('status', 'available');
+                room.setValue('active', true);
+                var roomId = room.insert();
+
+                var session = new GlideRecord('x_783010_tocc_a1_training_session');
+                session.initialize();
+                session.setValue('title', 'ATF Cancel Session ' + suffix);
+                session.setValue('room', roomId);
+                session.setValue('start_datetime', '2040-01-01 09:00:00');
+                session.setValue('end_datetime', '2040-01-01 11:00:00');
+                session.setValue('total_seats', 1);
+                session.setValue('available_seats', 0);
+                session.setValue('status', 'full');
+                session.setValue('active', true);
+                var sessionId = session.insert();
+
+                var user = new GlideRecord('sys_user');
+                user.initialize();
+                user.setValue('user_name', 'atf_cancel_ok_' + suffix);
+                user.setValue('first_name', 'ATF');
+                user.setValue('last_name', 'CancelOk');
+                var userId = user.insert();
+
+                var student = new GlideRecord('x_783010_tocc_a1_student');
+                student.initialize();
+                student.setValue('user', userId);
+                student.setValue('active', true);
+                var studentId = student.insert();
+
+                var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                enrollment.initialize();
+                enrollment.setValue('student', studentId);
+                enrollment.setValue('training_session', sessionId);
+                enrollment.setValue('status', 'approved');
+                enrollment.setValue('confirmed', false);
+                var enrollmentId = enrollment.insert();
+
+                gs.impersonateUser(userId);
+                var svc = new x_783010_tocc_a1.PortalApiService();
+                svc._testParams = { sysparm_enrollment_id: enrollmentId };
+                var result = JSON.parse(svc.cancelMyEnrollment());
+                gs.resetSession();
+
+                gs.assertTrue(result.success === true, 'Expected cancellation success. Got: ' + JSON.stringify(result));
+
+                var enCheck = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                gs.assertTrue(enCheck.get(enrollmentId), 'Enrollment not found after cancellation.');
+                gs.assertTrue(enCheck.getValue('status') === 'cancelled', 'Enrollment should be cancelled.');
+
+                var sessionCheck = new GlideRecord('x_783010_tocc_a1_training_session');
+                gs.assertTrue(sessionCheck.get(sessionId), 'Session not found after cancellation.');
+                gs.assertTrue(sessionCheck.getValue('available_seats') == '1', 'Seat should be released to 1.');
+                gs.assertTrue(sessionCheck.getValue('status') === 'open', 'Session should reopen after seat release.');
+            `,
+        })
+    }
+)
+
+Test(
+    {
+        $id: Now.ID['x_783010_tocc_a1_atf_portal_cancel_enrollment_late_blocked'],
+        name: '[TOCC][PORTAL] cancelMyEnrollment blocked inside late cancellation window',
+        description: 'PortalApiService must block student cancellation when session is inside late window.',
+        active: true,
+        failOnServerError: true,
+    },
+    (atf) => {
+        atf.server.runServerSideScript({
+            $id: Now.ID['x_783010_tocc_a1_atf_portal_cancel_late_block_script'],
+            script: `
+                var suffix = new GlideDateTime().getNumericValue() + '';
+
+                // Force deterministic cancellation window for this test.
+                var cfg = new GlideRecord('x_783010_tocc_a1_training_config');
+                cfg.addQuery('name', 'late_cancellation_window_hours');
+                cfg.setLimit(1);
+                cfg.query();
+
+                var previousValue = '';
+                if (cfg.next()) {
+                    previousValue = cfg.getValue('value') || '';
+                    cfg.setValue('value', '4');
+                    cfg.update();
+                }
+
+                var room = new GlideRecord('x_783010_tocc_a1_room');
+                room.initialize();
+                room.setValue('name', 'ATF-Room-CANCEL-LATE-' + suffix);
+                room.setValue('code', 'ATF-CAN-LATE-' + suffix);
+                room.setValue('capacity', 10);
+                room.setValue('room_type', 'classroom');
+                room.setValue('status', 'available');
+                room.setValue('active', true);
+                var roomId = room.insert();
+
+                var start = new GlideDateTime();
+                start.addSeconds(60 * 60); // 1 hour from now (inside 4h late window)
+                var end = new GlideDateTime(start);
+                end.addSeconds(2 * 60 * 60);
+
+                var session = new GlideRecord('x_783010_tocc_a1_training_session');
+                session.initialize();
+                session.setValue('title', 'ATF Cancel Late Session ' + suffix);
+                session.setValue('room', roomId);
+                session.setValue('start_datetime', start.getValue());
+                session.setValue('end_datetime', end.getValue());
+                session.setValue('total_seats', 1);
+                session.setValue('available_seats', 0);
+                session.setValue('status', 'full');
+                session.setValue('active', true);
+                var sessionId = session.insert();
+
+                var user = new GlideRecord('sys_user');
+                user.initialize();
+                user.setValue('user_name', 'atf_cancel_late_' + suffix);
+                user.setValue('first_name', 'ATF');
+                user.setValue('last_name', 'CancelLate');
+                var userId = user.insert();
+
+                var student = new GlideRecord('x_783010_tocc_a1_student');
+                student.initialize();
+                student.setValue('user', userId);
+                student.setValue('active', true);
+                var studentId = student.insert();
+
+                var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                enrollment.initialize();
+                enrollment.setValue('student', studentId);
+                enrollment.setValue('training_session', sessionId);
+                enrollment.setValue('status', 'approved');
+                enrollment.setValue('confirmed', false);
+                var enrollmentId = enrollment.insert();
+
+                gs.impersonateUser(userId);
+                var svc = new x_783010_tocc_a1.PortalApiService();
+                svc._testParams = { sysparm_enrollment_id: enrollmentId };
+                var result = JSON.parse(svc.cancelMyEnrollment());
+                gs.resetSession();
+
+                gs.assertTrue(result.success === false, 'Expected cancellation block in late window.');
+
+                var enCheck = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                gs.assertTrue(enCheck.get(enrollmentId), 'Enrollment missing after late-window attempt.');
+                gs.assertTrue(enCheck.getValue('status') === 'approved', 'Enrollment should remain approved.');
+
+                // Restore config
+                var cfgRestore = new GlideRecord('x_783010_tocc_a1_training_config');
+                cfgRestore.addQuery('name', 'late_cancellation_window_hours');
+                cfgRestore.setLimit(1);
+                cfgRestore.query();
+                if (cfgRestore.next() && previousValue !== '') {
+                    cfgRestore.setValue('value', previousValue);
+                    cfgRestore.update();
+                }
+            `,
+        })
+    }
+)
+
+Test(
+    {
+        $id: Now.ID['x_783010_tocc_a1_atf_portal_training_policies_payload'],
+        name: '[TOCC][PORTAL] getTrainingPolicies returns policy payload for VA',
+        description: 'PortalApiService must expose policy keys consumed by VA topic responses.',
+        active: true,
+        failOnServerError: true,
+    },
+    (atf) => {
+        atf.server.runServerSideScript({
+            $id: Now.ID['x_783010_tocc_a1_atf_portal_policy_payload_script'],
+            script: `
+                var svc = new x_783010_tocc_a1.PortalApiService();
+                var result = JSON.parse(svc.getTrainingPolicies());
+
+                gs.assertTrue(result.success === true, 'Expected success from getTrainingPolicies.');
+                gs.assertTrue(result.policies !== undefined, 'Policies object must exist.');
+                gs.assertTrue(result.policies.late_cancellation_window_hours !== undefined, 'Missing late cancellation policy.');
+                gs.assertTrue(result.policies.confirmation_lead_hours !== undefined, 'Missing confirmation policy.');
+                gs.assertTrue(result.links !== undefined, 'Links object must exist.');
+                gs.assertTrue(result.links.kb !== undefined && result.links.kb !== '', 'KB link must be present.');
+            `,
+        })
+    }
+)
+
+Test(
+    {
         $id: Now.ID['x_783010_tocc_a1_atf_notif_reservation_rejected_event'],
         name: '[TOCC][NOTIF] sendReservationDecision queues rejected event',
         description: 'NotificationHelper must queue the reservation.rejected event when status is rejected.',

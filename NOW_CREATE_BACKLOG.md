@@ -256,7 +256,7 @@
 
 ### US-28 VA Topics for Student Self-Service
 **As** Student, **I want** to interact with a bot to browse sessions, view enrollments, confirm, or cancel.
-**Priority:** Must Have | **Status:** ⬜ Pending (Sprint 7)
+**Priority:** Must Have | **Status:** 🟡 In Progress (Sprint 12 - backend API + ATF automation ready)
 **Components:** VA Topics 1–4, `PortalApiService`, NLU model
 **Acceptance Criteria:** 6 topics configured, NLU trained, bot linked to portal
 
@@ -313,7 +313,7 @@
 | 4 | Scheduled Jobs, Notifications, UI Actions, Client Scripts, UI Policies | ✅ Complete |
 | 5 | Record Producers, PortalApiService, Service Portal widgets/pages | ✅ Complete |
 | 6 | Cancellation, confirmation, no-show, waitlist | ✅ Covered by Sprint 3–4 services |
-| 7 | Knowledge Base + Virtual Agent | ⬜ Pending |
+| 7 | Knowledge Base + Virtual Agent | 🟡 In Progress (automation complete; topic/NLU authoring pending) |
 | 8 | CMDB light | ⬜ Pending |
 | 9 | Platform Analytics + KPIs | ⬜ Pending |
 | 10 | UI Builder / Workspace | ⬜ Pending |

@@ -29,9 +29,9 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
     // Optional filters: sysparm_course, sysparm_location, sysparm_from_date
     // -----------------------------------------------------------------------
     getAvailableSessions: function() {
-        var courseFilter   = this.getParameter('sysparm_course')    || '';
-        var locationFilter = this.getParameter('sysparm_location')  || '';
-        var fromDate       = this.getParameter('sysparm_from_date') || '';
+        var courseFilter   = this._getParam('sysparm_course')    || '';
+        var locationFilter = this._getParam('sysparm_location')  || '';
+        var fromDate       = this._getParam('sysparm_from_date') || '';
 
         var sessions = [];
         var gr = new GlideRecordSecure('x_783010_tocc_a1_training_session');
@@ -78,7 +78,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
     // Required: sysparm_session_id
     // -----------------------------------------------------------------------
     getSessionDetail: function() {
-        var sessionId = this.getParameter('sysparm_session_id');
+        var sessionId = this._getParam('sysparm_session_id');
         if (!sessionId) {
             return JSON.stringify({ success: false, message: 'Session ID is required.' });
         }
@@ -124,7 +124,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
     // Optional filter: sysparm_status (pending|approved|waitlisted|cancelled)
     // -----------------------------------------------------------------------
     getMyEnrollments: function() {
-        var statusFilter = this.getParameter('sysparm_status') || '';
+        var statusFilter = this._getParam('sysparm_status') || '';
 
         var studentId = this._getLoggedStudentId();
         if (!studentId) {
@@ -194,7 +194,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
     // Required: sysparm_enrollment_id
     // -----------------------------------------------------------------------
     confirmMyAttendance: function() {
-        var enrollmentId = this.getParameter('sysparm_enrollment_id');
+        var enrollmentId = this._getParam('sysparm_enrollment_id');
         if (!enrollmentId) {
             return JSON.stringify({ success: false, message: 'Enrollment ID is required.' });
         }
@@ -243,8 +243,103 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
     },
 
     // -----------------------------------------------------------------------
+    // cancelMyEnrollment
+    // Cancels one enrollment belonging to the logged-in student.
+    // Required: sysparm_enrollment_id
+    // -----------------------------------------------------------------------
+    cancelMyEnrollment: function() {
+        var enrollmentId = this._getParam('sysparm_enrollment_id');
+        if (!enrollmentId) {
+            return JSON.stringify({ success: false, message: 'Enrollment ID is required.' });
+        }
+
+        var studentId = this._getLoggedStudentId();
+        if (!studentId) {
+            return JSON.stringify({ success: false, message: 'No active student profile found.' });
+        }
+
+        var gr = new GlideRecordSecure('x_783010_tocc_a1_student_enrollment');
+        if (!gr.get(enrollmentId)) {
+            return JSON.stringify({ success: false, message: 'Enrollment not found.' });
+        }
+
+        if (gr.getValue('student') !== studentId) {
+            return JSON.stringify({ success: false, message: 'You can only cancel your own enrollment.' });
+        }
+
+        var status = gr.getValue('status');
+        if (status === 'cancelled') {
+            return JSON.stringify({ success: true, message: 'Enrollment already cancelled.' });
+        }
+
+        if (status !== 'pending' && status !== 'approved' && status !== 'waitlisted') {
+            return JSON.stringify({
+                success: false,
+                message: 'Enrollment cannot be cancelled from its current status.',
+            });
+        }
+
+        if (status === 'approved') {
+            var lateWindow = this._isLateCancellationWindow(gr.getValue('training_session'));
+            if (lateWindow.blocked) {
+                return JSON.stringify({
+                    success: false,
+                    message: 'Cancellation is not allowed within ' + lateWindow.hours + ' hours of session start.',
+                });
+            }
+        }
+
+        gr.setValue('status', 'cancelled');
+        gr.setValue('confirmed', false);
+        gr.setValue('work_notes', 'Enrollment cancelled via Service Portal by ' + gs.getUserDisplayName() + '.');
+        gr.setWorkflow(false);
+        gr.update();
+
+        var enrollmentService = new EnrollmentService();
+        enrollmentService.syncSessionAfterEnrollmentChange(gr.getValue('training_session'));
+
+        var helper = new NotificationHelper();
+        helper.sendEnrollmentDecision(enrollmentId);
+
+        return JSON.stringify({ success: true, message: 'Enrollment cancelled successfully.' });
+    },
+
+    // -----------------------------------------------------------------------
+    // getTrainingPolicies
+    // Returns policy values used by portal and VA responses.
+    // -----------------------------------------------------------------------
+    getTrainingPolicies: function() {
+        var cfg = new TrainingConfigService();
+
+        return JSON.stringify({
+            success: true,
+            policies: {
+                minimum_advance_notice_hours: cfg.getMinimumAdvanceNoticeHours(),
+                late_cancellation_window_hours: cfg.getLateCancellationWindowHours(),
+                waitlist_mode: cfg.getWaitlistMode(),
+                enrollment_approval_mode: cfg.getEnrollmentApprovalMode(),
+                confirmation_lead_hours: cfg.getConfirmationLeadHours(),
+                reminder_lead_hours: cfg.getReminderLeadHours(),
+                feedback_window_hours: cfg.getFeedbackWindowHours(),
+                stale_approval_hours: cfg.getStaleApprovalHours(),
+            },
+            links: {
+                kb: gs.getProperty('x_783010_tocc_a1.portal.kb_url', '?id=kb_home'),
+            },
+        });
+    },
+
+    // -----------------------------------------------------------------------
     // Internal helpers
     // -----------------------------------------------------------------------
+
+    _getParam: function(name) {
+        if (this._testParams && this._testParams[name] !== undefined && this._testParams[name] !== null) {
+            return this._testParams[name];
+        }
+
+        return this.getParameter(name);
+    },
 
     _getLoggedStudentId: function() {
         var student = new GlideRecordSecure('x_783010_tocc_a1_student');
@@ -273,6 +368,41 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             status:    gr.getValue('status'),
             confirmed: gr.getValue('confirmed'),
         };
+    },
+
+    _isLateCancellationWindow: function(sessionId) {
+        var result = { blocked: false, hours: 0 };
+        if (!sessionId) {
+            return result;
+        }
+
+        var cfg = new TrainingConfigService();
+        var hours = cfg.getLateCancellationWindowHours();
+        result.hours = hours;
+
+        if (!hours || hours <= 0) {
+            return result;
+        }
+
+        var session = new GlideRecordSecure('x_783010_tocc_a1_training_session');
+        if (!session.get(sessionId)) {
+            return result;
+        }
+
+        var startDateTime = session.getValue('start_datetime');
+        if (!startDateTime) {
+            return result;
+        }
+
+        var now = new GlideDateTime();
+        var cutoff = new GlideDateTime(startDateTime);
+        cutoff.addSeconds(-1 * hours * 3600);
+
+        if (now.compareTo(cutoff) >= 0) {
+            result.blocked = true;
+        }
+
+        return result;
     },
 
     type: 'PortalApiService'
