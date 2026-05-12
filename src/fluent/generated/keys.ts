@@ -697,6 +697,22 @@ declare global {
                         table: 'sys_atf_step'
                         id: 'af146c196c204a2fa769581b9024678d'
                     }
+                    x_783010_tocc_a1_atf_kpi_collect_daily_snapshot: {
+                        table: 'sys_atf_test'
+                        id: '84c355481a184232abb241d4b2eea84b'
+                    }
+                    x_783010_tocc_a1_atf_kpi_collect_daily_snapshot_script: {
+                        table: 'sys_atf_step'
+                        id: '844ac944e2e44148a34f2bec983b0d45'
+                    }
+                    x_783010_tocc_a1_atf_kpi_collect_is_idempotent: {
+                        table: 'sys_atf_test'
+                        id: '7213804d95fb4635a08f4ade7c62e449'
+                    }
+                    x_783010_tocc_a1_atf_kpi_collect_is_idempotent_script: {
+                        table: 'sys_atf_step'
+                        id: '752f931cf14b49bba4cddadc78cfb307'
+                    }
                     x_783010_tocc_a1_atf_notif_enrollment_decision_events: {
                         table: 'sys_atf_test'
                         id: '7eb7ed4b296a4424b91034e739f22c42'
@@ -1149,6 +1165,10 @@ declare global {
                         table: 'sysauto_script'
                         id: '1f83800e9ef348f2a4b4b4b330b5e9a6'
                     }
+                    x_783010_tocc_a1_sch_collect_kpi_snapshots: {
+                        table: 'sysauto_script'
+                        id: '028cec4b399e4b788fc2fdb0778d73bf'
+                    }
                     x_783010_tocc_a1_sch_detect_stale_approvals: {
                         table: 'sysauto_script'
                         id: '31a069b679ce4ea996c4a339fb08d340'
@@ -1196,6 +1216,10 @@ declare global {
                     x_783010_tocc_a1_script_include_training_context_ajax: {
                         table: 'sys_script_include'
                         id: 'ec6de78c7d6547e18968799bea006742'
+                    }
+                    x_783010_tocc_a1_script_include_training_kpi_service: {
+                        table: 'sys_script_include'
+                        id: '12669e63e0cf4c448ebb2cf44ad0b488'
                     }
                     x_783010_tocc_a1_script_include_training_session_service: {
                         table: 'sys_script_include'
@@ -1665,6 +1689,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '064298253e644b9199135a9a67d1189b'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'details'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '067f6a4f6be34494bdacf46f23858265'
                         key: {
@@ -1687,6 +1720,14 @@ declare global {
                         key: {
                             document_key: '14b3f15e345141028ea373c96d0c1ca5'
                             variable: '1985e0ceff2433008d3f5d9ad53bf1ba'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '06eb537dadde40f88b668b3a48f2bd3e'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_unit'
                         }
                     },
                     {
@@ -1801,6 +1842,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '0c6dc8506cc94faea1edd27c62dcce4c'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_value'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '0d1735da74194359b63b5d0535ba9cb4'
                         key: {
@@ -1862,6 +1912,15 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_student_enrollment'
                             element: 'confirmed'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '0e51ac1669b744ea9b50ff6527d959a8'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'period_start'
                             language: 'en'
                         }
                     },
@@ -1967,6 +2026,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_course'
                             element: 'course_name'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: '159cc243df1644e3867ddc91c88b8c7e'
+                        key: {
+                            document_key: '844ac944e2e44148a34f2bec983b0d45'
+                            variable: '989d9e235324220002c6435723dc3484'
                         }
                     },
                     {
@@ -2188,6 +2255,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '21f867dc05d8444f85e55f9fa31b022f'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_key'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: '221f6007c24544d2b2694166f084d2d0'
                         key: {
@@ -2399,6 +2474,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '2e2ae09da4d54ef1aa052d6e41b8af97'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_category'
+                            value: 'self_service'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '2f2d6b6611d64afab2b5c25a8493c785'
                         key: {
@@ -2468,6 +2552,15 @@ declare global {
                         key: {
                             document_key: 'a48631a089834199b802e2b7bbc37132'
                             variable: '989d9e235324220002c6435723dc3484'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '3124e52aedc3432ca806bdf3d8d99340'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_category'
+                            language: 'en'
                         }
                     },
                     {
@@ -2550,6 +2643,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '3449c8fc5b4348aab834b9b6b9c1bb90'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'snapshot_date'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: '344b3e2d9cfd420b8828cbc4d4b719c8'
                         key: {
@@ -2627,6 +2729,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '37dd3b10253641bdb3be4b2dd317c219'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_unit'
+                            value: 'count'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: '37f4eadba63c41e4a5661935b1434b4c'
                         key: {
@@ -2695,6 +2806,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_training_feedback'
                             element: 'rating'
+                        }
+                    },
+                    {
+                        table: 'sys_choice_set'
+                        id: '3a617ad570c4490fbc5a2d456178788b'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_category'
                         }
                     },
                     {
@@ -2834,6 +2953,14 @@ declare global {
                         id: '3dc84bbc43d74febbfbb13ebcf40d3f3'
                         key: {
                             name: 'x_783010_tocc_a1_student_enrollment'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '3de1419bcd89428eb2936a3750ba0755'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_value'
                         }
                     },
                     {
@@ -3236,6 +3363,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_variable_value'
+                        id: '4d95eec565e341e085b245e6ac3328d4'
+                        key: {
+                            document_key: '844ac944e2e44148a34f2bec983b0d45'
+                            variable: '42f2564b73031300440211d8faf6a777'
+                        }
+                    },
+                    {
                         table: 'sys_db_object'
                         id: '4db0cd6a7bc04b1c83d0a8cbb585b99f'
                         key: {
@@ -3304,6 +3439,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '4ffddc6a257a4710993ce87257a9414a'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_category'
+                            value: 'operations'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: '50b0a315b3d543a4ae1c4b6e39bd015e'
                         key: {
@@ -3326,6 +3470,14 @@ declare global {
                         key: {
                             sys_security_acl: '5e6048ff4515469b8fe6aaf291a8d145'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice_set'
+                        id: '52fdccd9e62642f6b503d76b41d26973'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_unit'
                         }
                     },
                     {
@@ -3387,6 +3539,15 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_course'
                             element: 'description'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '56e5d75964224e90b946f9ce2a809f24'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'source_table'
+                            language: 'en'
                         }
                     },
                     {
@@ -3594,6 +3755,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '60569c460ea54616b2f9b2efab0299fa'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_key'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_ui_policy_action'
                         id: '6106bf468fd24a18bc107e520213372e'
                         key: {
@@ -3643,6 +3813,15 @@ declare global {
                                     name: 'x_783010_tocc_a1.instructor'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '6235caa377d049fcaed41ddf094efe64'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_label'
+                            language: 'en'
                         }
                     },
                     {
@@ -3741,6 +3920,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '689ac9f72aa44ae0a5fd52e1da11e52a'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_unit'
+                            value: 'hours'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: '68bbd7dd95f847ce8d4f7139310303ff'
                         key: {
@@ -3754,6 +3942,15 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_student_enrollment'
                             element: 'check_in_datetime'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '69cb4d094a3a4674ba429c1b1dbbe0bc'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'NULL'
                             language: 'en'
                         }
                     },
@@ -3852,6 +4049,14 @@ declare global {
                         key: {
                             sys_security_acl: '168819f3208946a18333d4a4e4962eb9'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '6dbe651cf7144ecf8ef1aded54a74cce'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'NULL'
                         }
                     },
                     {
@@ -4015,6 +4220,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_element_mapping'
+                        id: '75927cca10fa41cba0c0a0d57f61f1cc'
+                        key: {
+                            field: 'script'
+                            id: '844ac944e2e44148a34f2bec983b0d45'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '75d09775ed8041f0a38b098a31aaf096'
                         key: {
@@ -4037,6 +4250,14 @@ declare global {
                         key: {
                             sys_security_acl: '1f8682fbbb8d4af394e389f203b87be1'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_index'
+                        id: '771063f2cdab4da4b38188d5b01e05a9'
+                        key: {
+                            logical_table_name: 'x_783010_tocc_a1_kpi_snapshot'
+                            col_name_string: 'kpi_key,snapshot_date'
                         }
                     },
                     {
@@ -4183,6 +4404,15 @@ declare global {
                         key: {
                             document_key: '4a9e1dcced1b46e3888345bbb51dc4d9'
                             variable: '90144b535320220002c6435723dc3488'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '7f446efa37544ed7888d4ded93027da7'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_unit'
+                            value: 'rating'
                         }
                     },
                     {
@@ -4437,6 +4667,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_variable_value'
+                        id: '8adb81bec045472181aee6ef42b0cf17'
+                        key: {
+                            document_key: '752f931cf14b49bba4cddadc78cfb307'
+                            variable: '989d9e235324220002c6435723dc3484'
+                        }
+                    },
+                    {
                         table: 'sys_element_mapping'
                         id: '8c90cfdb3b1e40b48b968a3179deb468'
                         key: {
@@ -4491,6 +4729,15 @@ declare global {
                         key: {
                             table: 'x_783010_tocc_a1_student_enrollment'
                             short_description: 'Enrollment - Show Confirmed Field When Approved'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '8f9c060fced842e69be3d30c8f86d6bf'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'active'
+                            language: 'en'
                         }
                     },
                     {
@@ -4582,6 +4829,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '93aeccaa709541dc8da8fe65e90d1ec2'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_label'
+                        }
+                    },
+                    {
                         table: 'sys_element_mapping'
                         id: '951465bc0e664a8aa40087b0196b5fd4'
                         key: {
@@ -4603,6 +4858,13 @@ declare global {
                         key: {
                             field: 'script'
                             id: '564670f23a134202a9f09374723fe918'
+                        }
+                    },
+                    {
+                        table: 'sys_db_object'
+                        id: '95e7ab13f08549e48bef6ad573288c9c'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
                         }
                     },
                     {
@@ -4715,6 +4977,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '999ca98e0d904b6f81f8399486b39fb6'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_category'
+                            value: 'executive'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '99d51cad06694c3bad23eac67c9d06c5'
                         key: {
@@ -4800,6 +5071,24 @@ declare global {
                         key: {
                             sys_security_acl: 'd21a46155bc441928d76e99379ca78fc'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '9ead51601a544e9494c026825306faff'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_category'
+                            value: 'enrollment'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '9ed12406cc724d728d73fb91934a4bff'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_unit'
+                            language: 'en'
                         }
                     },
                     {
@@ -4922,6 +5211,14 @@ declare global {
                         key: {
                             document_key: 'b763e43fb4c54fda983ea45e90d8e3a7'
                             variable: '42f2564b73031300440211d8faf6a777'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'a444fe4e53864caeb9eb1b88a341e9ad'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'source_table'
                         }
                     },
                     {
@@ -5066,6 +5363,14 @@ declare global {
                     },
                     {
                         table: 'sys_dictionary'
+                        id: 'aa79150de818490fa71ae3e261fd963c'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'snapshot_date'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
                         id: 'aabc178f57de4ceaa5bd8c59f211d53d'
                         deleted: true
                         key: {
@@ -5200,6 +5505,14 @@ declare global {
                         id: 'ae20e339932243dd8e830ba8735cb100'
                         key: {
                             name: 'x_783010_tocc_a1_room_reservation'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'ae6c3257d7ab464b857026b0b30af3f4'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'period_end'
                         }
                     },
                     {
@@ -5619,6 +5932,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_element_mapping'
+                        id: 'be96dc7d29894cd6a3bd81226bd0f040'
+                        key: {
+                            field: 'script'
+                            id: '752f931cf14b49bba4cddadc78cfb307'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: 'bef5263fb0254f598ae59ae2f57a3309'
                         key: {
@@ -5655,6 +5976,21 @@ declare global {
                         key: {
                             document_key: 'ad0c312425214c1a98e14cbdd03b5f50'
                             variable: '9024a37f671003007ba405225685efe5'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'c076de9f501a495798249341f28a6a57'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'period_start'
+                        }
+                    },
+                    {
+                        table: 'ua_table_licensing_config'
+                        id: 'c0a2232b52d74c59bcd78d1ef1e15f31'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
                         }
                     },
                     {
@@ -6014,6 +6350,22 @@ declare global {
                         key: {
                             document_key: 'a2180a2db47f41d5a0054a1af9dbb3b5'
                             variable: '42f2564b73031300440211d8faf6a777'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: 'cf7748efd8b649c3a81216ad7de53316'
+                        key: {
+                            document_key: '752f931cf14b49bba4cddadc78cfb307'
+                            variable: '42f2564b73031300440211d8faf6a777'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'cfb0c3228f934bbcbbc580542191f73f'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_category'
                         }
                     },
                     {
@@ -6449,6 +6801,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: 'e456e3244651422c9df2b0dbe71c0911'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'active'
+                        }
+                    },
+                    {
                         table: 'sys_ui_action_role'
                         id: 'e45e845644ef42b2ab839b87c5728004'
                         key: {
@@ -6809,6 +7169,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'f4b80922868a4b3fae60ec87e7afdbd0'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'kpi_unit'
+                            value: 'percent'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'f4e4350ae9df4a9c90aeb2e2431ebae6'
                         key: {
@@ -6879,6 +7248,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: 'fa0258346c744401a58baf5e504dfa46'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'details'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'fa2454d4be5b4aac88e590184b77e2f4'
                         key: {
@@ -6937,6 +7314,15 @@ declare global {
                         key: {
                             sys_security_acl: 'e1b880ff4a004160b4fa84bbc2103c4b'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'fe896e4b4ee54d8684e78e0385943fbb'
+                        key: {
+                            name: 'x_783010_tocc_a1_kpi_snapshot'
+                            element: 'period_end'
+                            language: 'en'
                         }
                     },
                     {

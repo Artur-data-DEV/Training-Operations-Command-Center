@@ -289,3 +289,47 @@ export const x_783010_tocc_a1_training_config = Table({
         description: StringColumn({ label: 'Description', maxLength: 1000 }),
     },
 })
+
+export const x_783010_tocc_a1_kpi_snapshot = Table({
+    name: 'x_783010_tocc_a1_kpi_snapshot',
+    label: 'KPI Snapshot',
+    display: 'kpi_label',
+    schema: {
+        kpi_key: StringColumn({ label: 'KPI Key', mandatory: true, maxLength: 120 }),
+        kpi_label: StringColumn({ label: 'KPI Label', mandatory: true, maxLength: 200 }),
+        kpi_category: StringColumn({
+            label: 'KPI Category',
+            mandatory: true,
+            choices: {
+                executive: { label: 'Executive' },
+                enrollment: { label: 'Enrollment' },
+                operations: { label: 'Operations' },
+                self_service: { label: 'Self-Service' },
+            },
+        }),
+        kpi_value: StringColumn({ label: 'KPI Value', mandatory: true, maxLength: 80 }),
+        kpi_unit: StringColumn({
+            label: 'KPI Unit',
+            mandatory: true,
+            choices: {
+                percent: { label: 'Percent' },
+                count: { label: 'Count' },
+                hours: { label: 'Hours' },
+                rating: { label: 'Rating' },
+            },
+        }),
+        period_start: DateTimeColumn({ label: 'Period Start', mandatory: true }),
+        period_end: DateTimeColumn({ label: 'Period End', mandatory: true }),
+        snapshot_date: DateTimeColumn({ label: 'Snapshot Date', mandatory: true }),
+        source_table: StringColumn({ label: 'Source Table', mandatory: true, maxLength: 120 }),
+        details: StringColumn({ label: 'Details', maxLength: 2000 }),
+        active: BooleanColumn({ label: 'Active', default: 'true' }),
+    },
+    index: [
+        {
+            name: 'u_kpi_key_snapshot_date',
+            unique: true,
+            element: ['kpi_key', 'snapshot_date'],
+        },
+    ],
+})

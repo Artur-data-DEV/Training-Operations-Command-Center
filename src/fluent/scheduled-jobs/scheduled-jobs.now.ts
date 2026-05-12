@@ -195,3 +195,32 @@ ScheduledScript({
     gs.info('[TOCC] DetectStaleApprovals: flagged ' + staleCount + ' stale record(s).');
 })();`,
 })
+
+// ---------------------------------------------------------------------------
+// SCH-005 â€” Collect KPI Snapshots
+// Runs daily. Calculates and upserts all dashboard KPIs into
+// x_783010_tocc_a1_kpi_snapshot for analytics traceability.
+// ---------------------------------------------------------------------------
+ScheduledScript({
+    $id: Now.ID['x_783010_tocc_a1_sch_collect_kpi_snapshots'],
+    name: '[TOCC] Collect KPI Snapshots',
+    active: true,
+    runAs: 'system',
+    frequency: 'daily',
+    executionTime: { hours: 1, minutes: 15, seconds: 0 },
+    script: `(function collectKpiSnapshots() {
+    var svc = new TrainingKpiService();
+    var result = svc.collectDailySnapshot(30);
+
+    if (result.success) {
+        gs.info(
+            '[TOCC] CollectKpiSnapshots: success. inserted=' +
+            result.snapshots_inserted +
+            ', updated=' +
+            result.snapshots_updated
+        );
+    } else {
+        gs.error('[TOCC] CollectKpiSnapshots failed: ' + result.message);
+    }
+})();`,
+})

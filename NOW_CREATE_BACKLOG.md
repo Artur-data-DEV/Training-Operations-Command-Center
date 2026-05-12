@@ -266,9 +266,9 @@
 
 ### US-29 Training Operations KPI Dashboard
 **As** Manager, **I want** a dashboard with 16 operational KPIs to track program health.
-**Priority:** Must Have | **Status:** In Progress (Sprint 12 - dashboard SDK scaffold + KPI mapping ready)
-**Components:** Platform Analytics indicators, dashboard, data collectors
-**Acceptance Criteria:** All 16 KPIs defined and collecting data; dashboard visible to Manager role
+**Priority:** Must Have | **Status:** In Progress (Sprint 12 - dashboard scaffold + automated KPI snapshot collector + ATF)
+**Components:** Platform Analytics indicators, dashboard, `TrainingKpiService`, `x_783010_tocc_a1_kpi_snapshot`, scheduled data collector
+**Acceptance Criteria:** All 16 KPIs defined and collecting data; dashboard visible to Manager role; daily collector is idempotent
 
 ---
 
@@ -297,7 +297,7 @@
 ### US-32 ATF Suite — Core Logic Coverage
 **As** Developer, **I want** automated tests covering all core Script Include methods.
 **Priority:** Must Have | **Status:** In Progress (Sprint 12 - expanded to dashboard/workspace/CMDB bootstrap scaffolds)
-**Components:** ATF tests TEST-001 to TEST-038
+**Components:** ATF tests TEST-001 to TEST-040
 **Acceptance Criteria:** >= 70% coverage across core services and scaffolds; all tests green after deploy
 
 ---
@@ -315,13 +315,13 @@
 | 6 | Cancellation, confirmation, no-show, waitlist | ✅ Covered by Sprint 3–4 services |
 | 7 | Knowledge Base + Virtual Agent | 🟡 In Progress (KB bootstrap automated; VA topic/NLU authoring pending) |
 | 8 | CMDB light | In Progress (CI reference validation + enrichment + bootstrap automation delivered) |
-| 9 | Platform Analytics + KPIs | In Progress (dashboard SDK scaffold delivered; indicator formulas pending collection) |
+| 9 | Platform Analytics + KPIs | In Progress (dashboard scaffold + daily KPI snapshot collector delivered; indicator widgets still need final PA wiring) |
 | 10 | UI Builder / Workspace | In Progress (workspace SDK scaffold delivered; UI composition pending) |
-| 11 | ATF full suite + QA hardening | In Progress (attendance + KB + CMDB bootstrap + dashboard/workspace ATF blocks delivered) |
+| 11 | ATF full suite + QA hardening | In Progress (attendance + KB + CMDB bootstrap + KPI collector + dashboard/workspace ATF blocks delivered) |
 
 ---
 
-*Last updated: Sprint 12 in progress - KB, CMDB (including bootstrap), Dashboard, and Workspace scaffolds automated via SDK and validated by build/deploy.*
+*Last updated: Sprint 12 in progress - KB, CMDB (including bootstrap), KPI collector, Dashboard, and Workspace scaffolds automated via SDK and validated by build/deploy.*
 
 
 

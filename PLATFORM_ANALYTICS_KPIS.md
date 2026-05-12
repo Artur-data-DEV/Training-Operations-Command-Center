@@ -2,7 +2,7 @@
 
 > **Version:** 1.1 — Sprint 9
 > **Strategy:** SDK-assisted. Indicator definitions configured on instance via Performance Analytics.
-> Dashboard layout composed in Analytics Hub UI.
+> Dashboard layout composed in Analytics Hub UI, with app-scoped KPI daily collector for baseline persistence.
 
 ---
 
@@ -253,6 +253,16 @@
 
 ## 4. Manual Configuration Steps
 
+### Step 0 - Validate App-Scoped KPI Collector
+Run in **Scripts - Background**:
+
+```javascript
+new x_783010_tocc_a1.TrainingKpiService().collectDailySnapshot(30);
+```
+
+Confirm 16 rows in `x_783010_tocc_a1_kpi_snapshot` for current `snapshot_date`.
+
+
 ### Step 1 — Enable Performance Analytics
 Navigate to **Performance Analytics → Activate** if not already enabled on the PDI.
 
@@ -275,4 +285,4 @@ After first data collection run, verify each KPI value is plausible given the te
 
 ---
 
-*Last updated: Sprint 9 — 16 KPIs defined, dashboard layout, manual config steps.*
+*Last updated: Sprint 12 — 16 KPIs defined, dashboard layout, and app-scoped collector integrated.*
