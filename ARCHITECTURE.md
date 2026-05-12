@@ -98,7 +98,7 @@ Vendor:      [Your Organization]
 - All custom tables are prefixed `x_783010_tocc_a1_`
 - All Script Includes are scoped; no cross-scope calls without explicit API exposure
 - ACLs are defined within the scoped app; no reliance on global ACLs
-- `TrainingConfigService` is the single gateway to configuration parameters; no hardcoded thresholds in logic
+- `TrainingConfigService` is the single gateway to configuration parameters; no hardcoded thresholds in logic (sys_properties override + training_config fallback).
 - Script Includes do not access tables outside the scope unless referencing standard platform tables (`sys_user`, `cmn_location`, `cmdb_ci`)
 
 ---
@@ -126,7 +126,7 @@ Vendor:      [Your Organization]
 - Business Rules are thin routers: they call Script Include methods
 - Script Includes hold all domain logic
 - One Script Include per service domain (single responsibility)
-- All services read configuration from `TrainingConfigService`
+- All services read configuration from `TrainingConfigService` (property override first, table fallback second).
 
 ### 3.5 Data Layer (Tables, Fields, Data Policies)
 - Tables represent domain entities with clear ownership
@@ -142,7 +142,7 @@ Vendor:      [Your Organization]
 **Rationale:** Enables unit testing via ATF, prevents logic duplication, keeps BRs readable and short.
 
 ### Decision 2: TrainingConfigService as single config gateway
-**Rationale:** All operational thresholds (minimum advance hours, late cancel window, waitlist behavior) are stored in `x_783010_tocc_a1_training_config` and read at runtime. Zero hardcoded values in logic.
+**Rationale:** All operational thresholds remain centrally governed by `TrainingConfigService` with `sys_properties` override support and `x_783010_tocc_a1_training_config` fallback. Zero hardcoded values in logic.
 
 ### Decision 3: Subflows for reusable orchestration units
 **Rationale:** `Promote Waitlisted Student` and `Send Training Notification` are called from multiple parent flows. Subflow encapsulation prevents duplication in Flow Designer.
@@ -221,3 +221,4 @@ The following features require validation against the actual instance release (`
 ---
 
 *Last updated: Sprint 0 — Documentation baseline*
+

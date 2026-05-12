@@ -270,7 +270,7 @@ A unified ServiceNow Scoped Application that orchestrates the full lifecycle of 
 | Security | All data access enforced via ACLs scoped to `x_tocc` |
 | Performance | BRs must not contain queries inside loops; use bulk-safe patterns |
 | Maintainability | Script Includes follow SRP; no duplicate logic across artifacts |
-| Configurability | All thresholds (advance notice, late cancel window, etc.) via `x_783010_tocc_a1_training_config` |
+| Configurability | All thresholds via `TrainingConfigService` (`sys_properties` override + `x_783010_tocc_a1_training_config` fallback) |
 | Observability | Critical state changes logged as work notes; KPI dashboards operational |
 | Compatibility | Artifacts must be compatible with `Australia Patch 1 (build 2026-03-31)`; verify on target PDI |
 | Portability | Delivered as Update Set / Scoped App installable on any instance |
@@ -291,3 +291,4 @@ A unified ServiceNow Scoped Application that orchestrates the full lifecycle of 
 ---
 
 *Last updated: Sprint 0 — Documentation baseline*
+

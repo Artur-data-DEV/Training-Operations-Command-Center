@@ -221,17 +221,17 @@ Post-session feedback submitted by students.
 
 ### x_783010_tocc_a1_training_config
 
-Operational configuration parameters. Read at runtime by `TrainingConfigService` with session-level cache.
+Operational configuration parameters. Read at runtime by `TrainingConfigService` with session-level cache and optional `sys_properties` overrides.
 
 | Field | Type | Notes |
 |---|---|---|
 | `sys_id` | GUID | PK |
-| `name` | String(100) | Unique key; used in `getValue(name)` calls |
+| `name` | String(100) | Unique key; used in `getValue(name)` calls and `x_783010_tocc_a1.config.<name>` property override mapping |
 | `value` | String(500) | String representation of the value |
 | `active` | Boolean | Inactive records are ignored by TrainingConfigService |
 | `description` | String(500) | Human-readable explanation |
 
-**Seed records (8 defaults):**
+**Seed records (8 defaults, fallback path):**
 
 | Name | Default | Purpose |
 |---|---|---|
@@ -262,3 +262,9 @@ Operational configuration parameters. Read at runtime by `TrainingConfigService`
 ---
 
 *Last updated: Sprint 1 — Full field dictionary, constraints, seed data.*
+
+
+### sys_properties overrides (optional)
+
+TrainingConfigService checks x_783010_tocc_a1.config.<key> first. If property value is empty, it falls back to x_783010_tocc_a1_training_config.
+

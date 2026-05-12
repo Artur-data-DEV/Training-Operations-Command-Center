@@ -2,7 +2,7 @@ import { Test } from '@servicenow/sdk/core'
 
 // ---------------------------------------------------------------------------
 // GROUP: TrainingConfigService
-// TEST-004 to TEST-007
+// TEST-004 to TEST-007 + TEST-046 to TEST-047
 // ---------------------------------------------------------------------------
 
 Test(
@@ -39,6 +39,100 @@ Test(
                 var gr = new GlideRecord('x_783010_tocc_a1_training_config');
                 gr.addQuery('name', 'atf_test_string_key');
                 gr.deleteMultiple();
+            `,
+        })
+    }
+)
+
+Test(
+    {
+        $id: Now.ID['x_783010_tocc_a1_atf_config_property_override_precedence'],
+        name: '[TOCC][CONFIG] sys_property override takes precedence over table value',
+        description: 'Validates getValue prefers x_783010_tocc_a1.config.* property when non-empty.',
+        active: true,
+        failOnServerError: true,
+    },
+    (atf) => {
+        atf.server.runServerSideScript({
+            $id: Now.ID['x_783010_tocc_a1_atf_config_property_override_precedence_script'],
+            script: `
+                var suffix = new GlideDateTime().getNumericValue() + '';
+                var key = 'atf_prop_override_' + suffix;
+                var propertyName = 'x_783010_tocc_a1.config.' + key;
+
+                var cfg = new GlideRecord('x_783010_tocc_a1_training_config');
+                cfg.initialize();
+                cfg.setValue('name', key);
+                cfg.setValue('value', 'table_value');
+                cfg.setValue('active', true);
+                cfg.insert();
+
+                var prop = new GlideRecord('sys_properties');
+                prop.initialize();
+                prop.setValue('name', propertyName);
+                prop.setValue('type', 'string');
+                prop.setValue('value', 'property_value');
+                prop.setValue('description', 'ATF temporary override property');
+                prop.insert();
+
+                var svc = new x_783010_tocc_a1.TrainingConfigService();
+                var result = svc.getValue(key, 'fallback');
+                gs.assertTrue(result === 'property_value', 'Expected property override, got: ' + result);
+
+                var delCfg = new GlideRecord('x_783010_tocc_a1_training_config');
+                delCfg.addQuery('name', key);
+                delCfg.deleteMultiple();
+
+                var delProp = new GlideRecord('sys_properties');
+                delProp.addQuery('name', propertyName);
+                delProp.deleteMultiple();
+            `,
+        })
+    }
+)
+
+Test(
+    {
+        $id: Now.ID['x_783010_tocc_a1_atf_config_empty_property_falls_back_to_table'],
+        name: '[TOCC][CONFIG] empty sys_property falls back to table value',
+        description: 'Validates empty property value does not block table fallback.',
+        active: true,
+        failOnServerError: true,
+    },
+    (atf) => {
+        atf.server.runServerSideScript({
+            $id: Now.ID['x_783010_tocc_a1_atf_config_empty_property_falls_back_to_table_script'],
+            script: `
+                var suffix = new GlideDateTime().getNumericValue() + '';
+                var key = 'atf_prop_fallback_' + suffix;
+                var propertyName = 'x_783010_tocc_a1.config.' + key;
+
+                var cfg = new GlideRecord('x_783010_tocc_a1_training_config');
+                cfg.initialize();
+                cfg.setValue('name', key);
+                cfg.setValue('value', 'table_fallback');
+                cfg.setValue('active', true);
+                cfg.insert();
+
+                var prop = new GlideRecord('sys_properties');
+                prop.initialize();
+                prop.setValue('name', propertyName);
+                prop.setValue('type', 'string');
+                prop.setValue('value', '');
+                prop.setValue('description', 'ATF temporary empty override property');
+                prop.insert();
+
+                var svc = new x_783010_tocc_a1.TrainingConfigService();
+                var result = svc.getValue(key, 'fallback');
+                gs.assertTrue(result === 'table_fallback', 'Expected table fallback, got: ' + result);
+
+                var delCfg = new GlideRecord('x_783010_tocc_a1_training_config');
+                delCfg.addQuery('name', key);
+                delCfg.deleteMultiple();
+
+                var delProp = new GlideRecord('sys_properties');
+                delProp.addQuery('name', propertyName);
+                delProp.deleteMultiple();
             `,
         })
     }

@@ -11,7 +11,8 @@ ScriptInclude({
 TrainingConfigService.prototype = {
     initialize: function() {
         this.configTable = 'x_783010_tocc_a1_training_config';
-        // Cache prefix unique to this app session — avoids key collision with other scoped apps.
+        this.propertyPrefix = 'x_783010_tocc_a1.config.';
+        // Session-local cache key prefix for fast repeated reads in the same execution context.
         this._cachePrefix = 'x_783010_tocc_a1.config.';
     },
 
@@ -27,24 +28,17 @@ TrainingConfigService.prototype = {
         var cacheKey = this._cachePrefix + name;
 
         // GlideSessionCache persists for the lifetime of the current transaction/session.
-        // This eliminates repeated DB hits when multiple BRs or Script Includes
-        // call the same config key within a single server-side execution context.
         var cached = GlideSessionCache.get(cacheKey);
         if (cached !== null && cached !== undefined) {
-            // Empty string is a valid stored value — only treat null/undefined as cache miss.
             return cached !== '' ? cached : defaultValue;
         }
 
-        var gr = new GlideRecord(this.configTable);
-        gr.addQuery('name', name);
-        gr.addQuery('active', true);
-        gr.setLimit(1);
-        gr.query();
+        // 1) sys_properties override path (preferred when explicitly configured)
+        var value = this._getPropertyOverride(name);
 
-        var value = defaultValue;
-        if (gr.next()) {
-            var raw = gr.getValue('value');
-            value = (raw !== null && raw !== undefined && raw !== '') ? raw : defaultValue;
+        // 2) custom table fallback path (default operational source of truth)
+        if (value === null || value === undefined || value === '') {
+            value = this._getTableValue(name, defaultValue);
         }
 
         GlideSessionCache.put(cacheKey, value !== null && value !== undefined ? value : '');
@@ -72,58 +66,72 @@ TrainingConfigService.prototype = {
         return defaultValue;
     },
 
+    getPropertyName: function(name) {
+        return this.propertyPrefix + name;
+    },
+
     // -------------------------------------------------------------------------
     // Domain-specific accessors
-    // Each method documents its config key and default so callers never need to
-    // know the raw key name — TrainingConfigService is the single source of truth.
     // -------------------------------------------------------------------------
 
-    // Key: minimum_advance_notice_hours | Default: 24
-    // Minimum hours in advance a room reservation must be submitted.
     getMinimumAdvanceNoticeHours: function() {
         return this.getNumber('minimum_advance_notice_hours', 24);
     },
 
-    // Key: late_cancellation_window_hours | Default: 4
-    // Hours before session start within which Students/Instructors cannot cancel.
     getLateCancellationWindowHours: function() {
         return this.getNumber('late_cancellation_window_hours', 4);
     },
 
-    // Key: waitlist_mode | Values: waitlist | block | Default: waitlist
-    // Controls what happens when a student tries to enroll in a full session.
     getWaitlistMode: function() {
         return this.getChoice('waitlist_mode', ['waitlist', 'block'], 'waitlist');
     },
 
-    // Key: enrollment_approval_mode | Values: direct | instructor_approval | Default: direct
-    // Controls whether enrollment is auto-approved or requires instructor action.
     getEnrollmentApprovalMode: function() {
         return this.getChoice('enrollment_approval_mode', ['direct', 'instructor_approval'], 'direct');
     },
 
-    // Key: confirmation_lead_hours | Default: 24
-    // Hours before session start when the attendance confirmation deadline is set.
     getConfirmationLeadHours: function() {
         return this.getNumber('confirmation_lead_hours', 24);
     },
 
-    // Key: reminder_lead_hours | Default: 24
-    // Hours before session start when the session reminder notification is sent.
     getReminderLeadHours: function() {
         return this.getNumber('reminder_lead_hours', 24);
     },
 
-    // Key: feedback_window_hours | Default: 48
-    // Hours after session completion during which feedback can be submitted.
     getFeedbackWindowHours: function() {
         return this.getNumber('feedback_window_hours', 48);
     },
 
-    // Key: stale_approval_hours | Default: 48
-    // Hours after which a pending reservation or enrollment approval is flagged as stale.
     getStaleApprovalHours: function() {
         return this.getNumber('stale_approval_hours', 48);
+    },
+
+    // -------------------------------------------------------------------------
+    // Internal helpers
+    // -------------------------------------------------------------------------
+
+    _getPropertyOverride: function(name) {
+        var propertyName = this.getPropertyName(name);
+        var propertyValue = gs.getProperty(propertyName, '');
+        if (propertyValue === null || propertyValue === undefined) {
+            return '';
+        }
+        return String(propertyValue);
+    },
+
+    _getTableValue: function(name, defaultValue) {
+        var gr = new GlideRecord(this.configTable);
+        gr.addQuery('name', name);
+        gr.addQuery('active', true);
+        gr.setLimit(1);
+        gr.query();
+
+        var value = defaultValue;
+        if (gr.next()) {
+            var raw = gr.getValue('value');
+            value = (raw !== null && raw !== undefined && raw !== '') ? raw : defaultValue;
+        }
+        return value;
     },
 
     type: 'TrainingConfigService'
