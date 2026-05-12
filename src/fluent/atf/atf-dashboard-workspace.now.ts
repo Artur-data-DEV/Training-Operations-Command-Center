@@ -1,0 +1,125 @@
+import { Test } from '@servicenow/sdk/core'
+
+// ---------------------------------------------------------------------------
+// GROUP: Dashboard + Workspace scaffolds
+// TEST-034 to TEST-036
+// ---------------------------------------------------------------------------
+
+Test(
+    {
+        $id: Now.ID['x_783010_tocc_a1_atf_dashboard_scaffold_materialized'],
+        name: '[TOCC][DASHBOARD] analytics dashboard scaffold is materialized',
+        description: 'Validates dashboard, tabs, and widgets were deployed by Fluent SDK.',
+        active: true,
+        failOnServerError: true,
+    },
+    (atf) => {
+        atf.server.runServerSideScript({
+            $id: Now.ID['x_783010_tocc_a1_atf_dashboard_scaffold_script'],
+            script: `
+                var dashboard = new GlideRecord('par_dashboard');
+                dashboard.addQuery('name', 'Training Operations Performance Dashboard');
+                dashboard.setLimit(1);
+                dashboard.query();
+                gs.assertTrue(dashboard.next(), 'Dashboard not found.');
+                gs.assertTrue(String(dashboard.getValue('active')) === 'true', 'Dashboard must be active.');
+
+                var dashboardId = dashboard.getUniqueValue();
+
+                var tabCount = 0;
+                var tab = new GlideRecord('par_dashboard_tab');
+                tab.addQuery('dashboard', dashboardId);
+                tab.query();
+                while (tab.next()) { tabCount++; }
+                gs.assertTrue(tabCount === 2, 'Expected 2 dashboard tabs, got: ' + tabCount);
+
+                var widgetCount = 0;
+                var widget = new GlideRecord('par_dashboard_widget');
+                widget.addQuery('canvas.dashboard', dashboardId);
+                widget.query();
+                while (widget.next()) { widgetCount++; }
+                gs.assertTrue(widgetCount === 10, 'Expected 10 dashboard widgets, got: ' + widgetCount);
+            `,
+        })
+    }
+)
+
+Test(
+    {
+        $id: Now.ID['x_783010_tocc_a1_atf_workspace_scaffold_materialized'],
+        name: '[TOCC][WORKSPACE] backoffice workspace scaffold is materialized',
+        description: 'Validates workspace page registry, list config, categories, and list counts.',
+        active: true,
+        failOnServerError: true,
+    },
+    (atf) => {
+        atf.server.runServerSideScript({
+            $id: Now.ID['x_783010_tocc_a1_atf_workspace_scaffold_script'],
+            script: `
+                var workspace = new GlideRecord('sys_ux_page_registry');
+                workspace.addQuery('title', 'TOCC Backoffice Operations Workspace');
+                workspace.addQuery('path', 'tocc-backoffice-ops');
+                workspace.setLimit(1);
+                workspace.query();
+                gs.assertTrue(workspace.next(), 'Workspace registry not found.');
+                gs.assertTrue(String(workspace.getValue('active')) === 'true', 'Workspace registry must be active.');
+
+                var config = new GlideRecord('sys_ux_list_menu_config');
+                config.addQuery('name', 'TOCC Backoffice List Configuration');
+                config.setLimit(1);
+                config.query();
+                gs.assertTrue(config.next(), 'Workspace list menu config not found.');
+                gs.assertTrue(String(config.getValue('active')) === 'true', 'Workspace list menu config must be active.');
+
+                var configId = config.getUniqueValue();
+
+                var categoryCount = 0;
+                var category = new GlideRecord('sys_ux_list_category');
+                category.addQuery('configuration', configId);
+                category.query();
+                while (category.next()) { categoryCount++; }
+                gs.assertTrue(categoryCount === 3, 'Expected 3 workspace categories, got: ' + categoryCount);
+
+                var listCount = 0;
+                var list = new GlideRecord('sys_ux_list');
+                list.addQuery('configuration', configId);
+                list.query();
+                while (list.next()) { listCount++; }
+                gs.assertTrue(listCount === 6, 'Expected 6 workspace lists, got: ' + listCount);
+            `,
+        })
+    }
+)
+
+Test(
+    {
+        $id: Now.ID['x_783010_tocc_a1_atf_workspace_lists_cover_core_tables'],
+        name: '[TOCC][WORKSPACE] list scaffold covers reservation session enrollment tables',
+        description: 'Validates workspace list configuration includes the core operational tables.',
+        active: true,
+        failOnServerError: true,
+    },
+    (atf) => {
+        atf.server.runServerSideScript({
+            $id: Now.ID['x_783010_tocc_a1_atf_workspace_lists_core_tables_script'],
+            script: `
+                function assertTableCoverage(tableName, expectedMin) {
+                    var count = 0;
+                    var gr = new GlideRecord('sys_ux_list');
+                    gr.addQuery('table', tableName);
+                    gr.addQuery('configuration.name', 'TOCC Backoffice List Configuration');
+                    gr.query();
+                    while (gr.next()) { count++; }
+                    gs.assertTrue(
+                        count >= expectedMin,
+                        'Expected at least ' + expectedMin + ' list(s) for table ' + tableName + ', got: ' + count
+                    );
+                }
+
+                assertTableCoverage('x_783010_tocc_a1_room_reservation', 2);
+                assertTableCoverage('x_783010_tocc_a1_training_session', 2);
+                assertTableCoverage('x_783010_tocc_a1_student_enrollment', 2);
+            `,
+        })
+    }
+)

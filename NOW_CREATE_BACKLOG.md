@@ -296,9 +296,9 @@
 
 ### US-32 ATF Suite — Core Logic Coverage
 **As** Developer, **I want** automated tests covering all core Script Include methods.
-**Priority:** Must Have | **Status:** 🟡 In Progress (Sprint 11)
-**Components:** ATF tests TEST-001 to TEST-030
-**Acceptance Criteria:** ≥ 70% coverage across 6 Script Includes; all tests green after deploy
+**Priority:** Must Have | **Status:** In Progress (Sprint 12 - expanded to dashboard/workspace/CMDB scaffolds)
+**Components:** ATF tests TEST-001 to TEST-036
+**Acceptance Criteria:** >= 70% coverage across core services and scaffolds; all tests green after deploy
 
 ---
 
@@ -317,11 +317,12 @@
 | 8 | CMDB light | In Progress (CI reference validation + enrichment automation delivered) |
 | 9 | Platform Analytics + KPIs | In Progress (dashboard SDK scaffold delivered; indicator formulas pending collection) |
 | 10 | UI Builder / Workspace | In Progress (workspace SDK scaffold delivered; UI composition pending) |
-| 11 | ATF full suite + QA hardening | In Progress (attendance block done; remaining scenarios pending) |
+| 11 | ATF full suite + QA hardening | In Progress (attendance + KB + CMDB + dashboard/workspace ATF blocks delivered) |
 
 ---
 
 *Last updated: Sprint 12 in progress - KB, CMDB, Dashboard, and Workspace scaffolds automated via SDK and validated by build/deploy.*
+
 
 
 
