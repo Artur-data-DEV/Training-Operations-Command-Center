@@ -2,8 +2,8 @@
 
 > **Sprint:** 5
 > **Strategy:** SDK-assisted — `PortalApiService` Script Include is SDK-first.
-> Portal structure (pages, widgets, theme) is configured on the instance via Service Portal Designer.
-> This document is the authoritative runbook for portal configuration.
+> Portal structure (pages/widgets/portal) is versioned in Fluent metadata under `src/fluent/portal/`.
+> This document is the operational runbook for validation and optional instance-level adjustments.
 
 ---
 
@@ -240,7 +240,7 @@ Navigate to **Service Portal → Portals → TOCC Portal → Theme**:
 
 ---
 
-## Manual Configuration Steps
+## Manual Configuration (Optional Overrides)
 
 ### Step 1 — Create the Portal
 Navigate to **Service Portal → Portals → New**

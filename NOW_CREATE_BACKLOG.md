@@ -222,17 +222,17 @@
 
 ### US-23 Browse Training Sessions (Portal)
 **As** Student, **I want** to browse available sessions from the portal home.
-**Priority:** Must Have | **Status:** 🟡 In Progress (Sprint 5)
+**Priority:** Must Have | **Status:** ✅ Done (Sprint 12)
 **Components:** `PortalApiService.getAvailableSessions()`, SP widgets
 
 ### US-24 View My Enrollments (Portal)
 **As** Student, **I want** to see all my enrollments and their status.
-**Priority:** Must Have | **Status:** 🟡 In Progress (Sprint 5)
+**Priority:** Must Have | **Status:** ✅ Done (Sprint 12)
 **Components:** `PortalApiService.getMyEnrollments()`, SP widget
 
 ### US-25 View My Reservations (Portal)
 **As** Instructor, **I want** to see all my reservation requests.
-**Priority:** Must Have | **Status:** 🟡 In Progress (Sprint 5)
+**Priority:** Must Have | **Status:** ✅ Done (Sprint 12)
 **Components:** `PortalApiService.getMyReservations()`, SP widget
 
 ### US-26 Help Center (Portal)
@@ -311,7 +311,7 @@
 | 2 | Reservation BRs + Script Includes | ✅ Complete |
 | 3 | Enrollment BRs + Script Includes | ✅ Complete |
 | 4 | Scheduled Jobs, Notifications, UI Actions, Client Scripts, UI Policies | ✅ Complete |
-| 5 | Record Producers, PortalApiService, SERVICE_PORTAL.md | 🟡 SDK done; widget build pending |
+| 5 | Record Producers, PortalApiService, Service Portal widgets/pages | ✅ Complete |
 | 6 | Cancellation, confirmation, no-show, waitlist | ✅ Covered by Sprint 3–4 services |
 | 7 | Knowledge Base + Virtual Agent | ⬜ Pending |
 | 8 | CMDB light | ⬜ Pending |

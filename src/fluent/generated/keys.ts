@@ -1045,6 +1045,118 @@ declare global {
                         table: 'sys_script_include'
                         id: 'da160ae18c204e2c98ac962caabd1515'
                     }
+                    x_783010_tocc_a1_service_portal: {
+                        table: 'sp_portal'
+                        id: 'fd3f17c78edb40a5a0325491968f8ef8'
+                    }
+                    x_783010_tocc_a1_sp_col_enrollments_main: {
+                        table: 'sp_column'
+                        id: 'bb7dc4c7462b45f18a5b42204a390a4a'
+                    }
+                    x_783010_tocc_a1_sp_col_home_quick_links: {
+                        table: 'sp_column'
+                        id: 'fba38b811ef14e38ac802767c093b8d1'
+                    }
+                    x_783010_tocc_a1_sp_col_home_sessions: {
+                        table: 'sp_column'
+                        id: '29e911ac505d4556887e0bdb7c45c470'
+                    }
+                    x_783010_tocc_a1_sp_col_not_found: {
+                        table: 'sp_column'
+                        id: 'e3af057985b041959e0824eebdffa759'
+                    }
+                    x_783010_tocc_a1_sp_col_reservations_main: {
+                        table: 'sp_column'
+                        id: '34dd30f5a8af4988956a7b4f36adb0b7'
+                    }
+                    x_783010_tocc_a1_sp_col_sessions_main: {
+                        table: 'sp_column'
+                        id: '1081b364ef7e4e84ad0cf4500987420e'
+                    }
+                    x_783010_tocc_a1_sp_container_enrollments_main: {
+                        table: 'sp_container'
+                        id: '2eeec006f1d842f4825b4937695a6fa2'
+                    }
+                    x_783010_tocc_a1_sp_container_home_main: {
+                        table: 'sp_container'
+                        id: 'ec01deafaf2f4964969e65403f52e93e'
+                    }
+                    x_783010_tocc_a1_sp_container_not_found: {
+                        table: 'sp_container'
+                        id: '5744faeaa7614665a3cb1dc43d44f9d2'
+                    }
+                    x_783010_tocc_a1_sp_container_reservations_main: {
+                        table: 'sp_container'
+                        id: 'f29fd7a5c8a9466d96425f8d25a2b47e'
+                    }
+                    x_783010_tocc_a1_sp_container_sessions_main: {
+                        table: 'sp_container'
+                        id: '689c847b2f0040f2b72b960b2009e149'
+                    }
+                    x_783010_tocc_a1_sp_inst_enrollments_main: {
+                        table: 'sp_instance'
+                        id: 'fd2ea326ef9a4d3dad6e02aa25557476'
+                    }
+                    x_783010_tocc_a1_sp_inst_home_quick_links: {
+                        table: 'sp_instance'
+                        id: 'd2ddee64d6b4416db7717d4f6ee1f75d'
+                    }
+                    x_783010_tocc_a1_sp_inst_home_sessions: {
+                        table: 'sp_instance'
+                        id: '0ee58eaacc134dcb9b68c5d7649c1b83'
+                    }
+                    x_783010_tocc_a1_sp_inst_not_found_quick_links: {
+                        table: 'sp_instance'
+                        id: 'f3a40542838c4bf0a255e8b7e75fe26b'
+                    }
+                    x_783010_tocc_a1_sp_inst_reservations_main: {
+                        table: 'sp_instance'
+                        id: 'b573759dd4824eeaaf08fb0e1b853662'
+                    }
+                    x_783010_tocc_a1_sp_inst_sessions_main: {
+                        table: 'sp_instance'
+                        id: 'ed2d655cc3f04e75a237039b10c6ecff'
+                    }
+                    x_783010_tocc_a1_sp_row_enrollments_main: {
+                        table: 'sp_row'
+                        id: 'db07f3f6deb940b18990f689705e5f83'
+                    }
+                    x_783010_tocc_a1_sp_row_home_quick_links: {
+                        table: 'sp_row'
+                        id: '38f333c1068d4246a1ba8f4147dc37fc'
+                    }
+                    x_783010_tocc_a1_sp_row_home_sessions: {
+                        table: 'sp_row'
+                        id: '275b5cfae5154f6a948a47fe76385214'
+                    }
+                    x_783010_tocc_a1_sp_row_not_found: {
+                        table: 'sp_row'
+                        id: 'c068e1523ccd481997d64ea15926db93'
+                    }
+                    x_783010_tocc_a1_sp_row_reservations_main: {
+                        table: 'sp_row'
+                        id: '1e470b2dcd994128b1e466cb88191e67'
+                    }
+                    x_783010_tocc_a1_sp_row_sessions_main: {
+                        table: 'sp_row'
+                        id: '61dc946137e34a8aa96c4fb67f2ddbe4'
+                    }
+                    x_783010_tocc_a1_sp_widget_my_enrollments: {
+                        table: 'sp_widget'
+                        id: '9bb48da9dcf9436a8ba62ae29e5763d0'
+                    }
+                    x_783010_tocc_a1_sp_widget_my_reservations: {
+                        table: 'sp_widget'
+                        id: '6a88fac63ccf46ee9039b7476a9709d6'
+                    }
+                    x_783010_tocc_a1_sp_widget_quick_links: {
+                        table: 'sp_widget'
+                        id: '8a48c97a144f4f5d9bc0ae3051e3b391'
+                    }
+                    x_783010_tocc_a1_sp_widget_session_browser: {
+                        table: 'sp_widget'
+                        id: 'cea89959ad4141c3bb52cdc43d674b9a'
+                    }
                     x_783010_tocc_a1_uia_approve_enrollment: {
                         table: 'sys_ui_action'
                         id: '7ab5b29a14ae481bb3a267ac94a32ba4'
@@ -1836,6 +1948,13 @@ declare global {
                         }
                     },
                     {
+                        table: 'sp_page'
+                        id: '2a91978b8add41ebbeb3d73e3f60a47a'
+                        key: {
+                            id: 'tocc_my_reservations'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '2b3ffdabdc8b47e0be660e5016534a59'
                         key: {
@@ -1873,6 +1992,13 @@ declare global {
                         key: {
                             sys_security_acl: 'f8aea3dbe46048aeb8051a940cc4abac'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sp_page'
+                        id: '2dd56e44096b4192a0673bf086b463e7'
+                        key: {
+                            id: 'tocc_my_enrollments'
                         }
                     },
                     {
@@ -2392,6 +2518,13 @@ declare global {
                         id: '40fc77beb50d45b785da13e6340f6b5c'
                         key: {
                             name: 'x_783010_tocc_a1_student'
+                        }
+                    },
+                    {
+                        table: 'sp_page'
+                        id: '40fd170519854c86b575fe326c5afca0'
+                        key: {
+                            id: 'tocc_not_found'
                         }
                     },
                     {
@@ -3760,6 +3893,13 @@ declare global {
                         }
                     },
                     {
+                        table: 'sp_page'
+                        id: '8a006b3af9e7452c9e27fb3d0630c4b4'
+                        key: {
+                            id: 'tocc_home'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '8a147c88d9f04bc9959bb7d724e8f06c'
                         key: {
@@ -4124,6 +4264,13 @@ declare global {
                         key: {
                             field: 'script'
                             id: 'e9573d064f624dc5bc26a6a689644108'
+                        }
+                    },
+                    {
+                        table: 'sp_page'
+                        id: '9f8f07bb27e84669adb2d724081f03ef'
+                        key: {
+                            id: 'tocc_sessions'
                         }
                     },
                     {

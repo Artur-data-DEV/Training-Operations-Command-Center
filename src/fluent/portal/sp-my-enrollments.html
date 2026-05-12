@@ -1,0 +1,61 @@
+<div class="tocc-my-enrollments">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong>My Enrollments</strong>
+      <span class="badge pull-right">{{c.data.count || 0}}</span>
+    </div>
+
+    <div class="panel-body" ng-if="c.data.error">
+      <div class="alert alert-danger m-b-0">{{c.data.error}}</div>
+    </div>
+
+    <div class="table-responsive" ng-if="!c.data.error">
+      <table class="table table-striped table-condensed m-b-0">
+        <thead>
+          <tr>
+            <th>Enrollment</th>
+            <th>Session</th>
+            <th>Start</th>
+            <th>Status</th>
+            <th>Confirmed</th>
+            <th class="text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="enrollment in c.data.enrollments">
+            <td>{{enrollment.number}}</td>
+            <td>
+              <strong>{{enrollment.session_title}}</strong><br />
+              <small class="text-muted">{{enrollment.room_name}}</small>
+            </td>
+            <td>{{enrollment.start_display}}</td>
+            <td>
+              <span class="label" ng-class="enrollment.status === 'approved' ? 'label-success' : 'label-default'">
+                {{enrollment.status_display || enrollment.status}}
+              </span>
+            </td>
+            <td>
+              <span class="label" ng-class="c.isConfirmed(enrollment.confirmed) ? 'label-success' : 'label-default'">
+                {{c.isConfirmed(enrollment.confirmed) ? 'Yes' : 'No'}}
+              </span>
+            </td>
+            <td class="text-right">
+              <button
+                type="button"
+                class="btn btn-xs btn-primary"
+                ng-if="enrollment.status === 'approved' && !c.isConfirmed(enrollment.confirmed)"
+                ng-disabled="c.submitting[enrollment.sys_id]"
+                ng-click="c.confirmAttendance(enrollment.sys_id)">
+                {{c.submitting[enrollment.sys_id] ? 'Confirming...' : 'Confirm attendance'}}
+              </button>
+            </td>
+          </tr>
+          <tr ng-if="!(c.data.enrollments || []).length">
+            <td colspan="6" class="text-muted text-center p-md">No enrollments found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
