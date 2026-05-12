@@ -325,6 +325,16 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             },
             links: {
                 kb: gs.getProperty('x_783010_tocc_a1.portal.kb_url', '?id=kb_home'),
+                support_page: gs.getProperty('x_783010_tocc_a1.portal.support_page', '?id=tocc_help'),
+                support_catalog_url: gs.getProperty(
+                    'x_783010_tocc_a1.portal.support_catalog_url',
+                    gs.getProperty('x_783010_tocc_a1.portal.support_page', '?id=tocc_help')
+                ),
+                va_url: gs.getProperty('x_783010_tocc_a1.portal.va_url', '/$sn-va-web-client-app.do'),
+                backoffice_email: gs.getProperty(
+                    'x_783010_tocc_a1.backoffice.email',
+                    gs.getProperty('x_783010_tocc_a1.portal.support_email', 'training-ops@company.com')
+                ),
             },
         });
     },

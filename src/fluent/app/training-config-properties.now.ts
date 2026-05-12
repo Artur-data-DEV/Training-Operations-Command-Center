@@ -109,3 +109,21 @@ Property({
     description: 'Backoffice escalation email surfaced to VA and help center.',
     roles: { read: readRoleNames, write: writeRoleNames },
 })
+
+Property({
+    $id: Now.ID['x_783010_tocc_a1_property_portal_va_url'],
+    name: 'x_783010_tocc_a1.portal.va_url',
+    type: 'string',
+    value: '/$sn-va-web-client-app.do',
+    description: 'Virtual Agent entrypoint URL used by the TOCC Help Center widget.',
+    roles: { read: readRoleNames, write: writeRoleNames },
+})
+
+Property({
+    $id: Now.ID['x_783010_tocc_a1_property_portal_support_catalog_url'],
+    name: 'x_783010_tocc_a1.portal.support_catalog_url',
+    type: 'string',
+    value: '?id=tocc_sessions',
+    description: 'Support catalog/page URL shown in Help Center quick actions.',
+    roles: { read: readRoleNames, write: writeRoleNames },
+})

@@ -237,7 +237,7 @@
 
 ### US-26 Help Center (Portal)
 **As** any user, **I want** a self-service hub with KB search and VA access.
-**Priority:** Should Have | **Status:** 🟡 In Progress (Sprint 12 - Help Center page/widget scaffolded)
+**Priority:** Should Have | **Status:** Done (Sprint 13 - property-driven links + support escalation aligned)
 **Components:** `tocc_help` SP page, `TOCC - Help Center` widget, property-driven KB/VA links
 
 ---
@@ -321,10 +321,4 @@
 
 ---
 
-*Last updated: Sprint 12 in progress - KB, CMDB (including bootstrap), KPI collector, VA adapter, Flow scaffolds, Dashboard, and Workspace scaffolds automated via SDK and validated by build/deploy.*
-
-
-
-
-
-
+*Last updated: Sprint 13 in progress - Help Center finalized with unified property-driven escalation links; KB, CMDB, KPI, VA, Flow, Dashboard, and Workspace scaffolds remain active.*

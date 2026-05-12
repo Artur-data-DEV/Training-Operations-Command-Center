@@ -1293,9 +1293,17 @@ declare global {
                         table: 'sys_properties'
                         id: '9f32fb31c2d8419b932a72a28762a7f0'
                     }
+                    x_783010_tocc_a1_property_portal_support_catalog_url: {
+                        table: 'sys_properties'
+                        id: 'ef24fcb97fb64d6c93947237159cb397'
+                    }
                     x_783010_tocc_a1_property_portal_support_page: {
                         table: 'sys_properties'
                         id: '39bb398aa1b946ccbb70adda242a5b79'
+                    }
+                    x_783010_tocc_a1_property_portal_va_url: {
+                        table: 'sys_properties'
+                        id: '03ec2d4cf9f740458cd4657a7446a043'
                     }
                     x_783010_tocc_a1_record_producer_create_room_reservation: {
                         table: 'sc_cat_item_producer'

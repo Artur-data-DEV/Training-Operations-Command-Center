@@ -265,6 +265,10 @@ Test(
                 gs.assertTrue(result.policies.confirmation_lead_hours !== undefined, 'Missing confirmation policy.');
                 gs.assertTrue(result.links !== undefined, 'Links object must exist.');
                 gs.assertTrue(result.links.kb !== undefined && result.links.kb !== '', 'KB link must be present.');
+                gs.assertTrue(result.links.support_page !== undefined && result.links.support_page !== '', 'Support page link must be present.');
+                gs.assertTrue(result.links.support_catalog_url !== undefined && result.links.support_catalog_url !== '', 'Support catalog link must be present.');
+                gs.assertTrue(result.links.va_url !== undefined && result.links.va_url !== '', 'VA URL must be present.');
+                gs.assertTrue(result.links.backoffice_email !== undefined && result.links.backoffice_email !== '', 'Backoffice email must be present.');
             `,
         })
     }

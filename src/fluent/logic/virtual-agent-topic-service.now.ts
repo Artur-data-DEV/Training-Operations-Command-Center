@@ -156,11 +156,17 @@ VirtualAgentTopicService.prototype = {
     },
 
     getBackofficeEscalation: function() {
+        var supportPage = gs.getProperty('x_783010_tocc_a1.portal.support_page', '?id=tocc_help');
         return {
             success: true,
             channel: 'email',
-            email: gs.getProperty('x_783010_tocc_a1.backoffice.email', 'training-backoffice@example.com'),
-            portal_support_page: gs.getProperty('x_783010_tocc_a1.portal.support_page', '?id=tocc_help'),
+            email: gs.getProperty(
+                'x_783010_tocc_a1.backoffice.email',
+                gs.getProperty('x_783010_tocc_a1.portal.support_email', 'training-backoffice@example.com')
+            ),
+            portal_support_page: supportPage,
+            support_catalog_url: gs.getProperty('x_783010_tocc_a1.portal.support_catalog_url', supportPage),
+            va_url: gs.getProperty('x_783010_tocc_a1.portal.va_url', '/$sn-va-web-client-app.do'),
         };
     },
 
@@ -220,4 +226,3 @@ VirtualAgentTopicService.prototype = {
     type: 'VirtualAgentTopicService'
 };`,
 })
-
