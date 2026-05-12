@@ -276,9 +276,9 @@
 
 ### US-30 Track Room Assets in CMDB
 **As** Admin, **I want** room equipment (projectors, AV, etc.) tracked as CMDB CIs.
-**Priority:** Should Have | **Status:** In Progress (Sprint 12 - CMDB validation/enrichment automation delivered)
+**Priority:** Should Have | **Status:** In Progress (Sprint 12 - CMDB validation/enrichment/bootstrap automation delivered)
 **Components:** `cmdb_ci`, `x_783010_tocc_a1_room_resource.ci_reference`
-**Acceptance Criteria:** At least 3 CIs created and linked to room resources via ci_reference field
+**Acceptance Criteria:** At least 3 CIs created and linked to room resources via ci_reference field; bootstrap remains idempotent across reruns
 
 ---
 
@@ -296,8 +296,8 @@
 
 ### US-32 ATF Suite — Core Logic Coverage
 **As** Developer, **I want** automated tests covering all core Script Include methods.
-**Priority:** Must Have | **Status:** In Progress (Sprint 12 - expanded to dashboard/workspace/CMDB scaffolds)
-**Components:** ATF tests TEST-001 to TEST-036
+**Priority:** Must Have | **Status:** In Progress (Sprint 12 - expanded to dashboard/workspace/CMDB bootstrap scaffolds)
+**Components:** ATF tests TEST-001 to TEST-038
 **Acceptance Criteria:** >= 70% coverage across core services and scaffolds; all tests green after deploy
 
 ---
@@ -314,14 +314,14 @@
 | 5 | Record Producers, PortalApiService, Service Portal widgets/pages | ✅ Complete |
 | 6 | Cancellation, confirmation, no-show, waitlist | ✅ Covered by Sprint 3–4 services |
 | 7 | Knowledge Base + Virtual Agent | 🟡 In Progress (KB bootstrap automated; VA topic/NLU authoring pending) |
-| 8 | CMDB light | In Progress (CI reference validation + enrichment automation delivered) |
+| 8 | CMDB light | In Progress (CI reference validation + enrichment + bootstrap automation delivered) |
 | 9 | Platform Analytics + KPIs | In Progress (dashboard SDK scaffold delivered; indicator formulas pending collection) |
 | 10 | UI Builder / Workspace | In Progress (workspace SDK scaffold delivered; UI composition pending) |
-| 11 | ATF full suite + QA hardening | In Progress (attendance + KB + CMDB + dashboard/workspace ATF blocks delivered) |
+| 11 | ATF full suite + QA hardening | In Progress (attendance + KB + CMDB bootstrap + dashboard/workspace ATF blocks delivered) |
 
 ---
 
-*Last updated: Sprint 12 in progress - KB, CMDB, Dashboard, and Workspace scaffolds automated via SDK and validated by build/deploy.*
+*Last updated: Sprint 12 in progress - KB, CMDB (including bootstrap), Dashboard, and Workspace scaffolds automated via SDK and validated by build/deploy.*
 
 
 
