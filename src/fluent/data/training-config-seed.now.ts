@@ -54,3 +54,36 @@ export const seed_training_config_005 = Record({
         description: 'Lead time before session start to request attendance confirmation.',
     },
 })
+
+export const seed_training_config_006 = Record({
+    $id: 'seed_training_config_006',
+    table: 'x_783010_tocc_a1_training_config',
+    data: {
+        name: 'reminder_lead_hours',
+        value: '24',
+        active: true,
+        description: 'Hours before session start when the reminder notification is dispatched.',
+    },
+})
+
+export const seed_training_config_007 = Record({
+    $id: 'seed_training_config_007',
+    table: 'x_783010_tocc_a1_training_config',
+    data: {
+        name: 'feedback_window_hours',
+        value: '48',
+        active: true,
+        description: 'Hours after session completion during which students can submit feedback.',
+    },
+})
+
+export const seed_training_config_008 = Record({
+    $id: 'seed_training_config_008',
+    table: 'x_783010_tocc_a1_training_config',
+    data: {
+        name: 'stale_approval_hours',
+        value: '48',
+        active: true,
+        description: 'Hours after which a pending reservation or enrollment approval is flagged as stale.',
+    },
+})

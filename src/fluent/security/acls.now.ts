@@ -954,3 +954,22 @@ Acl({
     active: true,
 })
 
+
+// PortalApiService — accessible to all app personas via Service Portal widgets.
+Acl({
+    $id: Now.ID['execute_x_783010_tocc_a1_portal_api_service'],
+    type: 'client_callable_script_include',
+    name: 'x_783010_tocc_a1.PortalApiService',
+    operation: 'execute',
+    roles: [
+        toccAdminRole.name,
+        toccBackofficeRole.name,
+        toccInstructorRole.name,
+        toccManagerRole.name,
+        toccStudentRole.name,
+    ],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+    active: true,
+})
