@@ -1053,6 +1053,10 @@ declare global {
                         table: 'sp_column'
                         id: 'bb7dc4c7462b45f18a5b42204a390a4a'
                     }
+                    x_783010_tocc_a1_sp_col_help_main: {
+                        table: 'sp_column'
+                        id: '2cae037b540841adbbc4778d37250957'
+                    }
                     x_783010_tocc_a1_sp_col_home_quick_links: {
                         table: 'sp_column'
                         id: 'fba38b811ef14e38ac802767c093b8d1'
@@ -1077,6 +1081,10 @@ declare global {
                         table: 'sp_container'
                         id: '2eeec006f1d842f4825b4937695a6fa2'
                     }
+                    x_783010_tocc_a1_sp_container_help_main: {
+                        table: 'sp_container'
+                        id: 'b841b8dee9094c2880aa4b854ea3ade6'
+                    }
                     x_783010_tocc_a1_sp_container_home_main: {
                         table: 'sp_container'
                         id: 'ec01deafaf2f4964969e65403f52e93e'
@@ -1096,6 +1104,10 @@ declare global {
                     x_783010_tocc_a1_sp_inst_enrollments_main: {
                         table: 'sp_instance'
                         id: 'fd2ea326ef9a4d3dad6e02aa25557476'
+                    }
+                    x_783010_tocc_a1_sp_inst_help_main: {
+                        table: 'sp_instance'
+                        id: '1c577db9d1004383b65538f2d157c2a6'
                     }
                     x_783010_tocc_a1_sp_inst_home_quick_links: {
                         table: 'sp_instance'
@@ -1121,6 +1133,10 @@ declare global {
                         table: 'sp_row'
                         id: 'db07f3f6deb940b18990f689705e5f83'
                     }
+                    x_783010_tocc_a1_sp_row_help_main: {
+                        table: 'sp_row'
+                        id: 'b69a0e674baf4fb68623be9d6a17ffbc'
+                    }
                     x_783010_tocc_a1_sp_row_home_quick_links: {
                         table: 'sp_row'
                         id: '38f333c1068d4246a1ba8f4147dc37fc'
@@ -1140,6 +1156,10 @@ declare global {
                     x_783010_tocc_a1_sp_row_sessions_main: {
                         table: 'sp_row'
                         id: '61dc946137e34a8aa96c4fb67f2ddbe4'
+                    }
+                    x_783010_tocc_a1_sp_widget_help_center: {
+                        table: 'sp_widget'
+                        id: 'e3d0583609454e14a17b931dcceed444'
                     }
                     x_783010_tocc_a1_sp_widget_my_enrollments: {
                         table: 'sp_widget'
@@ -6296,6 +6316,13 @@ declare global {
                             name: 'x_783010_tocc_a1_attendance'
                             element: 'checked_in_datetime'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sp_page'
+                        id: 'fbf28dc80db445c68b88389509e5bc8a'
+                        key: {
+                            id: 'tocc_help'
                         }
                     },
                     {

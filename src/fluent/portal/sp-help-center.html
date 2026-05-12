@@ -1,0 +1,26 @@
+<div class="tocc-help-center">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong>Help Center</strong>
+    </div>
+    <div class="panel-body">
+      <p class="text-muted">
+        Access Knowledge Base articles, open Virtual Agent, or contact the training operations team.
+      </p>
+
+      <div class="btn-group btn-group-sm" role="group">
+        <a class="btn btn-primary" ng-href="{{c.data.kbUrl}}">Knowledge Base</a>
+        <a class="btn btn-default" ng-href="{{c.data.vaUrl}}" target="_blank" rel="noopener">Virtual Agent</a>
+        <a class="btn btn-default" ng-href="{{c.data.supportCatalogUrl}}">Request Support</a>
+      </div>
+
+      <hr />
+
+      <p class="m-b-0">
+        <strong>Need help from Backoffice?</strong><br />
+        <a ng-href="mailto:{{c.data.supportEmail}}">{{c.data.supportEmail}}</a>
+      </p>
+    </div>
+  </div>
+</div>
+

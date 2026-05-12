@@ -33,6 +33,14 @@ const toccMyReservationsWidget = SPWidget({
     serverScript: Now.include('./sp-my-reservations.server.js'),
 })
 
+const toccHelpCenterWidget = SPWidget({
+    $id: Now.ID['x_783010_tocc_a1_sp_widget_help_center'],
+    id: 'x_783010_tocc_a1-help-center',
+    name: 'TOCC - Help Center',
+    htmlTemplate: Now.include('./sp-help-center.html'),
+    serverScript: Now.include('./sp-help-center.server.js'),
+})
+
 const toccHomePage = SPPage({
     pageId: 'tocc_home',
     title: 'Training Operations Home',
@@ -202,6 +210,46 @@ SPPage({
     ],
 })
 
+SPPage({
+    pageId: 'tocc_help',
+    title: 'Help Center',
+    shortDescription: 'Knowledge Base and Virtual Agent access point.',
+    roles: [
+        'x_783010_tocc_a1.student',
+        'x_783010_tocc_a1.instructor',
+        'x_783010_tocc_a1.backoffice',
+        'x_783010_tocc_a1.manager',
+        'x_783010_tocc_a1.admin',
+    ],
+    containers: [
+        {
+            $id: Now.ID['x_783010_tocc_a1_sp_container_help_main'],
+            width: 'container',
+            order: 100,
+            rows: [
+                {
+                    $id: Now.ID['x_783010_tocc_a1_sp_row_help_main'],
+                    order: 100,
+                    columns: [
+                        {
+                            $id: Now.ID['x_783010_tocc_a1_sp_col_help_main'],
+                            size: 12,
+                            instances: [
+                                {
+                                    $id: Now.ID['x_783010_tocc_a1_sp_inst_help_main'],
+                                    widget: toccHelpCenterWidget,
+                                    title: 'Help and Support',
+                                    order: 100,
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+})
+
 const toccNotFoundPage = SPPage({
     pageId: 'tocc_not_found',
     title: 'Page Not Found',
@@ -240,4 +288,3 @@ ServicePortal({
     homePage: toccHomePage,
     notFoundPage: toccNotFoundPage,
 })
-

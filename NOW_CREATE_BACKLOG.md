@@ -237,8 +237,8 @@
 
 ### US-26 Help Center (Portal)
 **As** any user, **I want** a self-service hub with KB search and VA access.
-**Priority:** Should Have | **Status:** ⬜ Pending (Sprint 7)
-**Components:** Service Portal KB widget, VA launcher
+**Priority:** Should Have | **Status:** 🟡 In Progress (Sprint 12 - Help Center page/widget scaffolded)
+**Components:** `tocc_help` SP page, `TOCC - Help Center` widget, property-driven KB/VA links
 
 ---
 
