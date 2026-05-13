@@ -28,6 +28,8 @@ Test(
                 assertFlowExists('[TOCC][FLOW] Reservation Intake Signal');
                 assertFlowExists('[TOCC][FLOW] Session Cancelled Signal');
                 assertFlowExists('[TOCC][FLOW] Daily KPI Refresh Signal');
+                assertFlowExists('[TOCC][FLOW] Attendance Confirmation Cadence Signal');
+                assertFlowExists('[TOCC][FLOW] Session Reminder Cadence Signal');
             `,
         })
     }
@@ -84,7 +86,7 @@ Test(
                 var flowCount = countByPrefix('[TOCC][FLOW]');
                 var subflowCount = countByPrefix('[TOCC][SF]');
 
-                gs.assertTrue(flowCount >= 3, 'Expected at least 3 [TOCC][FLOW] records, got: ' + flowCount);
+                gs.assertTrue(flowCount >= 5, 'Expected at least 5 [TOCC][FLOW] records, got: ' + flowCount);
                 gs.assertTrue(subflowCount >= 2, 'Expected at least 2 [TOCC][SF] records, got: ' + subflowCount);
             `,
         })

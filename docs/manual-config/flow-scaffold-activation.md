@@ -11,6 +11,8 @@ The SDK now materializes these records in `sys_hub_flow`:
 - `[TOCC][FLOW] Reservation Intake Signal`
 - `[TOCC][FLOW] Session Cancelled Signal`
 - `[TOCC][FLOW] Daily KPI Refresh Signal`
+- `[TOCC][FLOW] Attendance Confirmation Cadence Signal`
+- `[TOCC][FLOW] Session Reminder Cadence Signal`
 - `[TOCC][SF] Emit Reservation Intake Signal`
 - `[TOCC][SF] Emit Session Cancelled Signal`
 
@@ -25,6 +27,8 @@ The SDK now materializes these records in `sys_hub_flow`:
    - `Reservation Intake Signal`
    - `Session Cancelled Signal`
    - `Daily KPI Refresh Signal`
+   - `Attendance Confirmation Cadence Signal`
+   - `Session Reminder Cadence Signal`
 
 ## Post-activation checks
 

@@ -1177,6 +1177,18 @@ declare global {
                         table: 'par_dashboard_widget'
                         id: 'b4555dbfd0524e19ad0317141eacb126'
                     }
+                    x_783010_tocc_a1_flow_attendance_confirmation_cadence_signal: {
+                        table: 'sys_hub_flow'
+                        id: '02a8c8afa66e4e15976b5b7a99debbb9'
+                    }
+                    x_783010_tocc_a1_flow_attendance_confirmation_cadence_signal_log: {
+                        table: 'sys_hub_action_instance_v2'
+                        id: '225f99b929cd4a90b55689585bf0da45'
+                    }
+                    x_783010_tocc_a1_flow_attendance_confirmation_cadence_signal_trigger: {
+                        table: 'sys_hub_trigger_instance_v2'
+                        id: '74065cac0ec84de4b3005cb40cf4b8b3'
+                    }
                     x_783010_tocc_a1_flow_daily_kpi_refresh_signal: {
                         table: 'sys_hub_flow'
                         id: '7023a693996b40f0aeedae8b85625ced'
@@ -1220,6 +1232,18 @@ declare global {
                     x_783010_tocc_a1_flow_session_cancelled_signal_trigger: {
                         table: 'sys_hub_trigger_instance_v2'
                         id: 'b7e91fea8bc84d05ab6222593b9e0bdf'
+                    }
+                    x_783010_tocc_a1_flow_session_reminder_cadence_signal: {
+                        table: 'sys_hub_flow'
+                        id: '62cbee1bdeaa4a5badbe71edfadc5fc7'
+                    }
+                    x_783010_tocc_a1_flow_session_reminder_cadence_signal_log: {
+                        table: 'sys_hub_action_instance_v2'
+                        id: '4e9563998cc147b8be43f9077a7654df'
+                    }
+                    x_783010_tocc_a1_flow_session_reminder_cadence_signal_trigger: {
+                        table: 'sys_hub_trigger_instance_v2'
+                        id: '23567bd1317548d98f92ae462be3fb11'
                     }
                     x_783010_tocc_a1_notif_enrollment_approved: {
                         table: 'sysevent_email_action'

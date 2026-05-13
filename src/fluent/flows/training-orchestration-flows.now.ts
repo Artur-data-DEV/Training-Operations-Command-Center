@@ -163,3 +163,57 @@ Flow(
         )
     }
 )
+
+Flow(
+    {
+        $id: Now.ID['x_783010_tocc_a1_flow_attendance_confirmation_cadence_signal'],
+        name: '[TOCC][FLOW] Attendance Confirmation Cadence Signal',
+        description: 'Scheduled orchestration scaffold for attendance confirmation cadence.',
+        runAs: 'system',
+        flowPriority: 'LOW',
+    },
+    wfa.trigger(
+        trigger.scheduled.daily,
+        { $id: Now.ID['x_783010_tocc_a1_flow_attendance_confirmation_cadence_signal_trigger'] },
+        {
+            time: '08:00:00',
+        }
+    ),
+    () => {
+        wfa.action(
+            action.core.log,
+            { $id: Now.ID['x_783010_tocc_a1_flow_attendance_confirmation_cadence_signal_log'] },
+            {
+                log_level: 'info',
+                log_message: '[TOCC] Attendance confirmation cadence signal flow executed.',
+            }
+        )
+    }
+)
+
+Flow(
+    {
+        $id: Now.ID['x_783010_tocc_a1_flow_session_reminder_cadence_signal'],
+        name: '[TOCC][FLOW] Session Reminder Cadence Signal',
+        description: 'Scheduled orchestration scaffold for session reminder cadence.',
+        runAs: 'system',
+        flowPriority: 'LOW',
+    },
+    wfa.trigger(
+        trigger.scheduled.daily,
+        { $id: Now.ID['x_783010_tocc_a1_flow_session_reminder_cadence_signal_trigger'] },
+        {
+            time: '07:00:00',
+        }
+    ),
+    () => {
+        wfa.action(
+            action.core.log,
+            { $id: Now.ID['x_783010_tocc_a1_flow_session_reminder_cadence_signal_log'] },
+            {
+                log_level: 'info',
+                log_message: '[TOCC] Session reminder cadence signal flow executed.',
+            }
+        )
+    }
+)
