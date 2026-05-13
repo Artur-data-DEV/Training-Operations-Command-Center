@@ -1021,6 +1021,14 @@ declare global {
                         table: 'sys_atf_step'
                         id: 'ec015678dbb0401fad19cd42bd1a72a7'
                     }
+                    x_783010_tocc_a1_atf_va_topic_escalation_property_binding: {
+                        table: 'sys_atf_test'
+                        id: '57718fa295334be9af79f333f7f85b69'
+                    }
+                    x_783010_tocc_a1_atf_va_topic_escalation_property_binding_script: {
+                        table: 'sys_atf_step'
+                        id: '55fcb292e78b4ce8a6b782a8cf00c223'
+                    }
                     x_783010_tocc_a1_atf_va_topic_menu_contract: {
                         table: 'sys_atf_test'
                         id: '3eed0c716cdd4ec0a05c5c3b1f2dc0cc'
@@ -1855,6 +1863,14 @@ declare global {
                         key: {
                             document_key: '14b3f15e345141028ea373c96d0c1ca5'
                             variable: '98c44875ffa033008d3f5d9ad53bf1fa'
+                        }
+                    },
+                    {
+                        table: 'sys_element_mapping'
+                        id: '05946871575c4068b6844626c2ba08b5'
+                        key: {
+                            field: 'script'
+                            id: '55fcb292e78b4ce8a6b782a8cf00c223'
                         }
                     },
                     {
@@ -3522,6 +3538,14 @@ declare global {
                             user: 'NULL'
                             group: 'NULL'
                             role: 'x_783010_tocc_a1.backoffice'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: '4aebca4eb2d442a187a239212c9fe3a0'
+                        key: {
+                            document_key: '55fcb292e78b4ce8a6b782a8cf00c223'
+                            variable: '42f2564b73031300440211d8faf6a777'
                         }
                     },
                     {
@@ -7020,6 +7044,14 @@ declare global {
                         key: {
                             sys_security_acl: '1f4ec8e8837b4120a393cd7e0d39c795'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: 'd8aec0a5f4f64e8c9f876cc1a30867ed'
+                        key: {
+                            document_key: '55fcb292e78b4ce8a6b782a8cf00c223'
+                            variable: '989d9e235324220002c6435723dc3484'
                         }
                     },
                     {
