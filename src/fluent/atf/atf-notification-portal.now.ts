@@ -414,6 +414,17 @@ Test(
                 attendance.setValue('attendance_status', 'pending');
                 attendance.insert();
 
+                var kpi = new GlideRecord('x_783010_tocc_a1_kpi_snapshot');
+                kpi.initialize();
+                kpi.setValue('kpi_key', 'training_session_fill_rate');
+                kpi.setValue('kpi_label', 'Training Session Fill Rate');
+                kpi.setValue('kpi_category', 'executive');
+                kpi.setValue('kpi_value', '87.5');
+                kpi.setValue('kpi_unit', 'percent');
+                kpi.setValue('snapshot_date', gs.beginningOfToday());
+                kpi.setValue('active', true);
+                kpi.insert();
+
                 var svc = new x_783010_tocc_a1.PortalApiService();
                 var result = JSON.parse(svc.getOperationsSnapshot());
 
@@ -425,6 +436,8 @@ Test(
                 gs.assertTrue(result.snapshot.unconfirmed_approved_enrollments >= 1, 'Expected unconfirmed approved count >= 1.');
                 gs.assertTrue(result.snapshot.in_progress_attendance_pending >= 1, 'Expected in-progress attendance pending count >= 1.');
                 gs.assertTrue(result.snapshot.resources_missing_ci >= 1, 'Expected resources missing CI count >= 1.');
+                gs.assertTrue(result.kpi_highlights !== undefined, 'Expected KPI highlights payload.');
+                gs.assertTrue((result.kpi_highlights.metrics || []).length >= 1, 'Expected KPI highlight metrics.');
             `,
         })
     }

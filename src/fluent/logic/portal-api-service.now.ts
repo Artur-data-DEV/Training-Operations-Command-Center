@@ -390,6 +390,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
                 today_end: todayEnd,
             },
             snapshot: snapshot,
+            kpi_highlights: this._getLatestKpiHighlights(),
         });
     },
 
@@ -492,6 +493,65 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             count = count + 1;
         }
         return count;
+    },
+
+    _getLatestKpiHighlights: function() {
+        var keys = [
+            'training_session_fill_rate',
+            'no_show_rate',
+            'attendance_confirmation_rate',
+            'feedback_average_rating',
+        ];
+
+        var latest = new GlideRecordSecure('x_783010_tocc_a1_kpi_snapshot');
+        latest.addQuery('active', true);
+        latest.orderByDesc('snapshot_date');
+        latest.setLimit(1);
+        latest.query();
+
+        if (!latest.next()) {
+            return {
+                snapshot_date: '',
+                metrics: [],
+            };
+        }
+
+        var snapshotDate = latest.getValue('snapshot_date');
+        var byKey = {};
+
+        var gr = new GlideRecordSecure('x_783010_tocc_a1_kpi_snapshot');
+        gr.addQuery('active', true);
+        gr.addQuery('snapshot_date', snapshotDate);
+        gr.addQuery('kpi_key', 'IN', keys.join(','));
+        gr.query();
+
+        while (gr.next()) {
+            var key = gr.getValue('kpi_key');
+            byKey[key] = {
+                key: key,
+                label: gr.getValue('kpi_label') || key,
+                value: this._toNumber(gr.getValue('kpi_value')),
+                unit: gr.getValue('kpi_unit') || '',
+            };
+        }
+
+        var orderedMetrics = [];
+        for (var i = 0; i < keys.length; i++) {
+            var wantedKey = keys[i];
+            if (byKey[wantedKey]) {
+                orderedMetrics.push(byKey[wantedKey]);
+            }
+        }
+
+        return {
+            snapshot_date: snapshotDate,
+            metrics: orderedMetrics,
+        };
+    },
+
+    _toNumber: function(value) {
+        var n = parseFloat(value);
+        return isNaN(n) ? 0 : n;
     },
 
     _getHelpCenterContextObject: function() {

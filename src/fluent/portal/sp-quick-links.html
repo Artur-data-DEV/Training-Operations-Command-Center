@@ -57,6 +57,23 @@
             </div>
           </div>
         </div>
+
+        <div class="tocc-kpi-highlights" ng-if="c.data.kpi_highlights && (c.data.kpi_highlights.metrics || []).length">
+          <h5 class="m-t-sm m-b-sm">Latest KPI Highlights</h5>
+          <div class="row">
+            <div class="col-sm-6 col-md-3" ng-repeat="metric in c.data.kpi_highlights.metrics">
+              <div class="well well-sm">
+                <div class="text-muted">{{metric.label}}</div>
+                <div class="h4 m-t-xs m-b-0">{{metric.value}}
+                  <small ng-if="metric.unit === 'percent'">%</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <small class="text-muted" ng-if="c.data.kpi_highlights.snapshot_date">
+            Snapshot date: {{c.data.kpi_highlights.snapshot_date}}
+          </small>
+        </div>
       </div>
     </div>
   </div>

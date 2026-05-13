@@ -7,6 +7,7 @@
     };
 
     data.operations = null;
+    data.kpi_highlights = null;
     data.operations_error = '';
     data.show_operations = false;
 
@@ -28,6 +29,7 @@
 
         if (result.success && result.snapshot) {
             data.operations = result.snapshot;
+            data.kpi_highlights = result.kpi_highlights || { snapshot_date: '', metrics: [] };
         } else {
             data.operations_error = result.message || 'Unable to load operational snapshot.';
         }
