@@ -35,14 +35,12 @@ Physical or virtual training room.
 | Field | Type | Notes |
 |---|---|---|
 | `sys_id` | GUID | PK |
-| `name` | String(100) | Display name |
-| `code` | String(20) | Short unique identifier |
+| `room_name` | String(120) | Display name — mandatory |
+| `room_code` | String(40) | Unique identifier — mandatory |
 | `location` | Reference(cmn_location) | Building/floor reference |
-| `capacity` | Integer | Max occupants |
-| `room_type` | Choice | `classroom`, `lab`, `auditorium`, `virtual` |
-| `status` | Choice | `available`, `maintenance`, `retired` |
-| `active` | Boolean | Soft-delete flag |
-| `description` | String(500) | |
+| `capacity` | Integer | Max occupants — mandatory |
+| `room_type` | Choice | `classroom`, `lab`, `auditorium`, `meeting_room` |
+| `status` | Choice | `active`, `inactive`, `maintenance` — default `active` |
 
 ---
 
@@ -53,13 +51,12 @@ Physical resource (projector, AV, etc.) associated with a room.
 | Field | Type | Notes |
 |---|---|---|
 | `sys_id` | GUID | PK |
-| `name` | String(100) | |
-| `resource_type` | Choice | `projector`, `av_system`, `computer`, `microphone`, `display` |
-| `room` | Reference(x_783010_tocc_a1_room) | Owning room |
-| `related_ci` | Reference(cmdb_ci) | Optional CMDB CI link |
-| `status` | Choice | `available`, `in_use`, `maintenance` |
-| `active` | Boolean | |
-| `description` | String(500) | |
+| `room` | Reference(x_783010_tocc_a1_room) | Mandatory |
+| `resource_name` | String(120) | Mandatory |
+| `resource_type` | Choice | `projector`, `av`, `computer`, `other` |
+| `ci_reference` | Reference(cmdb_ci) | Optional CMDB CI link; validated by `CmdbResourceService` |
+| `quantity` | Integer | Default 1 |
+| `active` | Boolean | Default true |
 
 ---
 
@@ -70,13 +67,14 @@ Course catalog entry. Training sessions are instances of a course.
 | Field | Type | Notes |
 |---|---|---|
 | `sys_id` | GUID | PK |
-| `name` | String(200) | Course title |
-| `code` | String(30) | Unique course code |
-| `description` | String(2000) | |
-| `duration_hours` | Decimal | Expected duration in hours |
-| `delivery_category` | Choice | `in_person`, `virtual`, `hybrid` |
-| `status` | Choice | `active`, `archived` |
-| `active` | Boolean | |
+| `course_id` | String(40) | Unique course code — mandatory |
+| `course_name` | String(160) | Course title — mandatory |
+| `description` | String(4000) | Mandatory |
+| `duration_hours` | Integer | Expected duration — mandatory |
+| `delivery_category` | Choice | `in_person`, `vilt` — mandatory |
+| `status` | Choice | `draft`, `active`, `inactive` — default `draft` |
+
+**Auto-number prefix:** `COU`
 
 ---
 

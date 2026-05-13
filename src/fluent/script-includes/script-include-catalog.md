@@ -24,10 +24,14 @@ graph TD
     TrainingConfigService --> EnrollmentService
     TrainingConfigService --> PortalApiService
     EnrollmentService --> TrainingSessionService
-    NotificationHelper --> PortalApiService
-    KnowledgeBaseBootstrapService --> PortalApiService
-    CmdbResourceService --> RoomService
+    EnrollmentService --> NotificationHelper
+    CmdbResourceService --> TrainingConfigService
+    PortalApiService --> EnrollmentService
+    PortalApiService --> TrainingSessionService
 ```
+
+> Note: `KnowledgeBaseBootstrapService` is standalone — it has no runtime dependency on other Script Includes.
+> `NotificationHelper` dispatches events via `gs.eventQueue` and does not call other Script Includes.
 
 ## Notes
 
