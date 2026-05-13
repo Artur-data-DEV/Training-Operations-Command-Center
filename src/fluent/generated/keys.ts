@@ -37,6 +37,22 @@ declare global {
                         table: 'sys_security_acl'
                         id: 'f8aea3dbe46048aeb8051a940cc4abac'
                     }
+                    admin_x_783010_tocc_a1_kpi_snapshot_create: {
+                        table: 'sys_security_acl'
+                        id: 'acea19f9df7742b8ac650c68264a83b1'
+                    }
+                    admin_x_783010_tocc_a1_kpi_snapshot_delete: {
+                        table: 'sys_security_acl'
+                        id: 'bd4240fb008346fc8008513018d9a35b'
+                    }
+                    admin_x_783010_tocc_a1_kpi_snapshot_read: {
+                        table: 'sys_security_acl'
+                        id: '30740a89930e474196b2ee88935c96cf'
+                    }
+                    admin_x_783010_tocc_a1_kpi_snapshot_write: {
+                        table: 'sys_security_acl'
+                        id: '36d5eac13a694565a7fd32d347e23f53'
+                    }
                     admin_x_783010_tocc_a1_reservation_resource_create: {
                         table: 'sys_security_acl'
                         id: 'c55847f7d4de44f2ba9030a1d87bb3ae'
@@ -197,6 +213,22 @@ declare global {
                         table: 'sys_security_acl'
                         id: '51d594b0d68a4f758c54ab9fe95bfe8f'
                     }
+                    backoffice_x_783010_tocc_a1_kpi_snapshot_read: {
+                        table: 'sys_security_acl'
+                        id: '6079f2cb60984290a0d8d027fa169e51'
+                    }
+                    backoffice_x_783010_tocc_a1_reservation_resource_create: {
+                        table: 'sys_security_acl'
+                        id: '4d361b7ef38e43849fcfd915681bcd0b'
+                    }
+                    backoffice_x_783010_tocc_a1_reservation_resource_read: {
+                        table: 'sys_security_acl'
+                        id: '23850c5d07b54291a716aadb42cc1fd4'
+                    }
+                    backoffice_x_783010_tocc_a1_reservation_resource_write: {
+                        table: 'sys_security_acl'
+                        id: 'ab0ecfe55dd146e99f5ec47ba484b748'
+                    }
                     backoffice_x_783010_tocc_a1_room_read: {
                         table: 'sys_security_acl'
                         id: '10fee7593a6d400281194974aaf8f806'
@@ -208,6 +240,14 @@ declare global {
                     backoffice_x_783010_tocc_a1_room_reservation_write: {
                         table: 'sys_security_acl'
                         id: '97126b1014b04219b06909aa82476f70'
+                    }
+                    backoffice_x_783010_tocc_a1_room_resource_create: {
+                        table: 'sys_security_acl'
+                        id: 'b01c2bd3d1084d0a94740dc71fad38e3'
+                    }
+                    backoffice_x_783010_tocc_a1_room_resource_write: {
+                        table: 'sys_security_acl'
+                        id: '04ba7a9bc6a44125bba29a42d4581630'
                     }
                     backoffice_x_783010_tocc_a1_student_enrollment_read: {
                         table: 'sys_security_acl'
@@ -271,6 +311,14 @@ declare global {
                         table: 'sys_security_acl'
                         id: '8f1add73bbdc467a9dee83fc18cd3708'
                     }
+                    instructor_x_783010_tocc_a1_reservation_resource_create: {
+                        table: 'sys_security_acl'
+                        id: 'b6017b9d18ed41d198f4b80bd87849cf'
+                    }
+                    instructor_x_783010_tocc_a1_reservation_resource_read: {
+                        table: 'sys_security_acl'
+                        id: '67566dbe41694a28a1d1d62bbaae3885'
+                    }
                     instructor_x_783010_tocc_a1_room_read: {
                         table: 'sys_security_acl'
                         id: 'f392e510cb454eefa6cb5a38b1639c6d'
@@ -286,6 +334,10 @@ declare global {
                     instructor_x_783010_tocc_a1_room_reservation_write: {
                         table: 'sys_security_acl'
                         id: '413010c76b6d42aba7a93ac276d51752'
+                    }
+                    instructor_x_783010_tocc_a1_room_resource_read: {
+                        table: 'sys_security_acl'
+                        id: '9c1b512fdc0e4239b19962dddc8832be'
                     }
                     instructor_x_783010_tocc_a1_student_enrollment_read: {
                         table: 'sys_security_acl'
@@ -314,6 +366,10 @@ declare global {
                     manager_x_783010_tocc_a1_course_read: {
                         table: 'sys_security_acl'
                         id: 'c846fafbf45a480ea6c0ac2e9f92a4c0'
+                    }
+                    manager_x_783010_tocc_a1_kpi_snapshot_read: {
+                        table: 'sys_security_acl'
+                        id: '2a0cf1520b5d44ecb097e1cbc83bb64b'
                     }
                     manager_x_783010_tocc_a1_reservation_resource_read: {
                         table: 'sys_security_acl'
@@ -485,6 +541,10 @@ declare global {
                         table: 'sys_module'
                         id: 'b9ce9bd880d24223805ffa30a6109418'
                     }
+                    student_x_783010_tocc_a1_attendance_read_own: {
+                        table: 'sys_security_acl'
+                        id: '17b9e22749cf48cdb9b3d233cae485ab'
+                    }
                     student_x_783010_tocc_a1_course_read: {
                         table: 'sys_security_acl'
                         id: '82b247b361144b77832c6c88a65ef987'
@@ -492,6 +552,10 @@ declare global {
                     student_x_783010_tocc_a1_room_read: {
                         table: 'sys_security_acl'
                         id: 'ea965eec6307411487e91f5e34eb5cf0'
+                    }
+                    student_x_783010_tocc_a1_room_resource_read: {
+                        table: 'sys_security_acl'
+                        id: 'cb5798065c5f420eba8ba9288b19f907'
                     }
                     student_x_783010_tocc_a1_student_enrollment_create: {
                         table: 'sys_security_acl'
@@ -744,6 +808,14 @@ declare global {
                     x_783010_tocc_a1_atf_kpi_collect_is_idempotent_script: {
                         table: 'sys_atf_step'
                         id: '752f931cf14b49bba4cddadc78cfb307'
+                    }
+                    x_783010_tocc_a1_atf_kpi_latest_snapshot_contract: {
+                        table: 'sys_atf_test'
+                        id: '4b21c8044e2c453da0f7cd4e8789f4ae'
+                    }
+                    x_783010_tocc_a1_atf_kpi_latest_snapshot_contract_script: {
+                        table: 'sys_atf_step'
+                        id: 'ecf7dfe05b6c41e89b033c043909008c'
                     }
                     x_783010_tocc_a1_atf_notif_enrollment_decision_events: {
                         table: 'sys_atf_test'
@@ -1890,6 +1962,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_variable_value'
+                        id: '045b47c8d20a4ccab6cd40186d7d5934'
+                        key: {
+                            document_key: 'ecf7dfe05b6c41e89b033c043909008c'
+                            variable: '42f2564b73031300440211d8faf6a777'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '04aab13844ad4366ac07f36e51e1a01b'
                         key: {
@@ -2127,6 +2207,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '0b76f2f8e7ee4e5c9284fdfb349ec131'
+                        key: {
+                            sys_security_acl: '4d361b7ef38e43849fcfd915681bcd0b'
+                            sys_user_role: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_db_object'
                         id: '0c21e9c107524c2cbadfa1d6b98954c1'
                         key: {
@@ -2196,6 +2284,14 @@ declare global {
                         key: {
                             document_key: '6a1636d3934946408dd8e29323c449ae'
                             variable: 'b27b2b29ff6033008d3f5d9ad53bf164'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '0e33ad09c5334a41b04801a787921af5'
+                        key: {
+                            sys_security_acl: '04ba7a9bc6a44125bba29a42d4581630'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -2897,6 +2993,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_element_mapping'
+                        id: '32801742c61a43b6a6e1f5e3a8bf1b6c'
+                        key: {
+                            field: 'script'
+                            id: 'ecf7dfe05b6c41e89b033c043909008c'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '329b34d0f9584909980b600c534de37d'
                         key: {
@@ -2924,6 +3028,14 @@ declare global {
                                 }
                             }
                             field: 'student'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '3358d2a0fb0f4b209aedfc22bfd618ff'
+                        key: {
+                            sys_security_acl: '30740a89930e474196b2ee88935c96cf'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -3084,6 +3196,14 @@ declare global {
                         key: {
                             document_key: '99767ff8ecce4a4697ee9e62f1744fb8'
                             variable: 'ff6e125353a0220002c6435723dc3442'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '392bada176924fc0bcacc898ca872440'
+                        key: {
+                            sys_security_acl: '9c1b512fdc0e4239b19962dddc8832be'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -3652,6 +3772,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '4b7060e14a514c7ea5e7af46e5a8fe6d'
+                        key: {
+                            sys_security_acl: 'cb5798065c5f420eba8ba9288b19f907'
+                            sys_user_role: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '4b97797b96f74ca3907048609e1abb6a'
                         key: {
@@ -3772,6 +3900,14 @@ declare global {
                     },
                     {
                         table: 'sys_security_acl_role'
+                        id: '4f42c785b309459182628ec6d3bc7c9d'
+                        key: {
+                            sys_security_acl: '6079f2cb60984290a0d8d027fa169e51'
+                            sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
                         id: '4f6e86e62a714927bcb3ef783dfc82fa'
                         key: {
                             sys_security_acl: '3d6b761b6f6b496ea3a6e1903fea810b'
@@ -3793,6 +3929,14 @@ declare global {
                         key: {
                             document_key: 'b1b78382123e4dce8ff1d6b0c286b991'
                             variable: 'dd54cf535320220002c6435723dc34fd'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: '5104fd02fb674e5ea696416a4e1a0387'
+                        key: {
+                            document_key: 'ecf7dfe05b6c41e89b033c043909008c'
+                            variable: '989d9e235324220002c6435723dc3484'
                         }
                     },
                     {
@@ -4376,6 +4520,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '6b837558db7546fb99c816e82e7177e9'
+                        key: {
+                            sys_security_acl: 'b6017b9d18ed41d198f4b80bd87849cf'
+                            sys_user_role: 'NULL'
+                        }
+                    },
+                    {
                         table: 'ua_table_licensing_config'
                         id: '6c375f7d52824616b474d1094ea1a25e'
                         key: {
@@ -4701,6 +4853,14 @@ declare global {
                     },
                     {
                         table: 'sys_security_acl_role'
+                        id: '796df53f6905429880fd1d1241a4f07b'
+                        key: {
+                            sys_security_acl: '67566dbe41694a28a1d1d62bbaae3885'
+                            sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
                         id: '79b62f68b4634f0eb9433db32118b1a8'
                         key: {
                             sys_security_acl: '9b23868675bc4e8db57bda1e6d3e622c'
@@ -4771,6 +4931,14 @@ declare global {
                         key: {
                             document_key: '6ea67a9b867d4f43af18c24232d39e26'
                             variable: '989d9e235324220002c6435723dc3484'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '7d7bc6a2ddaf496a88a98056831a49b0'
+                        key: {
+                            sys_security_acl: 'ab0ecfe55dd146e99f5ec47ba484b748'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -5497,6 +5665,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '9bd0de4a6e9e4ad3994e4db8b1f5e9b4'
+                        key: {
+                            sys_security_acl: '36d5eac13a694565a7fd32d347e23f53'
+                            sys_user_role: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_user_role'
                         id: '9bf082f810f54fa5a1b3c29e006fd4b1'
                         key: {
@@ -5825,6 +6001,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'a9904812952d4490ba3a3b8e769e8c56'
+                        key: {
+                            sys_security_acl: '23850c5d07b54291a716aadb42cc1fd4'
+                            sys_user_role: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_db_object'
                         id: 'a99c36f644ac4f3193416e861bd8b39a'
                         key: {
@@ -5853,6 +6037,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_kpi_snapshot'
                             element: 'snapshot_date'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'aabbf0e37be94ab399cc611c4469dd33'
+                        key: {
+                            sys_security_acl: 'acea19f9df7742b8ac650c68264a83b1'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -6318,6 +6510,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_room_reservation'
                             element: 'course'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'b86964a1aa604856878f7e4e675b874d'
+                        key: {
+                            sys_security_acl: 'bd4240fb008346fc8008513018d9a35b'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -7707,6 +7907,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'f0c86783b8c54140929e2e878c3f5974'
+                        key: {
+                            sys_security_acl: '17b9e22749cf48cdb9b3d233cae485ab'
+                            sys_user_role: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: 'f1801c358087468d8524dd099cb120ac'
                         key: {
@@ -7800,6 +8008,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'f5be83adf7794335bf9a31382eff75cc'
+                        key: {
+                            sys_security_acl: 'b01c2bd3d1084d0a94740dc71fad38e3'
+                            sys_user_role: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_action_role'
                         id: 'f6752709a3b944439b097646c2af57a1'
                         key: {
@@ -7810,6 +8026,14 @@ declare global {
                                     name: 'x_783010_tocc_a1.backoffice'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'f776181771d340639aad576d8ebafab3'
+                        key: {
+                            sys_security_acl: '2a0cf1520b5d44ecb097e1cbc83bb64b'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {

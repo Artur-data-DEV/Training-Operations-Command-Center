@@ -73,6 +73,69 @@ TrainingKpiService.prototype = {
         return JSON.stringify(this.collectDailySnapshot(daysBack));
     },
 
+    getLatestSnapshot: function() {
+        try {
+            var latestDate = this._getLatestSnapshotDate();
+            if (!latestDate) {
+                return {
+                    success: true,
+                    snapshot_date: '',
+                    count: 0,
+                    kpis: [],
+                    by_key: {},
+                    message: 'No KPI snapshot rows found.',
+                };
+            }
+
+            var rows = [];
+            var byKey = {};
+
+            var gr = new GlideRecord(this.kpiTable);
+            gr.addQuery('active', true);
+            gr.addQuery('snapshot_date', latestDate);
+            gr.orderBy('kpi_category');
+            gr.orderBy('kpi_label');
+            gr.query();
+
+            while (gr.next()) {
+                var row = {
+                    key: gr.getValue('kpi_key'),
+                    label: gr.getValue('kpi_label'),
+                    category: gr.getValue('kpi_category'),
+                    value: this._asNumber(gr.getValue('kpi_value')),
+                    unit: gr.getValue('kpi_unit'),
+                    period_start: gr.getValue('period_start'),
+                    period_end: gr.getValue('period_end'),
+                    source_table: gr.getValue('source_table'),
+                    details: gr.getValue('details'),
+                };
+                rows.push(row);
+                byKey[row.key] = row;
+            }
+
+            return {
+                success: true,
+                snapshot_date: latestDate,
+                count: rows.length,
+                kpis: rows,
+                by_key: byKey,
+            };
+        } catch (ex) {
+            return {
+                success: false,
+                message: 'Failed to load latest KPI snapshot: ' + this._toErrorMessage(ex),
+                snapshot_date: '',
+                count: 0,
+                kpis: [],
+                by_key: {},
+            };
+        }
+    },
+
+    getLatestSnapshotAsJson: function() {
+        return JSON.stringify(this.getLatestSnapshot());
+    },
+
     _buildRange: function(daysBack) {
         var end = new GlideDateTime();
         var start = new GlideDateTime(end.getValue());
@@ -85,6 +148,17 @@ TrainingKpiService.prototype = {
             endNumeric: end.getNumericValue(),
             daysBack: daysBack,
         };
+    },
+
+    _getLatestSnapshotDate: function() {
+        var agg = new GlideAggregate(this.kpiTable);
+        agg.addQuery('active', true);
+        agg.addAggregate('MAX', 'snapshot_date');
+        agg.query();
+        if (!agg.next()) {
+            return '';
+        }
+        return agg.getAggregate('MAX', 'snapshot_date') || '';
     },
 
     _calculateMetrics: function(range) {
@@ -543,6 +617,14 @@ TrainingKpiService.prototype = {
         return Math.round(num * precision) / precision;
     },
 
+    _asNumber: function(value) {
+        var num = parseFloat(value);
+        if (isNaN(num)) {
+            return 0;
+        }
+        return num;
+    },
+
     _todayStartValue: function() {
         var start = new GlideDateTime(gs.beginningOfToday());
         return start.getValue();
@@ -561,4 +643,3 @@ TrainingKpiService.prototype = {
     type: 'TrainingKpiService'
 };`,
 })
-

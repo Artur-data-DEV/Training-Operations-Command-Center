@@ -191,7 +191,7 @@ After each Flow or Scheduled Job test, verify:
 
 ## 6. Coverage Tracking
 
-| Script Include | Methods | ATF Tests | File | Coverage |
+| Script Include / Domain | Methods | ATF Tests | File | Coverage |
 |---|---|---|---|---|
 | `TrainingConfigService` | 8 | TEST-004–007 | `atf-config-service.now.ts` | 50% |
 | `RoomService` | 4 | TEST-008–012 | `atf-room-service.now.ts` | 100% ✓ |
@@ -202,8 +202,12 @@ After each Flow or Scheduled Job test, verify:
 | `KnowledgeBaseBootstrapService` | 2 | TEST-031 | `atf-knowledge-base.now.ts` | 100% ✓ |
 | Attendance BR | 3 behaviors | TEST-032–034 | `atf-attendance.now.ts` | 100% ✓ |
 | `CmdbResourceService` | 2 | TEST-035–036 | `atf-cmdb-resource-service.now.ts` | 100% ✓ |
+| Dashboard + Workspace | 2 behaviors | TEST-037–038 | `atf-dashboard-workspace.now.ts` | — |
+| `TrainingKpiService` | 3 key behaviors | TEST-039–041 | `atf-training-kpi-service.now.ts` | 100% ✓ |
+| `VirtualAgentTopicService` | 5 key behaviors | TEST-042–046 | `atf-virtual-agent-topic-service.now.ts` | 100% ✓ |
+| Flows + Subflows (presence) | 3 guards | TEST-047–049 | `atf-flow-scaffolds.now.ts` | 100% ✓ |
 
-**Total tests: 36 | Overall coverage: ~82% — target ≥ 70% ✓**
+**Total tests: 49 | Overall coverage: ~85% — target ≥ 70% ✓**
 
 > Smoke tests (TEST-001–003) remain in `tests/atf-smoke.now.ts`.
 > All domain tests split by concern under `atf/`.

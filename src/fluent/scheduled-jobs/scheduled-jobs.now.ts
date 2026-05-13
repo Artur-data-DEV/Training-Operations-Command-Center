@@ -4,6 +4,8 @@ import { ScheduledScript } from '@servicenow/sdk/core'
 // SCH-001 — Send Session Reminders
 // Runs every hour. Finds sessions starting within the configured reminder
 // window and dispatches reminder notifications to all approved enrollments.
+// Fix: status filter now includes 'full' — enrolled students in full sessions
+// also need reminders.
 // ---------------------------------------------------------------------------
 ScheduledScript({
     $id: Now.ID['x_783010_tocc_a1_sch_send_session_reminders'],
@@ -20,13 +22,13 @@ ScheduledScript({
     var now = new GlideDateTime();
 
     var windowStart = new GlideDateTime(now.getValue());
-    windowStart.addSeconds(reminderLeadHours * 3600 - 1800); // window open: lead time minus 30 min
+    windowStart.addSeconds(reminderLeadHours * 3600 - 1800);
 
     var windowEnd = new GlideDateTime(now.getValue());
-    windowEnd.addSeconds(reminderLeadHours * 3600 + 1800); // window close: lead time plus 30 min
+    windowEnd.addSeconds(reminderLeadHours * 3600 + 1800);
 
     var session = new GlideRecord('x_783010_tocc_a1_training_session');
-    session.addQuery('status', 'open');
+    session.addQuery('status', 'IN', 'open,full');
     session.addQuery('start_datetime', '>=', windowStart.getValue());
     session.addQuery('start_datetime', '<=', windowEnd.getValue());
     session.query();
@@ -45,8 +47,6 @@ ScheduledScript({
 
 // ---------------------------------------------------------------------------
 // SCH-002 — Release Unconfirmed Seats
-// Runs hourly. Finds approved enrollments past the confirmation deadline
-// where the student has not confirmed. Cancels them and frees the seat.
 // ---------------------------------------------------------------------------
 ScheduledScript({
     $id: Now.ID['x_783010_tocc_a1_sch_release_unconfirmed_seats'],
@@ -59,7 +59,6 @@ ScheduledScript({
     script: `(function releaseUnconfirmedSeats() {
     var now = new GlideDateTime();
 
-    // Find sessions whose confirmation deadline has passed and are still open/full.
     var session = new GlideRecord('x_783010_tocc_a1_training_session');
     session.addQuery('status', 'IN', 'open,full');
     session.addQuery('confirmation_deadline', '!=', '');
@@ -71,7 +70,6 @@ ScheduledScript({
     while (session.next()) {
         var sessionId = session.getUniqueValue();
 
-        // Find approved, unconfirmed enrollments for this session.
         var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
         enrollment.addQuery('training_session', sessionId);
         enrollment.addQuery('status', 'approved');
@@ -80,11 +78,8 @@ ScheduledScript({
 
         while (enrollment.next()) {
             enrollment.setValue('status', 'cancelled');
-            enrollment.setValue(
-                'work_notes',
-                'Seat automatically released: student did not confirm attendance before the deadline.'
-            );
-            enrollment.setWorkflow(true); // allow BR to fire → seat sync + waitlist promotion
+            enrollment.setValue('work_notes', 'Seat automatically released: student did not confirm attendance before the deadline.');
+            enrollment.setWorkflow(true);
             enrollment.update();
             released++;
         }
@@ -96,8 +91,6 @@ ScheduledScript({
 
 // ---------------------------------------------------------------------------
 // SCH-003 — Close Past Training Sessions
-// Runs daily. Finds sessions whose end time has passed and are still in an
-// active status, then transitions them to Completed.
 // ---------------------------------------------------------------------------
 ScheduledScript({
     $id: Now.ID['x_783010_tocc_a1_sch_close_past_sessions'],
@@ -119,18 +112,11 @@ ScheduledScript({
 
     while (session.next()) {
         var previousStatus = session.getValue('status');
-
         session.setValue('status', 'completed');
-        session.setValue(
-            'work_notes',
-            'Session automatically closed by scheduled job. Previous status: ' + previousStatus + '.'
-        );
+        session.setValue('work_notes', 'Session automatically closed by scheduled job. Previous status: ' + previousStatus + '.');
         session.setWorkflow(false);
         session.update();
-
-        // Trigger feedback request to all approved enrolled students.
         helper.sendFeedbackRequests(session.getUniqueValue());
-
         closed++;
     }
 
@@ -140,9 +126,6 @@ ScheduledScript({
 
 // ---------------------------------------------------------------------------
 // SCH-004 — Detect Stale Pending Approvals
-// Runs daily. Finds reservations and enrollments in pending/submitted status
-// for longer than the configured stale window and adds a work note alert.
-// Does NOT auto-cancel — alerts the Backoffice team for manual action.
 // ---------------------------------------------------------------------------
 ScheduledScript({
     $id: Now.ID['x_783010_tocc_a1_sch_detect_stale_approvals'],
@@ -160,33 +143,25 @@ ScheduledScript({
 
     var staleCount = 0;
 
-    // Check stale reservations in 'submitted' status.
     var reservation = new GlideRecord('x_783010_tocc_a1_room_reservation');
     reservation.addQuery('status', 'submitted');
     reservation.addQuery('sys_created_on', '<', cutoff.getValue());
     reservation.query();
 
     while (reservation.next()) {
-        reservation.setValue(
-            'work_notes',
-            '[ALERT] Reservation has been awaiting approval for more than ' + staleHours + ' hours. Please review.'
-        );
+        reservation.setValue('work_notes', '[ALERT] Reservation has been awaiting approval for more than ' + staleHours + ' hours. Please review.');
         reservation.setWorkflow(false);
         reservation.update();
         staleCount++;
     }
 
-    // Check stale enrollments in 'pending' status.
     var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
     enrollment.addQuery('status', 'pending');
     enrollment.addQuery('sys_created_on', '<', cutoff.getValue());
     enrollment.query();
 
     while (enrollment.next()) {
-        enrollment.setValue(
-            'work_notes',
-            '[ALERT] Enrollment has been pending approval for more than ' + staleHours + ' hours. Please review.'
-        );
+        enrollment.setValue('work_notes', '[ALERT] Enrollment has been pending approval for more than ' + staleHours + ' hours. Please review.');
         enrollment.setWorkflow(false);
         enrollment.update();
         staleCount++;
@@ -197,9 +172,7 @@ ScheduledScript({
 })
 
 // ---------------------------------------------------------------------------
-// SCH-005 â€” Collect KPI Snapshots
-// Runs daily. Calculates and upserts all dashboard KPIs into
-// x_783010_tocc_a1_kpi_snapshot for analytics traceability.
+// SCH-005 — Collect KPI Snapshots
 // ---------------------------------------------------------------------------
 ScheduledScript({
     $id: Now.ID['x_783010_tocc_a1_sch_collect_kpi_snapshots'],
@@ -213,12 +186,7 @@ ScheduledScript({
     var result = svc.collectDailySnapshot(30);
 
     if (result.success) {
-        gs.info(
-            '[TOCC] CollectKpiSnapshots: success. inserted=' +
-            result.snapshots_inserted +
-            ', updated=' +
-            result.snapshots_updated
-        );
+        gs.info('[TOCC] CollectKpiSnapshots: success. inserted=' + result.snapshots_inserted + ', updated=' + result.snapshots_updated);
     } else {
         gs.error('[TOCC] CollectKpiSnapshots failed: ' + result.message);
     }

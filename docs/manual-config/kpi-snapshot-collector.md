@@ -11,6 +11,13 @@ Artifacts delivered:
 - Scheduled Job: `[TOCC] Collect KPI Snapshots`
 - ATF: KPI collector coverage (`TEST-039` and `TEST-040`)
 
+Available API methods:
+
+- `collectDailySnapshot(daysBack)`
+- `collectDailySnapshotAsJson(daysBack)`
+- `getLatestSnapshot()`
+- `getLatestSnapshotAsJson()`
+
 ## Execute Manually (On Demand)
 
 Navigate to **System Definition -> Scripts - Background** and run:
@@ -37,10 +44,9 @@ For same-day reruns:
 - [ ] Exactly 16 rows exist for `snapshot_date = beginningOfToday()`
 - [ ] `kpi_key` values are unique for the day
 - [ ] Scheduled job `[TOCC] Collect KPI Snapshots` is active
-- [ ] ATF tests `TEST-039` and `TEST-040` pass in the target instance
+- [ ] ATF tests `TEST-039`, `TEST-040`, and `TEST-041` pass in the target instance
 
 ## Notes
 
 - Collector writes normalized KPI values for trendability and audit.
 - Widget-level PA formulas can still be refined, but baseline daily KPI persistence is now automated in app scope.
-

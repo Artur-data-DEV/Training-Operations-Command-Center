@@ -2,7 +2,7 @@ import { Test } from '@servicenow/sdk/core'
 
 // ---------------------------------------------------------------------------
 // GROUP: Flow + Subflow scaffolds
-// TEST-043 to TEST-045
+// TEST-047 to TEST-049
 // ---------------------------------------------------------------------------
 
 Test(
@@ -85,10 +85,10 @@ Test(
 
                 var flowCount = countByPrefix('[TOCC][FLOW]');
                 var subflowCount = countByPrefix('[TOCC][SF]');
-
                 gs.assertTrue(flowCount >= 5, 'Expected at least 5 [TOCC][FLOW] records, got: ' + flowCount);
                 gs.assertTrue(subflowCount >= 2, 'Expected at least 2 [TOCC][SF] records, got: ' + subflowCount);
             `,
         })
     }
 )
+

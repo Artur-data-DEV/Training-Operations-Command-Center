@@ -85,3 +85,32 @@ Test(
     }
 )
 
+Test(
+    {
+        $id: Now.ID['x_783010_tocc_a1_atf_kpi_latest_snapshot_contract'],
+        name: '[TOCC][KPI] latest snapshot contract returns 16 KPI payload rows',
+        description: 'Validates getLatestSnapshot contract for workspace/portal consumers.',
+        active: true,
+        failOnServerError: true,
+    },
+    (atf) => {
+        atf.server.runServerSideScript({
+            $id: Now.ID['x_783010_tocc_a1_atf_kpi_latest_snapshot_contract_script'],
+            script: `
+                var svc = new x_783010_tocc_a1.TrainingKpiService();
+                var collect = svc.collectDailySnapshot(30);
+                gs.assertTrue(collect.success === true, 'collectDailySnapshot should succeed before latest snapshot contract check.');
+
+                var latest = svc.getLatestSnapshot();
+                gs.assertTrue(latest.success === true, 'Expected getLatestSnapshot success.');
+                gs.assertTrue(!gs.nil(latest.snapshot_date), 'Latest snapshot date should be present.');
+                gs.assertTrue(latest.count === 16, 'Expected 16 KPI rows in latest snapshot payload.');
+                gs.assertTrue(latest.kpis && latest.kpis.length === 16, 'Expected kpis array with 16 rows.');
+                gs.assertTrue(latest.by_key !== undefined, 'Expected by_key object in latest snapshot payload.');
+                gs.assertTrue(latest.by_key.training_session_fill_rate !== undefined, 'Missing training_session_fill_rate in by_key.');
+                gs.assertTrue(latest.by_key.no_show_rate !== undefined, 'Missing no_show_rate in by_key.');
+                gs.assertTrue(latest.by_key.attendance_confirmation_rate !== undefined, 'Missing attendance_confirmation_rate in by_key.');
+            `,
+        })
+    }
+)

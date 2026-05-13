@@ -1019,6 +1019,28 @@ Acl({
     decisionType: 'allow',
     localOrExisting: 'Local',
     adminOverrides: true,
+    script: `(function() {
+    var enrollmentId = current.getValue('enrollment');
+    if (!enrollmentId) {
+        answer = false;
+        return answer;
+    }
+
+    var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+    if (!enrollment.get(enrollmentId)) {
+        answer = false;
+        return answer;
+    }
+
+    var myStudent = new GlideRecord('x_783010_tocc_a1_student');
+    myStudent.addQuery('user', gs.getUserID());
+    myStudent.addQuery('active', true);
+    myStudent.setLimit(1);
+    myStudent.query();
+
+    answer = myStudent.next() && myStudent.getUniqueValue() === enrollment.getValue('student');
+    return answer;
+})();`,
 })
 
 Acl({
@@ -1030,6 +1052,28 @@ Acl({
     decisionType: 'allow',
     localOrExisting: 'Local',
     adminOverrides: true,
+    script: `(function() {
+    var enrollmentId = current.getValue('enrollment');
+    if (!enrollmentId) {
+        answer = false;
+        return answer;
+    }
+
+    var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+    if (!enrollment.get(enrollmentId)) {
+        answer = false;
+        return answer;
+    }
+
+    var session = new GlideRecord('x_783010_tocc_a1_training_session');
+    if (!session.get(enrollment.getValue('training_session'))) {
+        answer = false;
+        return answer;
+    }
+
+    answer = session.getValue('instructor') === gs.getUserID();
+    return answer;
+})();`,
 })
 
 Acl({
@@ -1079,4 +1123,210 @@ Acl({
     localOrExisting: 'Local',
     adminOverrides: true,
     active: true,
+})
+
+// ---------------------------------------------------------------------------
+// ACL gap fixes
+// GAP-1: kpi_snapshot ACL coverage for dashboard consumers.
+// GAP-2: student read access to own attendance records.
+// GAP-4: instructor create + backoffice CRUD-lite on reservation resources.
+// GAP-5: backoffice create/write for room resources.
+// ---------------------------------------------------------------------------
+
+Acl({
+    $id: Now.ID['admin_x_783010_tocc_a1_kpi_snapshot_create'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_kpi_snapshot',
+    operation: 'create',
+    roles: [toccAdminRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['admin_x_783010_tocc_a1_kpi_snapshot_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_kpi_snapshot',
+    operation: 'read',
+    roles: [toccAdminRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['admin_x_783010_tocc_a1_kpi_snapshot_write'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_kpi_snapshot',
+    operation: 'write',
+    roles: [toccAdminRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['admin_x_783010_tocc_a1_kpi_snapshot_delete'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_kpi_snapshot',
+    operation: 'delete',
+    roles: [toccAdminRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['manager_x_783010_tocc_a1_kpi_snapshot_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_kpi_snapshot',
+    operation: 'read',
+    roles: [toccManagerRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_kpi_snapshot_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_kpi_snapshot',
+    operation: 'read',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['student_x_783010_tocc_a1_attendance_read_own'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_attendance',
+    operation: 'read',
+    roles: [toccStudentRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+    script: `(function() {
+    var enrollmentId = current.getValue('enrollment');
+    if (!enrollmentId) {
+        answer = false;
+        return answer;
+    }
+
+    var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+    if (!enrollment.get(enrollmentId)) {
+        answer = false;
+        return answer;
+    }
+
+    var myStudent = new GlideRecord('x_783010_tocc_a1_student');
+    myStudent.addQuery('user', gs.getUserID());
+    myStudent.addQuery('active', true);
+    myStudent.setLimit(1);
+    myStudent.query();
+
+    answer = myStudent.next() && myStudent.getUniqueValue() === enrollment.getValue('student');
+    return answer;
+})();`,
+})
+
+Acl({
+    $id: Now.ID['instructor_x_783010_tocc_a1_reservation_resource_create'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_reservation_resource',
+    operation: 'create',
+    roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['instructor_x_783010_tocc_a1_reservation_resource_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_reservation_resource',
+    operation: 'read',
+    roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_reservation_resource_create'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_reservation_resource',
+    operation: 'create',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_reservation_resource_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_reservation_resource',
+    operation: 'read',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_reservation_resource_write'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_reservation_resource',
+    operation: 'write',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_room_resource_create'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_room_resource',
+    operation: 'create',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['backoffice_x_783010_tocc_a1_room_resource_write'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_room_resource',
+    operation: 'write',
+    roles: [toccBackofficeRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['instructor_x_783010_tocc_a1_room_resource_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_room_resource',
+    operation: 'read',
+    roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['student_x_783010_tocc_a1_room_resource_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_room_resource',
+    operation: 'read',
+    roles: [toccStudentRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
 })
