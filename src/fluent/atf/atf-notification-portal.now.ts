@@ -276,6 +276,32 @@ Test(
 
 Test(
     {
+        $id: Now.ID['x_783010_tocc_a1_atf_portal_help_center_context_payload'],
+        name: '[TOCC][PORTAL] getHelpCenterContext returns support links payload',
+        description: 'PortalApiService must return a complete property-driven Help Center payload.',
+        active: true,
+        failOnServerError: true,
+    },
+    (atf) => {
+        atf.server.runServerSideScript({
+            $id: Now.ID['x_783010_tocc_a1_atf_portal_help_center_context_script'],
+            script: `
+                var svc = new x_783010_tocc_a1.PortalApiService();
+                var result = JSON.parse(svc.getHelpCenterContext());
+
+                gs.assertTrue(result.success === true, 'Expected success from getHelpCenterContext.');
+                gs.assertTrue(result.kb_url !== undefined && result.kb_url !== '', 'KB URL must be present.');
+                gs.assertTrue(result.va_url !== undefined && result.va_url !== '', 'VA URL must be present.');
+                gs.assertTrue(result.support_page !== undefined && result.support_page !== '', 'Support page must be present.');
+                gs.assertTrue(result.support_catalog_url !== undefined && result.support_catalog_url !== '', 'Support catalog URL must be present.');
+                gs.assertTrue(result.backoffice_email !== undefined && result.backoffice_email !== '', 'Backoffice email must be present.');
+            `,
+        })
+    }
+)
+
+Test(
+    {
         $id: Now.ID['x_783010_tocc_a1_atf_notif_reservation_rejected_event'],
         name: '[TOCC][NOTIF] sendReservationDecision queues rejected event',
         description: 'NotificationHelper must queue the reservation.rejected event when status is rejected.',

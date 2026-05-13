@@ -156,17 +156,14 @@ VirtualAgentTopicService.prototype = {
     },
 
     getBackofficeEscalation: function() {
-        var supportPage = gs.getProperty('x_783010_tocc_a1.portal.support_page', '?id=tocc_help');
+        var help = this._getHelpCenterContext();
         return {
             success: true,
             channel: 'email',
-            email: gs.getProperty(
-                'x_783010_tocc_a1.backoffice.email',
-                gs.getProperty('x_783010_tocc_a1.portal.support_email', 'training-backoffice@example.com')
-            ),
-            portal_support_page: supportPage,
-            support_catalog_url: gs.getProperty('x_783010_tocc_a1.portal.support_catalog_url', supportPage),
-            va_url: gs.getProperty('x_783010_tocc_a1.portal.va_url', '/$sn-va-web-client-app.do'),
+            email: help.backoffice_email,
+            portal_support_page: help.support_page,
+            support_catalog_url: help.support_catalog_url,
+            va_url: help.va_url,
         };
     },
 
@@ -221,6 +218,32 @@ VirtualAgentTopicService.prototype = {
             return String(error.message);
         }
         return String(error);
+    },
+
+    _getHelpCenterContext: function() {
+        try {
+            var svc = new PortalApiService();
+            var raw = svc.getHelpCenterContext();
+            var parsed = this._parseJsonSafe(raw);
+            if (parsed && parsed.success) {
+                return parsed;
+            }
+        } catch (ignore) {
+            // Fallback to direct properties below.
+        }
+
+        var supportPage = gs.getProperty('x_783010_tocc_a1.portal.support_page', '?id=tocc_help');
+        return {
+            success: true,
+            kb_url: gs.getProperty('x_783010_tocc_a1.portal.kb_url', '?id=kb_home'),
+            va_url: gs.getProperty('x_783010_tocc_a1.portal.va_url', '/$sn-va-web-client-app.do'),
+            support_page: supportPage,
+            support_catalog_url: gs.getProperty('x_783010_tocc_a1.portal.support_catalog_url', supportPage),
+            backoffice_email: gs.getProperty(
+                'x_783010_tocc_a1.backoffice.email',
+                gs.getProperty('x_783010_tocc_a1.portal.support_email', 'training-backoffice@example.com')
+            ),
+        };
     },
 
     type: 'VirtualAgentTopicService'

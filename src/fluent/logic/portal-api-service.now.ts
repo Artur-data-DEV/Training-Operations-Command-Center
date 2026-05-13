@@ -310,6 +310,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
     // -----------------------------------------------------------------------
     getTrainingPolicies: function() {
         var cfg = new TrainingConfigService();
+        var help = this._getHelpCenterContextObject();
 
         return JSON.stringify({
             success: true,
@@ -324,19 +325,21 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
                 stale_approval_hours: cfg.getStaleApprovalHours(),
             },
             links: {
-                kb: gs.getProperty('x_783010_tocc_a1.portal.kb_url', '?id=kb_home'),
-                support_page: gs.getProperty('x_783010_tocc_a1.portal.support_page', '?id=tocc_help'),
-                support_catalog_url: gs.getProperty(
-                    'x_783010_tocc_a1.portal.support_catalog_url',
-                    gs.getProperty('x_783010_tocc_a1.portal.support_page', '?id=tocc_help')
-                ),
-                va_url: gs.getProperty('x_783010_tocc_a1.portal.va_url', '/$sn-va-web-client-app.do'),
-                backoffice_email: gs.getProperty(
-                    'x_783010_tocc_a1.backoffice.email',
-                    gs.getProperty('x_783010_tocc_a1.portal.support_email', 'training-ops@company.com')
-                ),
+                kb: help.kb_url,
+                support_page: help.support_page,
+                support_catalog_url: help.support_catalog_url,
+                va_url: help.va_url,
+                backoffice_email: help.backoffice_email,
             },
         });
+    },
+
+    // -----------------------------------------------------------------------
+    // getHelpCenterContext
+    // Returns property-driven links and escalation channels used by SP + VA.
+    // -----------------------------------------------------------------------
+    getHelpCenterContext: function() {
+        return JSON.stringify(this._getHelpCenterContextObject());
     },
 
     // -----------------------------------------------------------------------
@@ -413,6 +416,21 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         }
 
         return result;
+    },
+
+    _getHelpCenterContextObject: function() {
+        var supportPage = gs.getProperty('x_783010_tocc_a1.portal.support_page', '?id=tocc_help');
+        return {
+            success: true,
+            kb_url: gs.getProperty('x_783010_tocc_a1.portal.kb_url', '?id=kb_home'),
+            va_url: gs.getProperty('x_783010_tocc_a1.portal.va_url', '/$sn-va-web-client-app.do'),
+            support_page: supportPage,
+            support_catalog_url: gs.getProperty('x_783010_tocc_a1.portal.support_catalog_url', supportPage),
+            backoffice_email: gs.getProperty(
+                'x_783010_tocc_a1.backoffice.email',
+                gs.getProperty('x_783010_tocc_a1.portal.support_email', 'training-ops@company.com')
+            ),
+        };
     },
 
     type: 'PortalApiService'

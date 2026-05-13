@@ -805,6 +805,14 @@ declare global {
                         table: 'sys_atf_step'
                         id: '94de8ef21dfb47f9a21d7cd72be5095f'
                     }
+                    x_783010_tocc_a1_atf_portal_help_center_context_payload: {
+                        table: 'sys_atf_test'
+                        id: 'e26176c67ece4eceac4d6642b4b99051'
+                    }
+                    x_783010_tocc_a1_atf_portal_help_center_context_script: {
+                        table: 'sys_atf_step'
+                        id: '5ea1864e3935452eb6b5d16d091babe2'
+                    }
                     x_783010_tocc_a1_atf_portal_my_enrollments_own_only: {
                         table: 'sys_atf_test'
                         id: 'f5cde0ddb68e4f4c94c6e753da520f80'
@@ -3849,6 +3857,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_variable_value'
+                        id: '5878090db35147bab1f1a4ff2c3ecb6a'
+                        key: {
+                            document_key: '5ea1864e3935452eb6b5d16d091babe2'
+                            variable: '989d9e235324220002c6435723dc3484'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '5897c788b8f742408c7bc0f904b757f2'
                         key: {
@@ -3944,6 +3960,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_training_session'
                             element: 'course'
+                        }
+                    },
+                    {
+                        table: 'sys_element_mapping'
+                        id: '5e2dfe520f43420da086bfffa61f75ff'
+                        key: {
+                            field: 'script'
+                            id: '5ea1864e3935452eb6b5d16d091babe2'
                         }
                     },
                     {
@@ -4292,6 +4316,14 @@ declare global {
                         id: '6cb2e91d63284ca9a1f136919d874026'
                         key: {
                             document_key: '97e4eda442a141d1a4a7d7775b7f46e7'
+                            variable: '42f2564b73031300440211d8faf6a777'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: '6cf4b889a4f9401a83db9ec271437e7a'
+                        key: {
+                            document_key: '5ea1864e3935452eb6b5d16d091babe2'
                             variable: '42f2564b73031300440211d8faf6a777'
                         }
                     },
