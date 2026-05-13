@@ -343,6 +343,57 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
     },
 
     // -----------------------------------------------------------------------
+    // getOperationsSnapshot
+    // Returns high-signal operational counters for Backoffice workspace views.
+    // Access: backoffice, manager, scoped admin, or platform admin.
+    // -----------------------------------------------------------------------
+    getOperationsSnapshot: function() {
+        if (!this._canViewOperationsSnapshot()) {
+            return JSON.stringify({ success: false, message: 'Access denied.' });
+        }
+
+        var todayStart = gs.beginningOfToday();
+        var todayEnd = gs.endOfToday();
+
+        var snapshot = {
+            pending_reservations: this._countRecords('x_783010_tocc_a1_room_reservation', function(gr) {
+                gr.addQuery('status', 'submitted');
+            }),
+            todays_sessions: this._countRecords('x_783010_tocc_a1_training_session', function(gr) {
+                gr.addQuery('start_datetime', '>=', todayStart);
+                gr.addQuery('start_datetime', '<=', todayEnd);
+                gr.addQuery('status', 'IN', 'open,full,in_progress');
+            }),
+            pending_enrollments: this._countRecords('x_783010_tocc_a1_student_enrollment', function(gr) {
+                gr.addQuery('status', 'pending');
+            }),
+            unconfirmed_approved_enrollments: this._countRecords('x_783010_tocc_a1_student_enrollment', function(gr) {
+                gr.addQuery('status', 'approved');
+                gr.addQuery('confirmed', false);
+                gr.addQuery('training_session.start_datetime', '>=', todayStart);
+            }),
+            in_progress_attendance_pending: this._countRecords('x_783010_tocc_a1_attendance', function(gr) {
+                gr.addQuery('attendance_status', 'pending');
+                gr.addQuery('training_session.status', 'in_progress');
+            }),
+            resources_missing_ci: this._countRecords('x_783010_tocc_a1_room_resource', function(gr) {
+                gr.addQuery('active', true);
+                gr.addNullQuery('ci_reference');
+            }),
+        };
+
+        return JSON.stringify({
+            success: true,
+            generated_on: new GlideDateTime().getValue(),
+            window: {
+                today_start: todayStart,
+                today_end: todayEnd,
+            },
+            snapshot: snapshot,
+        });
+    },
+
+    // -----------------------------------------------------------------------
     // Internal helpers
     // -----------------------------------------------------------------------
 
@@ -416,6 +467,31 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         }
 
         return result;
+    },
+
+    _canViewOperationsSnapshot: function() {
+        if (gs.hasRole('admin')) {
+            return true;
+        }
+        return (
+            gs.hasRole('x_783010_tocc_a1.admin') ||
+            gs.hasRole('x_783010_tocc_a1.backoffice') ||
+            gs.hasRole('x_783010_tocc_a1.manager')
+        );
+    },
+
+    _countRecords: function(tableName, queryFn) {
+        var gr = new GlideRecordSecure(tableName);
+        if (queryFn) {
+            queryFn(gr);
+        }
+        gr.query();
+
+        var count = 0;
+        while (gr.next()) {
+            count = count + 1;
+        }
+        return count;
     },
 
     _getHelpCenterContextObject: function() {

@@ -302,6 +302,136 @@ Test(
 
 Test(
     {
+        $id: Now.ID['x_783010_tocc_a1_atf_portal_operations_snapshot_payload'],
+        name: '[TOCC][PORTAL] getOperationsSnapshot returns backoffice counters',
+        description: 'PortalApiService must expose operational counters used by backoffice views.',
+        active: true,
+        failOnServerError: true,
+    },
+    (atf) => {
+        atf.server.runServerSideScript({
+            $id: Now.ID['x_783010_tocc_a1_atf_portal_operations_snapshot_payload_script'],
+            script: `
+                var suffix = new GlideDateTime().getNumericValue() + '';
+
+                var room = new GlideRecord('x_783010_tocc_a1_room');
+                room.initialize();
+                room.setValue('name', 'ATF-Room-SNAPSHOT-' + suffix);
+                room.setValue('code', 'ATF-SNAPSHOT-' + suffix);
+                room.setValue('capacity', 20);
+                room.setValue('room_type', 'classroom');
+                room.setValue('status', 'available');
+                room.setValue('active', true);
+                var roomId = room.insert();
+
+                var reservation = new GlideRecord('x_783010_tocc_a1_room_reservation');
+                reservation.initialize();
+                reservation.setValue('room', roomId);
+                reservation.setValue('instructor', gs.getUserID());
+                reservation.setValue('start_datetime', '2042-01-01 09:00:00');
+                reservation.setValue('end_datetime', '2042-01-01 11:00:00');
+                reservation.setValue('expected_participants', 8);
+                reservation.setValue('status', 'submitted');
+                reservation.setValue('short_description', 'ATF operations snapshot reservation');
+                reservation.insert();
+
+                var sessionOpenStart = new GlideDateTime(gs.beginningOfToday());
+                sessionOpenStart.addSeconds(2 * 3600);
+                var sessionOpenEnd = new GlideDateTime(sessionOpenStart);
+                sessionOpenEnd.addSeconds(2 * 3600);
+
+                var sessionOpen = new GlideRecord('x_783010_tocc_a1_training_session');
+                sessionOpen.initialize();
+                sessionOpen.setValue('title', 'ATF Snapshot Open ' + suffix);
+                sessionOpen.setValue('room', roomId);
+                sessionOpen.setValue('start_datetime', sessionOpenStart.getValue());
+                sessionOpen.setValue('end_datetime', sessionOpenEnd.getValue());
+                sessionOpen.setValue('total_seats', 10);
+                sessionOpen.setValue('available_seats', 7);
+                sessionOpen.setValue('status', 'open');
+                sessionOpen.setValue('active', true);
+                var sessionOpenId = sessionOpen.insert();
+
+                var sessionInProgressStart = new GlideDateTime();
+                sessionInProgressStart.addSeconds(-1800);
+                var sessionInProgressEnd = new GlideDateTime();
+                sessionInProgressEnd.addSeconds(5400);
+
+                var sessionInProgress = new GlideRecord('x_783010_tocc_a1_training_session');
+                sessionInProgress.initialize();
+                sessionInProgress.setValue('title', 'ATF Snapshot In Progress ' + suffix);
+                sessionInProgress.setValue('room', roomId);
+                sessionInProgress.setValue('start_datetime', sessionInProgressStart.getValue());
+                sessionInProgress.setValue('end_datetime', sessionInProgressEnd.getValue());
+                sessionInProgress.setValue('total_seats', 10);
+                sessionInProgress.setValue('available_seats', 4);
+                sessionInProgress.setValue('status', 'in_progress');
+                sessionInProgress.setValue('active', true);
+                var sessionInProgressId = sessionInProgress.insert();
+
+                var user = new GlideRecord('sys_user');
+                user.initialize();
+                user.setValue('user_name', 'atf_snapshot_student_' + suffix);
+                user.setValue('first_name', 'ATF');
+                user.setValue('last_name', 'Snapshot');
+                var userId = user.insert();
+
+                var student = new GlideRecord('x_783010_tocc_a1_student');
+                student.initialize();
+                student.setValue('user', userId);
+                student.setValue('active', true);
+                var studentId = student.insert();
+
+                var pendingEnrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                pendingEnrollment.initialize();
+                pendingEnrollment.setValue('student', studentId);
+                pendingEnrollment.setValue('training_session', sessionOpenId);
+                pendingEnrollment.setValue('status', 'pending');
+                pendingEnrollment.setValue('confirmed', false);
+                pendingEnrollment.insert();
+
+                var approvedEnrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                approvedEnrollment.initialize();
+                approvedEnrollment.setValue('student', studentId);
+                approvedEnrollment.setValue('training_session', sessionOpenId);
+                approvedEnrollment.setValue('status', 'approved');
+                approvedEnrollment.setValue('confirmed', false);
+                var approvedEnrollmentId = approvedEnrollment.insert();
+
+                var resource = new GlideRecord('x_783010_tocc_a1_room_resource');
+                resource.initialize();
+                resource.setValue('resource_name', 'ATF Snapshot Resource ' + suffix);
+                resource.setValue('resource_type', 'projector');
+                resource.setValue('room', roomId);
+                resource.setValue('status', 'available');
+                resource.setValue('active', true);
+                resource.insert();
+
+                var attendance = new GlideRecord('x_783010_tocc_a1_attendance');
+                attendance.initialize();
+                attendance.setValue('training_session', sessionInProgressId);
+                attendance.setValue('student_enrollment', approvedEnrollmentId);
+                attendance.setValue('attendance_status', 'pending');
+                attendance.insert();
+
+                var svc = new x_783010_tocc_a1.PortalApiService();
+                var result = JSON.parse(svc.getOperationsSnapshot());
+
+                gs.assertTrue(result.success === true, 'Expected success from getOperationsSnapshot.');
+                gs.assertTrue(result.snapshot !== undefined, 'Snapshot payload missing.');
+                gs.assertTrue(result.snapshot.pending_reservations >= 1, 'Expected pending reservation count >= 1.');
+                gs.assertTrue(result.snapshot.todays_sessions >= 1, 'Expected today sessions count >= 1.');
+                gs.assertTrue(result.snapshot.pending_enrollments >= 1, 'Expected pending enrollments count >= 1.');
+                gs.assertTrue(result.snapshot.unconfirmed_approved_enrollments >= 1, 'Expected unconfirmed approved count >= 1.');
+                gs.assertTrue(result.snapshot.in_progress_attendance_pending >= 1, 'Expected in-progress attendance pending count >= 1.');
+                gs.assertTrue(result.snapshot.resources_missing_ci >= 1, 'Expected resources missing CI count >= 1.');
+            `,
+        })
+    }
+)
+
+Test(
+    {
         $id: Now.ID['x_783010_tocc_a1_atf_notif_reservation_rejected_event'],
         name: '[TOCC][NOTIF] sendReservationDecision queues rejected event',
         description: 'NotificationHelper must queue the reservation.rejected event when status is rejected.',

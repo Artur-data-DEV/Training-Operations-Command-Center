@@ -6,6 +6,7 @@ This runbook tracks remaining UI Builder composition tasks after SDK scaffold de
 
 - Workspace registry: `tocc-backoffice-ops`
 - List menu config: `TOCC Backoffice List Configuration`
+- Backoffice counters API: `PortalApiService.getOperationsSnapshot()`
 - Categories:
   - Reservations
   - Training Sessions
@@ -23,6 +24,7 @@ This runbook tracks remaining UI Builder composition tasks after SDK scaffold de
    - Attendance operations panel
    - Resource/CMDB hygiene panel
 3. Add KPI tiles linked to the dashboard metrics where available.
+   - Optional data source for operational count tiles: `PortalApiService.getOperationsSnapshot()`
 4. Validate role-based visibility for Backoffice and Admin.
 
 ## Hard Rules
@@ -36,4 +38,3 @@ This runbook tracks remaining UI Builder composition tasks after SDK scaffold de
 - Opening workspace as Backoffice shows all five categories.
 - Lists load without ACL errors.
 - Navigation paths remain stable after publish.
-

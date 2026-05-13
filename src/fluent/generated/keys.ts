@@ -821,6 +821,14 @@ declare global {
                         table: 'sys_atf_step'
                         id: '7a61ab7a09f74dedbef73fd1ba98052b'
                     }
+                    x_783010_tocc_a1_atf_portal_operations_snapshot_payload: {
+                        table: 'sys_atf_test'
+                        id: '099be40215fd4df9bffd21b756246e30'
+                    }
+                    x_783010_tocc_a1_atf_portal_operations_snapshot_payload_script: {
+                        table: 'sys_atf_step'
+                        id: 'e1e32eccba464c38aee9d395c67181d1'
+                    }
                     x_783010_tocc_a1_atf_portal_policy_payload_script: {
                         table: 'sys_atf_step'
                         id: 'd36d53e20c314b3892a6c2c4933b3dfc'
@@ -6154,6 +6162,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_element_mapping'
+                        id: 'b48d08ef16504d0d8f7c504399c502bd'
+                        key: {
+                            field: 'script'
+                            id: 'e1e32eccba464c38aee9d395c67181d1'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: 'b5df5d71acc8460fa786223e1ccf42ef'
                         key: {
@@ -6206,6 +6222,14 @@ declare global {
                                 }
                             }
                             field: 'enrollment_deadline'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: 'b7fb28fe00524794a1b86a38d6c4161f'
+                        key: {
+                            document_key: 'e1e32eccba464c38aee9d395c67181d1'
+                            variable: '989d9e235324220002c6435723dc3484'
                         }
                     },
                     {
@@ -6953,6 +6977,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_course'
                             element: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: 'd322e9d93d42423b9c23475137a09e06'
+                        key: {
+                            document_key: 'e1e32eccba464c38aee9d395c67181d1'
+                            variable: '42f2564b73031300440211d8faf6a777'
                         }
                     },
                     {
