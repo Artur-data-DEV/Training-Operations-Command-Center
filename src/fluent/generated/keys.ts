@@ -1037,6 +1037,22 @@ declare global {
                         table: 'sys_atf_step'
                         id: 'ec015678dbb0401fad19cd42bd1a72a7'
                     }
+                    x_783010_tocc_a1_atf_va_topic_actionable_enrollments: {
+                        table: 'sys_atf_test'
+                        id: '7255ca2df55d4c5ba3fbd7ac9d3f676b'
+                    }
+                    x_783010_tocc_a1_atf_va_topic_actionable_enrollments_script: {
+                        table: 'sys_atf_step'
+                        id: '0698bbfad87449468f2657443cd1e7b0'
+                    }
+                    x_783010_tocc_a1_atf_va_topic_confirm_by_number: {
+                        table: 'sys_atf_test'
+                        id: '3f9119fe96ba4985b1f0caa88d7e08c4'
+                    }
+                    x_783010_tocc_a1_atf_va_topic_confirm_by_number_script: {
+                        table: 'sys_atf_step'
+                        id: '5e68997c3cda4a0d8afac38a63271e01'
+                    }
                     x_783010_tocc_a1_atf_va_topic_escalation_property_binding: {
                         table: 'sys_atf_test'
                         id: '57718fa295334be9af79f333f7f85b69'
@@ -1933,6 +1949,14 @@ declare global {
                                     name: 'x_783010_tocc_a1.admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: '06012251cccf496a9b793a24820bb8d9'
+                        key: {
+                            document_key: '0698bbfad87449468f2657443cd1e7b0'
+                            variable: '42f2564b73031300440211d8faf6a777'
                         }
                     },
                     {
@@ -4807,6 +4831,14 @@ declare global {
                     },
                     {
                         table: 'sys_variable_value'
+                        id: '7fd7cd2bba5940c58c6ca8fdc06d1147'
+                        key: {
+                            document_key: '0698bbfad87449468f2657443cd1e7b0'
+                            variable: '989d9e235324220002c6435723dc3484'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
                         id: '7ff25f3e46304810910dcdd1d6aa7fd0'
                         key: {
                             document_key: 'a8ada84f538b4437828dc6a7e8da3a59'
@@ -5030,6 +5062,14 @@ declare global {
                         key: {
                             field: 'script'
                             id: 'b763e43fb4c54fda983ea45e90d8e3a7'
+                        }
+                    },
+                    {
+                        table: 'sys_element_mapping'
+                        id: '89d7d0c724fd44e2b70aaa5270119a34'
+                        key: {
+                            field: 'script'
+                            id: '5e68997c3cda4a0d8afac38a63271e01'
                         }
                     },
                     {
@@ -7020,6 +7060,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_variable_value'
+                        id: 'd33064324344407f9e8a5b7ccfa4a3e4'
+                        key: {
+                            document_key: '5e68997c3cda4a0d8afac38a63271e01'
+                            variable: '42f2564b73031300440211d8faf6a777'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'd41073c4220141e8b2a14ce98904f7fb'
                         key: {
@@ -7166,6 +7214,14 @@ declare global {
                         key: {
                             table: 'x_783010_tocc_a1_room_reservation'
                             short_description: 'Reservation - Read Only After Decision'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: 'db1646e0814e4b2fa1755333854224d9'
+                        key: {
+                            document_key: '5e68997c3cda4a0d8afac38a63271e01'
+                            variable: '989d9e235324220002c6435723dc3484'
                         }
                     },
                     {
@@ -7450,6 +7506,14 @@ declare global {
                         key: {
                             document_key: '14b3f15e345141028ea373c96d0c1ca5'
                             variable: '1778a7480f20101091d0f00c97767e03'
+                        }
+                    },
+                    {
+                        table: 'sys_element_mapping'
+                        id: 'e9fed07e62b54a0b80edb917e98794ce'
+                        key: {
+                            field: 'script'
+                            id: '0698bbfad87449468f2657443cd1e7b0'
                         }
                     },
                     {

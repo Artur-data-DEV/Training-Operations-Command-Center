@@ -175,3 +175,171 @@ Test(
         })
     }
 )
+
+Test(
+    {
+        $id: Now.ID['x_783010_tocc_a1_atf_va_topic_confirm_by_number'],
+        name: '[TOCC][VA] confirmAttendance accepts enrollment number reference',
+        description: 'VirtualAgentTopicService should resolve enrollment number to own enrollment and confirm attendance.',
+        active: true,
+        failOnServerError: true,
+    },
+    (atf) => {
+        atf.server.runServerSideScript({
+            $id: Now.ID['x_783010_tocc_a1_atf_va_topic_confirm_by_number_script'],
+            script: `
+                var suffix = new GlideDateTime().getNumericValue() + '';
+
+                var room = new GlideRecord('x_783010_tocc_a1_room');
+                room.initialize();
+                room.setValue('name', 'ATF-VA-Room-' + suffix);
+                room.setValue('code', 'ATF-VA-' + suffix);
+                room.setValue('capacity', 12);
+                room.setValue('room_type', 'classroom');
+                room.setValue('status', 'available');
+                room.setValue('active', true);
+                var roomId = room.insert();
+
+                var now = new GlideDateTime();
+                var start = new GlideDateTime(now);
+                start.addSeconds(48 * 3600);
+                var end = new GlideDateTime(start);
+                end.addSeconds(2 * 3600);
+                var deadline = new GlideDateTime(start);
+                deadline.addSeconds(-4 * 3600);
+
+                var session = new GlideRecord('x_783010_tocc_a1_training_session');
+                session.initialize();
+                session.setValue('title', 'ATF VA Confirm ' + suffix);
+                session.setValue('room', roomId);
+                session.setValue('start_datetime', start.getValue());
+                session.setValue('end_datetime', end.getValue());
+                session.setValue('confirmation_deadline', deadline.getValue());
+                session.setValue('total_seats', 10);
+                session.setValue('available_seats', 9);
+                session.setValue('status', 'open');
+                session.setValue('active', true);
+                var sessionId = session.insert();
+
+                var user = new GlideRecord('sys_user');
+                user.initialize();
+                user.setValue('user_name', 'atf_va_confirm_' + suffix);
+                user.setValue('first_name', 'ATF');
+                user.setValue('last_name', 'VAConfirm');
+                var userId = user.insert();
+
+                var student = new GlideRecord('x_783010_tocc_a1_student');
+                student.initialize();
+                student.setValue('user', userId);
+                student.setValue('active', true);
+                var studentId = student.insert();
+
+                var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                enrollment.initialize();
+                enrollment.setValue('student', studentId);
+                enrollment.setValue('training_session', sessionId);
+                enrollment.setValue('status', 'approved');
+                enrollment.setValue('confirmed', false);
+                var enrollmentId = enrollment.insert();
+                enrollment.get(enrollmentId);
+                var enrollmentNumber = enrollment.getValue('number');
+
+                gs.impersonateUser(userId);
+                var svc = new x_783010_tocc_a1.VirtualAgentTopicService();
+                var result = svc.confirmAttendance(enrollmentNumber);
+                gs.resetSession();
+
+                gs.assertTrue(result.success === true, 'Expected confirmAttendance success by enrollment number.');
+
+                var check = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                gs.assertTrue(check.get(enrollmentId), 'Enrollment missing after confirmation.');
+                gs.assertTrue(check.getValue('confirmed') == 'true', 'Enrollment should be confirmed.');
+            `,
+        })
+    }
+)
+
+Test(
+    {
+        $id: Now.ID['x_783010_tocc_a1_atf_va_topic_actionable_enrollments'],
+        name: '[TOCC][VA] getActionableEnrollments returns filtered records',
+        description: 'VirtualAgentTopicService should filter actionable enrollments by requested action.',
+        active: true,
+        failOnServerError: true,
+    },
+    (atf) => {
+        atf.server.runServerSideScript({
+            $id: Now.ID['x_783010_tocc_a1_atf_va_topic_actionable_enrollments_script'],
+            script: `
+                var suffix = new GlideDateTime().getNumericValue() + '';
+
+                var room = new GlideRecord('x_783010_tocc_a1_room');
+                room.initialize();
+                room.setValue('name', 'ATF-VA-Act-Room-' + suffix);
+                room.setValue('code', 'ATF-VA-ACT-' + suffix);
+                room.setValue('capacity', 15);
+                room.setValue('room_type', 'classroom');
+                room.setValue('status', 'available');
+                room.setValue('active', true);
+                var roomId = room.insert();
+
+                var start = new GlideDateTime();
+                start.addSeconds(72 * 3600);
+                var end = new GlideDateTime(start);
+                end.addSeconds(2 * 3600);
+
+                var session = new GlideRecord('x_783010_tocc_a1_training_session');
+                session.initialize();
+                session.setValue('title', 'ATF VA Actionable ' + suffix);
+                session.setValue('room', roomId);
+                session.setValue('start_datetime', start.getValue());
+                session.setValue('end_datetime', end.getValue());
+                session.setValue('total_seats', 10);
+                session.setValue('available_seats', 7);
+                session.setValue('status', 'open');
+                session.setValue('active', true);
+                var sessionId = session.insert();
+
+                var user = new GlideRecord('sys_user');
+                user.initialize();
+                user.setValue('user_name', 'atf_va_actionable_' + suffix);
+                user.setValue('first_name', 'ATF');
+                user.setValue('last_name', 'VAActionable');
+                var userId = user.insert();
+
+                var student = new GlideRecord('x_783010_tocc_a1_student');
+                student.initialize();
+                student.setValue('user', userId);
+                student.setValue('active', true);
+                var studentId = student.insert();
+
+                var approvedNotConfirmed = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                approvedNotConfirmed.initialize();
+                approvedNotConfirmed.setValue('student', studentId);
+                approvedNotConfirmed.setValue('training_session', sessionId);
+                approvedNotConfirmed.setValue('status', 'approved');
+                approvedNotConfirmed.setValue('confirmed', false);
+                approvedNotConfirmed.insert();
+
+                var waitlisted = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                waitlisted.initialize();
+                waitlisted.setValue('student', studentId);
+                waitlisted.setValue('training_session', sessionId);
+                waitlisted.setValue('status', 'waitlisted');
+                waitlisted.setValue('confirmed', false);
+                waitlisted.insert();
+
+                gs.impersonateUser(userId);
+                var svc = new x_783010_tocc_a1.VirtualAgentTopicService();
+                var confirmCandidates = svc.getActionableEnrollments('confirm_attendance', 10);
+                var cancelCandidates = svc.getActionableEnrollments('cancel_enrollment', 10);
+                gs.resetSession();
+
+                gs.assertTrue(confirmCandidates.success === true, 'Expected success for confirm_attendance candidates.');
+                gs.assertTrue(confirmCandidates.count >= 1, 'Expected at least one confirm_attendance candidate.');
+                gs.assertTrue(cancelCandidates.success === true, 'Expected success for cancel_enrollment candidates.');
+                gs.assertTrue(cancelCandidates.count >= 2, 'Expected at least two cancel_enrollment candidates.');
+            `,
+        })
+    }
+)

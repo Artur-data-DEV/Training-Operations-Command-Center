@@ -26,11 +26,13 @@ Create/update the following six topics:
   - `getMainMenuAsJson()`
   - `findAvailableSessionsAsJson(...)`
   - `getMyEnrollmentsAsJson(...)`
+  - `getActionableEnrollmentsAsJson(action, limit)`
   - `confirmAttendanceAsJson(...)`
   - `cancelEnrollmentAsJson(...)`
   - `getTrainingPoliciesAsJson()`
   - `getBackofficeEscalationAsJson()`
 - Do not duplicate GlideRecord logic inside topic scripts.
+- For confirm/cancel prompts, capture either enrollment `number` (preferred for user readability) or `sys_id`.
 
 ## NLU Notes
 
@@ -43,4 +45,3 @@ Create/update the following six topics:
 - Student can navigate all six topics end-to-end.
 - Policy topic reflects current `TrainingConfigService` values.
 - Escalation topic returns current support email and support page URL.
-

@@ -14,8 +14,9 @@ This avoids duplicated script logic in topic nodes.
 - `getMainMenu()`
 - `findAvailableSessions(courseId, locationId, fromDate, limit)`
 - `getMyEnrollments(status)`
-- `confirmAttendance(enrollmentId)`
-- `cancelEnrollment(enrollmentId)`
+- `getActionableEnrollments(action, limit)`
+- `confirmAttendance(enrollmentReference)`
+- `cancelEnrollment(enrollmentReference)`
 - `getTrainingPolicies()`
 - `getBackofficeEscalation()`
 
@@ -41,8 +42,8 @@ if (!payload.success) {
 ## Validation Checklist
 
 - [ ] Script Include `VirtualAgentTopicService` is active in scope `x_783010_tocc_a1`
-- [ ] `TEST-041` and `TEST-042` pass
+- [ ] `TEST-041` to `TEST-045` pass
 - [ ] Topic Script Actions call only adapter methods (no duplicated GlideRecord logic)
 - [ ] Policies topic shows current values from `TrainingConfigService`
 - [ ] Escalation topic returns valid email/support page
-
+- [ ] Confirm/cancel topics accept enrollment `number` or `sys_id`

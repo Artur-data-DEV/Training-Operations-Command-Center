@@ -109,32 +109,89 @@ VirtualAgentTopicService.prototype = {
         return JSON.stringify(this.getMyEnrollments(status));
     },
 
-    confirmAttendance: function(enrollmentId) {
-        if (!enrollmentId) {
-            return { success: false, message: 'Enrollment ID is required.' };
+    confirmAttendance: function(enrollmentReference) {
+        var resolved = this._resolveMyEnrollmentReference(
+            enrollmentReference,
+            ['approved'],
+            'confirm attendance'
+        );
+        if (!resolved.success) {
+            return resolved;
         }
 
         return this._callPortal('confirmMyAttendance', {
-            sysparm_enrollment_id: enrollmentId,
+            sysparm_enrollment_id: resolved.enrollment.sys_id,
         });
     },
 
-    confirmAttendanceAsJson: function(enrollmentId) {
-        return JSON.stringify(this.confirmAttendance(enrollmentId));
+    confirmAttendanceAsJson: function(enrollmentReference) {
+        return JSON.stringify(this.confirmAttendance(enrollmentReference));
     },
 
-    cancelEnrollment: function(enrollmentId) {
-        if (!enrollmentId) {
-            return { success: false, message: 'Enrollment ID is required.' };
+    cancelEnrollment: function(enrollmentReference) {
+        var resolved = this._resolveMyEnrollmentReference(
+            enrollmentReference,
+            ['pending', 'approved', 'waitlisted'],
+            'cancel enrollment'
+        );
+        if (!resolved.success) {
+            return resolved;
         }
 
         return this._callPortal('cancelMyEnrollment', {
-            sysparm_enrollment_id: enrollmentId,
+            sysparm_enrollment_id: resolved.enrollment.sys_id,
         });
     },
 
-    cancelEnrollmentAsJson: function(enrollmentId) {
-        return JSON.stringify(this.cancelEnrollment(enrollmentId));
+    cancelEnrollmentAsJson: function(enrollmentReference) {
+        return JSON.stringify(this.cancelEnrollment(enrollmentReference));
+    },
+
+    getActionableEnrollments: function(action, limit) {
+        var actionKey = this._normalizeToken(action);
+        var max = parseInt(limit, 10) || 5;
+        if (max < 1) {
+            max = 1;
+        }
+
+        var payload = this._callPortal('getMyEnrollments', {
+            sysparm_status: '',
+        });
+        if (!payload.success) {
+            return payload;
+        }
+
+        var enrollments = payload.enrollments || [];
+        var filtered = [];
+        for (var i = 0; i < enrollments.length; i++) {
+            var e = enrollments[i];
+            if (this._isEnrollmentActionableForAction(e, actionKey)) {
+                filtered.push({
+                    sys_id: e.sys_id,
+                    number: e.number,
+                    session_title: e.session_title,
+                    start_display: e.start_display,
+                    room_name: e.room_name,
+                    status: e.status,
+                    status_display: e.status_display,
+                    confirmed: String(e.confirmed) === 'true',
+                });
+            }
+            if (filtered.length >= max) {
+                break;
+            }
+        }
+
+        return {
+            success: true,
+            action: actionKey || 'general',
+            count: filtered.length,
+            enrollments: filtered,
+        };
+    },
+
+    getActionableEnrollmentsAsJson: function(action, limit) {
+        return JSON.stringify(this.getActionableEnrollments(action, limit));
     },
 
     getTrainingPolicies: function() {
@@ -244,6 +301,87 @@ VirtualAgentTopicService.prototype = {
                 gs.getProperty('x_783010_tocc_a1.portal.support_email', 'training-backoffice@example.com')
             ),
         };
+    },
+
+    _resolveMyEnrollmentReference: function(reference, allowedStatuses, actionLabel) {
+        var normalized = this._normalizeToken(reference);
+        if (!normalized) {
+            return {
+                success: false,
+                message: 'Enrollment reference is required to ' + actionLabel + '.',
+            };
+        }
+
+        var payload = this._callPortal('getMyEnrollments', {
+            sysparm_status: '',
+        });
+        if (!payload.success) {
+            return payload;
+        }
+
+        var enrollments = payload.enrollments || [];
+        var matched = null;
+        for (var i = 0; i < enrollments.length; i++) {
+            var enrollment = enrollments[i];
+            if (
+                this._normalizeToken(enrollment.sys_id) === normalized ||
+                this._normalizeToken(enrollment.number) === normalized
+            ) {
+                matched = enrollment;
+                break;
+            }
+        }
+
+        if (!matched) {
+            return {
+                success: false,
+                message: 'Enrollment not found for current user: ' + String(reference),
+            };
+        }
+
+        if (allowedStatuses && allowedStatuses.length > 0) {
+            var status = this._normalizeToken(matched.status);
+            var allowed = false;
+            for (var j = 0; j < allowedStatuses.length; j++) {
+                if (status === this._normalizeToken(allowedStatuses[j])) {
+                    allowed = true;
+                    break;
+                }
+            }
+
+            if (!allowed) {
+                return {
+                    success: false,
+                    message: 'Enrollment ' + (matched.number || matched.sys_id) + ' is not eligible to ' + actionLabel + '.',
+                };
+            }
+        }
+
+        return {
+            success: true,
+            enrollment: matched,
+        };
+    },
+
+    _isEnrollmentActionableForAction: function(enrollment, actionKey) {
+        var status = this._normalizeToken(enrollment.status);
+        var confirmed = String(enrollment.confirmed) === 'true';
+
+        if (actionKey === 'confirm_attendance') {
+            return status === 'approved' && !confirmed;
+        }
+        if (actionKey === 'cancel_enrollment') {
+            return status === 'pending' || status === 'approved' || status === 'waitlisted';
+        }
+
+        return true;
+    },
+
+    _normalizeToken: function(value) {
+        if (value === null || value === undefined) {
+            return '';
+        }
+        return String(value).replace(/^\\s+|\\s+$/g, '').toLowerCase();
     },
 
     type: 'VirtualAgentTopicService'
