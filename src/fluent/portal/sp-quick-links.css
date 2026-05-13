@@ -6,3 +6,12 @@
   margin-top: 8px;
 }
 
+.tocc-quick-links .tocc-ops-snapshot .well {
+  border-radius: 6px;
+  min-height: 74px;
+  margin-bottom: 10px;
+}
+
+.tocc-quick-links .tocc-ops-snapshot .h4 {
+  font-weight: 700;
+}

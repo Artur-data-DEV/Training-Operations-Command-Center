@@ -432,6 +432,41 @@ Test(
 
 Test(
     {
+        $id: Now.ID['x_783010_tocc_a1_atf_portal_operations_snapshot_access_denied'],
+        name: '[TOCC][PORTAL] getOperationsSnapshot denies unauthorized roles',
+        description: 'PortalApiService must deny operational snapshot for users without backoffice/manager/admin roles.',
+        active: true,
+        failOnServerError: true,
+    },
+    (atf) => {
+        atf.server.runServerSideScript({
+            $id: Now.ID['x_783010_tocc_a1_atf_portal_operations_snapshot_access_denied_script'],
+            script: `
+                var suffix = new GlideDateTime().getNumericValue() + '';
+                var user = new GlideRecord('sys_user');
+                user.initialize();
+                user.setValue('user_name', 'atf_snapshot_denied_' + suffix);
+                user.setValue('first_name', 'ATF');
+                user.setValue('last_name', 'SnapshotDenied');
+                var userId = user.insert();
+
+                gs.impersonateUser(userId);
+                var svc = new x_783010_tocc_a1.PortalApiService();
+                var result = JSON.parse(svc.getOperationsSnapshot());
+                gs.resetSession();
+
+                gs.assertTrue(result.success === false, 'Expected access denied for unauthorized role.');
+                gs.assertTrue(
+                    (result.message || '').indexOf('Access denied') > -1,
+                    'Expected access denied message, got: ' + JSON.stringify(result)
+                );
+            `,
+        })
+    }
+)
+
+Test(
+    {
         $id: Now.ID['x_783010_tocc_a1_atf_notif_reservation_rejected_event'],
         name: '[TOCC][NOTIF] sendReservationDecision queues rejected event',
         description: 'NotificationHelper must queue the reservation.rejected event when status is rejected.',

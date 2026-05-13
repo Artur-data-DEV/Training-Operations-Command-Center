@@ -6,6 +6,7 @@ const toccQuickLinksWidget = SPWidget({
     name: 'TOCC - Quick Links',
     htmlTemplate: Now.include('./sp-quick-links.html'),
     customCss: Now.include('./sp-quick-links.css'),
+    serverScript: Now.include('./sp-quick-links.server.js'),
 })
 
 const toccSessionBrowserWidget = SPWidget({

@@ -5,10 +5,58 @@
       <p class="text-muted">Use the links below to access core self-service actions.</p>
 
       <div class="btn-group btn-group-sm" role="group">
-        <a class="btn btn-primary" href="?id=tocc_sessions">Browse Sessions</a>
-        <a class="btn btn-default" href="?id=tocc_my_enrollments">My Enrollments</a>
-        <a class="btn btn-default" href="?id=tocc_my_reservations">My Reservations</a>
-        <a class="btn btn-default" href="?id=tocc_help">Help Center</a>
+        <a class="btn btn-primary" href="{{c.data.links.sessions}}">Browse Sessions</a>
+        <a class="btn btn-default" href="{{c.data.links.enrollments}}">My Enrollments</a>
+        <a class="btn btn-default" href="{{c.data.links.reservations}}">My Reservations</a>
+        <a class="btn btn-default" href="{{c.data.links.help}}">Help Center</a>
+      </div>
+
+      <div class="tocc-ops-snapshot" ng-if="c.data.show_operations">
+        <hr />
+        <h5 class="m-t-0 m-b-sm">Operational Snapshot</h5>
+
+        <div class="alert alert-warning m-b-sm" ng-if="c.data.operations_error">
+          {{c.data.operations_error}}
+        </div>
+
+        <div class="row" ng-if="c.data.operations">
+          <div class="col-sm-6 col-md-4">
+            <div class="well well-sm">
+              <div class="text-muted">Pending Reservations</div>
+              <div class="h4 m-t-xs m-b-0">{{c.data.operations.pending_reservations}}</div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="well well-sm">
+              <div class="text-muted">Today's Sessions</div>
+              <div class="h4 m-t-xs m-b-0">{{c.data.operations.todays_sessions}}</div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="well well-sm">
+              <div class="text-muted">Pending Enrollments</div>
+              <div class="h4 m-t-xs m-b-0">{{c.data.operations.pending_enrollments}}</div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="well well-sm">
+              <div class="text-muted">Unconfirmed Approved</div>
+              <div class="h4 m-t-xs m-b-0">{{c.data.operations.unconfirmed_approved_enrollments}}</div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="well well-sm">
+              <div class="text-muted">Attendance Pending (In Progress)</div>
+              <div class="h4 m-t-xs m-b-0">{{c.data.operations.in_progress_attendance_pending}}</div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="well well-sm">
+              <div class="text-muted">Resources Missing CI</div>
+              <div class="h4 m-t-xs m-b-0">{{c.data.operations.resources_missing_ci}}</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

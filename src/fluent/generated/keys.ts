@@ -821,6 +821,14 @@ declare global {
                         table: 'sys_atf_step'
                         id: '7a61ab7a09f74dedbef73fd1ba98052b'
                     }
+                    x_783010_tocc_a1_atf_portal_operations_snapshot_access_denied: {
+                        table: 'sys_atf_test'
+                        id: '7bb74fe7abe64c8aa07bf04ebef3a8f7'
+                    }
+                    x_783010_tocc_a1_atf_portal_operations_snapshot_access_denied_script: {
+                        table: 'sys_atf_step'
+                        id: '30c7637bd32c4c018ca63e6d9335aebb'
+                    }
                     x_783010_tocc_a1_atf_portal_operations_snapshot_payload: {
                         table: 'sys_atf_test'
                         id: '099be40215fd4df9bffd21b756246e30'
@@ -2328,6 +2336,14 @@ declare global {
                             name: 'x_783010_tocc_a1_room_resource'
                             element: 'resource_type'
                             value: 'av'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: '17e419966a4f461589645aeb564d6b06'
+                        key: {
+                            document_key: '30c7637bd32c4c018ca63e6d9335aebb'
+                            variable: '42f2564b73031300440211d8faf6a777'
                         }
                     },
                     {
@@ -6001,6 +6017,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_variable_value'
+                        id: 'af5afff341054479be8df5a2eee1f496'
+                        key: {
+                            document_key: '30c7637bd32c4c018ca63e6d9335aebb'
+                            variable: '989d9e235324220002c6435723dc3484'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'af6f85d6fd10460bae51665c6dfdba29'
                         key: {
@@ -6430,6 +6454,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_training_config'
                             element: 'description'
+                        }
+                    },
+                    {
+                        table: 'sys_element_mapping'
+                        id: 'c03be732a045458995440f2756bc2317'
+                        key: {
+                            field: 'script'
+                            id: '30c7637bd32c4c018ca63e6d9335aebb'
                         }
                     },
                     {
