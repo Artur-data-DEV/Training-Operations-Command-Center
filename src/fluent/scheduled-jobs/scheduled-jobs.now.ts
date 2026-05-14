@@ -192,3 +192,26 @@ ScheduledScript({
     }
 })();`,
 })
+
+// ---------------------------------------------------------------------------
+// SCH-006 — Repair Training Sessions Missing Room
+// ---------------------------------------------------------------------------
+ScheduledScript({
+    $id: Now.ID['x_783010_tocc_a1_sch_repair_sessions_missing_room'],
+    name: '[TOCC] Repair Sessions Missing Room',
+    active: true,
+    runAs: 'system',
+    frequency: 'daily',
+    executionTime: { hours: 1, minutes: 40, seconds: 0 },
+    script: `(function repairSessionsMissingRoom() {
+    var svc = new TrainingSessionService();
+    var result = svc.repairMissingRooms(500);
+
+    gs.info(
+        '[TOCC] RepairSessionsMissingRoom: scanned=' + result.scanned +
+        ', repaired=' + result.repaired +
+        ', skipped_no_reservation=' + result.skipped_no_reservation +
+        ', skipped_no_room_in_reservation=' + result.skipped_no_room_in_reservation
+    );
+})();`,
+})

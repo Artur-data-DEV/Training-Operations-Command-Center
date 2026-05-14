@@ -1,4 +1,5 @@
-import { SPPage, SPWidget, ServicePortal } from '@servicenow/sdk/core'
+import { SPMenu, SPPage, SPWidget, ServicePortal } from '@servicenow/sdk/core'
+import { toccServiceCatalog } from '../catalog/catalog-structure.now'
 
 const toccQuickLinksWidget = SPWidget({
     $id: Now.ID['x_783010_tocc_a1_sp_widget_quick_links'],
@@ -282,10 +283,76 @@ const toccNotFoundPage = SPPage({
     ],
 })
 
+const toccMainMenu = SPMenu({
+    $id: Now.ID['x_783010_tocc_a1_sp_main_menu'],
+    id: 'x_783010_tocc_a1-main-menu',
+    title: 'TOCC Main Menu',
+    items: [
+        {
+            $id: Now.ID['x_783010_tocc_a1_sp_main_menu_item_home'],
+            label: 'Home',
+            type: 'page',
+            page: toccHomePage,
+            order: 100,
+            active: true,
+            glyph: 'home',
+        },
+        {
+            $id: Now.ID['x_783010_tocc_a1_sp_main_menu_item_sessions'],
+            label: 'Sessions',
+            type: 'page',
+            page: Now.ref('sp_page', { id: 'tocc_sessions' }),
+            order: 200,
+            active: true,
+            glyph: 'calendar',
+        },
+        {
+            $id: Now.ID['x_783010_tocc_a1_sp_main_menu_item_my_enrollments'],
+            label: 'My Enrollments',
+            type: 'page',
+            page: Now.ref('sp_page', { id: 'tocc_my_enrollments' }),
+            order: 300,
+            active: true,
+            roles: ['x_783010_tocc_a1.student', 'x_783010_tocc_a1.admin'],
+            glyph: 'check-square-o',
+        },
+        {
+            $id: Now.ID['x_783010_tocc_a1_sp_main_menu_item_my_reservations'],
+            label: 'My Reservations',
+            type: 'page',
+            page: Now.ref('sp_page', { id: 'tocc_my_reservations' }),
+            order: 400,
+            active: true,
+            roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.admin'],
+            glyph: 'building-o',
+        },
+        {
+            $id: Now.ID['x_783010_tocc_a1_sp_main_menu_item_catalog'],
+            label: 'Request Catalog',
+            type: 'url',
+            url: '?id=sc_home',
+            order: 500,
+            active: true,
+            glyph: 'th-list',
+        },
+        {
+            $id: Now.ID['x_783010_tocc_a1_sp_main_menu_item_help'],
+            label: 'Help Center',
+            type: 'page',
+            page: Now.ref('sp_page', { id: 'tocc_help' }),
+            order: 600,
+            active: true,
+            glyph: 'life-ring',
+        },
+    ],
+})
+
 ServicePortal({
     $id: Now.ID['x_783010_tocc_a1_service_portal'],
     title: 'Training Operations',
     urlSuffix: 'tocc',
+    mainMenu: toccMainMenu,
     homePage: toccHomePage,
     notFoundPage: toccNotFoundPage,
+    catalogs: [{ catalog: toccServiceCatalog, order: 100, active: true }],
 })

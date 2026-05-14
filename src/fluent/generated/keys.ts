@@ -585,6 +585,42 @@ declare global {
                         table: 'sys_security_acl'
                         id: '2f0fef1178d147829a8e616dcf712e4a'
                     }
+                    x_783010_tocc_a1_app_menu_navigation: {
+                        table: 'sys_app_application'
+                        id: 'a27ca34132b54f669e3ed47fcd9ac6ee'
+                    }
+                    x_783010_tocc_a1_app_module_attendance: {
+                        table: 'sys_app_module'
+                        id: '95d077ab529f4584801a98f260082481'
+                    }
+                    x_783010_tocc_a1_app_module_room_reservations: {
+                        table: 'sys_app_module'
+                        id: 'e08dd7a095d4401ea082b80b13db0cfc'
+                    }
+                    x_783010_tocc_a1_app_module_room_resources: {
+                        table: 'sys_app_module'
+                        id: '8fd41540f3d1425c8cfbffd963c7d29f'
+                    }
+                    x_783010_tocc_a1_app_module_rooms: {
+                        table: 'sys_app_module'
+                        id: '09c1b5a2cc1647e8ad4bc92c724e12c7'
+                    }
+                    x_783010_tocc_a1_app_module_service_portal_home: {
+                        table: 'sys_app_module'
+                        id: '9458a5214f3a4f0a8c01b6b28f916044'
+                    }
+                    x_783010_tocc_a1_app_module_student_enrollments: {
+                        table: 'sys_app_module'
+                        id: '9752bb11102d419ea83c91b3c378d756'
+                    }
+                    x_783010_tocc_a1_app_module_training_sessions: {
+                        table: 'sys_app_module'
+                        id: '5af1c43bb5554572a3555bc3ecc53844'
+                    }
+                    x_783010_tocc_a1_app_module_workspace_ops: {
+                        table: 'sys_app_module'
+                        id: 'e1cc25289f55408f9227137b393711c6'
+                    }
                     x_783010_tocc_a1_atf_attendance_absent_clears_checkin: {
                         table: 'sys_atf_test'
                         id: '3c8963f3e49f4c6eb3307dac4828c1cf'
@@ -1209,6 +1245,18 @@ declare global {
                         table: 'sys_script'
                         id: 'ef5a29c3b3ef4293ba56ea7e9287d046'
                     }
+                    x_783010_tocc_a1_br_validate_training_session_room: {
+                        table: 'sys_script'
+                        id: '05cd025455de47a894e7801d90a33f26'
+                    }
+                    x_783010_tocc_a1_catalog_category_training_operations: {
+                        table: 'sc_category'
+                        id: 'd710c5db6b7a47e5b7a9e2103205580d'
+                    }
+                    x_783010_tocc_a1_catalog_self_service: {
+                        table: 'sc_catalog'
+                        id: '42fcbec23dff46e39b5e8df6482be6b2'
+                    }
                     x_783010_tocc_a1_cs_enrollment_autofill_student: {
                         table: 'sys_script_client'
                         id: '7639e94584b345d8bfea9e66d3c7415b'
@@ -1666,6 +1714,10 @@ declare global {
                         table: 'sysauto_script'
                         id: '933b497250b2408fa97689856523c6d6'
                     }
+                    x_783010_tocc_a1_sch_repair_sessions_missing_room: {
+                        table: 'sysauto_script'
+                        id: 'c092e7b93c184cc7a3721349a9091c1a'
+                    }
                     x_783010_tocc_a1_sch_send_session_reminders: {
                         table: 'sysauto_script'
                         id: '91d16f2aedf74143803b6221c935c2a2'
@@ -1925,6 +1977,34 @@ declare global {
                     x_783010_tocc_a1_sp_inst_sessions_main: {
                         table: 'sp_instance'
                         id: 'ed2d655cc3f04e75a237039b10c6ecff'
+                    }
+                    x_783010_tocc_a1_sp_main_menu: {
+                        table: 'sp_instance_menu'
+                        id: '49e1732a8cd741d0bbf4e5e28fa9c063'
+                    }
+                    x_783010_tocc_a1_sp_main_menu_item_catalog: {
+                        table: 'sp_rectangle_menu_item'
+                        id: '9eede30732774d47acf45992022da14d'
+                    }
+                    x_783010_tocc_a1_sp_main_menu_item_help: {
+                        table: 'sp_rectangle_menu_item'
+                        id: '80d59aff88a6416690aceb5a179e35f0'
+                    }
+                    x_783010_tocc_a1_sp_main_menu_item_home: {
+                        table: 'sp_rectangle_menu_item'
+                        id: 'e1dffc7a961448ea93606cdab50f244f'
+                    }
+                    x_783010_tocc_a1_sp_main_menu_item_my_enrollments: {
+                        table: 'sp_rectangle_menu_item'
+                        id: 'dbcd49801506415bb14cfd829bffd818'
+                    }
+                    x_783010_tocc_a1_sp_main_menu_item_my_reservations: {
+                        table: 'sp_rectangle_menu_item'
+                        id: '6effb354d7c941c9a3c987dfbe645fe0'
+                    }
+                    x_783010_tocc_a1_sp_main_menu_item_sessions: {
+                        table: 'sp_rectangle_menu_item'
+                        id: 'c3ccb2c163654e7e849addc8ff77a276'
                     }
                     x_783010_tocc_a1_sp_row_enrollments_main: {
                         table: 'sp_row'
@@ -2610,6 +2690,7 @@ declare global {
                     {
                         table: 'par_dashboard_visibility'
                         id: '0b253a35b629497386596672f3064d4b'
+                        deleted: true
                         key: {
                             dashboard: '0e91812dc4884f8cb00e6fe9fce50337'
                             experience: '08c73d60537101100834ddeeff7b1287'
@@ -3754,6 +3835,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_category'
+                        id: '3d28c1ae4892415a8d10e20e2892e9bb'
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_category: 'x_783010_tocc_a1_catalog_category_training_operations'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: '3d3c10aad1134e74b5dcf197d3450e00'
                         key: {
@@ -4288,6 +4377,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_category'
+                        id: '4ec5388536d643a5ac8c63eebe2314fe'
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_category: 'x_783010_tocc_a1_catalog_category_training_operations'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '4eda639060ba4eceb0a0c23ac820a24f'
                         key: {
@@ -4331,6 +4428,14 @@ declare global {
                             name: 'x_783010_tocc_a1_kpi_snapshot'
                             element: 'kpi_category'
                             value: 'operations'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: '50478e24979444cd8adb441f6c7e369f'
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: 'x_783010_tocc_a1_catalog_self_service'
                         }
                     },
                     {
@@ -4529,6 +4634,14 @@ declare global {
                         id: '592dcc8c14a64ea8998685e6777ef767'
                         key: {
                             name: 'x_783010_tocc_a1_student'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: '5a0b35d861eb411aa936fdb96dc1eb6a'
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '010b9aa0428a40c8bc84efc554fc6cf0'
                         }
                     },
                     {
@@ -6090,6 +6203,14 @@ declare global {
                         id: '9bf082f810f54fa5a1b3c29e006fd4b1'
                         key: {
                             name: 'x_783010_tocc_a1.manager'
+                        }
+                    },
+                    {
+                        table: 'par_dashboard_visibility'
+                        id: '9c263700413542da92f9c6c55d9504e5'
+                        key: {
+                            dashboard: '0e91812dc4884f8cb00e6fe9fce50337'
+                            experience: 'fa077bb53ffa4f088883123f15cb6e4f'
                         }
                     },
                     {
@@ -7847,6 +7968,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'm2m_sp_portal_catalog'
+                        id: 'dae236aabf1f48c6a126dbc1189f0844'
+                        key: {
+                            sp_portal: 'fd3f17c78edb40a5a0325491968f8ef8'
+                            sc_catalog: 'x_783010_tocc_a1_catalog_self_service'
+                        }
+                    },
+                    {
                         table: 'sys_ui_policy'
                         id: 'db10864690994e6696acf7b00f4f706b'
                         key: {
@@ -8106,6 +8235,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: 'e6df1f98dae0421d820435139c9be0c8'
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: 'x_783010_tocc_a1_catalog_self_service'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: 'e75398a737214e83b725b5331743359a'
                         key: {
@@ -8258,6 +8395,14 @@ declare global {
                             name: 'x_783010_tocc_a1_room'
                             element: 'status'
                             value: 'inactive'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'ed6e379416de45078b8f99f77af8affc'
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: 'c26126bc13d4482fa6426a3c365c8488'
                         }
                     },
                     {

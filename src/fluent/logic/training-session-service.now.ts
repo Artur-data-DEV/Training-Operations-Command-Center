@@ -169,6 +169,113 @@ TrainingSessionService.prototype = {
         reservation.update();
     },
 
+    ensureSessionRoom: function(current) {
+        if (!gs.nil(current.getValue('room'))) {
+            return '';
+        }
+
+        var reservationId = current.getValue('reservation');
+        if (gs.nil(reservationId)) {
+            return 'Training session requires a room.';
+        }
+
+        var reservation = new GlideRecord(this.reservationTable);
+        if (!reservation.get(reservationId)) {
+            return 'Linked reservation was not found for this training session.';
+        }
+
+        var reservationRoom = reservation.getValue('room');
+        if (gs.nil(reservationRoom)) {
+            return 'Linked reservation has no room defined.';
+        }
+
+        current.setValue('room', reservationRoom);
+
+        if (gs.nil(current.getValue('course')) && !gs.nil(reservation.getValue('course'))) {
+            current.setValue('course', reservation.getValue('course'));
+        }
+
+        if (gs.nil(current.getValue('instructor')) && !gs.nil(reservation.getValue('instructor'))) {
+            current.setValue('instructor', reservation.getValue('instructor'));
+        }
+
+        if (gs.nil(current.getValue('start_datetime')) && !gs.nil(reservation.getValue('start_datetime'))) {
+            current.setValue('start_datetime', reservation.getValue('start_datetime'));
+        }
+
+        if (gs.nil(current.getValue('end_datetime')) && !gs.nil(reservation.getValue('end_datetime'))) {
+            current.setValue('end_datetime', reservation.getValue('end_datetime'));
+        }
+
+        return '';
+    },
+
+    repairMissingRooms: function(maxRecords) {
+        var scanned = 0;
+        var repaired = 0;
+        var skippedNoReservation = 0;
+        var skippedNoRoomInReservation = 0;
+
+        var session = new GlideRecord(this.sessionTable);
+        session.addNullQuery('room');
+        session.orderByDesc('sys_updated_on');
+        if (!gs.nil(maxRecords)) {
+            var parsedLimit = parseInt(maxRecords, 10);
+            if (!isNaN(parsedLimit) && parsedLimit > 0) {
+                session.setLimit(parsedLimit);
+            }
+        }
+        session.query();
+
+        while (session.next()) {
+            scanned++;
+
+            var reservationId = session.getValue('reservation');
+            if (gs.nil(reservationId)) {
+                skippedNoReservation++;
+                continue;
+            }
+
+            var reservation = new GlideRecord(this.reservationTable);
+            if (!reservation.get(reservationId)) {
+                skippedNoReservation++;
+                continue;
+            }
+
+            var reservationRoom = reservation.getValue('room');
+            if (gs.nil(reservationRoom)) {
+                skippedNoRoomInReservation++;
+                continue;
+            }
+
+            session.setValue('room', reservationRoom);
+
+            if (gs.nil(session.getValue('course')) && !gs.nil(reservation.getValue('course'))) {
+                session.setValue('course', reservation.getValue('course'));
+            }
+            if (gs.nil(session.getValue('instructor')) && !gs.nil(reservation.getValue('instructor'))) {
+                session.setValue('instructor', reservation.getValue('instructor'));
+            }
+            if (gs.nil(session.getValue('start_datetime')) && !gs.nil(reservation.getValue('start_datetime'))) {
+                session.setValue('start_datetime', reservation.getValue('start_datetime'));
+            }
+            if (gs.nil(session.getValue('end_datetime')) && !gs.nil(reservation.getValue('end_datetime'))) {
+                session.setValue('end_datetime', reservation.getValue('end_datetime'));
+            }
+
+            session.setWorkflow(false);
+            session.update();
+            repaired++;
+        }
+
+        return {
+            scanned: scanned,
+            repaired: repaired,
+            skipped_no_reservation: skippedNoReservation,
+            skipped_no_room_in_reservation: skippedNoRoomInReservation
+        };
+    },
+
     type: 'TrainingSessionService'
 };`,
 })

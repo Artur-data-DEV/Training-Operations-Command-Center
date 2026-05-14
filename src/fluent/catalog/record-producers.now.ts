@@ -5,14 +5,19 @@ import {
     NumericScaleVariable,
     ReferenceVariable,
 } from '@servicenow/sdk/core'
+import { toccServiceCatalog, toccServiceCategory } from './catalog-structure.now'
 
-CatalogItemRecordProducer({
+export const createRoomReservationProducer = CatalogItemRecordProducer({
     $id: Now.ID['x_783010_tocc_a1_record_producer_create_room_reservation'],
     name: 'Create Room Reservation',
     table: 'x_783010_tocc_a1_room_reservation',
     active: true,
+    state: 'published',
     shortDescription: 'For instructors to submit room reservation requests.',
+    meta: ['training', 'room', 'reservation', 'instructor'],
     roles: ['x_783010_tocc_a1.instructor'],
+    catalogs: [toccServiceCatalog, Now.ref('sc_catalog', { title: 'Service Catalog' })],
+    categories: [toccServiceCategory],
     variables: {
         reservation_room: ReferenceVariable({
             question: 'Select Room',
@@ -74,13 +79,17 @@ CatalogItemRecordProducer({
 })(producer, current);`,
 })
 
-CatalogItemRecordProducer({
+export const requestTrainingEnrollmentProducer = CatalogItemRecordProducer({
     $id: Now.ID['x_783010_tocc_a1_record_producer_request_training_enrollment'],
     name: 'Request Training Enrollment',
     table: 'x_783010_tocc_a1_student_enrollment',
     active: true,
+    state: 'published',
     shortDescription: 'For students to request enrollment in training sessions.',
+    meta: ['training', 'enrollment', 'student', 'session'],
     roles: ['x_783010_tocc_a1.student'],
+    catalogs: [toccServiceCatalog, Now.ref('sc_catalog', { title: 'Service Catalog' })],
+    categories: [toccServiceCategory],
     variables: {
         enrollment_training_session: ReferenceVariable({
             question: 'Training Session',

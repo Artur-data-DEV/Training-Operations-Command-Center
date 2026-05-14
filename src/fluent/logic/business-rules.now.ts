@@ -66,6 +66,25 @@ BusinessRule({
 })
 
 BusinessRule({
+    $id: Now.ID['x_783010_tocc_a1_br_validate_training_session_room'],
+    table: 'x_783010_tocc_a1_training_session',
+    name: 'Validate Training Session Room',
+    when: 'before',
+    action: ['insert', 'update'],
+    active: true,
+    order: 90,
+    script: `(function executeRule(current, previous) {
+    var svc = new TrainingSessionService();
+    var error = svc.ensureSessionRoom(current);
+
+    if (error) {
+        gs.addErrorMessage(error);
+        current.setAbortAction(true);
+    }
+})(current, previous);`,
+})
+
+BusinessRule({
     $id: Now.ID['x_783010_tocc_a1_br_sync_seats_from_enrollment'],
     table: 'x_783010_tocc_a1_student_enrollment',
     name: 'Sync Seats From Enrollment',

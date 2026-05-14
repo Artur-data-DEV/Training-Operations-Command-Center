@@ -1,9 +1,16 @@
 import { Dashboard } from '@servicenow/sdk/core'
+import { toccBackofficeWorkspace } from '../workspace/backoffice-workspace.now'
 
 Dashboard({
     $id: Now.ID['x_783010_tocc_a1_dashboard_training_operations_performance'],
     name: 'Training Operations Performance Dashboard',
     active: true,
+    visibilities: [
+        {
+            $id: Now.ID['x_783010_tocc_a1_dashboard_visibility_backoffice_workspace'],
+            experience: toccBackofficeWorkspace,
+        },
+    ],
     tabs: [
         {
             $id: Now.ID['x_783010_tocc_a1_dashboard_tab_exec_summary'],
