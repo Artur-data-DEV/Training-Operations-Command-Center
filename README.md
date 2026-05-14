@@ -28,3 +28,5 @@ Baseline for scoped app `x_783010_tocc_a1` on ServiceNow instance:
 - SDK fallback/manual steps: `docs/manual-config/sdk-gaps-runbook.md`
 - V1 manual por historias: `docs/manual-config/v1-go-live-manual-por-historias.md`
 - V1 manual de desenvolvimento/plataforma: `docs/manual-config/v1-manual-desenvolvimento-plataforma.md`
+- Platform alignment (VA/PA/CMDB/Workspace): `docs/manual-config/platform-alignment-runbook.md`
+- Novas US de finalizacao: `docs/backlog/platform-finalization-user-stories.md`
