@@ -20,8 +20,8 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-ATT-PRESENT');
-                room.setValue('room_code', 'ATF-ATT-P1');
+                room.setValue('room_name', 'ATF-Room-ATT-PRESENT');
+                room.setValue('room_code', 'ATF-ATT-P1-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 10);
                 room.setValue('room_type', 'classroom');
                 room.setValue('status', 'active');
@@ -29,7 +29,7 @@ Test(
 
                 var course = new GlideRecord('x_783010_tocc_a1_course');
                 course.initialize();
-                course.setValue('course_id', 'ATF-ATT-C1');
+                course.setValue('course_id', 'ATF-ATT-C1-' + gs.generateGUID().substring(0, 8));
                 course.setValue('course_name', 'ATF Attendance Course 1');
                 course.setValue('description', 'ATF attendance fixture course');
                 course.setValue('duration_hours', 2);
@@ -53,7 +53,7 @@ Test(
 
                 var user = new GlideRecord('sys_user');
                 user.initialize();
-                user.setValue('user_name', 'atf_att_present_user');
+                user.setValue('user_name', 'atf_att_present_user_' + gs.generateGUID().substring(0, 8));
                 user.setValue('first_name', 'ATF');
                 user.setValue('last_name', 'ATT-P');
                 var userId = user.insert();
@@ -110,8 +110,8 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-ATT-BLOCK');
-                room.setValue('room_code', 'ATF-ATT-B1');
+                room.setValue('room_name', 'ATF-Room-ATT-BLOCK');
+                room.setValue('room_code', 'ATF-ATT-B1-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 10);
                 room.setValue('room_type', 'classroom');
                 room.setValue('status', 'active');
@@ -119,7 +119,7 @@ Test(
 
                 var course = new GlideRecord('x_783010_tocc_a1_course');
                 course.initialize();
-                course.setValue('course_id', 'ATF-ATT-C2');
+                course.setValue('course_id', 'ATF-ATT-C2-' + gs.generateGUID().substring(0, 8));
                 course.setValue('course_name', 'ATF Attendance Course 2');
                 course.setValue('description', 'ATF attendance fixture course');
                 course.setValue('duration_hours', 2);
@@ -143,7 +143,7 @@ Test(
 
                 var user = new GlideRecord('sys_user');
                 user.initialize();
-                user.setValue('user_name', 'atf_att_block_user');
+                user.setValue('user_name', 'atf_att_block_user_' + gs.generateGUID().substring(0, 8));
                 user.setValue('first_name', 'ATF');
                 user.setValue('last_name', 'ATT-B');
                 var userId = user.insert();
@@ -198,8 +198,8 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-ATT-ABS');
-                room.setValue('room_code', 'ATF-ATT-A1');
+                room.setValue('room_name', 'ATF-Room-ATT-ABS');
+                room.setValue('room_code', 'ATF-ATT-A1-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 10);
                 room.setValue('room_type', 'classroom');
                 room.setValue('status', 'active');
@@ -207,7 +207,7 @@ Test(
 
                 var course = new GlideRecord('x_783010_tocc_a1_course');
                 course.initialize();
-                course.setValue('course_id', 'ATF-ATT-C3');
+                course.setValue('course_id', 'ATF-ATT-C3-' + gs.generateGUID().substring(0, 8));
                 course.setValue('course_name', 'ATF Attendance Course 3');
                 course.setValue('description', 'ATF attendance fixture course');
                 course.setValue('duration_hours', 2);
@@ -231,7 +231,7 @@ Test(
 
                 var user = new GlideRecord('sys_user');
                 user.initialize();
-                user.setValue('user_name', 'atf_att_abs_user');
+                user.setValue('user_name', 'atf_att_abs_user_' + gs.generateGUID().substring(0, 8));
                 user.setValue('first_name', 'ATF');
                 user.setValue('last_name', 'ATT-A');
                 var userId = user.insert();

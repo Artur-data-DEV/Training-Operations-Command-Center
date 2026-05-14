@@ -3622,6 +3622,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: '3264a64233a84d09ae1a87af98d68d11'
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '11d0bfa3ebf34183bee522db5dba7dd2'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '327fd70abc524cd0baa22806fd4ab62b'
                         key: {
@@ -4346,6 +4354,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: '4839ece0eea14b36ba205e3c58f44df3'
+                        deleted: true
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: '9cb51eeb6c35462c9283e43309bd4acb'
+                        }
+                    },
+                    {
                         table: 'sys_element_mapping'
                         id: '487bcc30eaac41eea7a33b6d9da617b6'
                         key: {
@@ -4385,6 +4402,15 @@ declare global {
                         key: {
                             document_key: '7a61ab7a09f74dedbef73fd1ba98052b'
                             variable: '989d9e235324220002c6435723dc3484'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: '4a80879019bf4ad085135ddaf9108967'
+                        deleted: true
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '3bdedabe045f47b685db2e658e34c1cf'
                         }
                     },
                     {
@@ -6381,6 +6407,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: '9a1bfcc8504d48f28cf9ca19632009b5'
+                        deleted: true
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: '4b7d7632f0cf43c99f937198164d2882'
@@ -6652,6 +6679,14 @@ declare global {
                         key: {
                             document_key: 'ff9ebe50e2874afaa5e41370a538b327'
                             variable: '334b7bb7675003007ba405225685ef72'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'a4b6c1835789460786e0a219acc698c8'
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: 'cf37c03945eb4415b685605759a644cb'
                         }
                     },
                     {
@@ -8400,6 +8435,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'e1accb8d7c2445638bdc4e225b1342dd'
+                        deleted: true
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: '9c1b4e67ee194fd68d612c34e2ba312a'

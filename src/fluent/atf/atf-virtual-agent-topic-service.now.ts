@@ -192,12 +192,11 @@ Test(
 
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-VA-Room-' + suffix);
-                room.setValue('code', 'ATF-VA-' + suffix);
+                room.setValue('room_name', 'ATF-VA-Room-' + suffix);
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 12);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var now = new GlideDateTime();
@@ -275,12 +274,11 @@ Test(
 
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-VA-Act-Room-' + suffix);
-                room.setValue('code', 'ATF-VA-ACT-' + suffix);
+                room.setValue('room_name', 'ATF-VA-Act-Room-' + suffix);
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 15);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var start = new GlideDateTime();

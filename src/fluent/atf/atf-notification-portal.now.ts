@@ -1,7 +1,7 @@
 import { Test } from '@servicenow/sdk/core'
 
 // ---------------------------------------------------------------------------
-// GROUP: NotificationHelper — event queue validation
+// GROUP: NotificationHelper - event queue validation
 // TEST-024 to TEST-026
 // ---------------------------------------------------------------------------
 
@@ -19,12 +19,11 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-NOTIF1');
-                room.setValue('code', 'ATF-NOTIF1');
+                room.setValue('room_name', 'ATF-Room-NOTIF1');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 10);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var reservation = new GlideRecord('x_783010_tocc_a1_room_reservation');
@@ -81,12 +80,11 @@ Test(
 
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-CANCEL-' + suffix);
-                room.setValue('code', 'ATF-CANCEL-' + suffix);
+                room.setValue('room_name', 'ATF-Room-CANCEL-' + suffix);
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 10);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
@@ -172,12 +170,11 @@ Test(
 
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-CANCEL-LATE-' + suffix);
-                room.setValue('code', 'ATF-CAN-LATE-' + suffix);
+                room.setValue('room_name', 'ATF-Room-CANCEL-LATE-' + suffix);
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 10);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var start = new GlideDateTime();
@@ -316,12 +313,11 @@ Test(
 
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-SNAPSHOT-' + suffix);
-                room.setValue('code', 'ATF-SNAPSHOT-' + suffix);
+                room.setValue('room_name', 'ATF-Room-SNAPSHOT-' + suffix);
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 20);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var reservation = new GlideRecord('x_783010_tocc_a1_room_reservation');
@@ -403,14 +399,13 @@ Test(
                 resource.setValue('resource_name', 'ATF Snapshot Resource ' + suffix);
                 resource.setValue('resource_type', 'projector');
                 resource.setValue('room', roomId);
-                resource.setValue('status', 'available');
-                resource.setValue('active', true);
+                                resource.setValue('active', true);
                 resource.insert();
 
                 var attendance = new GlideRecord('x_783010_tocc_a1_attendance');
                 attendance.initialize();
                 attendance.setValue('training_session', sessionInProgressId);
-                attendance.setValue('student_enrollment', approvedEnrollmentId);
+                attendance.setValue('enrollment', approvedEnrollmentId);
                 attendance.setValue('attendance_status', 'pending');
                 attendance.insert();
 
@@ -492,12 +487,11 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-NOTIF2');
-                room.setValue('code', 'ATF-NOTIF2');
+                room.setValue('room_name', 'ATF-Room-NOTIF2');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 10);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var reservation = new GlideRecord('x_783010_tocc_a1_room_reservation');
@@ -544,12 +538,11 @@ Test(
                 // Create minimal fixtures
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-NOTIF3');
-                room.setValue('code', 'ATF-NOTIF3');
+                room.setValue('room_name', 'ATF-Room-NOTIF3');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 10);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
@@ -565,7 +558,7 @@ Test(
                 var sessionId = session.insert();
 
                 var userI = new GlideRecord('sys_user');
-                userI.initialize(); userI.setValue('user_name', 'atf_notif_i'); userI.setValue('first_name', 'ATF'); userI.setValue('last_name', 'I');
+                userI.initialize(); userI.setValue('user_name', 'atf_user_' + gs.generateGUID().substring(0, 8)); userI.setValue('first_name', 'ATF'); userI.setValue('last_name', 'I');
                 var userIId = userI.insert();
                 var studentI = new GlideRecord('x_783010_tocc_a1_student');
                 studentI.initialize(); studentI.setValue('user', userIId); studentI.setValue('active', true);
@@ -608,7 +601,7 @@ Test(
 )
 
 // ---------------------------------------------------------------------------
-// GROUP: PortalApiService — ACL & data boundaries
+// GROUP: PortalApiService - ACL & data boundaries
 // TEST-027 to TEST-030
 // ---------------------------------------------------------------------------
 
@@ -626,12 +619,11 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-PORTAL1');
-                room.setValue('code', 'ATF-PORTAL1');
+                room.setValue('room_name', 'ATF-Room-PORTAL1');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 10);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var statuses = ['open', 'full', 'draft', 'completed', 'cancelled'];
@@ -682,11 +674,11 @@ Test(
             script: `
                 // Create two users with student profiles
                 var userJ = new GlideRecord('sys_user');
-                userJ.initialize(); userJ.setValue('user_name', 'atf_portal_j'); userJ.setValue('first_name', 'ATF'); userJ.setValue('last_name', 'J');
+                userJ.initialize(); userJ.setValue('user_name', 'atf_user_' + gs.generateGUID().substring(0, 8)); userJ.setValue('first_name', 'ATF'); userJ.setValue('last_name', 'J');
                 var userJId = userJ.insert();
 
                 var userK = new GlideRecord('sys_user');
-                userK.initialize(); userK.setValue('user_name', 'atf_portal_k'); userK.setValue('first_name', 'ATF'); userK.setValue('last_name', 'K');
+                userK.initialize(); userK.setValue('user_name', 'atf_user_' + gs.generateGUID().substring(0, 8)); userK.setValue('first_name', 'ATF'); userK.setValue('last_name', 'K');
                 var userKId = userK.insert();
 
                 var studentJ = new GlideRecord('x_783010_tocc_a1_student');
@@ -699,12 +691,11 @@ Test(
 
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-PORTAL2');
-                room.setValue('code', 'ATF-P2');
+                room.setValue('room_name', 'ATF-Room-PORTAL2');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 10);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
@@ -765,12 +756,11 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-PORTAL3');
-                room.setValue('code', 'ATF-P3');
+                room.setValue('room_name', 'ATF-Room-PORTAL3');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 10);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 // Session with a deadline in the past
@@ -791,7 +781,7 @@ Test(
                 var sessionId = session.insert();
 
                 var userL = new GlideRecord('sys_user');
-                userL.initialize(); userL.setValue('user_name', 'atf_deadline_l'); userL.setValue('first_name', 'ATF'); userL.setValue('last_name', 'L');
+                userL.initialize(); userL.setValue('user_name', 'atf_user_' + gs.generateGUID().substring(0, 8)); userL.setValue('first_name', 'ATF'); userL.setValue('last_name', 'L');
                 var userLId = userL.insert();
                 var studentL = new GlideRecord('x_783010_tocc_a1_student');
                 studentL.initialize(); studentL.setValue('user', userLId); studentL.setValue('active', true);
@@ -836,12 +826,11 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-PORTAL4');
-                room.setValue('code', 'ATF-P4');
+                room.setValue('room_name', 'ATF-Room-PORTAL4');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 10);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
@@ -858,7 +847,7 @@ Test(
 
                 // Owner student M
                 var userM = new GlideRecord('sys_user');
-                userM.initialize(); userM.setValue('user_name', 'atf_wrong_m'); userM.setValue('first_name', 'ATF'); userM.setValue('last_name', 'M');
+                userM.initialize(); userM.setValue('user_name', 'atf_user_' + gs.generateGUID().substring(0, 8)); userM.setValue('first_name', 'ATF'); userM.setValue('last_name', 'M');
                 var userMId = userM.insert();
                 var studentM = new GlideRecord('x_783010_tocc_a1_student');
                 studentM.initialize(); studentM.setValue('user', userMId); studentM.setValue('active', true);
@@ -866,7 +855,7 @@ Test(
 
                 // Attacker student N
                 var userN = new GlideRecord('sys_user');
-                userN.initialize(); userN.setValue('user_name', 'atf_wrong_n'); userN.setValue('first_name', 'ATF'); userN.setValue('last_name', 'N');
+                userN.initialize(); userN.setValue('user_name', 'atf_user_' + gs.generateGUID().substring(0, 8)); userN.setValue('first_name', 'ATF'); userN.setValue('last_name', 'N');
                 var userNId = userN.insert();
                 var studentN = new GlideRecord('x_783010_tocc_a1_student');
                 studentN.initialize(); studentN.setValue('user', userNId); studentN.setValue('active', true);
