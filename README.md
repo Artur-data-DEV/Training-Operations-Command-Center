@@ -26,3 +26,5 @@ Baseline for scoped app `x_783010_tocc_a1` on ServiceNow instance:
 
 - Scope/bootstrap: `docs/manual-config/instance-bootstrap.md`
 - SDK fallback/manual steps: `docs/manual-config/sdk-gaps-runbook.md`
+- V1 manual por historias: `docs/manual-config/v1-go-live-manual-por-historias.md`
+- V1 manual de desenvolvimento/plataforma: `docs/manual-config/v1-manual-desenvolvimento-plataforma.md`
