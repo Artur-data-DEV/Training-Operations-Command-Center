@@ -5,7 +5,7 @@ const reservationSignalSubflow = Subflow(
     {
         $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_signal_v2'],
         name: '[TOCC][SF] Reservation Intake Processing',
-        description: 'Queues reservation submitted notification and creates a backoffice follow-up task.',
+        description: 'Queues reservation submitted notification.',
         runAs: 'system',
         inputs: {
             reservationRecord: ReferenceColumn({
@@ -25,62 +25,6 @@ const reservationSignalSubflow = Subflow(
                 record: wfa.dataPill(params.inputs.reservationRecord, 'reference'),
                 parm1: 'reservation_submitted',
                 parm2: 'flow',
-            }
-        )
-
-        const backofficeGroup = wfa.action(
-            action.core.lookUpRecord,
-            { $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_lookup_group_v2'] },
-            {
-                table: 'sys_user_group',
-                conditions: 'name=[TOCC] Backoffice',
-                sort_type: 'sort_asc',
-                if_multiple_records_are_found_action: 'use_first_record',
-                dont_fail_flow_on_error: true,
-            }
-        )
-
-        wfa.flowLogic.if(
-            {
-                $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_group_found_v2'],
-                condition: `${wfa.dataPill(backofficeGroup.status, 'string')}=0`,
-                annotation: 'Backoffice group found',
-            },
-            () => {
-                wfa.action(
-                    action.core.createTask,
-                    { $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_create_task_group_v2'] },
-                    {
-                        task_table: 'task',
-                        wait: false,
-                        field_values: TemplateValue({
-                            short_description: 'TOCC reservation pending approval',
-                            description: 'Review reservation and decide using reservation UI actions.',
-                            parent: wfa.dataPill(params.inputs.reservationRecord, 'reference'),
-                            assignment_group: wfa.dataPill(backofficeGroup.Record, 'reference'),
-                        }),
-                    }
-                )
-            }
-        )
-
-        wfa.flowLogic.else(
-            { $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_group_missing_v2'] },
-            () => {
-                wfa.action(
-                    action.core.createTask,
-                    { $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_create_task_fallback_v2'] },
-                    {
-                        task_table: 'task',
-                        wait: false,
-                        field_values: TemplateValue({
-                            short_description: 'TOCC reservation pending approval',
-                            description:
-                                'Backoffice group [TOCC] Backoffice was not found. Route this reservation manually.',
-                            parent: wfa.dataPill(params.inputs.reservationRecord, 'reference'),
-                        }),
-                    }
-                )
             }
         )
     }
@@ -135,8 +79,8 @@ const sessionCancelledSignalSubflow = Subflow(
 Flow(
     {
         $id: Now.ID['x_783010_tocc_a1_flow_reservation_intake_signal_v2'],
-        name: '[TOCC][FLOW] Reservation Intake',
-        description: 'On submitted reservation, queue notifications and create backoffice approval task.',
+        name: '[TOCC][FLOW] Reservation Approval',
+        description: 'On submitted reservation, route to backoffice approval and apply decision.',
         runAs: 'system',
         flowPriority: 'HIGH',
     },
@@ -160,12 +104,299 @@ Flow(
             }
         )
 
+        const backofficeGroup = wfa.action(
+            action.core.lookUpRecord,
+            { $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_lookup_group'] },
+            {
+                table: 'sys_user_group',
+                conditions: 'name=[TOCC] Backoffice',
+                sort_type: 'sort_asc',
+                if_multiple_records_are_found_action: 'use_first_record',
+                dont_fail_flow_on_error: true,
+            }
+        )
+
+        wfa.flowLogic.if(
+            {
+                $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_group_found'],
+                condition: `${wfa.dataPill(backofficeGroup.status, 'string')}=0`,
+                annotation: 'Backoffice group found',
+            },
+            () => {
+                const reservationApproval = wfa.action(
+                    action.core.askForApproval,
+                    { $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_create_task_group'] },
+                    {
+                        record: wfa.dataPill(params.trigger.current, 'reference'),
+                        table: 'x_783010_tocc_a1_room_reservation',
+                        approval_reason: 'Backoffice approval required for room reservation submission.',
+                        approval_conditions: wfa.approvalRules({
+                            conditionType: 'OR',
+                            ruleSets: [
+                                {
+                                    action: 'ApprovesRejects',
+                                    conditionType: 'AND',
+                                    rules: [
+                                        [
+                                            {
+                                                ruleType: 'Any',
+                                                groups: [wfa.dataPill(backofficeGroup.Record, 'string')],
+                                                users: [],
+                                                manual: false,
+                                            },
+                                        ],
+                                    ],
+                                },
+                            ],
+                        }),
+                        due_date: wfa.approvalDueDate({
+                            action: 'none',
+                            dateType: 'relative',
+                            duration: 2,
+                            durationType: 'days',
+                            daysSchedule: '',
+                        }),
+                    }
+                )
+
+                wfa.action(
+                    action.core.updateRecord,
+                    { $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_create_task_fallback'] },
+                    {
+                        table_name: 'x_783010_tocc_a1_room_reservation',
+                        record: wfa.dataPill(params.trigger.current, 'reference'),
+                        values: TemplateValue({
+                            status: wfa.dataPill(reservationApproval.approval_state, 'string'),
+                            work_notes: `Reservation decision applied by FLOW-01 (${wfa.dataPill(reservationApproval.approval_state, 'string')}).`,
+                        }),
+                    }
+                )
+
+                wfa.action(
+                    action.core.fireEvent,
+                    { $id: Now.ID['x_783010_tocc_a1_flow_reservation_intake_signal_log'] },
+                    {
+                        event_name: `x_783010_tocc_a1.reservation.${wfa.dataPill(reservationApproval.approval_state, 'string')}`,
+                        table: 'x_783010_tocc_a1_room_reservation',
+                        record: wfa.dataPill(params.trigger.current, 'reference'),
+                        parm1: wfa.dataPill(reservationApproval.approval_state, 'string'),
+                        parm2: 'flow',
+                    }
+                )
+            }
+        )
+
+        wfa.flowLogic.else(
+            { $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_group_missing'] },
+            () => {
+                wfa.action(
+                    action.core.createTask,
+                    { $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_create_task_group_v2'] },
+                    {
+                        task_table: 'task',
+                        wait: false,
+                        field_values: TemplateValue({
+                            short_description: 'TOCC reservation pending manual routing',
+                            description:
+                                'Backoffice group [TOCC] Backoffice was not found. Route this reservation manually.',
+                            parent: wfa.dataPill(params.trigger.current, 'reference'),
+                        }),
+                    }
+                )
+            }
+        )
+
         wfa.action(
             action.core.log,
             { $id: Now.ID['x_783010_tocc_a1_flow_reservation_intake_signal_log_v2'] },
             {
                 log_level: 'info',
-                log_message: '[TOCC] Reservation intake flow executed.',
+                log_message: '[TOCC] Reservation approval flow executed.',
+            }
+        )
+    }
+)
+
+Flow(
+    {
+        $id: Now.ID['x_783010_tocc_a1_flow_daily_kpi_refresh_signal_v2'],
+        name: '[TOCC][FLOW] Enrollment Approval',
+        description: 'On pending enrollment, process direct mode or route instructor approval.',
+        runAs: 'system',
+        flowPriority: 'HIGH',
+    },
+    wfa.trigger(
+        trigger.record.created,
+        { $id: Now.ID['x_783010_tocc_a1_flow_daily_kpi_refresh_signal_trigger_v2'] },
+        {
+            table: 'x_783010_tocc_a1_student_enrollment',
+            condition: 'status=pending',
+            run_flow_in: 'background',
+            trigger_strategy: 'once',
+        }
+    ),
+    (params) => {
+        const instructorApprovalMode = wfa.action(
+            action.core.lookUpRecord,
+            { $id: Now.ID['x_783010_tocc_a1_flow_daily_kpi_refresh_lookup_snapshots_v2'] },
+            {
+                table: 'x_783010_tocc_a1_training_config',
+                conditions: 'name=enrollment_approval_mode^active=true^value=instructor_approval',
+                sort_type: 'sort_asc',
+                if_multiple_records_are_found_action: 'use_first_record',
+                dont_fail_flow_on_error: true,
+            }
+        )
+
+        wfa.flowLogic.if(
+            {
+                $id: Now.ID['x_783010_tocc_a1_flow_attendance_confirmation_loop_sessions'],
+                condition: `${wfa.dataPill(instructorApprovalMode.status, 'string')}=0`,
+                annotation: 'Instructor approval mode',
+            },
+            () => {
+                const sessionRecord = wfa.action(
+                    action.core.lookUpRecord,
+                    { $id: Now.ID['x_783010_tocc_a1_flow_session_cancelled_update_work_notes'] },
+                    {
+                        table: 'x_783010_tocc_a1_training_session',
+                        // @ts-ignore Fluent parser requires direct property access expression for data pills.
+                        conditions: `sys_id=${wfa.dataPill(params.trigger.current.training_session, 'reference')}`,
+                        sort_type: 'sort_asc',
+                        if_multiple_records_are_found_action: 'use_first_record',
+                        dont_fail_flow_on_error: true,
+                    }
+                )
+
+                wfa.flowLogic.if(
+                    {
+                        $id: Now.ID['x_783010_tocc_a1_flow_session_reminder_loop_sessions'],
+                        condition: `${wfa.dataPill(sessionRecord.status, 'string')}=0`,
+                        annotation: 'Session found for enrollment',
+                    },
+                    () => {
+                        const instructorApproval = wfa.action(
+                            action.core.askForApproval,
+                            { $id: Now.ID['x_783010_tocc_a1_flow_session_cancelled_signal_log'] },
+                            {
+                                record: wfa.dataPill(params.trigger.current, 'reference'),
+                                table: 'x_783010_tocc_a1_student_enrollment',
+                                approval_reason:
+                                    'Instructor approval required according to enrollment_approval_mode.',
+                                approval_conditions: wfa.approvalRules({
+                                    conditionType: 'OR',
+                                    ruleSets: [
+                                        {
+                                            action: 'ApprovesRejects',
+                                            conditionType: 'AND',
+                                            rules: [
+                                                [
+                                                    {
+                                                        ruleType: 'Any',
+                                                        users: [wfa.dataPill(sessionRecord.Record.instructor, 'string')],
+                                                        groups: [],
+                                                        manual: false,
+                                                    },
+                                                ],
+                                            ],
+                                        },
+                                    ],
+                                }),
+                                due_date: wfa.approvalDueDate({
+                                    action: 'none',
+                                    dateType: 'relative',
+                                    duration: 2,
+                                    durationType: 'days',
+                                    daysSchedule: '',
+                                }),
+                            }
+                        )
+
+                        wfa.action(
+                            action.core.updateRecord,
+                            { $id: Now.ID['x_783010_tocc_a1_flow_session_reminder_lookup_sessions'] },
+                            {
+                                table_name: 'x_783010_tocc_a1_student_enrollment',
+                                record: wfa.dataPill(params.trigger.current, 'reference'),
+                                values: TemplateValue({
+                                    status: wfa.dataPill(instructorApproval.approval_state, 'string'),
+                                    work_notes: `Enrollment decision applied by FLOW-02 (${wfa.dataPill(instructorApproval.approval_state, 'string')}).`,
+                                }),
+                            }
+                        )
+
+                        wfa.action(
+                            action.core.fireEvent,
+                            { $id: Now.ID['x_783010_tocc_a1_flow_session_reminder_fire_event'] },
+                            {
+                                event_name: `x_783010_tocc_a1.enrollment.${wfa.dataPill(instructorApproval.approval_state, 'string')}`,
+                                table: 'x_783010_tocc_a1_student_enrollment',
+                                record: wfa.dataPill(params.trigger.current, 'reference'),
+                                parm1: wfa.dataPill(instructorApproval.approval_state, 'string'),
+                                parm2: 'flow',
+                            }
+                        )
+                    }
+                )
+
+                wfa.flowLogic.else(
+                    { $id: Now.ID['x_783010_tocc_a1_subflow_session_cancelled_loop_enrollments'] },
+                    () => {
+                        wfa.action(
+                            action.core.createTask,
+                            { $id: Now.ID['x_783010_tocc_a1_flow_session_reminder_lookup_enrollments'] },
+                            {
+                                task_table: 'task',
+                                wait: false,
+                                field_values: TemplateValue({
+                                    short_description: 'TOCC enrollment pending manual routing',
+                                    description:
+                                        'Session/instructor was not found for pending enrollment. Manual decision required.',
+                                    parent: wfa.dataPill(params.trigger.current, 'reference'),
+                                }),
+                            }
+                        )
+                    }
+                )
+            }
+        )
+
+        wfa.flowLogic.else(
+            { $id: Now.ID['x_783010_tocc_a1_flow_attendance_confirmation_loop_enrollments'] },
+            () => {
+                wfa.action(
+                    action.core.updateRecord,
+                    { $id: Now.ID['x_783010_tocc_a1_flow_attendance_confirmation_lookup_enrollments'] },
+                    {
+                        table_name: 'x_783010_tocc_a1_student_enrollment',
+                        record: wfa.dataPill(params.trigger.current, 'reference'),
+                        values: TemplateValue({
+                            status: 'approved',
+                            work_notes: 'Enrollment auto-approved through FLOW-02 direct mode.',
+                        }),
+                    }
+                )
+
+                wfa.action(
+                    action.core.fireEvent,
+                    { $id: Now.ID['x_783010_tocc_a1_flow_attendance_confirmation_fire_event'] },
+                    {
+                        event_name: 'x_783010_tocc_a1.enrollment.approved',
+                        table: 'x_783010_tocc_a1_student_enrollment',
+                        record: wfa.dataPill(params.trigger.current, 'reference'),
+                        parm1: 'enrollment_auto_approved',
+                        parm2: 'flow',
+                    }
+                )
+            }
+        )
+
+        wfa.action(
+            action.core.log,
+            { $id: Now.ID['x_783010_tocc_a1_flow_daily_kpi_refresh_signal_log_v2'] },
+            {
+                log_level: 'info',
+                log_message: '[TOCC] Enrollment approval flow executed.',
             }
         )
     }
@@ -217,45 +448,6 @@ Flow(
             {
                 log_level: 'info',
                 log_message: '[TOCC] Session cancelled flow executed.',
-            }
-        )
-    }
-)
-
-Flow(
-    {
-        $id: Now.ID['x_783010_tocc_a1_flow_daily_kpi_refresh_signal_v2'],
-        name: '[TOCC][FLOW] Daily KPI Refresh Observation',
-        description: 'Collects daily operational count context for KPI refresh observability.',
-        runAs: 'system',
-        flowPriority: 'LOW',
-    },
-    wfa.trigger(
-        trigger.scheduled.daily,
-        { $id: Now.ID['x_783010_tocc_a1_flow_daily_kpi_refresh_signal_trigger_v2'] },
-        {
-            time: '01:10:00',
-        }
-    ),
-    () => {
-        const dailySnapshots = wfa.action(
-            action.core.lookUpRecords,
-            { $id: Now.ID['x_783010_tocc_a1_flow_daily_kpi_refresh_lookup_snapshots_v2'] },
-            {
-                table: 'x_783010_tocc_a1_kpi_snapshot',
-                conditions:
-                    'snapshot_dateONToday@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()',
-                max_results: 10000,
-                sort_type: 'sort_asc',
-            }
-        )
-
-        wfa.action(
-            action.core.log,
-            { $id: Now.ID['x_783010_tocc_a1_flow_daily_kpi_refresh_signal_log_v2'] },
-            {
-                log_level: 'info',
-                log_message: `Daily KPI flow observed ${wfa.dataPill(dailySnapshots.Count, 'integer')} snapshot row(s) for today.`,
             }
         )
     }

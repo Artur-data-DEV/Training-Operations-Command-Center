@@ -1359,7 +1359,7 @@ declare global {
                     x_783010_tocc_a1_flow_attendance_confirmation_fire_event: {
                         table: 'sys_hub_action_instance_v2'
                         id: '1fdfc9dc11964d9e96cab01e33e1cd06'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_flow_attendance_confirmation_fire_event_v2: {
                         table: 'sys_hub_action_instance_v2'
@@ -1368,7 +1368,7 @@ declare global {
                     x_783010_tocc_a1_flow_attendance_confirmation_lookup_enrollments: {
                         table: 'sys_hub_action_instance_v2'
                         id: '24acf38eb8204c94b30100d55fd7bde9'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_flow_attendance_confirmation_lookup_enrollments_v2: {
                         table: 'sys_hub_action_instance_v2'
@@ -1386,7 +1386,7 @@ declare global {
                     x_783010_tocc_a1_flow_attendance_confirmation_loop_enrollments: {
                         table: 'sys_hub_flow_logic_instance_v2'
                         id: 'fa35bf63d5ff467a99cea4886719fadd'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_flow_attendance_confirmation_loop_enrollments_v2: {
                         table: 'sys_hub_flow_logic_instance_v2'
@@ -1395,7 +1395,7 @@ declare global {
                     x_783010_tocc_a1_flow_attendance_confirmation_loop_sessions: {
                         table: 'sys_hub_flow_logic_instance_v2'
                         id: 'f29570ba8143449d93feeb25ff52d035'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_flow_attendance_confirmation_loop_sessions_v2: {
                         table: 'sys_hub_flow_logic_instance_v2'
@@ -1445,7 +1445,7 @@ declare global {
                     x_783010_tocc_a1_flow_reservation_intake_signal_log: {
                         table: 'sys_hub_action_instance_v2'
                         id: 'b8eafa4320a3497789c1d8acd3583ce0'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_flow_reservation_intake_signal_log_v2: {
                         table: 'sys_hub_action_instance_v2'
@@ -1481,7 +1481,7 @@ declare global {
                     x_783010_tocc_a1_flow_session_cancelled_signal_log: {
                         table: 'sys_hub_action_instance_v2'
                         id: 'e76cef3d17ad4f28a018878320628342'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_flow_session_cancelled_signal_log_v2: {
                         table: 'sys_hub_action_instance_v2'
@@ -1512,7 +1512,7 @@ declare global {
                     x_783010_tocc_a1_flow_session_cancelled_update_work_notes: {
                         table: 'sys_hub_action_instance_v2'
                         id: '409af7b55b87445aa75b33b96fa36a05'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_flow_session_cancelled_update_work_notes_v2: {
                         table: 'sys_hub_action_instance_v2'
@@ -1548,7 +1548,7 @@ declare global {
                     x_783010_tocc_a1_flow_session_reminder_fire_event: {
                         table: 'sys_hub_action_instance_v2'
                         id: '3d3426516e3a481a956e3161c0c6233d'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_flow_session_reminder_fire_event_v2: {
                         table: 'sys_hub_action_instance_v2'
@@ -1557,7 +1557,7 @@ declare global {
                     x_783010_tocc_a1_flow_session_reminder_lookup_enrollments: {
                         table: 'sys_hub_action_instance_v2'
                         id: '075f3669763d47758a47abe31a3af927'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_flow_session_reminder_lookup_enrollments_v2: {
                         table: 'sys_hub_action_instance_v2'
@@ -1566,7 +1566,7 @@ declare global {
                     x_783010_tocc_a1_flow_session_reminder_lookup_sessions: {
                         table: 'sys_hub_action_instance_v2'
                         id: '6c196227dc2246df959eaf355a300358'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_flow_session_reminder_lookup_sessions_v2: {
                         table: 'sys_hub_action_instance_v2'
@@ -1584,7 +1584,7 @@ declare global {
                     x_783010_tocc_a1_flow_session_reminder_loop_sessions: {
                         table: 'sys_hub_flow_logic_instance_v2'
                         id: 'a55503602e47428ba594681d55a60422'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_flow_session_reminder_loop_sessions_v2: {
                         table: 'sys_hub_flow_logic_instance_v2'
@@ -2057,16 +2057,17 @@ declare global {
                     x_783010_tocc_a1_subflow_reservation_intake_create_task_fallback: {
                         table: 'sys_hub_action_instance_v2'
                         id: '91a11314504241beb850f08e9a70d7ef'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_subflow_reservation_intake_create_task_fallback_v2: {
                         table: 'sys_hub_action_instance_v2'
                         id: '5d2f2097d9d641d59d068eff433da28f'
+                        deleted: true
                     }
                     x_783010_tocc_a1_subflow_reservation_intake_create_task_group: {
                         table: 'sys_hub_action_instance_v2'
                         id: 'e3974e8c686342eea481b92eb5b02b85'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_subflow_reservation_intake_create_task_group_v2: {
                         table: 'sys_hub_action_instance_v2'
@@ -2084,29 +2085,32 @@ declare global {
                     x_783010_tocc_a1_subflow_reservation_intake_group_found: {
                         table: 'sys_hub_flow_logic_instance_v2'
                         id: 'ce9361fdad3c42bf9fe3e52394e2b5d8'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_subflow_reservation_intake_group_found_v2: {
                         table: 'sys_hub_flow_logic_instance_v2'
                         id: '6e61082f6bcc4ccd8dd01b67cbda09ef'
+                        deleted: true
                     }
                     x_783010_tocc_a1_subflow_reservation_intake_group_missing: {
                         table: 'sys_hub_flow_logic_instance_v2'
                         id: '441057f46a9d48d6b254d2069bb6f0f2'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_subflow_reservation_intake_group_missing_v2: {
                         table: 'sys_hub_flow_logic_instance_v2'
                         id: 'b379611602a749e5869f423710f529da'
+                        deleted: true
                     }
                     x_783010_tocc_a1_subflow_reservation_intake_lookup_group: {
                         table: 'sys_hub_action_instance_v2'
                         id: '9fc47c6e97bb4002a639bb654d72d846'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_subflow_reservation_intake_lookup_group_v2: {
                         table: 'sys_hub_action_instance_v2'
                         id: '1f54cb05248044aea8f8139f8550b0e2'
+                        deleted: true
                     }
                     x_783010_tocc_a1_subflow_reservation_intake_signal: {
                         table: 'sys_hub_flow'
@@ -2138,7 +2142,7 @@ declare global {
                     x_783010_tocc_a1_subflow_session_cancelled_loop_enrollments: {
                         table: 'sys_hub_flow_logic_instance_v2'
                         id: '9982440e051648e9b9c8713cbe689962'
-                        deleted: true
+                        deleted: false
                     }
                     x_783010_tocc_a1_subflow_session_cancelled_loop_enrollments_v2: {
                         table: 'sys_hub_flow_logic_instance_v2'
@@ -3630,6 +3634,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: '36d7fc1f8d7544c2b0c9f2995961d972'
+                        deleted: true
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: '188a32f71e6240fc8aee3a9dbce82531'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '36f9d624859a469daa36a64de95ea04c'
                         key: {
@@ -4490,6 +4503,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: '53fe3dfd49bd42b2b203b4c4dd824412'
+                        deleted: true
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: 'bd85599f963a479c935a071ca108f04e'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: '5436f7d78d7446388402f20d88b47230'
                         key: {
@@ -4639,6 +4661,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: '5a0b35d861eb411aa936fdb96dc1eb6a'
+                        deleted: true
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: '010b9aa0428a40c8bc84efc554fc6cf0'
@@ -5441,6 +5464,24 @@ declare global {
                             name: 'x_783010_tocc_a1_course'
                             element: 'status'
                             value: 'draft'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: '7cb90a0478b0487387881298e2741468'
+                        deleted: true
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '229ee9018b28466dbdef0bbc0210b6cc'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: '7d53b945f9d444629e1caca9697ffa3f'
+                        deleted: true
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '72993ff2d6e74380a80f03f3f40079a9'
                         }
                     },
                     {
@@ -6916,6 +6957,14 @@ declare global {
                         key: {
                             dashboard: '0e91812dc4884f8cb00e6fe9fce50337'
                             dashboard_tab: 'a253d4cfd6f54fb9a2032bcc1e931427'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'b262fb42544844c898f8602dc9edd36e'
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: 'c3110d13360f4baebb5d3dfa8866ddfc'
                         }
                     },
                     {
@@ -8400,6 +8449,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'ed6e379416de45078b8f99f77af8affc'
+                        deleted: true
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: 'c26126bc13d4482fa6426a3c365c8488'
@@ -8766,6 +8816,14 @@ declare global {
                             name: 'x_783010_tocc_a1_room_resource'
                             element: 'active'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'ff368c81ddc4400684e78fd22a909b8a'
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '31e50be3a6d64ff7aff7e1b6f267bc92'
                         }
                     },
                     {
