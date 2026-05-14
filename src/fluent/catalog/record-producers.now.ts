@@ -15,7 +15,7 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
     state: 'published',
     shortDescription: 'For instructors to submit room reservation requests.',
     meta: ['training', 'room', 'reservation', 'instructor'],
-    roles: ['x_783010_tocc_a1.instructor'],
+    roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.admin'],
     catalogs: [toccServiceCatalog, Now.ref('sc_catalog', { title: 'Service Catalog' })],
     categories: [toccServiceCategory],
     variables: {
@@ -87,7 +87,7 @@ export const requestTrainingEnrollmentProducer = CatalogItemRecordProducer({
     state: 'published',
     shortDescription: 'For students to request enrollment in training sessions.',
     meta: ['training', 'enrollment', 'student', 'session'],
-    roles: ['x_783010_tocc_a1.student'],
+    roles: ['x_783010_tocc_a1.student', 'x_783010_tocc_a1.admin'],
     catalogs: [toccServiceCatalog, Now.ref('sc_catalog', { title: 'Service Catalog' })],
     categories: [toccServiceCategory],
     variables: {
