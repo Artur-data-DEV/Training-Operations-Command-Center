@@ -4,6 +4,7 @@
         enrollments: '?id=tocc_my_enrollments',
         reservations: '?id=tocc_my_reservations',
         help: '?id=tocc_help',
+        sow_home: '/now/sow/home',
     };
 
     data.operations = null;

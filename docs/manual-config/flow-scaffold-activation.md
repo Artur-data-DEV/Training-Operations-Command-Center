@@ -1,6 +1,6 @@
-# Flow Scaffold Activation
+# Flow Orchestration Activation
 
-This runbook covers activation and verification for the Fluent SDK flow scaffolds in:
+This runbook covers activation and verification for the Fluent SDK orchestration flows in:
 
 - `src/fluent/flows/training-orchestration-flows.now.ts`
 
@@ -8,37 +8,39 @@ This runbook covers activation and verification for the Fluent SDK flow scaffold
 
 The SDK now materializes these records in `sys_hub_flow`:
 
-- `[TOCC][FLOW] Reservation Intake Signal`
-- `[TOCC][FLOW] Session Cancelled Signal`
-- `[TOCC][FLOW] Daily KPI Refresh Signal`
-- `[TOCC][FLOW] Attendance Confirmation Cadence Signal`
-- `[TOCC][FLOW] Session Reminder Cadence Signal`
-- `[TOCC][SF] Emit Reservation Intake Signal`
-- `[TOCC][SF] Emit Session Cancelled Signal`
+- `[TOCC][FLOW] Reservation Intake`
+- `[TOCC][FLOW] Session Cancelled`
+- `[TOCC][FLOW] Daily KPI Refresh Observation`
+- `[TOCC][FLOW] Attendance Confirmation Cadence`
+- `[TOCC][FLOW] Session Reminder Cadence`
+- `[TOCC][SF] Reservation Intake Processing`
+- `[TOCC][SF] Session Cancelled Processing`
 
 ## Activation sequence
 
 1. Open **Flow Designer** and search for `[TOCC][FLOW]`.
 2. Review each flow trigger/condition.
 3. Confirm required events exist in **System Policy > Events > Registry**:
-   - `x_783010_tocc_a1.flow.reservation_intake_signal`
-   - `x_783010_tocc_a1.flow.session_cancelled_signal`
+   - `x_783010_tocc_a1.reservation.submitted`
+   - `x_783010_tocc_a1.session.cancelled`
+   - `x_783010_tocc_a1.session.confirmation_request`
+   - `x_783010_tocc_a1.session.reminder`
 4. Activate flows in this order:
-   - `Reservation Intake Signal`
-   - `Session Cancelled Signal`
-   - `Daily KPI Refresh Signal`
-   - `Attendance Confirmation Cadence Signal`
-   - `Session Reminder Cadence Signal`
+   - `Reservation Intake`
+   - `Session Cancelled`
+   - `Daily KPI Refresh Observation`
+   - `Attendance Confirmation Cadence`
+   - `Session Reminder Cadence`
 
 ## Post-activation checks
 
 1. Submit a reservation with status `submitted`.
 2. Cancel a training session.
-3. Confirm signal entries in `syslog` and `sysevent`.
+3. Confirm entries in `syslog` and `sysevent`.
 4. Run ATF:
-   - `TEST-043`, `TEST-044`, `TEST-045`
+   - `TEST-047`, `TEST-048`, `TEST-049`
 
 ## Notes
 
-- These artifacts are scaffolds to keep orchestration in code and versioned in Git.
-- Business logic remains in Script Includes and Business Rules; flow steps are orchestration/signal focused.
+- These artifacts are operational orchestration flows versioned in Git.
+- Business rules still own data integrity; flows own routing and event dispatch.

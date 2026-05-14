@@ -21,6 +21,8 @@ Escopo tecnico:
 3. Confirmar eventos cadastrados (12 eventos `x_783010_tocc_a1.*`).
 4. Confirmar grupo de aprovacao:
    - `[TOCC] Backoffice`
+5. (Opcional, recomendado para UAT rapido) Confirmar seed de principals e dados de smoke:
+   - `docs/manual-config/demo-principals-and-portal-smoke.md`
 
 ---
 

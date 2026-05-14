@@ -1,15 +1,15 @@
 import { Test } from '@servicenow/sdk/core'
 
 // ---------------------------------------------------------------------------
-// GROUP: Flow + Subflow scaffolds
+// GROUP: Flow + Subflow orchestration
 // TEST-047 to TEST-049
 // ---------------------------------------------------------------------------
 
 Test(
     {
         $id: Now.ID['x_783010_tocc_a1_atf_flow_scaffold_presence'],
-        name: '[TOCC][FLOW] orchestration flow scaffolds are materialized',
-        description: 'Validates the expected Flow records are present in sys_hub_flow.',
+        name: '[TOCC][FLOW] orchestration flows are materialized',
+        description: 'Validates the expected operational Flow records are present in sys_hub_flow.',
         active: true,
         failOnServerError: true,
     },
@@ -25,11 +25,11 @@ Test(
                     gs.assertTrue(gr.next(), 'Flow not found: ' + flowName);
                 }
 
-                assertFlowExists('[TOCC][FLOW] Reservation Intake Signal');
-                assertFlowExists('[TOCC][FLOW] Session Cancelled Signal');
-                assertFlowExists('[TOCC][FLOW] Daily KPI Refresh Signal');
-                assertFlowExists('[TOCC][FLOW] Attendance Confirmation Cadence Signal');
-                assertFlowExists('[TOCC][FLOW] Session Reminder Cadence Signal');
+                assertFlowExists('[TOCC][FLOW] Reservation Intake');
+                assertFlowExists('[TOCC][FLOW] Session Cancelled');
+                assertFlowExists('[TOCC][FLOW] Daily KPI Refresh Observation');
+                assertFlowExists('[TOCC][FLOW] Attendance Confirmation Cadence');
+                assertFlowExists('[TOCC][FLOW] Session Reminder Cadence');
             `,
         })
     }
@@ -38,8 +38,8 @@ Test(
 Test(
     {
         $id: Now.ID['x_783010_tocc_a1_atf_subflow_scaffold_presence'],
-        name: '[TOCC][FLOW] orchestration subflow scaffolds are materialized',
-        description: 'Validates reusable subflows for flow signaling are present.',
+        name: '[TOCC][FLOW] orchestration subflows are materialized',
+        description: 'Validates reusable operational subflows are present.',
         active: true,
         failOnServerError: true,
     },
@@ -55,8 +55,8 @@ Test(
                     gs.assertTrue(gr.next(), 'Subflow not found: ' + flowName);
                 }
 
-                assertFlowExists('[TOCC][SF] Emit Reservation Intake Signal');
-                assertFlowExists('[TOCC][SF] Emit Session Cancelled Signal');
+                assertFlowExists('[TOCC][SF] Reservation Intake Processing');
+                assertFlowExists('[TOCC][SF] Session Cancelled Processing');
             `,
         })
     }
@@ -65,8 +65,8 @@ Test(
 Test(
     {
         $id: Now.ID['x_783010_tocc_a1_atf_flow_scaffold_count'],
-        name: '[TOCC][FLOW] scaffold namespace has expected flow/subflow counts',
-        description: 'Guards namespace drift by asserting expected record counts for scaffold prefixes.',
+        name: '[TOCC][FLOW] namespace has expected flow/subflow counts',
+        description: 'Guards namespace drift by asserting expected record counts for operational prefixes.',
         active: true,
         failOnServerError: true,
     },
