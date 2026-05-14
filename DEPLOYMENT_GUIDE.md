@@ -1,6 +1,6 @@
 # DEPLOYMENT_GUIDE.md — Training Operations Command Center
 
-> **Version:** 1.1 — Sprint 11
+> **Version:** 2.0 — v1 Release Readiness
 > **Target Instance:** `https://dev372264.service-now.com`
 > **Release:** Australia Patch 1 (build 2026-03-31)
 > **Scope:** `x_783010_tocc_a1`
@@ -262,12 +262,12 @@ now-sdk install --auth dev
 |---|---|---|
 | `now-sdk build` passes clean | | |
 | `now-sdk install` completes | | |
-| ATF 36/36 pass | | |
+| ATF suite pass (target: >= 70% coverage, current baseline ~51 tests) | | |
 | KB bootstrapped (10 categories, 13 articles) | | |
 | 12 events registered | | |
 | 12 notifications bound | | |
 | 5 flows activated | | |
-| 4 scheduled jobs activated | | |
+| 5 scheduled jobs activated | | |
 | Service Portal accessible | | |
 | Workspace accessible | | |
 | All 5 manual smoke tests pass | | |
@@ -278,4 +278,4 @@ now-sdk install --auth dev
 
 ---
 
-*Last updated: Sprint 11 — Full deploy sequence, post-deploy config, ATF validation, smoke tests, rollback plan.*
+*Last updated: v1.0 Release readiness — deploy checklist aligned with current ATF and scheduler baseline.*

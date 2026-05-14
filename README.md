@@ -18,8 +18,10 @@ Baseline for scoped app `x_783010_tocc_a1` on ServiceNow instance:
 
 ## Current Status
 
-- Sprint 0 documentation imported.
-- Project structure scaffolded.
+- Core implementation (Sprints 1–5) delivered and versioned.
+- Release branch active: `release/v1-platform-closure`.
+- Manual closure in progress for: VA topic publication, KB publish, and PA indicator wiring.
+- Workspace and dashboard scaffolds deployed; home-route/dashboard binding runbook available.
 - Scope `x_783010_tocc_a1` is registered on the target instance (see runbook).
 
 ## Runbooks

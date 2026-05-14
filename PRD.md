@@ -1,7 +1,7 @@
 # PRD.md — Training Operations Command Center
 
-> **Version:** 1.0 — Sprint 0 Baseline
-> **App Scope:** `x_tocc`
+> **Version:** 1.1 — v1 Release Alignment
+> **App Scope:** `x_783010_tocc_a1` (legacy alias: `x_tocc`)
 > **Instance Release:** `Australia Patch 1 (build 2026-03-31)`
 > **Methodology:** Now Create (Initiate → Plan → Execute → Deliver → Close)
 
@@ -267,7 +267,7 @@ A unified ServiceNow Scoped Application that orchestrates the full lifecycle of 
 
 | Category | Requirement |
 |---|---|
-| Security | All data access enforced via ACLs scoped to `x_tocc` |
+| Security | All data access enforced via ACLs scoped to `x_783010_tocc_a1` |
 | Performance | BRs must not contain queries inside loops; use bulk-safe patterns |
 | Maintainability | Script Includes follow SRP; no duplicate logic across artifacts |
 | Configurability | All thresholds via `TrainingConfigService` (`sys_properties` override + `x_783010_tocc_a1_training_config` fallback) |
@@ -290,5 +290,5 @@ A unified ServiceNow Scoped Application that orchestrates the full lifecycle of 
 
 ---
 
-*Last updated: Sprint 0 — Documentation baseline*
+*Last updated: v1.0 Release alignment — scope and governance metadata refreshed.*
 

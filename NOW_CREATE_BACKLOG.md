@@ -2,7 +2,7 @@
 
 > **Version:** 2.0 — v1.0 Release
 > **Methodology:** Now Create (Initiate → Plan → Execute → Deliver → Close)
-> **Release Status:** ✅ Ready for deploy — all Must Have stories complete
+> **Release Status:** 🟡 Release candidate — manual closure pending for Must Have stories US-27, US-28, US-29
 
 ---
 
@@ -261,4 +261,4 @@
 
 ---
 
-*Last updated: v1.0 Release — 32 user stories, 13 epics, all Must Have complete.*
+*Last updated: v1.0 Release candidate — 32 user stories, 13 epics, core implementation complete with manual closure pending (US-27/28/29).*

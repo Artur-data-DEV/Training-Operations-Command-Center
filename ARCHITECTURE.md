@@ -1,7 +1,7 @@
 # ARCHITECTURE.md — Training Operations Command Center
 
-> **Version:** 1.0 — Sprint 0 Baseline
-> **App Scope:** `x_tocc`
+> **Version:** 1.1 — v1 Release Alignment
+> **App Scope:** `x_783010_tocc_a1` (legacy alias: `x_tocc`)
 
 ---
 
@@ -87,8 +87,8 @@ The Training Operations Command Center is a **ServiceNow Scoped Application** bu
 
 ```
 Name:        Training Operations Command Center
-Scope:       x_tocc
-Prefix:      x_tocc
+Scope:       x_783010_tocc_a1
+Prefix:      x_783010_tocc_a1
 Version:     1.0.0
 Vendor:      [Your Organization]
 ```
@@ -176,11 +176,11 @@ Vendor:      [Your Organization]
 
 | Role | Prefix | Purpose |
 |---|---|---|
-| `x_783010_tocc_a1_student` | `x_tocc` | Student self-service access |
-| `x_783010_tocc_a1_instructor` | `x_tocc` | Instructor session management |
-| `x_783010_tocc_a1_backoffice` | `x_tocc` | Operations and approvals |
-| `x_783010_tocc_a1_manager` | `x_tocc` | Read-only KPI and reporting |
-| `x_783010_tocc_a1_admin` | `x_tocc` | Full administrative access |
+| `x_783010_tocc_a1_student` | `x_783010_tocc_a1` | Student self-service access |
+| `x_783010_tocc_a1_instructor` | `x_783010_tocc_a1` | Instructor session management |
+| `x_783010_tocc_a1_backoffice` | `x_783010_tocc_a1` | Operations and approvals |
+| `x_783010_tocc_a1_manager` | `x_783010_tocc_a1` | Read-only KPI and reporting |
+| `x_783010_tocc_a1_admin` | `x_783010_tocc_a1` | Full administrative access |
 
 ACLs are defined per table/operation combination. No role inherits from another automatically — role assignments are explicit.
 
@@ -199,7 +199,7 @@ Developer Machine
     │
     └── ServiceNow PDI Instance
             │
-            ├── Scoped App: x_tocc
+            ├── Scoped App: x_783010_tocc_a1
             ├── Update Set (export for transfer)
             └── ATF Suite: x_783010_tocc_a1_tests
 ```
@@ -220,5 +220,5 @@ The following features require validation against the actual instance release (`
 
 ---
 
-*Last updated: Sprint 0 — Documentation baseline*
+*Last updated: v1.0 Release alignment — scope and architecture metadata refreshed.*
 
