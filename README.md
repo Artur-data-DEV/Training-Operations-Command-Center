@@ -29,6 +29,7 @@ Baseline for scoped app `x_783010_tocc_a1` on ServiceNow instance:
 - V1 manual por historias: `docs/manual-config/v1-go-live-manual-por-historias.md`
 - V1 manual de desenvolvimento/plataforma: `docs/manual-config/v1-manual-desenvolvimento-plataforma.md`
 - AES source control linking (safe mode): `docs/manual-config/aes-source-control-linking.md`
+- Workspace home + source control hotfix: `docs/manual-config/workspace-home-and-source-control-hotfix.md`
 - Platform alignment (VA/PA/CMDB/Workspace): `docs/manual-config/platform-alignment-runbook.md`
 - Platform homologation checklist (US-33..US-38): `docs/manual-config/platform-homologation-checklist.md`
 - Platform background validation scripts: `docs/manual-config/platform-validation-scripts.md`

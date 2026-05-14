@@ -134,7 +134,8 @@ Workspace({
     $id: Now.ID['x_783010_tocc_a1_workspace_backoffice_operations'],
     title: 'TOCC Backoffice Operations Workspace',
     path: 'tocc-backoffice-ops',
-    landingPath: 'home',
+    // Default to list route to avoid empty dashboard-home state before manual dashboard binding.
+    landingPath: 'list',
     order: 100,
     active: true,
     listConfig: toccBackofficeListConfig,
