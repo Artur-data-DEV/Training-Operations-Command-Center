@@ -15,6 +15,153 @@ EnrollmentService.prototype = {
         this.config = new TrainingConfigService();
     },
 
+    enroll: function(studentId, sessionId) {
+        if (!studentId || !sessionId) {
+            return {
+                success: false,
+                message: 'Student and Training Session are required.'
+            };
+        }
+
+        var enrollment = new GlideRecord(this.enrollmentTable);
+        enrollment.initialize();
+        enrollment.setValue('student', studentId);
+        enrollment.setValue('training_session', sessionId);
+        enrollment.setValue('status', 'pending');
+
+        var enrollmentId = enrollment.insert();
+        if (!enrollmentId) {
+            return {
+                success: false,
+                message: gs.getErrorMessage() || 'Enrollment could not be created.'
+            };
+        }
+
+        if (enrollment.get(enrollmentId)) {
+            return {
+                success: true,
+                enrollmentId: enrollmentId,
+                status: enrollment.getValue('status')
+            };
+        }
+
+        return {
+            success: true,
+            enrollmentId: enrollmentId,
+            status: 'pending'
+        };
+    },
+
+    approve: function(enrollmentId) {
+        if (!enrollmentId) {
+            return {
+                success: false,
+                message: 'Enrollment ID is required.'
+            };
+        }
+
+        var enrollment = new GlideRecord(this.enrollmentTable);
+        if (!enrollment.get(enrollmentId)) {
+            return {
+                success: false,
+                message: 'Enrollment not found.'
+            };
+        }
+
+        enrollment.setValue('status', 'approved');
+        var updatedId = enrollment.update();
+        if (!updatedId) {
+            return {
+                success: false,
+                message: gs.getErrorMessage() || 'Enrollment could not be approved.'
+            };
+        }
+
+        this.syncSessionAfterEnrollmentChange(enrollment.getValue('training_session'));
+
+        return {
+            success: true,
+            enrollmentId: enrollmentId,
+            status: 'approved'
+        };
+    },
+
+    cancel: function(enrollmentId, reason, isBackoffice) {
+        if (!enrollmentId) {
+            return {
+                success: false,
+                message: 'Enrollment ID is required.'
+            };
+        }
+
+        var enrollment = new GlideRecord(this.enrollmentTable);
+        if (!enrollment.get(enrollmentId)) {
+            return {
+                success: false,
+                message: 'Enrollment not found.'
+            };
+        }
+
+        var currentStatus = enrollment.getValue('status');
+        if (currentStatus == 'cancelled') {
+            return {
+                success: true,
+                enrollmentId: enrollmentId,
+                status: 'cancelled'
+            };
+        }
+
+        if (currentStatus != 'pending' && currentStatus != 'approved' && currentStatus != 'waitlisted') {
+            return {
+                success: false,
+                message: 'Enrollment cannot be cancelled from its current status.'
+            };
+        }
+
+        if (currentStatus == 'approved') {
+            var session = this._loadSession(enrollment.getValue('training_session'));
+            if (!session) {
+                return {
+                    success: false,
+                    message: 'Training Session not found.'
+                };
+            }
+
+            var isPrivileged = !!isBackoffice || gs.hasRole('x_783010_tocc_a1.backoffice') || gs.hasRole('x_783010_tocc_a1.admin');
+            if (!isPrivileged) {
+                var lateValidation = this._validateLateCancellation(session);
+                if (lateValidation) {
+                    return {
+                        success: false,
+                        message: lateValidation
+                    };
+                }
+            }
+        }
+
+        enrollment.setValue('status', 'cancelled');
+        enrollment.setValue('confirmed', false);
+        if (reason) {
+            enrollment.setValue('work_notes', reason + '');
+        }
+
+        var cancelledId = enrollment.update();
+        if (!cancelledId) {
+            return {
+                success: false,
+                message: gs.getErrorMessage() || 'Enrollment could not be cancelled.'
+            };
+        }
+
+        this.syncSessionAfterEnrollmentChange(enrollment.getValue('training_session'));
+
+        return {
+            success: true,
+            enrollmentId: enrollmentId,
+            status: 'cancelled'
+        };
+    },
+
     validateBeforeSave: function(current, previous) {
         var sessionId = current.getValue('training_session');
         var studentId = current.getValue('student');

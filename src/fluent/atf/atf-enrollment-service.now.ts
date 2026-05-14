@@ -24,20 +24,18 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-DUP');
-                room.setValue('code', 'ATF-DUP');
+                room.setValue('room_name', 'ATF-Room-DUP');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 20);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var course = new GlideRecord('x_783010_tocc_a1_course');
                 course.initialize();
-                course.setValue('name', 'ATF Course DUP');
-                course.setValue('code', 'ATF-DUP');
+                course.setValue('course_name', 'ATF Course DUP');
+                course.setValue('course_id', 'ATF-COURSE-' + gs.generateGUID().substring(0, 8));
                 course.setValue('status', 'active');
-                course.setValue('active', true);
                 var courseId = course.insert();
 
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
@@ -81,11 +79,11 @@ Test(
 
                 var svc = new x_783010_tocc_a1.EnrollmentService();
 
-                // First enrollment — should succeed
+                // First enrollment â€” should succeed
                 var result1 = svc.enroll(student.getUniqueValue(), session.getUniqueValue());
                 gs.assertTrue(result1.success === true, 'First enrollment should succeed. Got: ' + JSON.stringify(result1));
 
-                // Second enrollment — must be blocked as duplicate
+                // Second enrollment â€” must be blocked as duplicate
                 var result2 = svc.enroll(student.getUniqueValue(), session.getUniqueValue());
                 gs.assertTrue(result2.success === false, 'Duplicate enrollment should be blocked. Got: ' + JSON.stringify(result2));
             `,
@@ -107,12 +105,11 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-CANCEL');
-                room.setValue('code', 'ATF-CXL');
+                room.setValue('room_name', 'ATF-Room-CANCEL');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 20);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
@@ -172,12 +169,11 @@ Test(
 
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-WL');
-                room.setValue('code', 'ATF-WL');
+                room.setValue('room_name', 'ATF-Room-WL');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 1);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
@@ -195,7 +191,7 @@ Test(
                 // Create two different students
                 var userA = new GlideRecord('sys_user');
                 userA.initialize();
-                userA.setValue('user_name', 'atf_wl_student_a');
+                userA.setValue('user_name', 'atf_user_' + gs.generateGUID().substring(0, 8));
                 userA.setValue('first_name', 'ATF');
                 userA.setValue('last_name', 'WL-A');
                 var userAId = userA.insert();
@@ -240,12 +236,11 @@ Test(
 
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-BLK');
-                room.setValue('code', 'ATF-BLK');
+                room.setValue('room_name', 'ATF-Room-BLK');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 1);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
@@ -262,7 +257,7 @@ Test(
 
                 var userB = new GlideRecord('sys_user');
                 userB.initialize();
-                userB.setValue('user_name', 'atf_blk_student_b');
+                userB.setValue('user_name', 'atf_user_' + gs.generateGUID().substring(0, 8));
                 userB.setValue('first_name', 'ATF');
                 userB.setValue('last_name', 'BLK-B');
                 var userBId = userB.insert();
@@ -302,12 +297,11 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-SEATS');
-                room.setValue('code', 'ATF-SEATS');
+                room.setValue('room_name', 'ATF-Room-SEATS');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 10);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
@@ -324,7 +318,7 @@ Test(
 
                 var userC = new GlideRecord('sys_user');
                 userC.initialize();
-                userC.setValue('user_name', 'atf_seats_student_c');
+                userC.setValue('user_name', 'atf_user_' + gs.generateGUID().substring(0, 8));
                 userC.setValue('first_name', 'ATF'); userC.setValue('last_name', 'SEATS-C');
                 var userCId = userC.insert();
 
@@ -334,7 +328,7 @@ Test(
                 studentC.setValue('active', true);
                 var studentCId = studentC.insert();
 
-                // Enroll (direct mode) → auto-approved → seats should drop
+                // Enroll (direct mode) â†’ auto-approved â†’ seats should drop
                 var svc = new x_783010_tocc_a1.EnrollmentService();
                 var enResult = svc.enroll(studentCId, sessionId);
                 gs.assertTrue(enResult.success === true, 'Enrollment failed: ' + JSON.stringify(enResult));
@@ -367,12 +361,11 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-FREE');
-                room.setValue('code', 'ATF-FREE');
+                room.setValue('room_name', 'ATF-Room-FREE');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 5);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
@@ -389,7 +382,7 @@ Test(
 
                 var userD = new GlideRecord('sys_user');
                 userD.initialize();
-                userD.setValue('user_name', 'atf_free_student_d');
+                userD.setValue('user_name', 'atf_user_' + gs.generateGUID().substring(0, 8));
                 userD.setValue('first_name', 'ATF'); userD.setValue('last_name', 'FREE-D');
                 var userDId = userD.insert();
 
@@ -433,12 +426,11 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-PROMO');
-                room.setValue('code', 'ATF-PROMO');
+                room.setValue('room_name', 'ATF-Room-PROMO');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 1);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
@@ -453,17 +445,17 @@ Test(
                 session.setValue('active', true);
                 var sessionId = session.insert();
 
-                // Student E — will take the seat
+                // Student E â€” will take the seat
                 var userE = new GlideRecord('sys_user');
-                userE.initialize(); userE.setValue('user_name', 'atf_promo_e'); userE.setValue('first_name', 'ATF'); userE.setValue('last_name', 'E');
+                userE.initialize(); userE.setValue('user_name', 'atf_user_' + gs.generateGUID().substring(0, 8)); userE.setValue('first_name', 'ATF'); userE.setValue('last_name', 'E');
                 var userEId = userE.insert();
                 var studentE = new GlideRecord('x_783010_tocc_a1_student');
                 studentE.initialize(); studentE.setValue('user', userEId); studentE.setValue('active', true);
                 var studentEId = studentE.insert();
 
-                // Student F — will be waitlisted
+                // Student F â€” will be waitlisted
                 var userF = new GlideRecord('sys_user');
-                userF.initialize(); userF.setValue('user_name', 'atf_promo_f'); userF.setValue('first_name', 'ATF'); userF.setValue('last_name', 'F');
+                userF.initialize(); userF.setValue('user_name', 'atf_user_' + gs.generateGUID().substring(0, 8)); userF.setValue('first_name', 'ATF'); userF.setValue('last_name', 'F');
                 var userFId = userF.insert();
                 var studentF = new GlideRecord('x_783010_tocc_a1_student');
                 studentF.initialize(); studentF.setValue('user', userFId); studentF.setValue('active', true);
@@ -480,7 +472,7 @@ Test(
                 var resF = svc.enroll(studentFId, sessionId);
                 gs.assertTrue(resF.status === 'waitlisted', 'Student F should be waitlisted. Got: ' + resF.status);
 
-                // E cancels — F should be promoted
+                // E cancels â€” F should be promoted
                 svc.cancel(resE.enrollmentId, 'ATF promotion test', true);
 
                 var enrollF = new GlideRecord('x_783010_tocc_a1_student_enrollment');
@@ -508,15 +500,14 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-LATE');
-                room.setValue('code', 'ATF-LATE');
+                room.setValue('room_name', 'ATF-Room-LATE');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 10);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
-                // Session starting in 1 hour — well within the 4h late-cancel window
+                // Session starting in 1 hour â€” well within the 4h late-cancel window
                 var start = new GlideDateTime();
                 start.addSeconds(3600);
                 var end = new GlideDateTime(start.getValue());
@@ -535,7 +526,7 @@ Test(
                 var sessionId = session.insert();
 
                 var userG = new GlideRecord('sys_user');
-                userG.initialize(); userG.setValue('user_name', 'atf_late_g'); userG.setValue('first_name', 'ATF'); userG.setValue('last_name', 'G');
+                userG.initialize(); userG.setValue('user_name', 'atf_user_' + gs.generateGUID().substring(0, 8)); userG.setValue('first_name', 'ATF'); userG.setValue('last_name', 'G');
                 var userGId = userG.insert();
                 var studentG = new GlideRecord('x_783010_tocc_a1_student');
                 studentG.initialize(); studentG.setValue('user', userGId); studentG.setValue('active', true);
@@ -545,7 +536,7 @@ Test(
                 var enResult = svc.enroll(studentGId, sessionId);
                 if (enResult.status === 'pending') { svc.approve(enResult.enrollmentId); }
 
-                // isBackoffice = false → should be blocked
+                // isBackoffice = false â†’ should be blocked
                 var cancelResult = svc.cancel(enResult.enrollmentId, 'ATF late cancel test', false);
                 gs.assertTrue(
                     cancelResult.success === false,

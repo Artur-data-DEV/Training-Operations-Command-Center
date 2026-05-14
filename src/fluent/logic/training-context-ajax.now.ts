@@ -104,10 +104,21 @@ TrainingContextAjax.prototype = Object.extendsObject(global.AbstractAjaxProcesso
         var endDateTime = this.getParameter('sysparm_end_datetime');
         var excludeReservationId = this.getParameter('sysparm_exclude_reservation');
 
-        if (!roomId || !startDateTime || !endDateTime) {
+        var missing = [];
+        if (!roomId) { missing.push('Room'); }
+        if (!startDateTime) { missing.push('Start date/time'); }
+        if (!endDateTime) { missing.push('End date/time'); }
+
+        if (missing.length > 0) {
+            var msg = '';
+            if (missing.length === 1) {
+                msg = missing[0] + ' is required.';
+            } else {
+                msg = missing.slice(0, -1).join(', ') + ' and ' + missing[missing.length - 1] + ' are required.';
+            }
             return JSON.stringify({
                 success: false,
-                message: 'Room, start date/time and end date/time are required.'
+                message: msg
             });
         }
 

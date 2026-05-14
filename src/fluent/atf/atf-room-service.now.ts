@@ -22,7 +22,13 @@ Test(
         const room = atf.server.recordInsert({
             $id: Now.ID['x_783010_tocc_a1_atf_room_no_conflict_room'],
             table: 'x_783010_tocc_a1_room',
-            fieldValues: { name: roomRnd.random_string, code: roomRnd.random_string, capacity: 20, room_type: 'classroom', status: 'available', active: true },
+            fieldValues: {
+                room_name: roomRnd.random_string,
+                room_code: roomRnd.random_string,
+                capacity: 20,
+                room_type: 'classroom',
+                status: 'active',
+            },
             enforceSecurity: false,
             assert: 'record_successfully_inserted',
         })
@@ -41,8 +47,8 @@ Test(
             $id: Now.ID['x_783010_tocc_a1_atf_room_no_conflict_check'],
             script: `
                 var svc = new x_783010_tocc_a1.RoomService();
-                var result = svc.checkConflict('${room.record_id}', '2035-06-01 11:00:00', '2035-06-01 13:00:00', null);
-                gs.assertFalse(result.conflict, 'Expected no conflict for non-overlapping slot. Got: ' + JSON.stringify(result));
+                var result = svc.hasConflict('${room.record_id}', '2035-06-01 11:00:00', '2035-06-01 13:00:00', null);
+                gs.assertFalse(result, 'Expected no conflict for non-overlapping slot. Got: ' + result);
             `,
         })
     }
@@ -65,7 +71,13 @@ Test(
         const room = atf.server.recordInsert({
             $id: Now.ID['x_783010_tocc_a1_atf_room_conflict_room'],
             table: 'x_783010_tocc_a1_room',
-            fieldValues: { name: roomRnd.random_string, code: roomRnd.random_string, capacity: 20, room_type: 'classroom', status: 'available', active: true },
+            fieldValues: {
+                room_name: roomRnd.random_string,
+                room_code: roomRnd.random_string,
+                capacity: 20,
+                room_type: 'classroom',
+                status: 'active',
+            },
             enforceSecurity: false,
             assert: 'record_successfully_inserted',
         })
@@ -83,8 +95,8 @@ Test(
             script: `
                 var svc = new x_783010_tocc_a1.RoomService();
                 // 10:00–12:00 overlaps with 09:00–11:00
-                var result = svc.checkConflict('${room.record_id}', '2035-07-01 10:00:00', '2035-07-01 12:00:00', null);
-                gs.assertTrue(result.conflict === true, 'Expected conflict for overlapping slot. Got: ' + JSON.stringify(result));
+                var result = svc.hasConflict('${room.record_id}', '2035-07-01 10:00:00', '2035-07-01 12:00:00', null);
+                gs.assertTrue(result === true, 'Expected conflict for overlapping slot. Got: ' + result);
             `,
         })
     }
@@ -107,7 +119,13 @@ Test(
         const room = atf.server.recordInsert({
             $id: Now.ID['x_783010_tocc_a1_atf_room_ignore_cancelled_room'],
             table: 'x_783010_tocc_a1_room',
-            fieldValues: { name: roomRnd.random_string, code: roomRnd.random_string, capacity: 20, room_type: 'classroom', status: 'available', active: true },
+            fieldValues: {
+                room_name: roomRnd.random_string,
+                room_code: roomRnd.random_string,
+                capacity: 20,
+                room_type: 'classroom',
+                status: 'active',
+            },
             enforceSecurity: false,
             assert: 'record_successfully_inserted',
         })
@@ -124,8 +142,8 @@ Test(
             $id: Now.ID['x_783010_tocc_a1_atf_room_ignore_cancelled_check'],
             script: `
                 var svc = new x_783010_tocc_a1.RoomService();
-                var result = svc.checkConflict('${room.record_id}', '2035-08-01 09:00:00', '2035-08-01 11:00:00', null);
-                gs.assertFalse(result.conflict, 'Cancelled reservation should not cause a conflict. Got: ' + JSON.stringify(result));
+                var result = svc.hasConflict('${room.record_id}', '2035-08-01 09:00:00', '2035-08-01 11:00:00', null);
+                gs.assertFalse(result, 'Cancelled reservation should not cause a conflict. Got: ' + result);
             `,
         })
     }
@@ -147,11 +165,9 @@ Test(
                 // Start 1 hour from now — well within the 24h minimum advance notice
                 var start = new GlideDateTime();
                 start.addSeconds(3600);
-                var end = new GlideDateTime(start.getValue());
-                end.addSeconds(3600);
 
-                var result = svc.validateAdvanceNotice(start.getValue(), end.getValue());
-                gs.assertTrue(result.error === true, 'Expected advance notice error. Got: ' + JSON.stringify(result));
+                var result = svc.validateAdvanceNotice(start.getValue());
+                gs.assertTrue(result !== '', 'Expected advance notice error message. Got empty string.');
             `,
         })
     }
@@ -174,7 +190,13 @@ Test(
         const room = atf.server.recordInsert({
             $id: Now.ID['x_783010_tocc_a1_atf_room_capacity_room'],
             table: 'x_783010_tocc_a1_room',
-            fieldValues: { name: roomRnd.random_string, code: roomRnd.random_string, capacity: 10, room_type: 'classroom', status: 'available', active: true },
+            fieldValues: {
+                room_name: roomRnd.random_string,
+                room_code: roomRnd.random_string,
+                capacity: 10,
+                room_type: 'classroom',
+                status: 'active',
+            },
             enforceSecurity: false,
             assert: 'record_successfully_inserted',
         })
@@ -185,7 +207,7 @@ Test(
                 var svc = new x_783010_tocc_a1.RoomService();
                 // 25 participants for a room with capacity 10
                 var result = svc.validateCapacity('${room.record_id}', 25);
-                gs.assertTrue(result.error === true, 'Expected capacity error. Got: ' + JSON.stringify(result));
+                gs.assertTrue(result !== '', 'Expected capacity error message. Got empty string.');
             `,
         })
     }

@@ -19,23 +19,21 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-SESS');
-                room.setValue('code', 'ATF-SESS');
+                room.setValue('room_name', 'ATF-Room-SESS');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 15);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var course = new GlideRecord('x_783010_tocc_a1_course');
                 course.initialize();
-                course.setValue('name', 'ATF Course SESS');
-                course.setValue('code', 'ATF-SESS');
+                course.setValue('course_name', 'ATF Course SESS');
+                course.setValue('course_id', 'ATF-COURSE-' + gs.generateGUID().substring(0, 8));
                 course.setValue('status', 'active');
-                course.setValue('active', true);
                 var courseId = course.insert();
 
-                // Create reservation in approved status — BR should fire and create session
+                // Create reservation in approved status â€” BR should fire and create session
                 var reservation = new GlideRecord('x_783010_tocc_a1_room_reservation');
                 reservation.initialize();
                 reservation.setValue('course', courseId);
@@ -49,7 +47,7 @@ Test(
                 var reservationId = reservation.insert();
 
                 // BR_SyncTrainingSession should have created a session
-                // Allow a short delay for workflow to complete if async — but BRs are sync.
+                // Allow a short delay for workflow to complete if async â€” but BRs are sync.
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.addQuery('reservation', reservationId);
                 session.setLimit(1);
@@ -80,23 +78,21 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-CXL2');
-                room.setValue('code', 'ATF-CXL2');
+                room.setValue('room_name', 'ATF-Room-CXL2');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 15);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var course = new GlideRecord('x_783010_tocc_a1_course');
                 course.initialize();
-                course.setValue('name', 'ATF Course CXL2');
-                course.setValue('code', 'ATF-CXL2');
+                course.setValue('course_name', 'ATF Course CXL2');
+                course.setValue('course_id', 'ATF-COURSE-' + gs.generateGUID().substring(0, 8));
                 course.setValue('status', 'active');
-                course.setValue('active', true);
                 var courseId = course.insert();
 
-                // Create approved reservation → session auto-created
+                // Create approved reservation â†’ session auto-created
                 var reservation = new GlideRecord('x_783010_tocc_a1_room_reservation');
                 reservation.initialize();
                 reservation.setValue('course', courseId);
@@ -151,12 +147,11 @@ Test(
             script: `
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
-                room.setValue('name', 'ATF-Room-FULL2');
-                room.setValue('code', 'ATF-FULL2');
+                room.setValue('room_name', 'ATF-Room-FULL2');
+                room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
                 room.setValue('capacity', 1);
                 room.setValue('room_type', 'classroom');
-                room.setValue('status', 'available');
-                room.setValue('active', true);
+                room.setValue('status', 'active');
                 var roomId = room.insert();
 
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
@@ -172,7 +167,7 @@ Test(
                 var sessionId = session.insert();
 
                 var userH = new GlideRecord('sys_user');
-                userH.initialize(); userH.setValue('user_name', 'atf_full2_h'); userH.setValue('first_name', 'ATF'); userH.setValue('last_name', 'H');
+                userH.initialize(); userH.setValue('user_name', 'atf_user_' + gs.generateGUID().substring(0, 8)); userH.setValue('first_name', 'ATF'); userH.setValue('last_name', 'H');
                 var userHId = userH.insert();
                 var studentH = new GlideRecord('x_783010_tocc_a1_student');
                 studentH.initialize(); studentH.setValue('user', userHId); studentH.setValue('active', true);

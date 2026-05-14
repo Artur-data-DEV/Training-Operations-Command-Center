@@ -59,8 +59,16 @@ RoomService.prototype = {
             return '';
         }
 
-        if (!roomId || !start || !end) {
-            return 'Room, start date/time and end date/time are required.';
+        var missing = [];
+        if (!roomId) { missing.push('Room'); }
+        if (!start) { missing.push('Start date/time'); }
+        if (!end) { missing.push('End date/time'); }
+
+        if (missing.length > 0) {
+            if (missing.length === 1) {
+                return missing[0] + ' is required.';
+            }
+            return missing.slice(0, -1).join(', ') + ' and ' + missing[missing.length - 1] + ' are required.';
         }
 
         var startGdt = new GlideDateTime(start);

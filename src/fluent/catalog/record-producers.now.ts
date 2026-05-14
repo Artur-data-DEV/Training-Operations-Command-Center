@@ -67,6 +67,14 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
         }),
     },
     script: `(function execute(producer, current) {
+    // Explicitly map producer vars before BR validation to avoid timing/mapping gaps.
+    current.setValue('room', producer.reservation_room);
+    current.setValue('course', producer.reservation_course);
+    current.setValue('start_datetime', producer.reservation_start_datetime);
+    current.setValue('end_datetime', producer.reservation_end_datetime);
+    current.setValue('expected_participants', producer.reservation_expected_participants);
+    current.setValue('description', producer.reservation_notes);
+
     current.setValue('instructor', gs.getUserID());
     current.setValue('status', 'submitted');
 
