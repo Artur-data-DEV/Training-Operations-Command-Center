@@ -6,6 +6,8 @@
 
       <div class="btn-group btn-group-sm" role="group">
         <a class="btn btn-primary" href="{{c.data.links.sessions}}">Browse Sessions</a>
+        <a class="btn btn-default" href="{{c.data.links.request_enrollment}}" ng-if="c.data.persona.is_student">Request Enrollment</a>
+        <a class="btn btn-default" href="{{c.data.links.create_reservation}}" ng-if="c.data.persona.is_instructor">Create Reservation</a>
         <a class="btn btn-default" href="{{c.data.links.enrollments}}">My Enrollments</a>
         <a class="btn btn-default" href="{{c.data.links.reservations}}">My Reservations</a>
         <a class="btn btn-default" href="{{c.data.links.help}}">Help Center</a>

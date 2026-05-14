@@ -2879,6 +2879,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: '11e4b888a8134f8c935ca155cd69ae34'
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: 'a86138b72cda43a6ac55a894f855dc1d'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '124408814018472ea18d7c1903b5c801'
                         key: {
@@ -3289,6 +3297,14 @@ declare global {
                         key: {
                             document_key: '89fe81e63f31400287000273b4d838fd'
                             variable: 'e6e3c7535320220002c6435723dc3496'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: '290d80674ec540a18347307e8a8e865d'
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '9376b65813cd41efa674b29877093260'
                         }
                     },
                     {
@@ -6962,6 +6978,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'b262fb42544844c898f8602dc9edd36e'
+                        deleted: true
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: 'c3110d13360f4baebb5d3dfa8866ddfc'
@@ -8821,6 +8838,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'ff368c81ddc4400684e78fd22a909b8a'
+                        deleted: true
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: '31e50be3a6d64ff7aff7e1b6f267bc92'
