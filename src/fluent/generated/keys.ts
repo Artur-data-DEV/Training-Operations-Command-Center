@@ -3072,6 +3072,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: '149acc3830b94e04acf427dc62c8b4c2'
+                        deleted: true
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: 'e6271d928d4b4a258bdc7dd8f06b3fe1'
@@ -7878,6 +7879,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: 'c725d2bcc61d466ba54deff67af026e5'
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '19de153de0db4861840fbb8b24835829'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'c72e1aba014f418e8bd10ef5f86b22c2'
                         key: {
@@ -8551,6 +8560,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'dde64c201891450292db50fd8330ebc9'
+                        deleted: true
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: 'c1347f84532c42bf932021b7b25be2c5'
@@ -9319,6 +9329,14 @@ declare global {
                             name: 'x_783010_tocc_a1_kpi_snapshot'
                             element: 'period_end'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'fe8e377ca8ec4933927f0149788fdc05'
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: 'd1394305c6124420b06375cca1f71b47'
                         }
                     },
                     {

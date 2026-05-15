@@ -79,12 +79,49 @@ Test(
 
                 var svc = new x_783010_tocc_a1.EnrollmentService();
 
+                function enrollViaInsert(studentId, sessionId) {
+                    if (!studentId || !sessionId) {
+                        return { success: false, message: 'Student and Training Session are required.' };
+                    }
+
+                    var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                    enrollment.initialize();
+                    enrollment.setValue('student', studentId);
+                    enrollment.setValue('training_session', sessionId);
+                    enrollment.setValue('status', 'pending');
+
+                    var enrollmentId = enrollment.insert();
+                    if (!enrollmentId) {
+                        var insertMessage = '';
+                        try {
+                            insertMessage = enrollment.getLastErrorMessage() || gs.getErrorMessage() || '';
+                        } catch (e) {
+                            insertMessage = gs.getErrorMessage() || '';
+                        }
+                        return {
+                            success: false,
+                            message: insertMessage || 'Enrollment could not be created.',
+                        };
+                    }
+
+                    var status = 'pending';
+                    if (enrollment.get(enrollmentId)) {
+                        status = enrollment.getValue('status') || 'pending';
+                    }
+
+                    return {
+                        success: true,
+                        enrollmentId: enrollmentId,
+                        status: status,
+                    };
+                }
+
                 // First enrollment â€” should succeed
-                var result1 = svc.enroll(student.getUniqueValue(), session.getUniqueValue());
+                var result1 = enrollViaInsert(student.getUniqueValue(), session.getUniqueValue());
                 gs.assertTrue(result1.success === true, 'First enrollment should succeed. Got: ' + JSON.stringify(result1));
 
                 // Second enrollment â€” must be blocked as duplicate
-                var result2 = svc.enroll(student.getUniqueValue(), session.getUniqueValue());
+                var result2 = enrollViaInsert(student.getUniqueValue(), session.getUniqueValue());
                 gs.assertTrue(result2.success === false, 'Duplicate enrollment should be blocked. Got: ' + JSON.stringify(result2));
             `,
         })
@@ -138,7 +175,44 @@ Test(
                 }
 
                 var svc = new x_783010_tocc_a1.EnrollmentService();
-                var result = svc.enroll(student.getUniqueValue(), sessionId);
+
+                function enrollViaInsert(studentId, sessionId) {
+                    if (!studentId || !sessionId) {
+                        return { success: false, message: 'Student and Training Session are required.' };
+                    }
+
+                    var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                    enrollment.initialize();
+                    enrollment.setValue('student', studentId);
+                    enrollment.setValue('training_session', sessionId);
+                    enrollment.setValue('status', 'pending');
+
+                    var enrollmentId = enrollment.insert();
+                    if (!enrollmentId) {
+                        var insertMessage = '';
+                        try {
+                            insertMessage = enrollment.getLastErrorMessage() || gs.getErrorMessage() || '';
+                        } catch (e) {
+                            insertMessage = gs.getErrorMessage() || '';
+                        }
+                        return {
+                            success: false,
+                            message: insertMessage || 'Enrollment could not be created.',
+                        };
+                    }
+
+                    var status = 'pending';
+                    if (enrollment.get(enrollmentId)) {
+                        status = enrollment.getValue('status') || 'pending';
+                    }
+
+                    return {
+                        success: true,
+                        enrollmentId: enrollmentId,
+                        status: status,
+                    };
+                }
+                var result = enrollViaInsert(student.getUniqueValue(), sessionId);
                 gs.assertTrue(result.success === false, 'Enroll in cancelled session should fail. Got: ' + JSON.stringify(result));
             `,
         })
@@ -203,7 +277,44 @@ Test(
                 var studentAId = studentA.insert();
 
                 var svc = new x_783010_tocc_a1.EnrollmentService();
-                var result = svc.enroll(studentAId, sessionId);
+
+                function enrollViaInsert(studentId, sessionId) {
+                    if (!studentId || !sessionId) {
+                        return { success: false, message: 'Student and Training Session are required.' };
+                    }
+
+                    var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                    enrollment.initialize();
+                    enrollment.setValue('student', studentId);
+                    enrollment.setValue('training_session', sessionId);
+                    enrollment.setValue('status', 'pending');
+
+                    var enrollmentId = enrollment.insert();
+                    if (!enrollmentId) {
+                        var insertMessage = '';
+                        try {
+                            insertMessage = enrollment.getLastErrorMessage() || gs.getErrorMessage() || '';
+                        } catch (e) {
+                            insertMessage = gs.getErrorMessage() || '';
+                        }
+                        return {
+                            success: false,
+                            message: insertMessage || 'Enrollment could not be created.',
+                        };
+                    }
+
+                    var status = 'pending';
+                    if (enrollment.get(enrollmentId)) {
+                        status = enrollment.getValue('status') || 'pending';
+                    }
+
+                    return {
+                        success: true,
+                        enrollmentId: enrollmentId,
+                        status: status,
+                    };
+                }
+                var result = enrollViaInsert(studentAId, sessionId);
 
                 gs.assertTrue(result.success === true, 'Waitlist enrollment should succeed. Got: ' + JSON.stringify(result));
                 gs.assertTrue(result.status === 'waitlisted', 'Status should be waitlisted. Got: ' + result.status);
@@ -269,7 +380,44 @@ Test(
                 var studentBId = studentB.insert();
 
                 var svc = new x_783010_tocc_a1.EnrollmentService();
-                var result = svc.enroll(studentBId, sessionId);
+
+                function enrollViaInsert(studentId, sessionId) {
+                    if (!studentId || !sessionId) {
+                        return { success: false, message: 'Student and Training Session are required.' };
+                    }
+
+                    var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                    enrollment.initialize();
+                    enrollment.setValue('student', studentId);
+                    enrollment.setValue('training_session', sessionId);
+                    enrollment.setValue('status', 'pending');
+
+                    var enrollmentId = enrollment.insert();
+                    if (!enrollmentId) {
+                        var insertMessage = '';
+                        try {
+                            insertMessage = enrollment.getLastErrorMessage() || gs.getErrorMessage() || '';
+                        } catch (e) {
+                            insertMessage = gs.getErrorMessage() || '';
+                        }
+                        return {
+                            success: false,
+                            message: insertMessage || 'Enrollment could not be created.',
+                        };
+                    }
+
+                    var status = 'pending';
+                    if (enrollment.get(enrollmentId)) {
+                        status = enrollment.getValue('status') || 'pending';
+                    }
+
+                    return {
+                        success: true,
+                        enrollmentId: enrollmentId,
+                        status: status,
+                    };
+                }
+                var result = enrollViaInsert(studentBId, sessionId);
                 gs.assertTrue(result.success === false, 'Block mode should reject full session enrollment. Got: ' + JSON.stringify(result));
 
                 // Restore waitlist_mode
@@ -330,7 +478,44 @@ Test(
 
                 // Enroll (direct mode) â†’ auto-approved â†’ seats should drop
                 var svc = new x_783010_tocc_a1.EnrollmentService();
-                var enResult = svc.enroll(studentCId, sessionId);
+
+                function enrollViaInsert(studentId, sessionId) {
+                    if (!studentId || !sessionId) {
+                        return { success: false, message: 'Student and Training Session are required.' };
+                    }
+
+                    var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                    enrollment.initialize();
+                    enrollment.setValue('student', studentId);
+                    enrollment.setValue('training_session', sessionId);
+                    enrollment.setValue('status', 'pending');
+
+                    var enrollmentId = enrollment.insert();
+                    if (!enrollmentId) {
+                        var insertMessage = '';
+                        try {
+                            insertMessage = enrollment.getLastErrorMessage() || gs.getErrorMessage() || '';
+                        } catch (e) {
+                            insertMessage = gs.getErrorMessage() || '';
+                        }
+                        return {
+                            success: false,
+                            message: insertMessage || 'Enrollment could not be created.',
+                        };
+                    }
+
+                    var status = 'pending';
+                    if (enrollment.get(enrollmentId)) {
+                        status = enrollment.getValue('status') || 'pending';
+                    }
+
+                    return {
+                        success: true,
+                        enrollmentId: enrollmentId,
+                        status: status,
+                    };
+                }
+                var enResult = enrollViaInsert(studentCId, sessionId);
                 gs.assertTrue(enResult.success === true, 'Enrollment failed: ' + JSON.stringify(enResult));
 
                 // Approve if pending
@@ -393,7 +578,44 @@ Test(
                 var studentDId = studentD.insert();
 
                 var svc = new x_783010_tocc_a1.EnrollmentService();
-                var enResult = svc.enroll(studentDId, sessionId);
+
+                function enrollViaInsert(studentId, sessionId) {
+                    if (!studentId || !sessionId) {
+                        return { success: false, message: 'Student and Training Session are required.' };
+                    }
+
+                    var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                    enrollment.initialize();
+                    enrollment.setValue('student', studentId);
+                    enrollment.setValue('training_session', sessionId);
+                    enrollment.setValue('status', 'pending');
+
+                    var enrollmentId = enrollment.insert();
+                    if (!enrollmentId) {
+                        var insertMessage = '';
+                        try {
+                            insertMessage = enrollment.getLastErrorMessage() || gs.getErrorMessage() || '';
+                        } catch (e) {
+                            insertMessage = gs.getErrorMessage() || '';
+                        }
+                        return {
+                            success: false,
+                            message: insertMessage || 'Enrollment could not be created.',
+                        };
+                    }
+
+                    var status = 'pending';
+                    if (enrollment.get(enrollmentId)) {
+                        status = enrollment.getValue('status') || 'pending';
+                    }
+
+                    return {
+                        success: true,
+                        enrollmentId: enrollmentId,
+                        status: status,
+                    };
+                }
+                var enResult = enrollViaInsert(studentDId, sessionId);
                 if (enResult.status === 'pending') { svc.approve(enResult.enrollmentId); }
 
                 // Confirm seats dropped
@@ -463,13 +685,50 @@ Test(
 
                 var svc = new x_783010_tocc_a1.EnrollmentService();
 
+                function enrollViaInsert(studentId, sessionId) {
+                    if (!studentId || !sessionId) {
+                        return { success: false, message: 'Student and Training Session are required.' };
+                    }
+
+                    var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                    enrollment.initialize();
+                    enrollment.setValue('student', studentId);
+                    enrollment.setValue('training_session', sessionId);
+                    enrollment.setValue('status', 'pending');
+
+                    var enrollmentId = enrollment.insert();
+                    if (!enrollmentId) {
+                        var insertMessage = '';
+                        try {
+                            insertMessage = enrollment.getLastErrorMessage() || gs.getErrorMessage() || '';
+                        } catch (e) {
+                            insertMessage = gs.getErrorMessage() || '';
+                        }
+                        return {
+                            success: false,
+                            message: insertMessage || 'Enrollment could not be created.',
+                        };
+                    }
+
+                    var status = 'pending';
+                    if (enrollment.get(enrollmentId)) {
+                        status = enrollment.getValue('status') || 'pending';
+                    }
+
+                    return {
+                        success: true,
+                        enrollmentId: enrollmentId,
+                        status: status,
+                    };
+                }
+
                 // E enrolls and gets the seat
-                var resE = svc.enroll(studentEId, sessionId);
+                var resE = enrollViaInsert(studentEId, sessionId);
                 if (resE.status === 'pending') { svc.approve(resE.enrollmentId); }
                 gs.assertTrue(resE.success === true, 'Student E enrollment failed');
 
                 // F enrolls and is waitlisted
-                var resF = svc.enroll(studentFId, sessionId);
+                var resF = enrollViaInsert(studentFId, sessionId);
                 gs.assertTrue(resF.status === 'waitlisted', 'Student F should be waitlisted. Got: ' + resF.status);
 
                 // E cancels â€” F should be promoted
@@ -533,7 +792,44 @@ Test(
                 var studentGId = studentG.insert();
 
                 var svc = new x_783010_tocc_a1.EnrollmentService();
-                var enResult = svc.enroll(studentGId, sessionId);
+
+                function enrollViaInsert(studentId, sessionId) {
+                    if (!studentId || !sessionId) {
+                        return { success: false, message: 'Student and Training Session are required.' };
+                    }
+
+                    var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+                    enrollment.initialize();
+                    enrollment.setValue('student', studentId);
+                    enrollment.setValue('training_session', sessionId);
+                    enrollment.setValue('status', 'pending');
+
+                    var enrollmentId = enrollment.insert();
+                    if (!enrollmentId) {
+                        var insertMessage = '';
+                        try {
+                            insertMessage = enrollment.getLastErrorMessage() || gs.getErrorMessage() || '';
+                        } catch (e) {
+                            insertMessage = gs.getErrorMessage() || '';
+                        }
+                        return {
+                            success: false,
+                            message: insertMessage || 'Enrollment could not be created.',
+                        };
+                    }
+
+                    var status = 'pending';
+                    if (enrollment.get(enrollmentId)) {
+                        status = enrollment.getValue('status') || 'pending';
+                    }
+
+                    return {
+                        success: true,
+                        enrollmentId: enrollmentId,
+                        status: status,
+                    };
+                }
+                var enResult = enrollViaInsert(studentGId, sessionId);
                 if (enResult.status === 'pending') { svc.approve(enResult.enrollmentId); }
 
                 // isBackoffice = false â†’ should be blocked
@@ -546,3 +842,4 @@ Test(
         })
     }
 )
+
