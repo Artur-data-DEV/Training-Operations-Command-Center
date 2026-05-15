@@ -9,6 +9,7 @@ const toccNavigationMenu = ApplicationMenu({
     hint: 'Training Operations Command Center',
     description: 'Primary navigation modules for TOCC operations and self-service.',
     roles: [
+        'admin',
         'x_783010_tocc_a1.student',
         'x_783010_tocc_a1.instructor',
         'x_783010_tocc_a1.backoffice',
@@ -27,7 +28,7 @@ Record({
         query: '/x/783010/tocc-backoffice-ops/list/x_783010_tocc_a1_room_reservation',
         order: 100,
         active: true,
-        roles: ['x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
+        roles: ['admin', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
     },
 })
 
@@ -42,6 +43,7 @@ Record({
         order: 150,
         active: true,
         roles: [
+            'admin',
             'x_783010_tocc_a1.student',
             'x_783010_tocc_a1.instructor',
             'x_783010_tocc_a1.backoffice',
@@ -61,7 +63,7 @@ Record({
         name: 'x_783010_tocc_a1_room_reservation',
         order: 200,
         active: true,
-        roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
+        roles: ['admin', 'x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
     },
 })
 
@@ -76,6 +78,7 @@ Record({
         order: 300,
         active: true,
         roles: [
+            'admin',
             'x_783010_tocc_a1.student',
             'x_783010_tocc_a1.instructor',
             'x_783010_tocc_a1.backoffice',
@@ -95,7 +98,7 @@ Record({
         name: 'x_783010_tocc_a1_student_enrollment',
         order: 400,
         active: true,
-        roles: ['x_783010_tocc_a1.student', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
+        roles: ['admin', 'x_783010_tocc_a1.student', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
     },
 })
 
@@ -109,7 +112,7 @@ Record({
         name: 'x_783010_tocc_a1_attendance',
         order: 500,
         active: true,
-        roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
+        roles: ['admin', 'x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
     },
 })
 
@@ -123,7 +126,7 @@ Record({
         name: 'x_783010_tocc_a1_room',
         order: 600,
         active: true,
-        roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
+        roles: ['admin', 'x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
     },
 })
 

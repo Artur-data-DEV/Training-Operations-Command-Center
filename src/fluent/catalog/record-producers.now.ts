@@ -15,11 +15,11 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
     state: 'published',
     shortDescription: 'For instructors to submit room reservation requests.',
     meta: ['training', 'room', 'reservation', 'instructor'],
-    roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.admin'],
+    roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.admin', 'admin'],
     catalogs: [toccServiceCatalog, Now.ref('sc_catalog', { title: 'Service Catalog' })],
     categories: [toccServiceCategory],
     variables: {
-        reservation_room: ReferenceVariable({
+        room: ReferenceVariable({
             question: 'Select Room',
             order: 100,
             mandatory: true,
@@ -27,7 +27,7 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
             mapToField: true,
             field: 'room',
         }),
-        reservation_course: ReferenceVariable({
+        course: ReferenceVariable({
             question: 'Select Course',
             order: 200,
             mandatory: true,
@@ -35,21 +35,21 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
             mapToField: true,
             field: 'course',
         }),
-        reservation_start_datetime: DateTimeVariable({
+        start_datetime: DateTimeVariable({
             question: 'Start Date/Time',
             order: 300,
             mandatory: true,
             mapToField: true,
             field: 'start_datetime',
         }),
-        reservation_end_datetime: DateTimeVariable({
+        end_datetime: DateTimeVariable({
             question: 'End Date/Time',
             order: 400,
             mandatory: true,
             mapToField: true,
             field: 'end_datetime',
         }),
-        reservation_expected_participants: NumericScaleVariable({
+        expected_participants: NumericScaleVariable({
             question: 'Expected Participants',
             order: 500,
             mandatory: true,
@@ -58,7 +58,7 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
             mapToField: true,
             field: 'expected_participants',
         }),
-        reservation_notes: MultiLineTextVariable({
+        description: MultiLineTextVariable({
             question: 'Additional Notes',
             order: 600,
             mandatory: false,
@@ -67,22 +67,99 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
         }),
     },
     script: `(function execute(producer, current) {
-    // Explicitly map producer vars before BR validation to avoid timing/mapping gaps.
-    current.setValue('room', producer.reservation_room);
-    current.setValue('course', producer.reservation_course);
-    current.setValue('start_datetime', producer.reservation_start_datetime);
-    current.setValue('end_datetime', producer.reservation_end_datetime);
-    current.setValue('expected_participants', producer.reservation_expected_participants);
-    current.setValue('description', producer.reservation_notes);
+    // mapToField should handle core fields; keep fallback for portal/runtime mapping edge-cases.
+    function pick() {
+        for (var i = 0; i < arguments.length; i++) {
+            if (!gs.nil(arguments[i])) return arguments[i];
+        }
+        return '';
+    }
+
+    function extractRawValue(value) {
+        if (gs.nil(value)) return '';
+        try {
+            if (typeof value.getValue === 'function') {
+                var gv = value.getValue();
+                if (!gs.nil(gv)) return gv;
+            }
+        } catch (e1) {}
+        if (value && value.sys_id) return value.sys_id;
+        if (value && value.value) return value.value;
+        return value;
+    }
+
+    function resolveReferenceId(raw, tableName, displayFields) {
+        var value = extractRawValue(raw);
+        if (gs.nil(value)) return '';
+        var s = String(value);
+        if (/^[0-9a-f]{32}$/i.test(s)) return s;
+
+        var gr = new GlideRecord(tableName);
+        for (var i = 0; i < displayFields.length; i++) {
+            gr.initialize();
+            gr.addQuery(displayFields[i], s);
+            gr.setLimit(1);
+            gr.query();
+            if (gr.next()) return gr.getUniqueValue();
+        }
+        return '';
+    }
+
+    function setReferenceIfEmpty(fieldName, raw, tableName, displayFields) {
+        if (!gs.nil(current.getValue(fieldName))) return;
+        var refId = resolveReferenceId(raw, tableName, displayFields);
+        if (!gs.nil(refId)) current.setValue(fieldName, refId);
+    }
+
+    function setValueIfEmpty(fieldName, value) {
+        if (!gs.nil(current.getValue(fieldName)) || gs.nil(value)) return;
+        current.setValue(fieldName, extractRawValue(value));
+    }
+
+    function setDateIfEmpty(fieldName, value) {
+        if (!gs.nil(current.getValue(fieldName)) || gs.nil(value)) return;
+        try {
+            current.setDisplayValue(fieldName, String(value));
+        } catch (e) {
+            current.setValue(fieldName, String(value));
+        }
+    }
+
+    var roomRaw = pick(producer.room, producer.reservation_room);
+    var courseRaw = pick(producer.course, producer.reservation_course);
+    var startRaw = pick(producer.start_datetime, producer.reservation_start_datetime, producer.reservation_start_date_time);
+    var endRaw = pick(producer.end_datetime, producer.reservation_end_datetime, producer.reservation_end_date_time);
+    var participantsRaw = pick(producer.expected_participants, producer.reservation_expected_participants);
+    var notesRaw = pick(producer.description, producer.reservation_notes);
+
+    setReferenceIfEmpty('room', roomRaw, 'x_783010_tocc_a1_room', ['room_code', 'room_name']);
+    setReferenceIfEmpty('course', courseRaw, 'x_783010_tocc_a1_course', ['course_id', 'course_name']);
+    setDateIfEmpty('start_datetime', startRaw);
+    setDateIfEmpty('end_datetime', endRaw);
+    setValueIfEmpty('expected_participants', participantsRaw);
+    setValueIfEmpty('description', notesRaw);
 
     current.setValue('instructor', gs.getUserID());
     current.setValue('status', 'submitted');
 
     if (gs.nil(current.getValue('short_description'))) {
-        current.setValue(
-            'short_description',
-            'Room reservation request for ' + current.getDisplayValue('course')
-        );
+        var courseLabel = current.getDisplayValue('course');
+        if (gs.nil(courseLabel)) {
+            courseLabel = String(extractRawValue(courseRaw) || '').trim();
+        }
+        if (gs.nil(courseLabel)) {
+            current.setValue('short_description', 'Room reservation request');
+        } else {
+            current.setValue('short_description', 'Room reservation request for ' + courseLabel);
+        }
+    }
+
+    if (gs.nil(current.getValue('room'))) {
+        gs.error('[TOCC][RP][CreateRoomReservation] room unresolved | user=' + gs.getUserID() +
+            ' | roomRaw=' + extractRawValue(roomRaw) +
+            ' | courseRaw=' + extractRawValue(courseRaw) +
+            ' | startRaw=' + extractRawValue(startRaw) +
+            ' | endRaw=' + extractRawValue(endRaw));
     }
 })(producer, current);`,
 })
@@ -95,11 +172,11 @@ export const requestTrainingEnrollmentProducer = CatalogItemRecordProducer({
     state: 'published',
     shortDescription: 'For students to request enrollment in training sessions.',
     meta: ['training', 'enrollment', 'student', 'session'],
-    roles: ['x_783010_tocc_a1.student', 'x_783010_tocc_a1.admin'],
+    roles: ['x_783010_tocc_a1.student', 'x_783010_tocc_a1.admin', 'admin'],
     catalogs: [toccServiceCatalog, Now.ref('sc_catalog', { title: 'Service Catalog' })],
     categories: [toccServiceCategory],
     variables: {
-        enrollment_training_session: ReferenceVariable({
+        training_session: ReferenceVariable({
             question: 'Training Session',
             order: 100,
             mandatory: true,
@@ -109,7 +186,7 @@ export const requestTrainingEnrollmentProducer = CatalogItemRecordProducer({
             mapToField: true,
             field: 'training_session',
         }),
-        enrollment_notes: MultiLineTextVariable({
+        description: MultiLineTextVariable({
             question: 'Additional Notes',
             order: 200,
             mandatory: false,

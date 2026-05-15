@@ -176,5 +176,12 @@ Dashboard({
             canShare: true,
             owner: true,
         },
+        {
+            $id: Now.ID['x_783010_tocc_a1_dashboard_perm_global_admin'],
+            role: 'admin',
+            canRead: true,
+            canWrite: true,
+            canShare: true,
+        },
     ],
 })

@@ -59,16 +59,10 @@ RoomService.prototype = {
             return '';
         }
 
-        var missing = [];
-        if (!roomId) { missing.push('Room'); }
-        if (!start) { missing.push('Start date/time'); }
-        if (!end) { missing.push('End date/time'); }
-
-        if (missing.length > 0) {
-            if (missing.length === 1) {
-                return missing[0] + ' is required.';
-            }
-            return missing.slice(0, -1).join(', ') + ' and ' + missing[missing.length - 1] + ' are required.';
+        // Keep required validation in catalog/form + dictionary mandatory rules.
+        // BR validations run only when core fields are already present.
+        if (!roomId || !start || !end) {
+            return '';
         }
 
         var startGdt = new GlideDateTime(start);

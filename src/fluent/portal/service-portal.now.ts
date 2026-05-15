@@ -48,6 +48,7 @@ const toccHomePage = SPPage({
     title: 'Training Operations Home',
     shortDescription: 'TOCC landing page with quick links and upcoming sessions.',
     roles: [
+        'admin',
         'x_783010_tocc_a1.student',
         'x_783010_tocc_a1.instructor',
         'x_783010_tocc_a1.backoffice',
@@ -109,6 +110,7 @@ SPPage({
     title: 'Available Training Sessions',
     shortDescription: 'Student self-service page with open/full sessions.',
     roles: [
+        'admin',
         'x_783010_tocc_a1.student',
         'x_783010_tocc_a1.instructor',
         'x_783010_tocc_a1.backoffice',
@@ -148,7 +150,7 @@ SPPage({
     pageId: 'tocc_my_enrollments',
     title: 'My Enrollments',
     shortDescription: 'Student enrollment history and attendance confirmation.',
-    roles: ['x_783010_tocc_a1.student', 'x_783010_tocc_a1.admin'],
+    roles: ['admin', 'x_783010_tocc_a1.student', 'x_783010_tocc_a1.admin'],
     containers: [
         {
             $id: Now.ID['x_783010_tocc_a1_sp_container_enrollments_main'],
@@ -182,7 +184,7 @@ SPPage({
     pageId: 'tocc_my_reservations',
     title: 'My Reservations',
     shortDescription: 'Instructor reservation requests with lifecycle status.',
-    roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.admin'],
+    roles: ['admin', 'x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.admin'],
     containers: [
         {
             $id: Now.ID['x_783010_tocc_a1_sp_container_reservations_main'],
@@ -217,6 +219,7 @@ SPPage({
     title: 'Help Center',
     shortDescription: 'Knowledge Base and Virtual Agent access point.',
     roles: [
+        'admin',
         'x_783010_tocc_a1.student',
         'x_783010_tocc_a1.instructor',
         'x_783010_tocc_a1.backoffice',
@@ -313,7 +316,7 @@ const toccMainMenu = SPMenu({
             page: Now.ref('sp_page', { id: 'tocc_my_enrollments' }),
             order: 300,
             active: true,
-            roles: ['x_783010_tocc_a1.student', 'x_783010_tocc_a1.admin'],
+            roles: ['admin', 'x_783010_tocc_a1.student', 'x_783010_tocc_a1.admin'],
             glyph: 'check-square-o',
         },
         {
@@ -323,7 +326,7 @@ const toccMainMenu = SPMenu({
             page: Now.ref('sp_page', { id: 'tocc_my_reservations' }),
             order: 400,
             active: true,
-            roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.admin'],
+            roles: ['admin', 'x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.admin'],
             glyph: 'building-o',
         },
         {
