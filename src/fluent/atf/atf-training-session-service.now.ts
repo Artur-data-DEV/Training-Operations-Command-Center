@@ -30,6 +30,9 @@ Test(
                 course.initialize();
                 course.setValue('course_name', 'ATF Course SESS');
                 course.setValue('course_id', 'ATF-COURSE-' + gs.generateGUID().substring(0, 8));
+                course.setValue('description', 'ATF fixture course for session creation');
+                course.setValue('duration_hours', 8);
+                course.setValue('delivery_category', 'in_person');
                 course.setValue('status', 'active');
                 var courseId = course.insert();
 
@@ -89,6 +92,9 @@ Test(
                 course.initialize();
                 course.setValue('course_name', 'ATF Course CXL2');
                 course.setValue('course_id', 'ATF-COURSE-' + gs.generateGUID().substring(0, 8));
+                course.setValue('description', 'ATF fixture course for cancellation cascade');
+                course.setValue('duration_hours', 8);
+                course.setValue('delivery_category', 'in_person');
                 course.setValue('status', 'active');
                 var courseId = course.insert();
 
@@ -154,10 +160,22 @@ Test(
                 room.setValue('status', 'active');
                 var roomId = room.insert();
 
+                var course = new GlideRecord('x_783010_tocc_a1_course');
+                course.initialize();
+                course.setValue('course_name', 'ATF Course FULL2');
+                course.setValue('course_id', 'ATF-COURSE-' + gs.generateGUID().substring(0, 8));
+                course.setValue('description', 'ATF fixture course for full-session status');
+                course.setValue('duration_hours', 8);
+                course.setValue('delivery_category', 'in_person');
+                course.setValue('status', 'active');
+                var courseId = course.insert();
+
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session FULL2');
+                session.setValue('course', courseId);
                 session.setValue('room', roomId);
+                session.setValue('instructor', gs.getUserID());
                 session.setValue('start_datetime', '2037-05-01 09:00:00');
                 session.setValue('end_datetime', '2037-05-01 11:00:00');
                 session.setValue('total_seats', 1);

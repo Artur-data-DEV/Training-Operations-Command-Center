@@ -35,6 +35,9 @@ Test(
                 course.initialize();
                 course.setValue('course_name', 'ATF Course DUP');
                 course.setValue('course_id', 'ATF-COURSE-' + gs.generateGUID().substring(0, 8));
+                course.setValue('description', 'ATF fixture course for duplicate enrollment');
+                course.setValue('duration_hours', 8);
+                course.setValue('delivery_category', 'in_person');
                 course.setValue('status', 'active');
                 var courseId = course.insert();
 
@@ -43,6 +46,7 @@ Test(
                 session.setValue('title', 'ATF Session DUP');
                 session.setValue('course', courseId);
                 session.setValue('room', roomId);
+                session.setValue('instructor', gs.getUserID());
                 session.setValue('start_datetime', '2036-01-10 09:00:00');
                 session.setValue('end_datetime', '2036-01-10 11:00:00');
                 session.setValue('total_seats', 10);
@@ -149,10 +153,22 @@ Test(
                 room.setValue('status', 'active');
                 var roomId = room.insert();
 
+                var course = new GlideRecord('x_783010_tocc_a1_course');
+                course.initialize();
+                course.setValue('course_name', 'ATF Course CANCELLED');
+                course.setValue('course_id', 'ATF-COURSE-' + gs.generateGUID().substring(0, 8));
+                course.setValue('description', 'ATF fixture course for cancelled session enrollment');
+                course.setValue('duration_hours', 8);
+                course.setValue('delivery_category', 'in_person');
+                course.setValue('status', 'active');
+                var courseId = course.insert();
+
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session CANCELLED');
+                session.setValue('course', courseId);
                 session.setValue('room', roomId);
+                session.setValue('instructor', gs.getUserID());
                 session.setValue('start_datetime', '2036-02-01 09:00:00');
                 session.setValue('end_datetime', '2036-02-01 11:00:00');
                 session.setValue('total_seats', 10);
@@ -250,10 +266,22 @@ Test(
                 room.setValue('status', 'active');
                 var roomId = room.insert();
 
+                var course = new GlideRecord('x_783010_tocc_a1_course');
+                course.initialize();
+                course.setValue('course_name', 'ATF Course WL');
+                course.setValue('course_id', 'ATF-COURSE-' + gs.generateGUID().substring(0, 8));
+                course.setValue('description', 'ATF fixture course for waitlist scenario');
+                course.setValue('duration_hours', 8);
+                course.setValue('delivery_category', 'in_person');
+                course.setValue('status', 'active');
+                var courseId = course.insert();
+
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session FULL-WL');
+                session.setValue('course', courseId);
                 session.setValue('room', roomId);
+                session.setValue('instructor', gs.getUserID());
                 session.setValue('start_datetime', '2036-03-01 09:00:00');
                 session.setValue('end_datetime', '2036-03-01 11:00:00');
                 session.setValue('total_seats', 1);
@@ -354,10 +382,22 @@ Test(
                 room.setValue('status', 'active');
                 var roomId = room.insert();
 
+                var course = new GlideRecord('x_783010_tocc_a1_course');
+                course.initialize();
+                course.setValue('course_name', 'ATF Course BLK');
+                course.setValue('course_id', 'ATF-COURSE-' + gs.generateGUID().substring(0, 8));
+                course.setValue('description', 'ATF fixture course for block mode scenario');
+                course.setValue('duration_hours', 8);
+                course.setValue('delivery_category', 'in_person');
+                course.setValue('status', 'active');
+                var courseId = course.insert();
+
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session FULL-BLK');
+                session.setValue('course', courseId);
                 session.setValue('room', roomId);
+                session.setValue('instructor', gs.getUserID());
                 session.setValue('start_datetime', '2036-04-01 09:00:00');
                 session.setValue('end_datetime', '2036-04-01 11:00:00');
                 session.setValue('total_seats', 1);
@@ -452,10 +492,22 @@ Test(
                 room.setValue('status', 'active');
                 var roomId = room.insert();
 
+                var course = new GlideRecord('x_783010_tocc_a1_course');
+                course.initialize();
+                course.setValue('course_name', 'ATF Course SEATS');
+                course.setValue('course_id', 'ATF-COURSE-' + gs.generateGUID().substring(0, 8));
+                course.setValue('description', 'ATF fixture course for seat decrement scenario');
+                course.setValue('duration_hours', 8);
+                course.setValue('delivery_category', 'in_person');
+                course.setValue('status', 'active');
+                var courseId = course.insert();
+
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session SEATS');
+                session.setValue('course', courseId);
                 session.setValue('room', roomId);
+                session.setValue('instructor', gs.getUserID());
                 session.setValue('start_datetime', '2036-05-01 09:00:00');
                 session.setValue('end_datetime', '2036-05-01 11:00:00');
                 session.setValue('total_seats', 10);
@@ -553,10 +605,22 @@ Test(
                 room.setValue('status', 'active');
                 var roomId = room.insert();
 
+                var course = new GlideRecord('x_783010_tocc_a1_course');
+                course.initialize();
+                course.setValue('course_name', 'ATF Course FREE');
+                course.setValue('course_id', 'ATF-COURSE-' + gs.generateGUID().substring(0, 8));
+                course.setValue('description', 'ATF fixture course for seat release scenario');
+                course.setValue('duration_hours', 8);
+                course.setValue('delivery_category', 'in_person');
+                course.setValue('status', 'active');
+                var courseId = course.insert();
+
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session FREE');
+                session.setValue('course', courseId);
                 session.setValue('room', roomId);
+                session.setValue('instructor', gs.getUserID());
                 session.setValue('start_datetime', '2037-01-10 09:00:00');
                 session.setValue('end_datetime', '2037-01-10 11:00:00');
                 session.setValue('total_seats', 5);
@@ -655,10 +719,22 @@ Test(
                 room.setValue('status', 'active');
                 var roomId = room.insert();
 
+                var course = new GlideRecord('x_783010_tocc_a1_course');
+                course.initialize();
+                course.setValue('course_name', 'ATF Course PROMO');
+                course.setValue('course_id', 'ATF-COURSE-' + gs.generateGUID().substring(0, 8));
+                course.setValue('description', 'ATF fixture course for waitlist promotion');
+                course.setValue('duration_hours', 8);
+                course.setValue('delivery_category', 'in_person');
+                course.setValue('status', 'active');
+                var courseId = course.insert();
+
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session PROMO');
+                session.setValue('course', courseId);
                 session.setValue('room', roomId);
+                session.setValue('instructor', gs.getUserID());
                 session.setValue('start_datetime', '2037-02-01 09:00:00');
                 session.setValue('end_datetime', '2037-02-01 11:00:00');
                 session.setValue('total_seats', 1);
@@ -766,6 +842,16 @@ Test(
                 room.setValue('status', 'active');
                 var roomId = room.insert();
 
+                var course = new GlideRecord('x_783010_tocc_a1_course');
+                course.initialize();
+                course.setValue('course_name', 'ATF Course LATE');
+                course.setValue('course_id', 'ATF-COURSE-' + gs.generateGUID().substring(0, 8));
+                course.setValue('description', 'ATF fixture course for late cancellation');
+                course.setValue('duration_hours', 8);
+                course.setValue('delivery_category', 'in_person');
+                course.setValue('status', 'active');
+                var courseId = course.insert();
+
                 // Session starting in 1 hour â€” well within the 4h late-cancel window
                 var start = new GlideDateTime();
                 start.addSeconds(3600);
@@ -775,7 +861,9 @@ Test(
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session LATE');
+                session.setValue('course', courseId);
                 session.setValue('room', roomId);
+                session.setValue('instructor', gs.getUserID());
                 session.setValue('start_datetime', start.getValue());
                 session.setValue('end_datetime', end.getValue());
                 session.setValue('total_seats', 10);
