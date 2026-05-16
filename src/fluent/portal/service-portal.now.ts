@@ -16,6 +16,7 @@ const toccSessionBrowserWidget = SPWidget({
     name: 'TOCC - Session Browser',
     htmlTemplate: Now.include('./sp-session-browser.html'),
     customCss: Now.include('./sp-session-browser.css'),
+    clientScript: Now.include('./sp-session-browser.client.js'),
     serverScript: Now.include('./sp-session-browser.server.js'),
 })
 

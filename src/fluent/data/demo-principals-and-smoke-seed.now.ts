@@ -80,6 +80,7 @@ Record({
         email: 'tocc.student@example.com',
         title: 'Training Student',
         time_zone: 'America/Sao_Paulo',
+        user_password: 'Training2026!',
         active: true,
     },
 })
@@ -94,6 +95,7 @@ Record({
         email: 'tocc.student2@example.com',
         title: 'Training Student',
         time_zone: 'America/Sao_Paulo',
+        user_password: 'Training2026!',
         active: true,
     },
 })
@@ -108,6 +110,7 @@ Record({
         email: 'tocc.student3@example.com',
         title: 'Training Student',
         time_zone: 'America/Sao_Paulo',
+        user_password: 'Training2026!',
         active: true,
     },
 })
@@ -122,6 +125,7 @@ Record({
         email: 'tocc.instructor@example.com',
         title: 'Training Instructor',
         time_zone: 'America/Sao_Paulo',
+        user_password: 'Training2026!',
         active: true,
     },
 })
@@ -136,6 +140,7 @@ Record({
         email: 'tocc.backoffice@example.com',
         title: 'Backoffice Analyst',
         time_zone: 'America/Sao_Paulo',
+        user_password: 'Training2026!',
         active: true,
     },
 })
@@ -150,6 +155,7 @@ Record({
         email: 'tocc.manager@example.com',
         title: 'Training Operations Manager',
         time_zone: 'America/Sao_Paulo',
+        user_password: 'Training2026!',
         active: true,
     },
 })
@@ -164,6 +170,7 @@ Record({
         email: 'tocc.admin@example.com',
         title: 'TOCC Scoped Administrator',
         time_zone: 'America/Sao_Paulo',
+        user_password: 'Training2026!',
         active: true,
     },
 })
