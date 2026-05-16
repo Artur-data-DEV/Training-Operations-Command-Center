@@ -75,7 +75,11 @@ TrainingConfigService.prototype = {
     // -------------------------------------------------------------------------
 
     getMinimumAdvanceNoticeHours: function() {
-        return this.getNumber('minimum_advance_notice_hours', 24);
+        return this.getNumber('minimum_advance_notice_hours', 48);
+    },
+
+    getMinimumReservationDurationMinutes: function() {
+        return this.getNumber('minimum_reservation_duration_minutes', 60);
     },
 
     getLateCancellationWindowHours: function() {

@@ -16,6 +16,8 @@ CatalogClientScript({
     var course = g_form.getValue('course');
     var start = g_form.getValue('start_datetime');
     var end = g_form.getValue('end_datetime');
+    var minimumAdvanceHours = 48;
+    var minimumDurationMinutes = 60;
 
     var hasError = false;
 
@@ -42,6 +44,29 @@ CatalogClientScript({
         if (!isNaN(startMs) && !isNaN(endMs) && endMs <= startMs) {
             g_form.showFieldMsg('end_datetime', 'End date/time must be after start date/time.', 'error');
             hasError = true;
+        } else if (!isNaN(startMs) && !isNaN(endMs)) {
+            var durationMs = endMs - startMs;
+            if (durationMs < (minimumDurationMinutes * 60 * 1000)) {
+                g_form.showFieldMsg(
+                    'end_datetime',
+                    'Reservation must have at least ' + minimumDurationMinutes + ' minutes between start and end date/time.',
+                    'error'
+                );
+                hasError = true;
+            }
+        }
+    }
+
+    if (start) {
+        var requestedStartMs = new Date(start.replace(' ', 'T')).getTime();
+        var minimumAllowedStartMs = Date.now() + (minimumAdvanceHours * 3600 * 1000);
+        if (!isNaN(requestedStartMs) && requestedStartMs < minimumAllowedStartMs) {
+            g_form.showFieldMsg(
+                'start_datetime',
+                'Reservations must be submitted at least ' + minimumAdvanceHours + ' hours in advance.',
+                'error'
+            );
+            hasError = true;
         }
     }
 
@@ -52,4 +77,3 @@ CatalogClientScript({
     return true;
 }`,
 })
-

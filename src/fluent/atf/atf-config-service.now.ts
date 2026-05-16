@@ -151,10 +151,10 @@ Test(
             $id: Now.ID['x_783010_tocc_a1_atf_config_get_number_script'],
             script: `
                 var svc = new x_783010_tocc_a1.TrainingConfigService();
-                // Uses seed: minimum_advance_notice_hours = '24'
+                // Uses seed: minimum_advance_notice_hours = '48'
                 var hours = svc.getMinimumAdvanceNoticeHours();
                 gs.assertTrue(typeof hours === 'number', 'Expected number type');
-                gs.assertTrue(hours === 24, 'Expected 24, got: ' + hours);
+                gs.assertTrue(hours === 48, 'Expected 48, got: ' + hours);
             `,
         })
     }
@@ -212,7 +212,7 @@ Test(
 Test(
     {
         $id: Now.ID['x_783010_tocc_a1_atf_config_advance_notice_default'],
-        name: '[TOCC][CONFIG] getMinimumAdvanceNoticeHours returns 24 from seed',
+        name: '[TOCC][CONFIG] getMinimumAdvanceNoticeHours returns 48 from seed',
         description: 'Validates the default seed value for advance notice hours.',
         active: true,
         failOnServerError: true,
@@ -223,7 +223,7 @@ Test(
             script: `
                 var svc = new x_783010_tocc_a1.TrainingConfigService();
                 var result = svc.getMinimumAdvanceNoticeHours();
-                gs.assertTrue(result === 24, 'Expected 24h advance notice, got: ' + result);
+                gs.assertTrue(result === 48, 'Expected 48h advance notice, got: ' + result);
             `,
         })
     }

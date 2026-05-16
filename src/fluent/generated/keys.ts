@@ -532,6 +532,10 @@ declare global {
                         table: 'x_783010_tocc_a1_training_config'
                         id: '0ce50cae903a48bf95aa1fa6498b09b9'
                     }
+                    seed_training_config_009: {
+                        table: 'x_783010_tocc_a1_training_config'
+                        id: '5a705f065e164297880c53c7d5fca725'
+                    }
                     src_server_script_ts: {
                         table: 'sys_module'
                         id: 'eeb02c692f60454788ee903e84693fff'
@@ -1665,6 +1669,10 @@ declare global {
                     x_783010_tocc_a1_property_config_minimum_advance_notice_hours: {
                         table: 'sys_properties'
                         id: '4508e02afe174927a9cf8f7a1ed12397'
+                    }
+                    x_783010_tocc_a1_property_config_minimum_reservation_duration_minutes: {
+                        table: 'sys_properties'
+                        id: 'a54ae1758a614143ac3d186ad9ae0212'
                     }
                     x_783010_tocc_a1_property_config_reminder_lead_hours: {
                         table: 'sys_properties'
@@ -2996,6 +3004,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: '11016369817647af947aa8e7b5df50e7'
+                        deleted: true
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: '2068dad075744be088ae99b8592d405f'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '112dda65db4d4c989a68ca2f21007492'
                         key: {
@@ -3475,6 +3492,14 @@ declare global {
                         key: {
                             field: 'script'
                             id: 'a9c13edd7c0048f391450add8204d8db'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: '28c1389ae4234773a1ddfa7efa28db11'
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: 'd7f64fd9ad71483e997f3586c51b2b9a'
                         }
                     },
                     {
@@ -7186,6 +7211,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: 'af19ed1eb86c4f21839a82dfa583d71a'
+                        deleted: true
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '33605222d03c45f48226f141276971ed'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'af1fe09d77d44cb585118084ea5fe2b4'
                         key: {
@@ -7881,6 +7915,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'c725d2bcc61d466ba54deff67af026e5'
+                        deleted: true
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: '19de153de0db4861840fbb8b24835829'
@@ -7917,6 +7952,14 @@ declare global {
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: '75112ccd864b4d59b385a80604097c88'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'c816a02b669648e496962c76c6eb24bd'
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: '7abf90ee693044928b2e34b667237b2e'
                         }
                     },
                     {
@@ -9334,6 +9377,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'fe8e377ca8ec4933927f0149788fdc05'
+                        deleted: true
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: 'd1394305c6124420b06375cca1f71b47'

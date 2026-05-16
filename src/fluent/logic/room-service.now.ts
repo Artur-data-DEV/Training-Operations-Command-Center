@@ -71,6 +71,11 @@ RoomService.prototype = {
             return 'End date/time must be greater than start date/time.';
         }
 
+        var minimumDurationError = this.validateMinimumDuration(start, end);
+        if (minimumDurationError) {
+            return minimumDurationError;
+        }
+
         var advanceNoticeError = this.validateAdvanceNotice(start);
         if (advanceNoticeError) {
             return advanceNoticeError;
@@ -101,6 +106,24 @@ RoomService.prototype = {
         var requestedStart = new GlideDateTime(startDateTime);
         if (requestedStart.compareTo(minimumAllowedStart) < 0) {
             return 'Reservations must be submitted at least ' + minimumAdvanceHours + ' hours in advance.';
+        }
+
+        return '';
+    },
+
+    validateMinimumDuration: function(startDateTime, endDateTime) {
+        var minimumDurationMinutes = this.config.getMinimumReservationDurationMinutes();
+        if (minimumDurationMinutes <= 0) {
+            return '';
+        }
+
+        var requestedStart = new GlideDateTime(startDateTime);
+        var requestedEnd = new GlideDateTime(endDateTime);
+        var durationMs = requestedEnd.getNumericValue() - requestedStart.getNumericValue();
+        var minimumDurationMs = minimumDurationMinutes * 60 * 1000;
+
+        if (durationMs < minimumDurationMs) {
+            return 'Reservation must have at least ' + minimumDurationMinutes + ' minutes between start and end date/time.';
         }
 
         return '';

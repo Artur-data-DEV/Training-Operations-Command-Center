@@ -5,7 +5,7 @@ export const seed_training_config_001 = Record({
     table: 'x_783010_tocc_a1_training_config',
     data: {
         name: 'minimum_advance_notice_hours',
-        value: '24',
+        value: '48',
         active: true,
         description: 'Minimum lead time required to submit a room reservation.',
     },
@@ -85,5 +85,16 @@ export const seed_training_config_008 = Record({
         value: '48',
         active: true,
         description: 'Hours after which a pending reservation or enrollment approval is flagged as stale.',
+    },
+})
+
+export const seed_training_config_009 = Record({
+    $id: 'seed_training_config_009',
+    table: 'x_783010_tocc_a1_training_config',
+    data: {
+        name: 'minimum_reservation_duration_minutes',
+        value: '60',
+        active: true,
+        description: 'Minimum duration required between reservation start and end date/time.',
     },
 })

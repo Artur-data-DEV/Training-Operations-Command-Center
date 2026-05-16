@@ -24,6 +24,14 @@ Property({
 })
 
 Property({
+    $id: Now.ID['x_783010_tocc_a1_property_config_minimum_reservation_duration_minutes'],
+    name: 'x_783010_tocc_a1.config.minimum_reservation_duration_minutes',
+    type: 'integer',
+    description: 'Override for minimum reservation duration in minutes. Empty uses training_config table.',
+    roles: { read: readRoleNames, write: writeRoleNames },
+})
+
+Property({
     $id: Now.ID['x_783010_tocc_a1_property_config_late_cancellation_window_hours'],
     name: 'x_783010_tocc_a1.config.late_cancellation_window_hours',
     type: 'integer',
