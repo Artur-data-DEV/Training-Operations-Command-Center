@@ -1,3 +1,4 @@
+// Cache invalidation comment
 import { SPMenu, SPPage, SPWidget, ServicePortal } from '@servicenow/sdk/core'
 import { toccServiceCatalog } from '../catalog/catalog-structure.now'
 

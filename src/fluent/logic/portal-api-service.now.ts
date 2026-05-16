@@ -19,7 +19,7 @@ ScriptInclude({
     $id: Now.ID['x_783010_tocc_a1_script_include_portal_api_service'],
     name: 'PortalApiService',
     apiName: 'x_783010_tocc_a1.PortalApiService',
-    accessibleFrom: 'package_private',
+    accessibleFrom: 'public',
     clientCallable: true,
     protectionPolicy: 'read',
     script: `var PortalApiService = Class.create();

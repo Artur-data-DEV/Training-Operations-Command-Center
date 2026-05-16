@@ -1,71 +1,26 @@
-<div class="tocc-quick-links">
-  <div class="panel panel-default tocc-hero-panel">
-    <div class="panel-body">
-      <div class="tocc-hero-top">
-        <div>
-          <h2 class="m-t-0 tocc-hero-title">Training Operations Command Center</h2>
-          <p class="text-muted tocc-hero-subtitle">Acesso rápido para reservas, inscrições e acompanhamento operacional.</p>
+<div class="tocc-portal-container">
+  <div class="tocc-hero-section">
+    <h1 class="tocc-hero-title">Training Operations</h1>
+    <p class="tocc-hero-subtitle">Gestão centralizada de reservas, sessões de treinamento e indicadores operacionais em tempo real.</p>
+  </div>
+
+  <div class="tocc-actions-section">
+    <h3 class="tocc-section-title">QUICK ACTIONS</h3>
+    
+    <div class="tocc-action-grid">
+      <a
+        ng-repeat="action in c.data.actions track by $index"
+        class="tocc-action-card"
+        href="{{action.href}}"
+      >
+        <div class="tocc-action-icon-wrapper">
+          <i class="fa {{action.icon}}"></i>
         </div>
-      </div>
-
-      <div class="tocc-action-grid" role="group">
-        <a
-          ng-repeat="action in c.data.actions track by $index"
-          class="tocc-action-card"
-          ng-class="action.kind === 'primary' ? 'tocc-action-card--primary' : ''"
-          href="{{action.href}}"
-        >
-          <span class="tocc-action-card__label">{{action.label}}</span>
-          <span class="tocc-action-card__meta">Open</span>
-        </a>
-      </div>
-
-      <div class="tocc-ops-snapshot" ng-if="c.data.show_operations">
-        <h4 class="m-t-md m-b-sm">Operational Snapshot</h4>
-
-        <div class="alert alert-warning m-b-sm" ng-if="c.data.operations_error">
-          {{c.data.operations_error}}
+        <div class="tocc-action-content">
+          <h4 class="tocc-action-title">{{action.title}}</h4>
+          <p class="tocc-action-desc">{{action.desc}}</p>
         </div>
-
-        <div class="row" ng-if="c.data.operations">
-          <div class="col-sm-6 col-md-4">
-            <div class="tocc-metric-card">
-              <div class="tocc-metric-card__label">Pending Reservations</div>
-              <div class="tocc-metric-card__value">{{c.data.operations.pending_reservations}}</div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <div class="tocc-metric-card">
-              <div class="tocc-metric-card__label">Today's Sessions</div>
-              <div class="tocc-metric-card__value">{{c.data.operations.todays_sessions}}</div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <div class="tocc-metric-card">
-              <div class="tocc-metric-card__label">Pending Enrollments</div>
-              <div class="tocc-metric-card__value">{{c.data.operations.pending_enrollments}}</div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <div class="tocc-metric-card">
-              <div class="tocc-metric-card__label">Unconfirmed Approved</div>
-              <div class="tocc-metric-card__value">{{c.data.operations.unconfirmed_approved_enrollments}}</div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <div class="tocc-metric-card">
-              <div class="tocc-metric-card__label">Attendance Pending</div>
-              <div class="tocc-metric-card__value">{{c.data.operations.in_progress_attendance_pending}}</div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <div class="tocc-metric-card">
-              <div class="tocc-metric-card__label">Resources Missing CI</div>
-              <div class="tocc-metric-card__value">{{c.data.operations.resources_missing_ci}}</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </a>
     </div>
   </div>
 </div>

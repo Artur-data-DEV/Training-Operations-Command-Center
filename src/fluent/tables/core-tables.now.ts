@@ -220,13 +220,6 @@ export const x_783010_tocc_a1_student_enrollment = Table({
         number: 1,
         numberOfDigits: 7,
     },
-    index: [
-        {
-            name: 'u_student_training_session',
-            unique: true,
-            element: ['student', 'training_session'],
-        },
-    ],
 })
 
 export const x_783010_tocc_a1_attendance = Table({
@@ -325,11 +318,4 @@ export const x_783010_tocc_a1_kpi_snapshot = Table({
         details: StringColumn({ label: 'Details', maxLength: 2000 }),
         active: BooleanColumn({ label: 'Active', default: 'true' }),
     },
-    index: [
-        {
-            name: 'u_kpi_key_snapshot_date',
-            unique: true,
-            element: ['kpi_key', 'snapshot_date'],
-        },
-    ],
 })

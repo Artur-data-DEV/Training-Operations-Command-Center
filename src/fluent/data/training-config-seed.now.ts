@@ -98,3 +98,49 @@ export const seed_training_config_009 = Record({
         description: 'Minimum duration required between reservation start and end date/time.',
     },
 })
+
+export const seed_room_001 = Record({
+    $id: 'seed_room_001',
+    table: 'x_783010_tocc_a1_room',
+    data: {
+        name: 'Conference Room A',
+        capacity: 20,
+        active: true,
+        description: 'Modern conference room with AV equipment.',
+    },
+})
+
+export const seed_room_002 = Record({
+    $id: 'seed_room_002',
+    table: 'x_783010_tocc_a1_room',
+    data: {
+        name: 'Laboratory 101',
+        capacity: 15,
+        active: true,
+        description: 'Technical training lab with workstations.',
+    },
+})
+
+export const seed_course_001 = Record({
+    $id: 'seed_course_001',
+    table: 'x_783010_tocc_a1_course',
+    data: {
+        name: 'ServiceNow Fundamentals',
+        course_id: 'SN-FND-01',
+        duration_hours: 16,
+        active: true,
+        description: 'Core concepts of the ServiceNow platform.',
+    },
+})
+
+export const seed_course_002 = Record({
+    $id: 'seed_course_002',
+    table: 'x_783010_tocc_a1_course',
+    data: {
+        name: 'ServiceNow Advanced Development',
+        course_id: 'SN-ADV-01',
+        duration_hours: 24,
+        active: true,
+        description: 'In-depth development patterns and best practices.',
+    },
+})
