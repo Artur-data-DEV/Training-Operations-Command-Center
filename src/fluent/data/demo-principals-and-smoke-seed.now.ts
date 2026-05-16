@@ -256,7 +256,7 @@ Record({
         user: demoUserStudentId,
         name: 'my_home_navigation_page',
         type: 'string',
-        value: '/now/sow/home',
+        value: '/tocc',
         system: false,
     },
 })
@@ -268,7 +268,7 @@ Record({
         user: demoUserStudent2Id,
         name: 'my_home_navigation_page',
         type: 'string',
-        value: '/now/sow/home',
+        value: '/tocc',
         system: false,
     },
 })
@@ -280,7 +280,7 @@ Record({
         user: demoUserStudent3Id,
         name: 'my_home_navigation_page',
         type: 'string',
-        value: '/now/sow/home',
+        value: '/tocc',
         system: false,
     },
 })
@@ -292,7 +292,7 @@ Record({
         user: demoUserInstructorId,
         name: 'my_home_navigation_page',
         type: 'string',
-        value: '/now/sow/home',
+        value: '/tocc',
         system: false,
     },
 })
@@ -304,7 +304,7 @@ Record({
         user: demoUserBackofficeId,
         name: 'my_home_navigation_page',
         type: 'string',
-        value: '/now/sow/home',
+        value: '/tocc',
         system: false,
     },
 })
@@ -316,7 +316,7 @@ Record({
         user: demoUserManagerId,
         name: 'my_home_navigation_page',
         type: 'string',
-        value: '/now/sow/home',
+        value: '/tocc',
         system: false,
     },
 })
@@ -328,7 +328,7 @@ Record({
         user: demoUserScopedAdminId,
         name: 'my_home_navigation_page',
         type: 'string',
-        value: '/now/sow/home',
+        value: '/tocc',
         system: false,
     },
 })

@@ -89,6 +89,66 @@ ClientScript({
 }`,
 })
 
+ClientScript({
+    $id: Now.ID['x_783010_tocc_a1_cs_reservation_capacity_guard'],
+    name: 'Reservation - Capacity Guard',
+    table: 'x_783010_tocc_a1_room_reservation',
+    type: 'onChange',
+    field: 'room,expected_participants',
+    active: true,
+    script: `function onChange(control, oldValue, newValue, isLoading) {
+    if (isLoading) {
+        return;
+    }
+
+    var roomId = g_form.getValue('room');
+    if (!roomId) {
+        return;
+    }
+
+    var participants = parseInt(g_form.getValue('expected_participants'), 10) || 0;
+    if (participants <= 0) {
+        return;
+    }
+
+    var ga = new GlideAjax('x_783010_tocc_a1.TrainingContextAjax');
+    ga.addParam('sysparm_name', 'getRoomCapacity');
+    ga.addParam('sysparm_room', roomId);
+    ga.getXMLAnswer(function(answer) {
+        try {
+            var payload = JSON.parse(answer || '{}');
+            if (!payload.success) {
+                return;
+            }
+
+            var capacity = parseInt(payload.capacity, 10) || 0;
+            if (capacity <= 0) {
+                return;
+            }
+
+            var currentParticipants = parseInt(g_form.getValue('expected_participants'), 10) || 0;
+            if (currentParticipants > capacity) {
+                g_form.setValue('expected_participants', String(capacity));
+                g_form.showFieldMsg(
+                    'expected_participants',
+                    'Adjusted to room capacity (' + capacity + ').',
+                    'info'
+                );
+                return;
+            }
+
+            g_form.showFieldMsg(
+                'expected_participants',
+                'Room capacity: ' + capacity + ' participants.',
+                'info'
+            );
+        } catch (e) {
+            // Server-side BR still enforces the limit.
+        }
+    });
+}`,
+})
+
 // ---------------------------------------------------------------------------
 // Client Scripts — Training Session form
 // ---------------------------------------------------------------------------

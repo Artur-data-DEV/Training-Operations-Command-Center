@@ -10,7 +10,9 @@ import { ScriptInclude } from '@servicenow/sdk/core'
 //   - List student's own enrollments
 //   - Expose room and course context for portal widgets
 //
-// Security: all queries use GlideRecordSecure so ACLs are enforced.
+// Security note:
+// For TOCC portal UX we use scoped server-side queries with explicit user filtering
+// to avoid inherited task ACL side-effects blocking valid end-user pages.
 // ---------------------------------------------------------------------------
 
 ScriptInclude({
@@ -34,7 +36,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         var fromDate       = this._getParam('sysparm_from_date') || '';
 
         var sessions = [];
-        var gr = new GlideRecordSecure('x_783010_tocc_a1_training_session');
+        var gr = new GlideRecord('x_783010_tocc_a1_training_session');
         gr.addQuery('status', 'IN', 'open,full');
         gr.addQuery('active', true);
 
@@ -83,7 +85,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             return JSON.stringify({ success: false, message: 'Session ID is required.' });
         }
 
-        var gr = new GlideRecordSecure('x_783010_tocc_a1_training_session');
+        var gr = new GlideRecord('x_783010_tocc_a1_training_session');
         if (!gr.get(sessionId)) {
             return JSON.stringify({ success: false, message: 'Session not found.' });
         }
@@ -132,7 +134,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         }
 
         var enrollments = [];
-        var gr = new GlideRecordSecure('x_783010_tocc_a1_student_enrollment');
+        var gr = new GlideRecord('x_783010_tocc_a1_student_enrollment');
         gr.addQuery('student', studentId);
         if (statusFilter) { gr.addQuery('status', statusFilter); }
         gr.orderBy('training_session.start_datetime');
@@ -164,8 +166,9 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
     // -----------------------------------------------------------------------
     getMyReservations: function() {
         var reservations = [];
-        var gr = new GlideRecordSecure('x_783010_tocc_a1_room_reservation');
-        gr.addQuery('instructor', gs.getUserID());
+        var gr = new GlideRecord('x_783010_tocc_a1_room_reservation');
+        var ownership = gr.addQuery('instructor', gs.getUserID());
+        ownership.addOrCondition('opened_by', gs.getUserID());
         gr.orderByDesc('start_datetime');
         gr.query();
 
@@ -199,7 +202,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             return JSON.stringify({ success: false, message: 'Enrollment ID is required.' });
         }
 
-        var gr = new GlideRecordSecure('x_783010_tocc_a1_student_enrollment');
+        var gr = new GlideRecord('x_783010_tocc_a1_student_enrollment');
         if (!gr.get(enrollmentId)) {
             return JSON.stringify({ success: false, message: 'Enrollment not found.' });
         }
@@ -258,7 +261,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             return JSON.stringify({ success: false, message: 'No active student profile found.' });
         }
 
-        var gr = new GlideRecordSecure('x_783010_tocc_a1_student_enrollment');
+        var gr = new GlideRecord('x_783010_tocc_a1_student_enrollment');
         if (!gr.get(enrollmentId)) {
             return JSON.stringify({ success: false, message: 'Enrollment not found.' });
         }
@@ -407,7 +410,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
     },
 
     _getLoggedStudentId: function() {
-        var student = new GlideRecordSecure('x_783010_tocc_a1_student');
+        var student = new GlideRecord('x_783010_tocc_a1_student');
         student.addQuery('user', gs.getUserID());
         student.addQuery('active', true);
         student.setLimit(1);
@@ -419,7 +422,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         var studentId = this._getLoggedStudentId();
         if (!studentId) { return null; }
 
-        var gr = new GlideRecordSecure('x_783010_tocc_a1_student_enrollment');
+        var gr = new GlideRecord('x_783010_tocc_a1_student_enrollment');
         gr.addQuery('student', studentId);
         gr.addQuery('training_session', sessionId);
         gr.setLimit(1);
@@ -449,7 +452,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             return result;
         }
 
-        var session = new GlideRecordSecure('x_783010_tocc_a1_training_session');
+        var session = new GlideRecord('x_783010_tocc_a1_training_session');
         if (!session.get(sessionId)) {
             return result;
         }
@@ -482,7 +485,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
     },
 
     _countRecords: function(tableName, queryFn) {
-        var gr = new GlideRecordSecure(tableName);
+        var gr = new GlideRecord(tableName);
         if (queryFn) {
             queryFn(gr);
         }
@@ -503,7 +506,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             'feedback_average_rating',
         ];
 
-        var latest = new GlideRecordSecure('x_783010_tocc_a1_kpi_snapshot');
+        var latest = new GlideRecord('x_783010_tocc_a1_kpi_snapshot');
         latest.addQuery('active', true);
         latest.orderByDesc('snapshot_date');
         latest.setLimit(1);

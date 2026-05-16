@@ -119,10 +119,36 @@ Flow(
         wfa.flowLogic.if(
             {
                 $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_group_found'],
-                condition: `${wfa.dataPill(backofficeGroup.status, 'string')}=0`,
+                condition: `${wfa.dataPill(backofficeGroup.Record, 'string')}ISNOTEMPTY`,
                 annotation: 'Backoffice group found',
             },
             () => {
+                const currentReservation = wfa.action(
+                    action.core.lookUpRecord,
+                    { $id: Now.ID['x_783010_tocc_a1_flow_reservation_lookup_current_record'] },
+                    {
+                        table: 'x_783010_tocc_a1_room_reservation',
+                        conditions: `sys_id=${wfa.dataPill(params.trigger.current, 'string')}`,
+                        sort_type: 'sort_asc',
+                        if_multiple_records_are_found_action: 'use_first_record',
+                        dont_fail_flow_on_error: true,
+                    }
+                )
+
+                wfa.action(
+                    action.core.updateRecord,
+                    { $id: Now.ID['x_783010_tocc_a1_flow_reservation_set_assignment'] },
+                    {
+                        table_name: 'x_783010_tocc_a1_room_reservation',
+                        record: wfa.dataPill(params.trigger.current, 'reference'),
+                        values: TemplateValue({
+                            assignment_group: wfa.dataPill(backofficeGroup.Record, 'string'),
+                            assigned_to: wfa.dataPill(currentReservation.Record.opened_by, 'string'),
+                            work_notes: '[FLOW-01] Assignment group and assignee set on reservation submission.',
+                        }),
+                    }
+                )
+
                 const reservationApproval = wfa.action(
                     action.core.askForApproval,
                     { $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_create_task_group'] },

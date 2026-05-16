@@ -1,6 +1,7 @@
 import {
     CatalogItemRecordProducer,
     DateTimeVariable,
+    LookupSelectBoxVariable,
     MultiLineTextVariable,
     NumericScaleVariable,
     ReferenceVariable,
@@ -19,19 +20,27 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
     catalogs: [toccServiceCatalog, Now.ref('sc_catalog', { title: 'Service Catalog' })],
     categories: [toccServiceCategory],
     variables: {
-        room: ReferenceVariable({
+        room: LookupSelectBoxVariable({
             question: 'Select Room',
             order: 100,
             mandatory: true,
-            referenceTable: 'x_783010_tocc_a1_room',
+            lookupFromTable: 'x_783010_tocc_a1_room',
+            lookupValueField: 'sys_id',
+            lookupLabelFields: ['room_name', 'room_code'],
+            referenceQual: 'status=active',
+            includeNone: false,
             mapToField: true,
             field: 'room',
         }),
-        course: ReferenceVariable({
+        course: LookupSelectBoxVariable({
             question: 'Select Course',
             order: 200,
             mandatory: true,
-            referenceTable: 'x_783010_tocc_a1_course',
+            lookupFromTable: 'x_783010_tocc_a1_course',
+            lookupValueField: 'sys_id',
+            lookupLabelFields: ['course_name', 'course_id'],
+            referenceQual: 'status=active',
+            includeNone: false,
             mapToField: true,
             field: 'course',
         }),

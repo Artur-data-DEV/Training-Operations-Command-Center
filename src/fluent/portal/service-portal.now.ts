@@ -15,6 +15,7 @@ const toccSessionBrowserWidget = SPWidget({
     id: 'x_783010_tocc_a1-session-browser',
     name: 'TOCC - Session Browser',
     htmlTemplate: Now.include('./sp-session-browser.html'),
+    customCss: Now.include('./sp-session-browser.css'),
     serverScript: Now.include('./sp-session-browser.server.js'),
 })
 
@@ -32,6 +33,7 @@ const toccMyReservationsWidget = SPWidget({
     id: 'x_783010_tocc_a1-my-reservations',
     name: 'TOCC - My Reservations',
     htmlTemplate: Now.include('./sp-my-reservations.html'),
+    customCss: Now.include('./sp-my-reservations.css'),
     serverScript: Now.include('./sp-my-reservations.server.js'),
 })
 
@@ -48,6 +50,7 @@ const toccHomePage = SPPage({
     title: 'Training Operations Home',
     shortDescription: 'TOCC landing page with quick links and upcoming sessions.',
     roles: [
+        'snc_internal',
         'admin',
         'x_783010_tocc_a1.student',
         'x_783010_tocc_a1.instructor',
@@ -110,6 +113,7 @@ SPPage({
     title: 'Available Training Sessions',
     shortDescription: 'Student self-service page with open/full sessions.',
     roles: [
+        'snc_internal',
         'admin',
         'x_783010_tocc_a1.student',
         'x_783010_tocc_a1.instructor',
@@ -150,7 +154,7 @@ SPPage({
     pageId: 'tocc_my_enrollments',
     title: 'My Enrollments',
     shortDescription: 'Student enrollment history and attendance confirmation.',
-    roles: ['admin', 'x_783010_tocc_a1.student', 'x_783010_tocc_a1.admin'],
+    roles: ['snc_internal', 'admin', 'x_783010_tocc_a1.student', 'x_783010_tocc_a1.admin'],
     containers: [
         {
             $id: Now.ID['x_783010_tocc_a1_sp_container_enrollments_main'],
@@ -184,7 +188,7 @@ SPPage({
     pageId: 'tocc_my_reservations',
     title: 'My Reservations',
     shortDescription: 'Instructor reservation requests with lifecycle status.',
-    roles: ['admin', 'x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.admin'],
+    roles: ['snc_internal', 'admin', 'x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.admin'],
     containers: [
         {
             $id: Now.ID['x_783010_tocc_a1_sp_container_reservations_main'],
@@ -219,6 +223,7 @@ SPPage({
     title: 'Help Center',
     shortDescription: 'Knowledge Base and Virtual Agent access point.',
     roles: [
+        'snc_internal',
         'admin',
         'x_783010_tocc_a1.student',
         'x_783010_tocc_a1.instructor',
@@ -331,9 +336,9 @@ const toccMainMenu = SPMenu({
         },
         {
             $id: Now.ID['x_783010_tocc_a1_sp_main_menu_item_catalog'],
-            label: 'Request Catalog',
-            type: 'url',
-            url: '?id=sc_home',
+            label: 'Self-Service Home',
+            type: 'page',
+            page: Now.ref('sp_page', { id: 'tocc_home' }),
             order: 500,
             active: true,
             glyph: 'th-list',

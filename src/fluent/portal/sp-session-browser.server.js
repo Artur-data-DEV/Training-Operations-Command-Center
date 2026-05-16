@@ -2,6 +2,11 @@
     data.sessions = [];
     data.count = 0;
     data.error = '';
+    data.links = {
+        home: '?id=tocc_home',
+        my_enrollments: '?id=tocc_my_enrollments',
+        my_reservations: '?id=tocc_my_reservations',
+    };
 
     try {
         var service = new x_783010_tocc_a1.PortalApiService();
@@ -21,9 +26,19 @@
 
         data.sessions = sessions;
         data.count = sessions.length;
+
+        data.persona = {
+            is_student:
+                gs.hasRole('x_783010_tocc_a1.student') ||
+                gs.hasRole('x_783010_tocc_a1.admin') ||
+                gs.hasRole('admin'),
+            is_instructor:
+                gs.hasRole('x_783010_tocc_a1.instructor') ||
+                gs.hasRole('x_783010_tocc_a1.admin') ||
+                gs.hasRole('admin'),
+        };
     } catch (error) {
         data.error = 'Unable to load available sessions.';
         gs.warn('[TOCC][SP][SessionBrowser] ' + error.message);
     }
 })();
-

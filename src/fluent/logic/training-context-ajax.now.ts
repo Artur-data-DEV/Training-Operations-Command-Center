@@ -98,6 +98,31 @@ TrainingContextAjax.prototype = Object.extendsObject(global.AbstractAjaxProcesso
         });
     },
 
+    getRoomCapacity: function() {
+        var roomId = this.getParameter('sysparm_room');
+        if (!roomId) {
+            return JSON.stringify({
+                success: false,
+                message: 'Room is required.'
+            });
+        }
+
+        var room = new GlideRecordSecure('x_783010_tocc_a1_room');
+        if (!room.get(roomId)) {
+            return JSON.stringify({
+                success: false,
+                message: 'Room not found.'
+            });
+        }
+
+        return JSON.stringify({
+            success: true,
+            room: room.getUniqueValue(),
+            room_name: room.getDisplayValue('room_name'),
+            capacity: parseInt(room.getValue('capacity'), 10) || 0
+        });
+    },
+
     checkRoomAvailability: function() {
         var roomId = this.getParameter('sysparm_room');
         var startDateTime = this.getParameter('sysparm_start_datetime');

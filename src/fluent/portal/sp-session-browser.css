@@ -1,0 +1,40 @@
+.tocc-session-browser .tocc-session-panel {
+  border-radius: 12px;
+  border: 1px solid #d7e2ee;
+  box-shadow: 0 2px 12px rgba(12, 31, 53, 0.06);
+  overflow: hidden;
+}
+
+.tocc-session-browser .panel-heading {
+  background: #f5f8fc;
+  border-bottom: 1px solid #d7e2ee;
+  color: #0b2f52;
+}
+
+.tocc-session-browser .tocc-session-toolbar {
+  border-bottom: 1px solid #e3ebf4;
+  background: #fff;
+}
+
+.tocc-session-browser .tocc-session-toolbar .btn {
+  margin-right: 8px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.tocc-session-browser .tocc-session-table > thead > tr > th {
+  border-bottom: 1px solid #d7e2ee;
+  color: #0b2f52;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.tocc-session-browser .tocc-session-table > tbody > tr > td {
+  vertical-align: middle;
+}
+
+.tocc-session-browser .tocc-empty-state {
+  padding: 26px 18px;
+  text-align: center;
+}

@@ -1,14 +1,19 @@
 <div class="tocc-session-browser">
-  <div class="panel panel-default">
+  <div class="panel panel-default tocc-session-panel">
     <div class="panel-heading">
       <strong>Available Sessions</strong>
       <span class="badge pull-right">{{c.data.count || 0}}</span>
+    </div>
+    <div class="panel-body tocc-session-toolbar">
+      <a class="btn btn-default btn-sm" href="{{c.data.links.home}}">Back to Home</a>
+      <a class="btn btn-default btn-sm" ng-if="c.data.persona && c.data.persona.is_student" href="{{c.data.links.my_enrollments}}">My Enrollments</a>
+      <a class="btn btn-default btn-sm" ng-if="c.data.persona && c.data.persona.is_instructor" href="{{c.data.links.my_reservations}}">My Reservations</a>
     </div>
     <div class="panel-body" ng-if="c.data.error">
       <div class="alert alert-danger m-b-0">{{c.data.error}}</div>
     </div>
     <div class="table-responsive" ng-if="!c.data.error">
-      <table class="table table-striped table-condensed m-b-0">
+      <table class="table table-striped table-condensed m-b-0 tocc-session-table" ng-if="(c.data.sessions || []).length">
         <thead>
           <tr>
             <th>Session</th>
@@ -37,12 +42,14 @@
             </td>
             <td class="text-right">{{session.available_seats}} / {{session.total_seats}}</td>
           </tr>
-          <tr ng-if="!(c.data.sessions || []).length">
-            <td colspan="7" class="text-muted text-center p-md">No sessions available at the moment.</td>
-          </tr>
         </tbody>
       </table>
+
+      <div class="tocc-empty-state" ng-if="!(c.data.sessions || []).length">
+        <h4 class="m-t-0">No sessions available right now</h4>
+        <p class="text-muted">Try again later or contact the training backoffice team.</p>
+        <a class="btn btn-default btn-sm" href="{{c.data.links.home}}">Back to Home</a>
+      </div>
     </div>
   </div>
 </div>
-

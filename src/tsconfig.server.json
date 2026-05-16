@@ -9,7 +9,11 @@
         "noEmitHelpers": true,
         "esModuleInterop": false,
         "module": "None",
-        "types": []
+        "moduleResolution": "node",
+        "skipLibCheck": true,
+        "types": [
+            "@servicenow/glide"
+        ]
     },
     "include": [
         "./**/*.server.js",

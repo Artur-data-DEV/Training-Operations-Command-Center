@@ -747,6 +747,17 @@ Acl({
 })
 
 Acl({
+    $id: Now.ID['internal_x_783010_tocc_a1_room_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_room',
+    operation: 'read',
+    roles: ['snc_internal'],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
     $id: Now.ID['student_x_783010_tocc_a1_course_read'],
     type: 'record',
     table: 'x_783010_tocc_a1_course',
@@ -780,6 +791,17 @@ Acl({
 })
 
 Acl({
+    $id: Now.ID['internal_x_783010_tocc_a1_course_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_course',
+    operation: 'read',
+    roles: ['snc_internal'],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
     $id: Now.ID['instructor_x_783010_tocc_a1_room_reservation_create'],
     type: 'record',
     table: 'x_783010_tocc_a1_room_reservation',
@@ -807,6 +829,39 @@ Acl({
     table: 'x_783010_tocc_a1_room_reservation',
     operation: 'write',
     roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['internal_x_783010_tocc_a1_room_reservation_create'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_room_reservation',
+    operation: 'create',
+    roles: ['snc_internal'],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['internal_x_783010_tocc_a1_room_reservation_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_room_reservation',
+    operation: 'read',
+    roles: ['snc_internal'],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['internal_x_783010_tocc_a1_room_reservation_write'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_room_reservation',
+    operation: 'write',
+    roles: ['snc_internal'],
     decisionType: 'allow',
     localOrExisting: 'Local',
     adminOverrides: true,
@@ -851,6 +906,17 @@ Acl({
     table: 'x_783010_tocc_a1_training_session',
     operation: 'read',
     roles: [toccInstructorRole.name],
+    decisionType: 'allow',
+    localOrExisting: 'Local',
+    adminOverrides: true,
+})
+
+Acl({
+    $id: Now.ID['internal_x_783010_tocc_a1_training_session_read'],
+    type: 'record',
+    table: 'x_783010_tocc_a1_training_session',
+    operation: 'read',
+    roles: ['snc_internal'],
     decisionType: 'allow',
     localOrExisting: 'Local',
     adminOverrides: true,

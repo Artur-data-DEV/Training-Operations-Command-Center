@@ -1,21 +1,85 @@
-.tocc-quick-links .panel {
-  border-radius: 8px;
+.tocc-quick-links .tocc-hero-panel {
+  border-radius: 12px;
+  border: 1px solid #d7e2ee;
+  background: linear-gradient(150deg, #ffffff 0%, #f0f5fb 100%);
+  box-shadow: 0 2px 12px rgba(12, 31, 53, 0.06);
 }
 
-.tocc-quick-links .btn-group {
-  margin-top: 8px;
-}
-
-.tocc-quick-links .tocc-ops-snapshot .well {
-  border-radius: 6px;
-  min-height: 74px;
-  margin-bottom: 10px;
-}
-
-.tocc-quick-links .tocc-ops-snapshot .h4 {
+.tocc-quick-links .tocc-hero-title {
   font-weight: 700;
+  color: #0b2f52;
+  letter-spacing: 0.2px;
 }
 
-.tocc-quick-links .tocc-kpi-highlights {
-  margin-top: 8px;
+.tocc-quick-links .tocc-hero-subtitle {
+  margin-bottom: 16px;
+}
+
+.tocc-quick-links .tocc-action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
+}
+
+.tocc-quick-links .tocc-action-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none !important;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #d7e2ee;
+  background: #fff;
+  color: #0b2f52;
+}
+
+.tocc-quick-links .tocc-action-card:hover {
+  border-color: #9fb6d1;
+  background: #f7fbff;
+}
+
+.tocc-quick-links .tocc-action-card--primary {
+  border-color: #2f72b8;
+  background: #2f72b8;
+  color: #fff;
+}
+
+.tocc-quick-links .tocc-action-card--primary:hover {
+  border-color: #245f9c;
+  background: #245f9c;
+}
+
+.tocc-quick-links .tocc-action-card__label {
+  font-weight: 600;
+}
+
+.tocc-quick-links .tocc-action-card__meta {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.75;
+}
+
+.tocc-quick-links .tocc-metric-card {
+  border: 1px solid #d7e2ee;
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  min-height: 84px;
+}
+
+.tocc-quick-links .tocc-metric-card__label {
+  color: #5b6877;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.35px;
+}
+
+.tocc-quick-links .tocc-metric-card__value {
+  margin-top: 3px;
+  font-size: 28px;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #0b2f52;
 }
