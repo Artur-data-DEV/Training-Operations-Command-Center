@@ -111,6 +111,21 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
         if (!gs.nil(refId)) current.setValue(fieldName, refId);
     }
 
+    function resolveReferenceLabel(raw, tableName, displayFields) {
+        var refId = resolveReferenceId(raw, tableName, displayFields);
+        if (gs.nil(refId)) return '';
+
+        var gr = new GlideRecord(tableName);
+        if (!gr.get(refId)) return '';
+
+        for (var i = 0; i < displayFields.length; i++) {
+            var label = String(gr.getDisplayValue(displayFields[i]) || '').trim();
+            if (!gs.nil(label)) return label;
+        }
+
+        return String(gr.getDisplayValue() || '').trim();
+    }
+
     function setValueIfEmpty(fieldName, value) {
         if (!gs.nil(current.getValue(fieldName)) || gs.nil(value)) return;
         current.setValue(fieldName, extractRawValue(value));
@@ -144,6 +159,12 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
 
     if (gs.nil(current.getValue('short_description'))) {
         var courseLabel = current.getDisplayValue('course');
+        if (/^[0-9a-f]{32}$/i.test(String(courseLabel || ''))) {
+            courseLabel = '';
+        }
+        if (gs.nil(courseLabel)) {
+            courseLabel = resolveReferenceLabel(courseRaw, 'x_783010_tocc_a1_course', ['course_name', 'course_id']);
+        }
         if (gs.nil(courseLabel)) {
             courseLabel = String(extractRawValue(courseRaw) || '').trim();
         }

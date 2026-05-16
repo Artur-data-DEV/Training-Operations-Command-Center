@@ -1217,6 +1217,10 @@ declare global {
                         table: 'sys_script'
                         id: '9fbfd9fe49ae4051b9e8149c0dc994b7'
                     }
+                    x_783010_tocc_a1_br_normalize_reservation_short_description: {
+                        table: 'sys_script'
+                        id: '510f9580abe549ce9d684b0fca9536ab'
+                    }
                     x_783010_tocc_a1_br_stamp_attendance_marking: {
                         table: 'sys_script'
                         id: 'ec92076ff61d4840a81f4c9c0e8edc42'
@@ -3497,6 +3501,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: '28c1389ae4234773a1ddfa7efa28db11'
+                        deleted: true
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: 'd7f64fd9ad71483e997f3586c51b2b9a'
@@ -7957,6 +7962,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'c816a02b669648e496962c76c6eb24bd'
+                        deleted: true
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: '7abf90ee693044928b2e34b667237b2e'
@@ -8128,6 +8134,14 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_attendance'
                             element: 'enrollment'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'ce4933fe57cb4008a59f2ab400ac74bc'
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: 'f22d6cbea99946a9bad393e3f93c188c'
                         }
                     },
                     {
@@ -8532,6 +8546,14 @@ declare global {
                         key: {
                             document_key: '5e68997c3cda4a0d8afac38a63271e01'
                             variable: '989d9e235324220002c6435723dc3484'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'db59558117d34ece9504650575af2ab9'
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: 'cfbe6fc47ad84b4eac1a2f003f42ea46'
                         }
                     },
                     {

@@ -1,6 +1,46 @@
 import { BusinessRule } from '@servicenow/sdk/core'
 
 BusinessRule({
+    $id: Now.ID['x_783010_tocc_a1_br_normalize_reservation_short_description'],
+    table: 'x_783010_tocc_a1_room_reservation',
+    name: 'Normalize Reservation Short Description',
+    when: 'before',
+    action: ['insert', 'update'],
+    active: true,
+    order: 80,
+    script: `(function executeRule(current, previous) {
+    var shortDescription = String(current.getValue('short_description') || '').trim();
+    var shouldNormalize = gs.nil(shortDescription) ||
+        /^Room reservation request for [0-9a-f]{32}$/i.test(shortDescription);
+
+    if (!shouldNormalize) {
+        return;
+    }
+
+    var courseLabel = String(current.getDisplayValue('course') || '').trim();
+    if (gs.nil(courseLabel) || /^[0-9a-f]{32}$/i.test(courseLabel)) {
+        var courseId = current.getValue('course');
+        if (!gs.nil(courseId)) {
+            var course = new GlideRecord('x_783010_tocc_a1_course');
+            if (course.get(courseId)) {
+                courseLabel = String(course.getDisplayValue('course_name') || '').trim();
+                if (gs.nil(courseLabel)) {
+                    courseLabel = String(course.getDisplayValue('course_id') || '').trim();
+                }
+            }
+        }
+    }
+
+    if (gs.nil(courseLabel)) {
+        current.setValue('short_description', 'Room reservation request');
+        return;
+    }
+
+    current.setValue('short_description', 'Room reservation request for ' + courseLabel);
+})(current, previous);`,
+})
+
+BusinessRule({
     $id: Now.ID['x_783010_tocc_a1_br_validate_room_reservation'],
     table: 'x_783010_tocc_a1_room_reservation',
     name: 'Validate Room Reservation',
