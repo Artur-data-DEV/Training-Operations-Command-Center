@@ -15,10 +15,6 @@
       </div>
     </div>
 
-    <div class="panel-body tocc-filters" ng-if="!c.data.error">
-       <!-- Filter placeholder for future sprints -->
-    </div>
-
     <div class="panel-body" ng-if="c.data.error">
       <div class="alert alert-danger m-b-0">{{c.data.error}}</div>
     </div>
@@ -38,12 +34,10 @@
         <tbody>
           <tr ng-repeat="session in c.data.sessions">
             <td>
-              <div class="tocc-session-info">
-                <span class="tocc-session-number">{{session.number}}</span>
-                <span class="tocc-session-title">{{session.course_name}}</span>
-                <div class="tocc-session-instructor">
-                  <i class="fa fa-user-circle m-r-xs"></i> {{session.instructor_name}}
-                </div>
+              <span class="tocc-session-number">{{session.number}}</span>
+              <span class="tocc-session-title">{{session.course_name}}</span>
+              <div class="tocc-session-instructor">
+                <i class="fa fa-user-circle m-r-xs"></i> {{session.instructor_name}}
               </div>
             </td>
             <td>
@@ -52,10 +46,8 @@
               </div>
             </td>
             <td>
-              <div class="tocc-date-info">
-                <div class="tocc-date-main">{{session.start_display}}</div>
-                <div class="tocc-date-sub">Starts soon</div>
-              </div>
+              <div class="tocc-date-main">{{session.start_display}}</div>
+              <div class="tocc-date-sub">Starts soon</div>
             </td>
             <td>
               <span class="tocc-status-pill" ng-class="'tocc-status-pill--' + session.status">
@@ -66,7 +58,7 @@
               <div class="tocc-capacity">
                 <div class="tocc-capacity-text">{{session.available_seats}} seats left</div>
                 <div class="progress tocc-progress">
-                  <div class="progress-bar" role="progressbar" 
+                  <div class="progress-bar" role="progressbar"
                        ng-style="{'width': (session.available_seats / session.total_seats * 100) + '%'}"
                        ng-class="session.status === 'full' ? 'progress-bar-warning' : 'progress-bar-success'">
                   </div>
@@ -75,7 +67,7 @@
             </td>
             <td class="text-right">
               <div class="tocc-row-actions">
-                <button class="btn tocc-btn-primary btn-sm" 
+                <button class="btn tocc-btn-primary btn-sm"
                         ng-if="session.status !== 'full' && c.data.persona.is_student"
                         ng-click="c.enroll(session.sys_id)">
                   Enroll Now
@@ -90,9 +82,7 @@
       </table>
 
       <div class="tocc-empty-state" ng-if="!(c.data.sessions || []).length">
-        <div class="tocc-empty-icon">
-          <i class="fa fa-calendar-o"></i>
-        </div>
+        <div class="tocc-empty-icon"><i class="fa fa-calendar-o"></i></div>
         <h4>No sessions available right now</h4>
         <p>Try again later or contact the training backoffice team.</p>
         <a class="btn tocc-btn-primary" href="{{c.data.links.home}}">Back to Home</a>

@@ -1,198 +1,214 @@
-/* 
-  TOCC Session Browser - Premium Table Design
-  Modern, clean, and data-rich interface for course enrollment.
-*/
+/* TOCC Session Browser — Dark enterprise redesign */
+* { box-sizing: border-box; }
 
 .tocc-session-browser {
-  padding-bottom: 40px;
+    background: #0B0E14;
+    padding: 32px 24px 48px;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
 }
 
 .tocc-session-panel {
-  border-radius: 16px;
-  border: 1px solid #e1e8f0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-  background: #ffffff;
-  overflow: hidden;
+    background: #131925 !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    border-radius: 16px !important;
+    box-shadow: none !important;
+    overflow: hidden;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-/* Header Styling */
 .tocc-panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #ffffff !important;
-  padding: 20px 25px !important;
-  border-bottom: 1px solid #f1f5f9 !important;
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(124,143,255,0.05) !important;
+    padding: 20px 28px !important;
+    border-bottom: 1px solid rgba(124,143,255,0.1) !important;
 }
 
 .tocc-panel-header__main {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
 }
 
 .tocc-panel-header .panel-title {
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 20px;
-  color: #0b2f52;
-  margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #F0F3FF !important;
+    margin: 0;
+    letter-spacing: -0.2px;
 }
 
 .tocc-count-badge {
-  background: #f1f5f9;
-  color: #64748b;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 4px 12px;
-  border-radius: 20px;
+    background: rgba(124,143,255,0.12);
+    color: #7C8FFF;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(124,143,255,0.2);
 }
 
-/* Custom Table Styling */
-.tocc-custom-table {
-  margin-bottom: 0;
-}
+.tocc-panel-header__actions { display: flex; gap: 10px; align-items: center; }
+
+/* Table */
+.tocc-custom-table { margin-bottom: 0; width: 100%; }
 
 .tocc-custom-table thead th {
-  background: #f8fafc;
-  border-bottom: 1px solid #e1e8f0;
-  color: #64748b;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 15px 25px;
+    background: #0D1117 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+    color: #4A5375 !important;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 14px 24px !important;
 }
 
 .tocc-custom-table tbody td {
-  padding: 20px 25px;
-  vertical-align: middle;
-  border-top: 1px solid #f1f5f9;
+    padding: 18px 24px !important;
+    vertical-align: middle !important;
+    border-top: 1px solid rgba(255,255,255,0.04) !important;
+    background: transparent !important;
+    color: #E4E8F0 !important;
 }
 
-/* Session Info */
-.tocc-session-info {
-  display: flex;
-  flex-direction: column;
+.tocc-custom-table tbody tr:hover td {
+    background: rgba(124,143,255,0.04) !important;
 }
 
+/* Session info cell */
 .tocc-session-number {
-  font-size: 11px;
-  font-weight: 700;
-  color: #2f80ed;
-  margin-bottom: 2px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #7C8FFF;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+    display: block;
 }
 
 .tocc-session-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: #0b2f52;
+    font-size: 14px;
+    font-weight: 700;
+    color: #E4E8F0;
+    display: block;
+    margin-bottom: 4px;
 }
 
 .tocc-session-instructor {
-  font-size: 13px;
-  color: #64748b;
-  margin-top: 4px;
+    font-size: 12px;
+    color: #6B7694;
 }
+
+/* Location */
+.tocc-location-info { font-size: 13px; color: #9AA3C0; }
+
+/* Date */
+.tocc-date-main { font-size: 13px; font-weight: 600; color: #E4E8F0; margin-bottom: 2px; }
+.tocc-date-sub { font-size: 11px; color: #7C8FFF; font-weight: 600; }
 
 /* Status Pills */
 .tocc-status-pill {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
 .tocc-status-pill--open {
-  background: #dcfce7;
-  color: #15803d;
+    background: rgba(74,222,128,0.1);
+    color: #4ADE80;
+    border: 1px solid rgba(74,222,128,0.2);
 }
 
 .tocc-status-pill--full {
-  background: #fee2e2;
-  color: #b91c1c;
+    background: rgba(255,107,138,0.1);
+    color: #FF6B8A;
+    border: 1px solid rgba(255,107,138,0.2);
 }
 
-/* Capacity & Progress */
-.tocc-capacity {
-  width: 140px;
-  display: inline-block;
-}
+/* Capacity */
+.tocc-capacity { width: 140px; display: inline-block; }
 
 .tocc-capacity-text {
-  font-size: 12px;
-  font-weight: 600;
-  color: #64748b;
-  margin-bottom: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #6B7694;
+    margin-bottom: 7px;
+    text-align: right;
 }
 
 .tocc-progress {
-  height: 6px;
-  margin-bottom: 0;
-  background: #f1f5f9;
-  border-radius: 10px;
+    height: 5px !important;
+    margin-bottom: 0 !important;
+    background: rgba(255,255,255,0.07) !important;
+    border-radius: 100px !important;
+    box-shadow: none !important;
 }
+
+.progress-bar-success { background: #4ADE80 !important; border-radius: 100px; }
+.progress-bar-warning { background: #FF6B8A !important; border-radius: 100px; }
 
 /* Buttons */
 .tocc-btn-primary {
-  background: #2f80ed;
-  color: #ffffff;
-  border: none;
-  font-weight: 600;
-  padding: 8px 16px;
-  border-radius: 8px;
-  transition: all 0.2s;
+    background: #7C8FFF !important;
+    color: #fff !important;
+    border: none !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    padding: 7px 16px !important;
+    border-radius: 8px !important;
+    transition: all 0.2s;
 }
 
 .tocc-btn-primary:hover {
-  background: #2166c4;
-  color: #ffffff;
-  transform: translateY(-1px);
+    background: #6B7EFF !important;
+    color: #fff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(124,143,255,0.3);
 }
 
 .tocc-btn-outline {
-  border: 1px solid #e1e8f0;
-  background: #ffffff;
-  color: #0b2f52;
-  font-weight: 600;
-  padding: 8px 16px;
-  border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    background: rgba(255,255,255,0.04) !important;
+    color: #9AA3C0 !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    padding: 7px 14px !important;
+    border-radius: 8px !important;
 }
 
 .tocc-btn-outline:hover {
-  background: #f8fafc;
-  border-color: #cbd5e1;
+    background: rgba(255,255,255,0.08) !important;
+    color: #E4E8F0 !important;
+    border-color: rgba(255,255,255,0.2) !important;
 }
 
 .tocc-btn-ghost {
-  color: #2f80ed;
-  font-weight: 600;
-  background: transparent;
-  border: none;
+    color: #7C8FFF !important;
+    font-weight: 600 !important;
+    background: transparent !important;
+    border: 1px solid rgba(124,143,255,0.2) !important;
+    font-size: 12px !important;
+    padding: 7px 14px !important;
+    border-radius: 8px !important;
 }
 
 .tocc-btn-ghost:hover {
-  color: #2166c4;
-  background: #f1f5f9;
+    background: rgba(124,143,255,0.1) !important;
+    color: #7C8FFF !important;
 }
 
-.tocc-row-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
+.tocc-row-actions { display: flex; justify-content: flex-end; gap: 8px; }
 
 /* Empty State */
-.tocc-empty-state {
-  padding: 60px 40px;
-  text-align: center;
-}
-
-.tocc-empty-icon {
-  font-size: 48px;
-  color: #e2e8f0;
-  margin-bottom: 20px;
-}
+.tocc-empty-state { padding: 72px 40px; text-align: center; }
+.tocc-empty-icon { font-size: 44px; color: #2A3050; margin-bottom: 20px; }
+.tocc-empty-state h4 { color: #6B7694; font-size: 17px; margin-bottom: 8px; }
+.tocc-empty-state p { color: #4A5375; font-size: 14px; margin-bottom: 24px; }

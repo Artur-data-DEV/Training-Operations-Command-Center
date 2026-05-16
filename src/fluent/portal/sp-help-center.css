@@ -1,0 +1,134 @@
+/* TOCC Help Center — Dark enterprise redesign */
+.tocc-help-center {
+    background: #0B0E14;
+    min-height: 100vh;
+    padding: 48px 24px;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.tocc-hc-card {
+    background: #131925;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    width: 100%;
+    max-width: 680px;
+    overflow: hidden;
+}
+
+.tocc-hc-header {
+    background: rgba(124,143,255,0.06);
+    border-bottom: 1px solid rgba(124,143,255,0.1);
+    padding: 28px 32px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.tocc-hc-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: rgba(124,143,255,0.12);
+    border: 1px solid rgba(124,143,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.tocc-hc-icon i {
+    font-size: 22px;
+    color: #7C8FFF;
+}
+
+.tocc-hc-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #F0F3FF;
+    margin: 0 0 6px;
+    letter-spacing: -0.2px;
+}
+
+.tocc-hc-subtitle {
+    font-size: 14px;
+    color: #6B7694;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.tocc-hc-actions {
+    padding: 28px 32px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.tocc-hc-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none !important;
+    transition: all 0.2s;
+    border: 1.5px solid transparent;
+}
+
+.tocc-hc-btn--primary {
+    background: #7C8FFF;
+    color: #ffffff !important;
+    border-color: #7C8FFF;
+}
+
+.tocc-hc-btn--primary:hover {
+    background: #6B7EFF;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(124,143,255,0.3);
+    text-decoration: none !important;
+}
+
+.tocc-hc-btn--secondary {
+    background: rgba(255,255,255,0.04);
+    color: #9AA3C0 !important;
+    border-color: rgba(255,255,255,0.1);
+}
+
+.tocc-hc-btn--secondary:hover {
+    background: rgba(255,255,255,0.08);
+    color: #E4E8F0 !important;
+    border-color: rgba(255,255,255,0.18);
+    text-decoration: none !important;
+}
+
+.tocc-hc-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.05);
+    margin: 0 32px;
+}
+
+.tocc-hc-contact {
+    padding: 24px 32px 28px;
+}
+
+.tocc-hc-contact-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #9AA3C0;
+    margin-bottom: 8px;
+}
+
+.tocc-hc-email {
+    font-size: 14px;
+    color: #7C8FFF !important;
+    text-decoration: none !important;
+    font-weight: 500;
+}
+
+.tocc-hc-email:hover {
+    color: #A5B4FF !important;
+    text-decoration: underline !important;
+}

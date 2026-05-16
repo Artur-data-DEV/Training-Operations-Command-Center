@@ -684,6 +684,14 @@ declare global {
                         table: 'x_783010_tocc_a1_course'
                         id: '25ef6a187e924efa9d1dbe6a2ec7cd42'
                     }
+                    seed_room_001: {
+                        table: 'x_783010_tocc_a1_room'
+                        id: '40d466b956364b8280f1ea4256ca0423'
+                    }
+                    seed_room_002: {
+                        table: 'x_783010_tocc_a1_room'
+                        id: '882542c27d7c43af9dd5504e7412d9fa'
+                    }
                     seed_training_config_001: {
                         table: 'x_783010_tocc_a1_training_config'
                         id: '19f653a6acbf4af981b98d9259561075'
@@ -5962,6 +5970,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: '41e33d45fe5547af8ac3fdca72702b90'
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: '347a222f2bfb49fb83e8bbe4bdbb210e'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: '41f5ea2326c746f38f4b2c5e61660fc1'
                         key: {
@@ -6721,6 +6737,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: '51571ca8e923429a9def58003b52931d'
+                        deleted: true
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: '4b4bc275e2684f5996e0a01fef159033'
@@ -7800,6 +7817,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: '6b56c3c4d143439d957c1eb496e5c5a3'
+                        deleted: true
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: '86f9733f13b2420697885f534ab99b31'
@@ -10830,6 +10848,14 @@ declare global {
                         key: {
                             document_key: 'cf4f9b5c7dc245c19ccbdd45db829c5c'
                             variable: '594393e4c3123300eaac11fe81d3aef0'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'b7872fc5c6c546b68ab83d3013802573'
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '4b3238ce251b439c829d772f4eaf005c'
                         }
                     },
                     {

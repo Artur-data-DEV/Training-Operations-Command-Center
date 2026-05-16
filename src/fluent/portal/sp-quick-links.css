@@ -1,107 +1,155 @@
+/* TOCC Quick Links — Dark enterprise redesign */
+* { box-sizing: border-box; }
+
 .tocc-portal-container {
-    background-color: #0b1120; /* Dark background similar to the screenshot */
-    color: #ffffff;
+    background: #0B0E14;
+    color: #E4E8F0;
     min-height: 100vh;
-    padding: 40px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    padding: 0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
 .tocc-hero-section {
-    max-width: 1000px;
-    margin: 0 auto 60px auto;
+    background: linear-gradient(135deg, #0D1117 0%, #131925 100%);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 64px 40px 56px;
     text-align: center;
-    background: linear-gradient(180deg, rgba(29,36,54,1) 0%, rgba(11,17,32,1) 100%);
-    padding: 60px 20px;
-    border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.tocc-hero-section::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(124,143,255,0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.tocc-hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #7C8FFF;
+    margin-bottom: 16px;
 }
 
 .tocc-hero-title {
-    font-size: 48px;
+    font-size: 42px;
     font-weight: 800;
-    margin-bottom: 20px;
-    color: #e2e8f0;
+    color: #F0F3FF;
     letter-spacing: -0.5px;
+    margin: 0 0 16px;
+    line-height: 1.1;
 }
 
 .tocc-hero-subtitle {
-    font-size: 18px;
-    color: #94a3b8;
-    max-width: 600px;
+    font-size: 16px;
+    color: #6B7694;
+    max-width: 520px;
     margin: 0 auto;
-    line-height: 1.6;
+    line-height: 1.65;
 }
 
 .tocc-actions-section {
-    max-width: 1000px;
+    max-width: 960px;
     margin: 0 auto;
+    padding: 48px 32px 64px;
 }
 
 .tocc-section-title {
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 2px;
-    color: #cbd5e1;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #4A5375;
     margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tocc-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.05);
 }
 
 .tocc-action-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
 }
 
 .tocc-action-card {
     display: flex;
     align-items: center;
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 16px;
-    padding: 24px;
-    text-decoration: none;
-    transition: all 0.3s ease;
+    background: #131925;
+    border: 1.5px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 22px 24px;
+    text-decoration: none !important;
+    transition: all 0.22s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.tocc-action-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: #7C8FFF;
+    opacity: 0;
+    transition: opacity 0.22s;
 }
 
 .tocc-action-card:hover {
-    background-color: #27354f;
-    border-color: #475569;
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.4);
-    text-decoration: none;
+    background: #161D2E;
+    border-color: rgba(124,143,255,0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+    text-decoration: none !important;
 }
+
+.tocc-action-card:hover::before { opacity: 1; }
 
 .tocc-action-icon-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 64px;
-    height: 64px;
-    background: linear-gradient(135deg, rgba(56,189,248,0.2) 0%, rgba(59,130,246,0.1) 100%);
-    border-radius: 16px;
-    margin-right: 20px;
+    width: 52px; height: 52px;
+    background: rgba(124,143,255,0.1);
+    border: 1px solid rgba(124,143,255,0.2);
+    border-radius: 12px;
+    margin-right: 18px;
     flex-shrink: 0;
-    box-shadow: inset 0 0 0 1px rgba(56,189,248,0.3);
+    transition: background 0.22s;
+}
+
+.tocc-action-card:hover .tocc-action-icon-wrapper {
+    background: rgba(124,143,255,0.18);
 }
 
 .tocc-action-icon-wrapper i {
-    font-size: 24px;
-    color: #38bdf8;
-}
-
-.tocc-action-content {
-    flex-grow: 1;
+    font-size: 22px;
+    color: #7C8FFF;
 }
 
 .tocc-action-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #f8fafc;
-    margin: 0 0 8px 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #E4E8F0;
+    margin: 0 0 5px;
 }
 
 .tocc-action-desc {
-    font-size: 14px;
-    color: #60a5fa; /* Blue text for descriptions as in screenshot */
+    font-size: 13px;
+    color: #6B7694;
     margin: 0;
     line-height: 1.4;
 }
