@@ -42,3 +42,14 @@ Baseline for scoped app `x_783010_tocc_a1` on ServiceNow instance:
 - Persona experience architecture: `docs/foundation/persona-experience-architecture.md`
 - Role and ACL control matrix: `docs/foundation/role-acl-control-matrix.md`
 - Increment acceptance criteria: `docs/foundation/increment-acceptance-criteria.md`
+- Platform execution backlog: `docs/foundation/platform-execution-backlog.md`
+- Homologation baseline status: `docs/foundation/homologation-baseline-status.md`
+- Homologation run log (2026-05-17): `docs/foundation/homologation-run-2026-05-17.md`
+- Homologation checklist snapshot (2026-05-17): `docs/foundation/homologation-checklist-2026-05-17.md`
+
+## Build and Generated Metadata Notes
+
+- `now-sdk build` may update `src/fluent/generated/keys.ts`.
+- Treat `keys.ts` diffs as generated metadata and always classify intent in release scope:
+  - intended metadata evolution, or
+  - regeneration noise.

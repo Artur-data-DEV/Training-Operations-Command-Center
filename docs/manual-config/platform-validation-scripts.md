@@ -89,15 +89,15 @@ Expected:
 ```javascript
 (function() {
   var api = new x_783010_tocc_a1.PortalApiService();
-  var out = api.getOperationsSnapshot();
+  var out = JSON.parse(api.getOperationsSnapshot());
 
   gs.info('success=' + out.success);
-  gs.info('pending_reservations=' + out.pending_reservations);
-  gs.info('todays_sessions=' + out.todays_sessions);
-  gs.info('pending_enrollments=' + out.pending_enrollments);
-  gs.info('unconfirmed_approved_enrollments=' + out.unconfirmed_approved_enrollments);
-  gs.info('in_progress_attendance_pending=' + out.in_progress_attendance_pending);
-  gs.info('resources_missing_ci=' + out.resources_missing_ci);
+  gs.info('pending_reservations=' + out.snapshot.pending_reservations);
+  gs.info('todays_sessions=' + out.snapshot.todays_sessions);
+  gs.info('pending_enrollments=' + out.snapshot.pending_enrollments);
+  gs.info('unconfirmed_approved_enrollments=' + out.snapshot.unconfirmed_approved_enrollments);
+  gs.info('in_progress_attendance_pending=' + out.snapshot.in_progress_attendance_pending);
+  gs.info('resources_missing_ci=' + out.snapshot.resources_missing_ci);
 
   if (out.kpi_highlights && out.kpi_highlights.metrics) {
     gs.info('kpi_highlights.metrics=' + JSON.stringify(out.kpi_highlights.metrics));
@@ -150,3 +150,82 @@ For user-specific methods (`getMyEnrollments`, `confirmAttendance`, `cancelEnrol
   }
 })();
 ```
+
+## 7) ACL persona smoke (post P0-01)
+
+```javascript
+(function() {
+  // Replace these usernames with real smoke users (one role each).
+  var personaUsers = [
+    { persona: 'student', username: 'tocc.student' },
+    { persona: 'instructor', username: 'tocc.instructor' },
+    { persona: 'manager', username: 'tocc.manager' }
+  ];
+
+  var checks = [
+    { persona: 'student', table: 'x_783010_tocc_a1_training_config', op: 'read', expected: false },
+    { persona: 'manager', table: 'x_783010_tocc_a1_training_config', op: 'read', expected: true },
+    { persona: 'student', table: 'x_783010_tocc_a1_student_enrollment', op: 'create', expected: true },
+    { persona: 'instructor', table: 'x_783010_tocc_a1_room_reservation', op: 'create', expected: true },
+    { persona: 'manager', table: 'x_783010_tocc_a1_room_reservation', op: 'write', expected: false }
+  ];
+
+  function findUsername(persona) {
+    for (var i = 0; i < personaUsers.length; i++) {
+      if (personaUsers[i].persona === persona) {
+        return personaUsers[i].username;
+      }
+    }
+    return '';
+  }
+
+  function findUserSysIdByUsername(username) {
+    var u = new GlideRecord('sys_user');
+    u.addQuery('user_name', username);
+    u.setLimit(1);
+    u.query();
+    if (u.next()) {
+      return u.getUniqueValue();
+    }
+    return '';
+  }
+
+  var session = gs.getSession();
+  var originalUser = gs.getUserName();
+
+  for (var i = 0; i < checks.length; i++) {
+    var c = checks[i];
+    var username = findUsername(c.persona);
+    if (!username) {
+      gs.info('[ACL-SMOKE] missing user mapping for persona=' + c.persona);
+      continue;
+    }
+
+    var userSysId = findUserSysIdByUsername(username);
+    if (!userSysId) {
+      gs.info('[ACL-SMOKE] user not found username=' + username);
+      continue;
+    }
+
+    session.impersonate(userSysId);
+    var allowed = GlideSecurityManager.get().canTableOperation(c.table, c.op);
+    gs.info(
+      '[ACL-SMOKE] persona=' + c.persona +
+      ' user=' + username +
+      ' table=' + c.table +
+      ' op=' + c.op +
+      ' allowed=' + allowed +
+      ' expected=' + c.expected
+    );
+  }
+
+  session.impersonate(originalUser);
+})();
+```
+
+Expected (policy baseline):
+- Student read `training_config` = false
+- Manager read `training_config` = true
+- Student create `student_enrollment` = true
+- Instructor create `room_reservation` = true
+- Manager write `room_reservation` = false
