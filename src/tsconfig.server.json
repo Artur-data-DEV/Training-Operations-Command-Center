@@ -7,9 +7,8 @@
         "checkJs": true,
         "allowJs": true,
         "noEmitHelpers": true,
-        "esModuleInterop": false,
-        "module": "None",
-        "moduleResolution": "node",
+        "module": "node16",
+        "moduleResolution": "node16",
         "skipLibCheck": true,
         "types": [
             "@servicenow/glide"
