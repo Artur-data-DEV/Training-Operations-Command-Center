@@ -36,3 +36,9 @@ Baseline for scoped app `x_783010_tocc_a1` on ServiceNow instance:
 - Platform homologation checklist (US-33..US-38): `docs/manual-config/platform-homologation-checklist.md`
 - Platform background validation scripts: `docs/manual-config/platform-validation-scripts.md`
 - Novas US de finalizacao: `docs/backlog/platform-finalization-user-stories.md`
+
+## Foundation Baselines
+
+- Persona experience architecture: `docs/foundation/persona-experience-architecture.md`
+- Role and ACL control matrix: `docs/foundation/role-acl-control-matrix.md`
+- Increment acceptance criteria: `docs/foundation/increment-acceptance-criteria.md`
