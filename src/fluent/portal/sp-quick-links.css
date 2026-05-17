@@ -4,15 +4,16 @@
 .tocc-portal-container {
     background: #0B0E14;
     color: #E4E8F0;
-    min-height: 100vh;
+    min-height: 100%;
     padding: 0;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    width: 100%;
 }
 
 .tocc-hero-section {
     background: linear-gradient(135deg, #0D1117 0%, #131925 100%);
     border-bottom: 1px solid rgba(255,255,255,0.06);
-    padding: 64px 40px 56px;
+    padding: 72px 64px 64px;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -55,9 +56,9 @@
 }
 
 .tocc-actions-section {
-    max-width: 960px;
+    max-width: 1440px;
     margin: 0 auto;
-    padding: 48px 32px 64px;
+    padding: 48px 64px 72px;
 }
 
 .tocc-section-title {
@@ -81,8 +82,8 @@
 
 .tocc-action-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
 }
 
 .tocc-action-card {
@@ -152,4 +153,33 @@
     color: #6B7694;
     margin: 0;
     line-height: 1.4;
+}
+
+@media (max-width: 1280px) {
+    .tocc-actions-section {
+        padding: 44px 40px 64px;
+    }
+
+    .tocc-action-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .tocc-hero-section {
+        padding: 56px 20px 44px;
+    }
+
+    .tocc-hero-title {
+        font-size: 34px;
+    }
+
+    .tocc-actions-section {
+        padding: 28px 20px 44px;
+    }
+
+    .tocc-action-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
 }

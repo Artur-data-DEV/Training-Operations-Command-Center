@@ -58,7 +58,7 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
         reservation_requested_resources: ListCollectorVariable({
             question: 'Required Room Resources',
             order: 550,
-            mandatory: true,
+            mandatory: false,
             listTable: 'x_783010_tocc_a1_room_resource',
             referenceQual: 'active=true',
             helpText: 'Select the resources required for this reservation.',
@@ -74,6 +74,49 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
     script: `(function execute(producer, current) {
     current.setValue('instructor', gs.getUserID());
     current.setValue('status', 'submitted');
+
+    var roomId = current.getValue('room') || producer.reservation_room;
+    var participants = parseInt(producer.reservation_expected_participants, 10);
+
+    if (isNaN(participants) || participants < 1) {
+        gs.addErrorMessage('Expected participants must be greater than zero.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    if (gs.nil(roomId)) {
+        gs.addErrorMessage('Room is required for reservation submission.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    var room = new GlideRecord('x_783010_tocc_a1_room');
+    if (!room.get(roomId)) {
+        gs.addErrorMessage('Selected room was not found.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    var capacity = parseInt(room.getValue('capacity'), 10) || 0;
+    if (capacity <= 0) {
+        gs.addErrorMessage('Selected room has no valid capacity configured.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    if (participants > capacity) {
+        gs.addErrorMessage(
+            'Expected participants (' +
+                participants +
+                ') cannot exceed room capacity (' +
+                capacity +
+                ').'
+        );
+        current.setAbortAction(true);
+        return;
+    }
+
+    current.setValue('expected_participants', participants);
 
     if (gs.nil(current.getValue('short_description'))) {
         current.setValue(

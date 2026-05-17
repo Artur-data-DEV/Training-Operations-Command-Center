@@ -63,7 +63,7 @@ const toccHomePage = SPPage({
     containers: [
         {
             $id: Now.ID['x_783010_tocc_a1_sp_container_home_main'],
-            width: 'container',
+            width: 'container-fluid',
             order: 100,
             rows: [
                 {
@@ -126,7 +126,7 @@ SPPage({
     containers: [
         {
             $id: Now.ID['x_783010_tocc_a1_sp_container_sessions_main'],
-            width: 'container',
+            width: 'container-fluid',
             order: 100,
             rows: [
                 {
@@ -160,7 +160,7 @@ SPPage({
     containers: [
         {
             $id: Now.ID['x_783010_tocc_a1_sp_container_enrollments_main'],
-            width: 'container',
+            width: 'container-fluid',
             order: 100,
             rows: [
                 {
@@ -194,7 +194,7 @@ SPPage({
     containers: [
         {
             $id: Now.ID['x_783010_tocc_a1_sp_container_reservations_main'],
-            width: 'container',
+            width: 'container-fluid',
             order: 100,
             rows: [
                 {
@@ -236,7 +236,7 @@ SPPage({
     containers: [
         {
             $id: Now.ID['x_783010_tocc_a1_sp_container_help_main'],
-            width: 'container',
+            width: 'container-fluid',
             order: 100,
             rows: [
                 {
@@ -269,7 +269,7 @@ const toccNotFoundPage = SPPage({
     containers: [
         {
             $id: Now.ID['x_783010_tocc_a1_sp_container_not_found'],
-            width: 'container',
+            width: 'container-fluid',
             order: 100,
             rows: [
                 {
