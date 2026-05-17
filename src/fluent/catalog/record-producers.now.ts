@@ -1,6 +1,7 @@
 import {
     CatalogItemRecordProducer,
     DateTimeVariable,
+    ListCollectorVariable,
     MultiLineTextVariable,
     SingleLineTextVariable,
     ReferenceVariable,
@@ -54,6 +55,14 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
             mapToField: true,
             field: 'expected_participants',
         }),
+        reservation_requested_resources: ListCollectorVariable({
+            question: 'Required Room Resources',
+            order: 550,
+            mandatory: true,
+            listTable: 'x_783010_tocc_a1_room_resource',
+            referenceQual: 'active=true',
+            helpText: 'Select the resources required for this reservation.',
+        }),
         reservation_notes: MultiLineTextVariable({
             question: 'Additional Notes',
             order: 600,
@@ -73,6 +82,61 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
         );
     }
 })(producer, current);`,
+    postInsertScript: `(function executePostInsert(producer, current, cat_item) {
+    var selectedResourcesRaw = producer.reservation_requested_resources;
+    if (!selectedResourcesRaw) {
+        return;
+    }
+
+    var selectedResources = [];
+    if (Object.prototype.toString.call(selectedResourcesRaw) === '[object Array]') {
+        selectedResources = selectedResourcesRaw;
+    } else if (typeof selectedResourcesRaw === 'string') {
+        selectedResources = selectedResourcesRaw.split(',');
+    } else {
+        selectedResources = [selectedResourcesRaw];
+    }
+
+    var currentRoom = current.getValue('room');
+    var insertedCount = 0;
+
+    for (var i = 0; i < selectedResources.length; i++) {
+        var resourceId = (selectedResources[i] + '').trim();
+        if (!resourceId) {
+            continue;
+        }
+
+        var roomResource = new GlideRecord('x_783010_tocc_a1_room_resource');
+        if (!roomResource.get(resourceId)) {
+            continue;
+        }
+
+        if (roomResource.getValue('active') != 'true') {
+            continue;
+        }
+
+        if (currentRoom && roomResource.getValue('room') != currentRoom) {
+            continue;
+        }
+
+        var link = new GlideRecord('x_783010_tocc_a1_reservation_resource');
+        link.initialize();
+        link.setValue('reservation', current.getUniqueValue());
+        link.setValue('room_resource', roomResource.getUniqueValue());
+        link.setValue('resource_name', roomResource.getValue('resource_name'));
+        link.setValue('quantity', 1);
+        link.insert();
+        insertedCount++;
+    }
+
+    if (insertedCount === 0) {
+        current.setValue(
+            'work_notes',
+            'No valid room resources were linked from the Record Producer submission. Verify room-resource selection.'
+        );
+        current.update();
+    }
+})(producer, current, cat_item);`,
 })
 
 export const requestTrainingEnrollmentProducer = CatalogItemRecordProducer({

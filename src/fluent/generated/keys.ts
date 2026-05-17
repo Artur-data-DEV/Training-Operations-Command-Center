@@ -887,6 +887,14 @@ declare global {
                         table: 'x_783010_tocc_a1_course'
                         id: '25ef6a187e924efa9d1dbe6a2ec7cd42'
                     }
+                    seed_location_001: {
+                        table: 'cmn_location'
+                        id: '8068c65f304a4e90abba2fb74585e0b7'
+                    }
+                    seed_location_002: {
+                        table: 'cmn_location'
+                        id: '53fd69ef724f4ef2bede91d60dad1b6d'
+                    }
                     seed_room_001: {
                         table: 'x_783010_tocc_a1_room'
                         id: '40d466b956364b8280f1ea4256ca0423'
@@ -2122,6 +2130,10 @@ declare global {
                         table: 'sc_catalog'
                         id: '42fcbec23dff46e39b5e8df6482be6b2'
                     }
+                    x_783010_tocc_a1_ccs_room_reservation_participants_guard: {
+                        table: 'catalog_script_client'
+                        id: '7843312a3932408283b434e807b271f1'
+                    }
                     x_783010_tocc_a1_ccs_room_reservation_room_capacity_guard: {
                         table: 'catalog_script_client'
                         id: '239d9441770242d683606e0f9695c974'
@@ -2806,6 +2818,18 @@ declare global {
                     x_783010_tocc_a1_seed_group_role_backoffice: {
                         table: 'sys_group_has_role'
                         id: '3b8ff2bc8acc49259e7fe1250fcfccd6'
+                    }
+                    x_783010_tocc_a1_seed_location_cps_001: {
+                        table: 'cmn_location'
+                        id: 'caccb96ebd624e8993609a64e137055c'
+                    }
+                    x_783010_tocc_a1_seed_location_rj_001: {
+                        table: 'cmn_location'
+                        id: 'cf2a1b758d724c3cb207363dcd5bda4d'
+                    }
+                    x_783010_tocc_a1_seed_location_sp_001: {
+                        table: 'cmn_location'
+                        id: '541050b2020143f7860e737669f06ec3'
                     }
                     x_783010_tocc_a1_seed_pref_backoffice_home: {
                         table: 'sys_user_preference'
@@ -5011,6 +5035,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: '21ac8605ef00474d97f9cb0021fdec2a'
+                        deleted: true
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: '06231c644cf34e0ba724499bc98a850f'
@@ -6781,6 +6806,14 @@ declare global {
                     },
                     {
                         table: 'sc_cat_item_catalog'
+                        id: '43c77e94f0d6487fbbc1b5913962ccbc'
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: 'ca3046ec02fa4a268d01de8f4cb0be1e'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
                         id: '43d0daf9af764b779e9aa1a71463bc24'
                         deleted: true
                         key: {
@@ -7109,6 +7142,15 @@ declare global {
                         key: {
                             document_key: '7a61ab7a09f74dedbef73fd1ba98052b'
                             variable: '989d9e235324220002c6435723dc3484'
+                        }
+                    },
+                    {
+                        table: 'item_option_new'
+                        id: '4a0838eda6fe49cc80cb857ac2dc8739'
+                        key: {
+                            cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            variable_set: 'NULL'
+                            name: 'reservation_requested_resources'
                         }
                     },
                     {
@@ -11765,6 +11807,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'adafd5c8d07d40b982cbae47ea9ff1f5'
+                        deleted: true
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: 'b5175d76726d4f6496e6c39cf468e465'
@@ -14330,6 +14373,14 @@ declare global {
                             name: 'x_783010_tocc_a1_room_reservation'
                             element: 'status'
                             value: 'approved'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'df80fa3f53c348289d5cf3be4b8e9e46'
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '411ffe79c6b047e184eb3847887d1918'
                         }
                     },
                     {

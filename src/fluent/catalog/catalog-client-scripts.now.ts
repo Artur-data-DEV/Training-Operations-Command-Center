@@ -38,12 +38,25 @@ CatalogClientScript({
             return;
         }
 
+        try {
+            window.__toccRoomCapacity = capacity;
+        } catch (e) {
+            // Ignore browser storage issues.
+        }
+
+        var participantControl = g_form.getControl('expected_participants');
+        if (participantControl && participantControl.setAttribute) {
+            participantControl.setAttribute('type', 'number');
+            participantControl.setAttribute('min', '1');
+            participantControl.setAttribute('max', String(capacity));
+        }
+
         var currentParticipants = parseInt(g_form.getValue('expected_participants'), 10) || 0;
-        if (currentParticipants > capacity) {
+        if (!currentParticipants || currentParticipants > capacity) {
             g_form.setValue('expected_participants', String(capacity));
             g_form.showFieldMsg(
                 'expected_participants',
-                'Adjusted to room capacity (' + capacity + ').',
+                'Expected participants was adjusted to room capacity (' + capacity + ').',
                 'info'
             );
         } else {
@@ -53,7 +66,63 @@ CatalogClientScript({
                 'info'
             );
         }
+
+        // Refresh resource selection after room change.
+        g_form.setValue('reservation_requested_resources', '');
+        try {
+            var query = 'active=true^room=' + newValue;
+            if (window.g_list && window.g_list.get) {
+                var collector = window.g_list.get('IO:reservation_requested_resources');
+                if (collector && collector.setQuery) {
+                    collector.setQuery(query);
+                }
+                if (collector && collector.reset) {
+                    collector.reset();
+                }
+                if (collector && collector.refresh) {
+                    collector.refresh();
+                }
+            }
+        } catch (ignore) {
+            // List collector APIs vary by UI; server-side checks still apply.
+        }
     });
+}`,
+})
+
+CatalogClientScript({
+    $id: Now.ID['x_783010_tocc_a1_ccs_room_reservation_participants_guard'],
+    name: 'TOCC - Reservation Participants Guard (onChange)',
+    catalogItem: createRoomReservationProducer,
+    type: 'onChange',
+    variableName: 'expected_participants',
+    uiType: 'all',
+    active: true,
+    script: `function onChange(control, oldValue, newValue, isLoading) {
+    if (isLoading) {
+        return;
+    }
+
+    var participants = parseInt(newValue, 10) || 0;
+    if (participants <= 0) {
+        return;
+    }
+
+    var capacity = 0;
+    try {
+        capacity = parseInt(window.__toccRoomCapacity, 10) || 0;
+    } catch (e) {
+        capacity = 0;
+    }
+
+    if (capacity > 0 && participants > capacity) {
+        g_form.setValue('expected_participants', String(capacity));
+        g_form.showFieldMsg(
+            'expected_participants',
+            'Expected participants cannot exceed room capacity (' + capacity + ').',
+            'error'
+        );
+    }
 }`,
 })
 
@@ -70,12 +139,20 @@ CatalogClientScript({
 
     var room = g_form.getValue('room');
     var course = g_form.getValue('course');
+    var resources = g_form.getValue('reservation_requested_resources');
     var start = g_form.getValue('start_datetime');
     var end = g_form.getValue('end_datetime');
     var participantsRaw = g_form.getValue('expected_participants');
     var participants = parseInt(participantsRaw, 10) || 0;
     var minimumAdvanceHours = 48;
     var minimumDurationMinutes = 60;
+    var roomCapacity = 0;
+
+    try {
+        roomCapacity = parseInt(window.__toccRoomCapacity, 10) || 0;
+    } catch (e) {
+        roomCapacity = 0;
+    }
 
     var hasError = false;
 
@@ -87,12 +164,30 @@ CatalogClientScript({
         g_form.showFieldMsg('course', 'Select a course.', 'error');
         hasError = true;
     }
+    if (!resources) {
+        g_form.showFieldMsg('reservation_requested_resources', 'Select at least one room resource.', 'error');
+        hasError = true;
+    }
     if (!start) {
         g_form.showFieldMsg('start_datetime', 'Start date/time is required.', 'error');
         hasError = true;
     }
     if (!end) {
         g_form.showFieldMsg('end_datetime', 'End date/time is required.', 'error');
+        hasError = true;
+    }
+
+    if (participants <= 0) {
+        g_form.showFieldMsg('expected_participants', 'Expected participants must be greater than zero.', 'error');
+        hasError = true;
+    }
+
+    if (roomCapacity > 0 && participants > roomCapacity) {
+        g_form.showFieldMsg(
+            'expected_participants',
+            'Expected participants cannot exceed room capacity (' + roomCapacity + ').',
+            'error'
+        );
         hasError = true;
     }
 
@@ -138,3 +233,4 @@ CatalogClientScript({
     return true;
 }`,
 })
+

@@ -17,6 +17,9 @@ const demoStudentProfile3Id = Now.ID['x_783010_tocc_a1_seed_student_profile_3']
 const demoRoomId = Now.ID['x_783010_tocc_a1_seed_room_001']
 const demoRoom2Id = Now.ID['x_783010_tocc_a1_seed_room_002']
 const demoRoom3Id = Now.ID['x_783010_tocc_a1_seed_room_003']
+const demoLocationSaoPauloId = Now.ID['x_783010_tocc_a1_seed_location_sp_001']
+const demoLocationRioId = Now.ID['x_783010_tocc_a1_seed_location_rj_001']
+const demoLocationCampinasId = Now.ID['x_783010_tocc_a1_seed_location_cps_001']
 
 const demoRoomResourceId = Now.ID['x_783010_tocc_a1_seed_room_resource_001']
 const demoRoomResource2Id = Now.ID['x_783010_tocc_a1_seed_room_resource_002']
@@ -368,11 +371,48 @@ Record({
 })
 
 Record({
+    $id: demoLocationSaoPauloId,
+    table: 'cmn_location',
+    data: {
+        name: 'TOCC Campus - Sao Paulo',
+        city: 'Sao Paulo',
+        state: 'SP',
+        country: 'BR',
+        active: true,
+    },
+})
+
+Record({
+    $id: demoLocationRioId,
+    table: 'cmn_location',
+    data: {
+        name: 'TOCC Campus - Rio de Janeiro',
+        city: 'Rio de Janeiro',
+        state: 'RJ',
+        country: 'BR',
+        active: true,
+    },
+})
+
+Record({
+    $id: demoLocationCampinasId,
+    table: 'cmn_location',
+    data: {
+        name: 'TOCC Campus - Campinas',
+        city: 'Campinas',
+        state: 'SP',
+        country: 'BR',
+        active: true,
+    },
+})
+
+Record({
     $id: demoRoomId,
     table: 'x_783010_tocc_a1_room',
     data: {
         room_name: 'TOCC Demo Room',
         room_code: 'TOCC-DEMO-ROOM-01',
+        location: demoLocationSaoPauloId,
         capacity: 30,
         room_type: 'classroom',
         status: 'active',
@@ -385,6 +425,7 @@ Record({
     data: {
         room_name: 'TOCC Demo Lab',
         room_code: 'TOCC-DEMO-LAB-01',
+        location: demoLocationRioId,
         capacity: 20,
         room_type: 'lab',
         status: 'active',
@@ -397,6 +438,7 @@ Record({
     data: {
         room_name: 'TOCC Demo Auditorium',
         room_code: 'TOCC-DEMO-AUD-01',
+        location: demoLocationCampinasId,
         capacity: 80,
         room_type: 'auditorium',
         status: 'active',

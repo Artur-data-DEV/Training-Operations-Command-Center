@@ -98,25 +98,54 @@ export const seed_training_config_009 = Record({
         description: 'Minimum duration required between reservation start and end date/time.',
     },
 })
-export const seed_room_001 = Record({
+
+export const seed_location_001 = Record({
+    $id: 'seed_location_001',
+    table: 'cmn_location',
+    data: {
+        name: 'Training Center - Sao Paulo',
+        city: 'Sao Paulo',
+        state: 'SP',
+        country: 'BR',
+        active: true,
+    },
+})
+
+export const seed_location_002 = Record({
+    $id: 'seed_location_002',
+    table: 'cmn_location',
+    data: {
+        name: 'Training Center - Rio de Janeiro',
+        city: 'Rio de Janeiro',
+        state: 'RJ',
+        country: 'BR',
+        active: true,
+    },
+})
+
+export const seed_room_001 = Record({
     $id: 'seed_room_001',
     table: 'x_783010_tocc_a1_room',
     data: {
         room_name: 'Conference Room A',
         room_code: 'CONF-A',
+        location: seed_location_001,
         capacity: 20,
         status: 'active',
         description: 'Modern conference room with AV equipment.',
     },
 })
+
 export const seed_room_002 = Record({
     $id: 'seed_room_002',
     table: 'x_783010_tocc_a1_room',
     data: {
         room_name: 'Laboratory 101',
         room_code: 'LAB-101',
+        location: seed_location_002,
         capacity: 15,
         status: 'active',
         description: 'Technical training lab with workstations.',
     },
 })
+
