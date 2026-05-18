@@ -26,8 +26,22 @@ Record({
         application: toccNavigationMenu,
         title: 'Backoffice Queue',
         link_type: 'DIRECT',
-        query: '/now/nav/ui/classic/params/target/x_783010_tocc_a1_room_reservation_list.do?sysparm_query=status%3Dsubmitted',
+        query: '/tocc?id=tocc_backoffice_queue',
         order: 100,
+        active: true,
+        roles: ['snc_internal', 'admin', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
+    },
+})
+
+Record({
+    $id: Now.ID['x_783010_tocc_a1_app_module_classic_submitted_reservations'],
+    table: 'sys_app_module',
+    data: {
+        application: toccNavigationMenu,
+        title: 'Submitted Reservations',
+        link_type: 'DIRECT',
+        query: '/now/nav/ui/classic/params/target/x_783010_tocc_a1_room_reservation_list.do?sysparm_query=status%3Dsubmitted',
+        order: 125,
         active: true,
         roles: ['snc_internal', 'admin', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
     },

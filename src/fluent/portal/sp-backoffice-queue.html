@@ -1,0 +1,92 @@
+<div class="tocc-backoffice-queue">
+  <div class="tocc-page-header">
+    <div>
+      <h2 class="tocc-page-title m-t-0 m-b-xs">Backoffice Queue</h2>
+      <p class="tocc-page-subtitle m-b-0">Review submitted reservations and fix data quality before approval.</p>
+    </div>
+    <div class="tocc-page-header__actions">
+      <a class="tocc-btn-outline" href="{{c.data.links.home}}">Home</a>
+      <a class="tocc-btn-outline" href="{{c.data.links.classic_queue}}">Classic queue</a>
+    </div>
+  </div>
+
+  <div class="tocc-reservation-panel">
+    <div class="tocc-panel-header">
+      <div class="tocc-panel-header__main">
+        <strong>Submitted Reservations</strong>
+        <span class="tocc-count-badge">{{c.data.count || 0}}</span>
+      </div>
+    </div>
+
+    <div class="tocc-alert tocc-alert--danger" ng-if="c.data.error">{{c.data.error}}</div>
+    <div class="tocc-alert tocc-alert--success" ng-if="!c.data.error && c.data.message">{{c.data.message}}</div>
+
+    <div class="tocc-empty-state" ng-if="!c.data.error && !(c.data.reservations || []).length">
+      <h4 class="m-t-0">No submitted reservations</h4>
+      <p>The backoffice queue is clear.</p>
+    </div>
+
+    <div class="table-responsive" ng-if="!c.data.error && (c.data.reservations || []).length">
+      <table class="table tocc-custom-table m-b-0">
+        <thead>
+          <tr>
+            <th>Number</th>
+            <th>Instructor</th>
+            <th>Course</th>
+            <th>Room</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Participants</th>
+            <th>Data Quality</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="reservation in c.data.reservations">
+            <td>
+              <a class="tocc-record-link" href="{{reservation.record_url}}">
+                {{reservation.number}}
+              </a>
+            </td>
+            <td>
+              <span ng-if="reservation.instructor_name">{{reservation.instructor_name}}</span>
+              <span ng-if="!reservation.instructor_name" class="tocc-data-warning">Missing instructor</span>
+            </td>
+            <td>
+              <span ng-if="reservation.course_name">{{reservation.course_name}}</span>
+              <span ng-if="!reservation.course_name" class="tocc-data-warning">Missing course</span>
+            </td>
+            <td>
+              <span ng-if="reservation.room_name">{{reservation.room_name}}</span>
+              <span ng-if="!reservation.room_name" class="tocc-data-warning">Missing room</span>
+            </td>
+            <td>
+              <span ng-if="reservation.start_display">{{reservation.start_display}}</span>
+              <span ng-if="!reservation.start_display" class="tocc-data-warning">Missing start</span>
+            </td>
+            <td>
+              <span ng-if="reservation.end_display">{{reservation.end_display}}</span>
+              <span ng-if="!reservation.end_display" class="tocc-data-warning">Missing end</span>
+            </td>
+            <td>{{reservation.expected_participants || '-'}}</td>
+            <td>
+              <span class="tocc-status-pill tocc-status-pill--ready" ng-if="!c.hasIssues(reservation)">Ready</span>
+              <span class="tocc-status-pill tocc-status-pill--review" ng-if="c.hasIssues(reservation)" title="{{c.issueText(reservation)}}">Needs review</span>
+            </td>
+            <td class="text-right">
+              <div class="tocc-row-actions">
+                <button type="button" class="tocc-btn-primary" ng-click="c.approve(reservation)" ng-disabled="c.submitting[reservation.sys_id] || c.hasIssues(reservation)">
+                  Approve
+                </button>
+                <button type="button" class="tocc-btn-danger" ng-click="c.reject(reservation)" ng-disabled="c.submitting[reservation.sys_id]">
+                  Reject
+                </button>
+                <a class="tocc-btn-outline" href="{{reservation.record_url}}">Open</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

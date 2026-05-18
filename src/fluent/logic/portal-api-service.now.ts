@@ -39,6 +39,13 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         var gr = new GlideRecord('x_783010_tocc_a1_training_session');
         gr.addQuery('status', 'IN', 'open,full');
         gr.addQuery('active', true);
+        gr.addNotNullQuery('course');
+        gr.addNotNullQuery('room');
+        gr.addNotNullQuery('instructor');
+        gr.addNotNullQuery('start_datetime');
+        gr.addNotNullQuery('end_datetime');
+        gr.addQuery('start_datetime', '>=', new GlideDateTime().getValue());
+        gr.addQuery('total_seats', '>', 0);
 
         if (courseFilter)   { gr.addQuery('course', courseFilter); }
         if (locationFilter) { gr.addQuery('room.location', locationFilter); }
@@ -49,6 +56,10 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         gr.query();
 
         while (gr.next()) {
+            if (!this._isActiveRoom(gr.getValue('room'))) {
+                continue;
+            }
+
             sessions.push({
                 sys_id:               gr.getUniqueValue(),
                 number:               gr.getValue('number'),
@@ -64,10 +75,12 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
                 end_datetime:         gr.getValue('end_datetime'),
                 end_display:          gr.getDisplayValue('end_datetime'),
                 status:               gr.getValue('status'),
-                available_seats:      gr.getValue('available_seats'),
-                total_seats:          gr.getValue('total_seats'),
+                available_seats:      parseInt(gr.getValue('available_seats'), 10) || 0,
+                total_seats:          parseInt(gr.getValue('total_seats'), 10) || 0,
                 enrollment_deadline:  gr.getValue('enrollment_deadline'),
                 confirmation_deadline:gr.getValue('confirmation_deadline'),
+                data_quality_status:  'ready',
+                data_quality_issues:  [],
             });
         }
 
@@ -173,22 +186,149 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         gr.query();
 
         while (gr.next()) {
+            var reservationIssues = this._getReservationDataQualityIssues(gr);
             reservations.push({
                 sys_id:               gr.getUniqueValue(),
                 number:               gr.getValue('number'),
                 status:               gr.getValue('status'),
                 status_display:       gr.getDisplayValue('status'),
+                course:               gr.getValue('course'),
                 course_name:          gr.getDisplayValue('course'),
+                instructor:           gr.getValue('instructor'),
+                instructor_name:      gr.getDisplayValue('instructor'),
+                room:                 gr.getValue('room'),
                 room_name:            gr.getDisplayValue('room'),
                 start_datetime:       gr.getValue('start_datetime'),
                 start_display:        gr.getDisplayValue('start_datetime'),
+                end_datetime:         gr.getValue('end_datetime'),
                 end_display:          gr.getDisplayValue('end_datetime'),
                 expected_participants:gr.getValue('expected_participants'),
                 training_session:     gr.getValue('training_session'),
+                record_url:           '/now/nav/ui/classic/params/target/x_783010_tocc_a1_room_reservation.do?sys_id=' + gr.getUniqueValue(),
+                portal_record_url:    '?id=form&table=x_783010_tocc_a1_room_reservation&sys_id=' + gr.getUniqueValue(),
+                data_quality_status:  reservationIssues.length ? 'needs_review' : 'ready',
+                data_quality_issues:  reservationIssues,
             });
         }
 
         return JSON.stringify({ success: true, reservations: reservations, count: reservations.length });
+    },
+
+    // -----------------------------------------------------------------------
+    // getBackofficeReservationQueue
+    // Returns submitted reservations requiring operational review.
+    // Access: backoffice, manager, scoped admin, or platform admin.
+    // -----------------------------------------------------------------------
+    getBackofficeReservationQueue: function() {
+        if (!this._canManageReservationQueue()) {
+            return JSON.stringify({ success: false, message: 'Access denied.' });
+        }
+
+        var reservations = [];
+        var gr = new GlideRecord('x_783010_tocc_a1_room_reservation');
+        gr.addQuery('status', 'submitted');
+        gr.orderBy('start_datetime');
+        gr.query();
+
+        while (gr.next()) {
+            var issues = this._getReservationDataQualityIssues(gr);
+            reservations.push({
+                sys_id:                gr.getUniqueValue(),
+                number:                gr.getValue('number'),
+                status:                gr.getValue('status'),
+                status_display:        gr.getDisplayValue('status'),
+                course:                gr.getValue('course'),
+                course_name:           gr.getDisplayValue('course'),
+                instructor:            gr.getValue('instructor'),
+                instructor_name:       gr.getDisplayValue('instructor'),
+                room:                  gr.getValue('room'),
+                room_name:             gr.getDisplayValue('room'),
+                start_datetime:        gr.getValue('start_datetime'),
+                start_display:         gr.getDisplayValue('start_datetime'),
+                end_datetime:          gr.getValue('end_datetime'),
+                end_display:           gr.getDisplayValue('end_datetime'),
+                expected_participants: gr.getValue('expected_participants'),
+                training_session:      gr.getValue('training_session'),
+                record_url:            '/now/nav/ui/classic/params/target/x_783010_tocc_a1_room_reservation.do?sys_id=' + gr.getUniqueValue(),
+                portal_record_url:     '?id=form&table=x_783010_tocc_a1_room_reservation&sys_id=' + gr.getUniqueValue(),
+                data_quality_status:   issues.length ? 'needs_review' : 'ready',
+                data_quality_issues:   issues,
+            });
+        }
+
+        return JSON.stringify({ success: true, reservations: reservations, count: reservations.length });
+    },
+
+    // -----------------------------------------------------------------------
+    // approveReservation
+    // Approves one submitted reservation from the backoffice queue.
+    // -----------------------------------------------------------------------
+    approveReservation: function(reservationId) {
+        if (!this._canManageReservationQueue()) {
+            return JSON.stringify({ success: false, message: 'Access denied.' });
+        }
+
+        var id = reservationId || this._getParam('sysparm_reservation_id');
+        if (!id) {
+            return JSON.stringify({ success: false, message: 'Reservation ID is required.' });
+        }
+
+        var gr = new GlideRecord('x_783010_tocc_a1_room_reservation');
+        if (!gr.get(id)) {
+            return JSON.stringify({ success: false, message: 'Reservation not found.' });
+        }
+
+        if (gr.getValue('status') !== 'submitted') {
+            return JSON.stringify({ success: false, message: 'Only submitted reservations can be approved.' });
+        }
+
+        var issues = this._getReservationDataQualityIssues(gr);
+        if (issues.length) {
+            return JSON.stringify({
+                success: false,
+                message: 'Reservation has missing operational data: ' + issues.join(', ') + '.',
+                data_quality_issues: issues,
+            });
+        }
+
+        gr.setValue('status', 'approved');
+        gr.setValue('work_notes', 'Approved via TOCC Backoffice Queue by ' + gs.getUserDisplayName() + '.');
+        gr.setWorkflow(true);
+        gr.update();
+
+        return JSON.stringify({ success: true, message: 'Reservation approved successfully.' });
+    },
+
+    // -----------------------------------------------------------------------
+    // rejectReservation
+    // Rejects one submitted reservation from the backoffice queue.
+    // -----------------------------------------------------------------------
+    rejectReservation: function(reservationId, reason) {
+        if (!this._canManageReservationQueue()) {
+            return JSON.stringify({ success: false, message: 'Access denied.' });
+        }
+
+        var id = reservationId || this._getParam('sysparm_reservation_id');
+        var rejectReason = reason || this._getParam('sysparm_reason') || '';
+        if (!id) {
+            return JSON.stringify({ success: false, message: 'Reservation ID is required.' });
+        }
+
+        var gr = new GlideRecord('x_783010_tocc_a1_room_reservation');
+        if (!gr.get(id)) {
+            return JSON.stringify({ success: false, message: 'Reservation not found.' });
+        }
+
+        if (gr.getValue('status') !== 'submitted') {
+            return JSON.stringify({ success: false, message: 'Only submitted reservations can be rejected.' });
+        }
+
+        gr.setValue('status', 'rejected');
+        gr.setValue('work_notes', 'Rejected via TOCC Backoffice Queue by ' + gs.getUserDisplayName() + (rejectReason ? '. Reason: ' + rejectReason : '.'));
+        gr.setWorkflow(true);
+        gr.update();
+
+        return JSON.stringify({ success: true, message: 'Reservation rejected successfully.' });
     },
 
     // -----------------------------------------------------------------------
@@ -496,6 +636,53 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             gs.hasRole('x_783010_tocc_a1.backoffice') ||
             gs.hasRole('x_783010_tocc_a1.manager')
         );
+    },
+
+    _canManageReservationQueue: function() {
+        if (gs.hasRole('admin')) {
+            return true;
+        }
+        return (
+            gs.hasRole('x_783010_tocc_a1.admin') ||
+            gs.hasRole('x_783010_tocc_a1.backoffice') ||
+            gs.hasRole('x_783010_tocc_a1.manager')
+        );
+    },
+
+    _getReservationDataQualityIssues: function(gr) {
+        var issues = [];
+        if (!gr.getValue('course')) {
+            issues.push('missing course');
+        }
+        if (!gr.getValue('room')) {
+            issues.push('missing room');
+        }
+        if (!gr.getValue('instructor')) {
+            issues.push('missing instructor');
+        }
+        if (!gr.getValue('start_datetime')) {
+            issues.push('missing start');
+        }
+        if (!gr.getValue('end_datetime')) {
+            issues.push('missing end');
+        }
+        if (!(parseInt(gr.getValue('expected_participants'), 10) > 0)) {
+            issues.push('invalid participants');
+        }
+        return issues;
+    },
+
+    _isActiveRoom: function(roomId) {
+        if (!roomId) {
+            return false;
+        }
+
+        var room = new GlideRecord('x_783010_tocc_a1_room');
+        if (!room.get(roomId)) {
+            return false;
+        }
+
+        return room.getValue('status') === 'active';
     },
 
     _countRecords: function(tableName, queryFn) {

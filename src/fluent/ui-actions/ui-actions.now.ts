@@ -13,6 +13,11 @@ UiAction({
     hint: 'Approve this room reservation and create the training session.',
     client: { isClient: false },
     roles: ['x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.admin'],
+    showUpdate: true,
+    form: { showButton: true, style: 'primary' },
+    list: { showButton: true, showListChoice: true, showBannerButton: true, style: 'primary' },
+    workspace: { isConfigurableWorkspace: true, showFormButtonV2: true },
+    order: 100,
     condition: 'current.status == "submitted"',
     script: `(function approveReservation() {
     if (current.getValue('status') !== 'submitted') {
@@ -40,6 +45,11 @@ UiAction({
     hint: 'Reject this room reservation request.',
     client: { isClient: false },
     roles: ['x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.admin'],
+    showUpdate: true,
+    form: { showButton: true, style: 'destructive' },
+    list: { showButton: true, showListChoice: true, showBannerButton: true, style: 'destructive' },
+    workspace: { isConfigurableWorkspace: true, showFormButtonV2: true },
+    order: 110,
     condition: 'current.status == "submitted"',
     script: `(function rejectReservation() {
     if (current.getValue('status') !== 'submitted') {
@@ -70,6 +80,11 @@ UiAction({
     hint: 'Cancel this reservation and the linked training session.',
     client: { isClient: false },
     roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.admin'],
+    showUpdate: true,
+    form: { showButton: true },
+    list: { showListChoice: true },
+    workspace: { isConfigurableWorkspace: true, showFormMenuButtonV2: true },
+    order: 120,
     condition: 'current.status != "cancelled" && current.status != "rejected"',
     script: `(function cancelReservation() {
     var status = current.getValue('status');

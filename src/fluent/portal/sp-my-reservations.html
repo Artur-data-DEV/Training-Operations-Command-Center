@@ -2,12 +2,12 @@
   <div class="tocc-page-header">
     <div class="tocc-page-header__left">
       <h2 class="tocc-page-title m-t-0 m-b-xs">My Reservations</h2>
-      <p class="text-muted m-b-0">Track room requests, approval status and schedule details.</p>
+      <p class="tocc-page-subtitle m-b-0">Track room requests, approval status and schedule details.</p>
     </div>
     <div class="tocc-page-header__actions">
-      <a class="btn btn-default btn-sm" href="{{c.data.links.home}}">Back to Home</a>
-      <a class="btn btn-default btn-sm" href="{{c.data.links.sessions}}">Browse Sessions</a>
-      <a class="btn btn-primary btn-sm" href="{{c.data.links.create_reservation}}">New Reservation</a>
+      <a class="tocc-btn-outline" href="{{c.data.links.home}}">Back to Home</a>
+      <a class="tocc-btn-outline" href="{{c.data.links.sessions}}">Browse Sessions</a>
+      <a class="tocc-btn-primary" href="{{c.data.links.create_reservation}}">New Reservation</a>
     </div>
   </div>
 
@@ -38,26 +38,24 @@
     </div>
   </div>
 
-  <div class="panel panel-default tocc-reservation-panel">
-    <div class="panel-heading">
+  <div class="tocc-reservation-panel">
+    <div class="tocc-panel-header">
       <strong>Reservation Requests</strong>
-      <span class="badge pull-right">{{c.data.count || 0}}</span>
+      <span class="tocc-count-badge">{{c.data.count || 0}}</span>
     </div>
-    <div class="panel-body" ng-if="c.data.error">
-      <div class="alert alert-danger m-b-0">{{c.data.error}}</div>
-    </div>
+    <div class="tocc-alert tocc-alert--danger" ng-if="c.data.error">{{c.data.error}}</div>
 
     <div class="tocc-empty-state" ng-if="!c.data.error && !(c.data.reservations || []).length">
       <h4 class="m-t-0">No reservations yet</h4>
-      <p class="text-muted">You have not submitted any room reservations with this instructor account.</p>
+      <p>You have not submitted any room reservations with this instructor account.</p>
       <div>
-        <a class="btn btn-primary btn-sm" href="{{c.data.links.create_reservation}}">Create first reservation</a>
-        <a class="btn btn-default btn-sm" href="{{c.data.links.home}}">Go to Home</a>
+        <a class="tocc-btn-primary" href="{{c.data.links.create_reservation}}">Create first reservation</a>
+        <a class="tocc-btn-outline" href="{{c.data.links.home}}">Go to Home</a>
       </div>
     </div>
 
     <div class="table-responsive" ng-if="!c.data.error">
-      <table class="table table-striped m-b-0" ng-if="(c.data.reservations || []).length">
+      <table class="table tocc-custom-table m-b-0" ng-if="(c.data.reservations || []).length">
         <thead>
           <tr>
             <th>Number</th>
@@ -66,27 +64,48 @@
             <th>Start</th>
             <th>End</th>
             <th>Status</th>
+            <th>Data Quality</th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="reservation in c.data.reservations">
-            <td><strong>{{reservation.number}}</strong></td>
-            <td>{{reservation.course_name}}</td>
-            <td>{{reservation.room_name}}</td>
-            <td>{{reservation.start_display}}</td>
-            <td>{{reservation.end_display}}</td>
+            <td>
+              <a class="tocc-record-link" href="{{reservation.record_url}}">
+                {{reservation.number}}
+              </a>
+            </td>
+            <td>
+              <span ng-if="reservation.course_name">{{reservation.course_name}}</span>
+              <span ng-if="!reservation.course_name" class="tocc-data-warning">Missing course</span>
+            </td>
+            <td>
+              <span ng-if="reservation.room_name">{{reservation.room_name}}</span>
+              <span ng-if="!reservation.room_name" class="tocc-data-warning">Missing room</span>
+            </td>
+            <td>
+              <span ng-if="reservation.start_display">{{reservation.start_display}}</span>
+              <span ng-if="!reservation.start_display" class="tocc-data-warning">Missing start</span>
+            </td>
+            <td>
+              <span ng-if="reservation.end_display">{{reservation.end_display}}</span>
+              <span ng-if="!reservation.end_display" class="tocc-data-warning">Missing end</span>
+            </td>
             <td>
               <span
-                class="label"
+                class="tocc-status-pill"
                 ng-class="{
-                  'label-warning': reservation.status === 'submitted',
-                  'label-success': reservation.status === 'approved',
-                  'label-danger': reservation.status === 'rejected',
-                  'label-default': reservation.status === 'cancelled'
+                  'tocc-status-pill--submitted': reservation.status === 'submitted',
+                  'tocc-status-pill--approved': reservation.status === 'approved',
+                  'tocc-status-pill--rejected': reservation.status === 'rejected',
+                  'tocc-status-pill--cancelled': reservation.status === 'cancelled'
                 }"
               >
                 {{reservation.status_display || reservation.status}}
               </span>
+            </td>
+            <td>
+              <span class="tocc-status-pill tocc-status-pill--ready" ng-if="reservation.data_quality_status === 'ready'">Ready</span>
+              <span class="tocc-status-pill tocc-status-pill--review" ng-if="reservation.data_quality_status !== 'ready'" title="{{reservation.data_quality_issues.join(', ')}}">Needs review</span>
             </td>
           </tr>
         </tbody>

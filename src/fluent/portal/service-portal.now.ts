@@ -39,6 +39,16 @@ const toccMyReservationsWidget = SPWidget({
     serverScript: Now.include('./sp-my-reservations.server.js'),
 })
 
+const toccBackofficeQueueWidget = SPWidget({
+    $id: Now.ID['x_783010_tocc_a1_sp_widget_backoffice_queue'],
+    id: 'x_783010_tocc_a1-backoffice-queue',
+    name: 'TOCC - Backoffice Queue',
+    htmlTemplate: Now.include('./sp-backoffice-queue.html'),
+    customCss: Now.include('./sp-backoffice-queue.css'),
+    clientScript: Now.include('./sp-backoffice-queue.client.js'),
+    serverScript: Now.include('./sp-backoffice-queue.server.js'),
+})
+
 const toccHelpCenterWidget = SPWidget({
     $id: Now.ID['x_783010_tocc_a1_sp_widget_help_center'],
     id: 'x_783010_tocc_a1-help-center',
@@ -221,6 +231,40 @@ SPPage({
 })
 
 SPPage({
+    pageId: 'tocc_backoffice_queue',
+    title: 'Backoffice Queue',
+    shortDescription: 'Backoffice approval queue for submitted room reservations.',
+    roles: ['snc_internal', 'admin', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
+    containers: [
+        {
+            $id: Now.ID['x_783010_tocc_a1_sp_container_backoffice_queue_main'],
+            width: 'container-fluid',
+            order: 100,
+            rows: [
+                {
+                    $id: Now.ID['x_783010_tocc_a1_sp_row_backoffice_queue_main'],
+                    order: 100,
+                    columns: [
+                        {
+                            $id: Now.ID['x_783010_tocc_a1_sp_col_backoffice_queue_main'],
+                            size: 12,
+                            instances: [
+                                {
+                                    $id: Now.ID['x_783010_tocc_a1_sp_inst_backoffice_queue_main'],
+                                    widget: toccBackofficeQueueWidget,
+                                    title: 'Backoffice Queue',
+                                    order: 100,
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+})
+
+SPPage({
     pageId: 'tocc_help',
     title: 'Help Center',
     shortDescription: 'Knowledge Base and Virtual Agent access point.',
@@ -335,6 +379,16 @@ const toccMainMenu = SPMenu({
             active: true,
             roles: ['admin', 'x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.admin'],
             glyph: 'building-o',
+        },
+        {
+            $id: Now.ID['x_783010_tocc_a1_sp_main_menu_item_backoffice_queue'],
+            label: 'Backoffice Queue',
+            type: 'page',
+            page: Now.ref('sp_page', { id: 'tocc_backoffice_queue' }),
+            order: 450,
+            active: true,
+            roles: ['admin', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
+            glyph: 'tasks',
         },
         {
             $id: Now.ID['x_783010_tocc_a1_sp_main_menu_item_catalog'],

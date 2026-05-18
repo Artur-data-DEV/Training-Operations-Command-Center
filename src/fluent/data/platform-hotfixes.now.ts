@@ -310,12 +310,160 @@ Record({
         backofficeModule.addQuery('application.name', 'x_783010_tocc_a1_tocc');
         backofficeModule.query();
         while (backofficeModule.next()) {
-            backofficeModule.setValue('title', 'Backoffice Workspace');
-            backofficeModule.setValue('query', '/x/783010/tocc-backoffice-ops/list');
+            backofficeModule.setValue('title', 'Backoffice Queue');
+            backofficeModule.setValue('query', '/tocc?id=tocc_backoffice_queue');
             backofficeModule.setValue('active', true);
             backofficeModule.update();
-            gs.info('[TOCC][FIX] Backoffice module mapped to workspace: /x/783010/tocc-backoffice-ops/list');
+            gs.info('[TOCC][FIX] Backoffice module mapped to portal queue: /tocc?id=tocc_backoffice_queue');
         }
+
+        function setIfChanged(record, fieldName, value) {
+            if (!record.isValidField(fieldName)) {
+                return false;
+            }
+            if (String(record.getValue(fieldName) || '') === String(value || '')) {
+                return false;
+            }
+            record.setValue(fieldName, value);
+            return true;
+        }
+
+        function findOne(tableName, fieldName, value) {
+            var record = new GlideRecord(tableName);
+            record.addQuery(fieldName, value);
+            record.setLimit(1);
+            record.query();
+            return record.next() ? record : null;
+        }
+
+        function ensureCi(tableName, name, location) {
+            var ci = new GlideRecord(tableName);
+            ci.addQuery('name', name);
+            ci.setLimit(1);
+            ci.query();
+            if (!ci.next()) {
+                ci.initialize();
+                ci.setValue('name', name);
+                if (location && ci.isValidField('location')) {
+                    ci.setValue('location', location);
+                }
+                if (ci.isValidField('install_status')) {
+                    ci.setValue('install_status', '1');
+                }
+                ci.setValue('short_description', 'TOCC managed room resource CI.');
+                var createdId = ci.insert();
+                return createdId || '';
+            }
+
+            var changedCi = false;
+            if (location && ci.isValidField('location')) {
+                changedCi = setIfChanged(ci, 'location', location) || changedCi;
+            }
+            if (ci.isValidField('install_status')) {
+                changedCi = setIfChanged(ci, 'install_status', '1') || changedCi;
+            }
+            if (changedCi) {
+                ci.update();
+            }
+            return ci.getUniqueValue();
+        }
+
+        function patchRoomResource(resourceName, roomCode, ciTable, ciName) {
+            var room = findOne('x_783010_tocc_a1_room', 'room_code', roomCode);
+            if (!room) {
+                gs.warn('[TOCC][FIX] Cannot patch resource ' + resourceName + ': room not found ' + roomCode);
+                return;
+            }
+
+            var ciId = ensureCi(ciTable, ciName, room.getValue('location'));
+            if (!ciId) {
+                gs.warn('[TOCC][FIX] Cannot patch resource ' + resourceName + ': CI not available ' + ciName);
+                return;
+            }
+
+            var resource = new GlideRecord('x_783010_tocc_a1_room_resource');
+            resource.addQuery('resource_name', resourceName);
+            resource.query();
+            while (resource.next()) {
+                var changedResource = false;
+                changedResource = setIfChanged(resource, 'room', room.getUniqueValue()) || changedResource;
+                changedResource = setIfChanged(resource, 'ci_reference', ciId) || changedResource;
+                changedResource = setIfChanged(resource, 'active', true) || changedResource;
+                if (changedResource) {
+                    resource.update();
+                    gs.info('[TOCC][FIX] Resource linked to room and CI: ' + resourceName);
+                }
+            }
+        }
+
+        function patchSession(title, number, courseId, roomCode, instructorUserName) {
+            var course = findOne('x_783010_tocc_a1_course', 'course_id', courseId);
+            var room = findOne('x_783010_tocc_a1_room', 'room_code', roomCode);
+            var instructor = findOne('sys_user', 'user_name', instructorUserName);
+            var session = new GlideRecord('x_783010_tocc_a1_training_session');
+            session.addQuery('title', title);
+            session.query();
+            while (session.next()) {
+                var changedSession = false;
+                if (number && gs.nil(session.getValue('number'))) {
+                    changedSession = setIfChanged(session, 'number', number) || changedSession;
+                }
+                if (course) {
+                    changedSession = setIfChanged(session, 'course', course.getUniqueValue()) || changedSession;
+                }
+                if (room) {
+                    changedSession = setIfChanged(session, 'room', room.getUniqueValue()) || changedSession;
+                }
+                if (instructor) {
+                    changedSession = setIfChanged(session, 'instructor', instructor.getUniqueValue()) || changedSession;
+                }
+                if (changedSession) {
+                    session.update();
+                    gs.info('[TOCC][FIX] Session operational references normalized: ' + title);
+                }
+            }
+        }
+
+        function forceUiActionButtons(actionName, formStyle, listStyle) {
+            var uiAction = new GlideRecord('sys_ui_action');
+            uiAction.addQuery('table', TARGET_TABLE);
+            uiAction.addQuery('action_name', actionName);
+            uiAction.query();
+            while (uiAction.next()) {
+                var changedAction = false;
+                changedAction = setIfChanged(uiAction, 'show_update', true) || changedAction;
+                changedAction = setIfChanged(uiAction, 'form_button', true) || changedAction;
+                changedAction = setIfChanged(uiAction, 'list_button', true) || changedAction;
+                changedAction = setIfChanged(uiAction, 'list_choice', true) || changedAction;
+                changedAction = setIfChanged(uiAction, 'list_banner_button', true) || changedAction;
+                if (uiAction.isValidField('workspace_form_button')) {
+                    changedAction = setIfChanged(uiAction, 'workspace_form_button', true) || changedAction;
+                }
+                if (formStyle && uiAction.isValidField('form_style')) {
+                    changedAction = setIfChanged(uiAction, 'form_style', formStyle) || changedAction;
+                }
+                if (listStyle && uiAction.isValidField('list_style')) {
+                    changedAction = setIfChanged(uiAction, 'list_style', listStyle) || changedAction;
+                }
+                if (changedAction) {
+                    uiAction.update();
+                    gs.info('[TOCC][FIX] UI Action button flags enforced: ' + actionName);
+                }
+            }
+        }
+
+        patchRoomResource('Projector - Demo Unit', 'TOCC-DEMO-ROOM-01', 'cmdb_ci_hardware', '[TOCC] Projector - Demo Unit');
+        patchRoomResource('Lab Workstations', 'TOCC-DEMO-LAB-01', 'cmdb_ci_computer', '[TOCC] Lab Workstations');
+        patchRoomResource('PA System', 'TOCC-DEMO-AUD-01', 'cmdb_ci_hardware', '[TOCC] PA System');
+        patchRoomResource('Wireless Microphones', 'TOCC-DEMO-AUD-01', 'cmdb_ci_hardware', '[TOCC] Wireless Microphones');
+
+        patchSession('TOCC Demo Session - Foundations', 'SES0000001', 'TOCC-DEMO-101', 'TOCC-DEMO-ROOM-01', 'tocc.instructor');
+        patchSession('TOCC Demo Session - Lab Intensive', 'SES0000002', 'TOCC-DEMO-201', 'TOCC-DEMO-LAB-01', 'tocc.instructor');
+        patchSession('TOCC Demo Session - Leadership Briefing Live', 'SES0000003', 'TOCC-DEMO-301', 'TOCC-DEMO-AUD-01', 'tocc.instructor');
+        patchSession('TOCC Demo Session - Completed Cohort', 'SES0000004', 'TOCC-DEMO-101', 'TOCC-DEMO-AUD-01', 'tocc.instructor');
+
+        forceUiActionButtons('approve_reservation', 'primary', 'primary');
+        forceUiActionButtons('reject_reservation', 'destructive', 'destructive');
     }
 })();`,
     },

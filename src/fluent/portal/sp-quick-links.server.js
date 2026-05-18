@@ -52,12 +52,12 @@
         sessions: pageLink('tocc_sessions'),
         enrollments: pageLink('tocc_my_enrollments'),
         reservations: pageLink('tocc_my_reservations'),
+        backoffice_queue: pageLink('tocc_backoffice_queue'),
         create_reservation: createReservationLink,
         request_enrollment: requestEnrollmentLink,
         create_course: createCourseLink,
         help: pageLink('tocc_help'),
         sow_home: '/now/sow/home',
-        workspace_home: '/x/783010/tocc-backoffice-ops/list',
     };
 
     function countRecords(table, encodedQuery) {
@@ -108,13 +108,15 @@
             kind: 'secondary'
         });
 
-        data.actions.push({
-            title: 'Manage Schedule',
-            desc: 'Acompanhe o status de suas solicitacoes de reserva.',
-            icon: 'fa-list-alt',
-            href: data.links.reservations,
-            kind: 'secondary'
-        });
+        if (isInstructor || isAppAdmin || isPlatformAdmin) {
+            data.actions.push({
+                title: 'Manage Schedule',
+                desc: 'Acompanhe o status de suas solicitacoes de reserva.',
+                icon: 'fa-list-alt',
+                href: data.links.reservations,
+                kind: 'secondary'
+            });
+        }
     }
 
     if (isStudent) {
@@ -147,10 +149,10 @@
 
     if (isOpsPersona) {
         data.actions.push({
-            title: 'Backoffice Workspace',
-            desc: 'Abra a experiencia operacional no UI Builder.',
-            icon: 'fa-briefcase',
-            href: data.links.workspace_home,
+            title: 'Backoffice Queue',
+            desc: 'Aprove ou rejeite reservas submetidas.',
+            icon: 'fa-tasks',
+            href: data.links.backoffice_queue,
             kind: 'secondary'
         });
     }
