@@ -48,15 +48,15 @@ TrainingContextAjax.prototype = Object.extendsObject(global.AbstractAjaxProcesso
 
         var course = new GlideRecordSecure('x_783010_tocc_a1_course');
         var deliveryCategory = '';
-        if (course.get(session.getValue('course'))) {
+        if (course.get(session.getValue('tocc_course'))) {
             deliveryCategory = course.getValue('delivery_category');
         }
 
         return JSON.stringify({
             success: true,
             training_session: session.getUniqueValue(),
-            course: session.getValue('course'),
-            course_name: session.getDisplayValue('course'),
+            course: session.getValue('tocc_course'),
+            course_name: session.getDisplayValue('tocc_course'),
             delivery_category: deliveryCategory,
             status: session.getValue('status'),
             room: session.getValue('room'),

@@ -39,9 +39,9 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         var gr = new GlideRecord('x_783010_tocc_a1_training_session');
         gr.addQuery('status', 'IN', 'open,full');
         gr.addQuery('active', true);
-        gr.addNotNullQuery('course');
+        gr.addNotNullQuery('tocc_course');
         gr.addNotNullQuery('room');
-        gr.addNotNullQuery('instructor');
+        gr.addNotNullQuery('tocc_instructor');
         gr.addNotNullQuery('start_datetime');
         gr.addNotNullQuery('end_datetime');
         gr.addQuery('start_datetime', '>=', new GlideDateTime().getValue());
@@ -64,10 +64,10 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
                 sys_id:               gr.getUniqueValue(),
                 number:               gr.getValue('number'),
                 title:                gr.getValue('title'),
-                course:               gr.getValue('course'),
-                course_name:          gr.getDisplayValue('course'),
-                instructor:           gr.getValue('instructor'),
-                instructor_name:      gr.getDisplayValue('instructor'),
+                course:               gr.getValue('tocc_course'),
+                course_name:          gr.getDisplayValue('tocc_course'),
+                instructor:           gr.getValue('tocc_instructor'),
+                instructor_name:      gr.getDisplayValue('tocc_instructor'),
                 room:                 gr.getValue('room'),
                 room_name:            gr.getDisplayValue('room'),
                 start_datetime:       gr.getValue('start_datetime'),
@@ -107,9 +107,9 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             sys_id:                gr.getUniqueValue(),
             number:                gr.getValue('number'),
             title:                 gr.getValue('title'),
-            course:                gr.getValue('course'),
-            course_name:           gr.getDisplayValue('course'),
-            instructor_name:       gr.getDisplayValue('instructor'),
+            course:                gr.getValue('tocc_course'),
+            course_name:           gr.getDisplayValue('tocc_course'),
+            instructor_name:       gr.getDisplayValue('tocc_instructor'),
             room_name:             gr.getDisplayValue('room'),
             location_name:         gr.getDisplayValue('room.location'),
             start_datetime:        gr.getValue('start_datetime'),
@@ -166,7 +166,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
                 start_datetime:   gr.getValue('training_session.start_datetime'),
                 start_display:    gr.getDisplayValue('training_session.start_datetime'),
                 room_name:        gr.getDisplayValue('training_session.room'),
-                instructor_name:  gr.getDisplayValue('training_session.instructor'),
+                instructor_name:  gr.getDisplayValue('training_session.tocc_instructor'),
             });
         }
 
@@ -192,12 +192,12 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
                 number:               gr.getValue('number'),
                 status:               gr.getValue('status'),
                 status_display:       gr.getDisplayValue('status'),
-                course:               gr.getValue('course'),
-                course_name:          gr.getDisplayValue('course'),
-                instructor:           gr.getValue('instructor'),
-                instructor_name:      gr.getDisplayValue('instructor'),
-                room:                 gr.getValue('room'),
-                room_name:            gr.getDisplayValue('room'),
+                course:               gr.getValue('tocc_course'),
+                course_name:          gr.getDisplayValue('tocc_course'),
+                instructor:           gr.getValue('tocc_instructor'),
+                instructor_name:      gr.getDisplayValue('tocc_instructor'),
+                room:                 gr.getValue('tocc_room'),
+                room_name:            gr.getDisplayValue('tocc_room'),
                 start_datetime:       gr.getValue('start_datetime'),
                 start_display:        gr.getDisplayValue('start_datetime'),
                 end_datetime:         gr.getValue('end_datetime'),
@@ -237,12 +237,12 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
                 number:                gr.getValue('number'),
                 status:                gr.getValue('status'),
                 status_display:        gr.getDisplayValue('status'),
-                course:                gr.getValue('course'),
-                course_name:           gr.getDisplayValue('course'),
-                instructor:            gr.getValue('instructor'),
-                instructor_name:       gr.getDisplayValue('instructor'),
-                room:                  gr.getValue('room'),
-                room_name:             gr.getDisplayValue('room'),
+                course:                gr.getValue('tocc_course'),
+                course_name:           gr.getDisplayValue('tocc_course'),
+                instructor:            gr.getValue('tocc_instructor'),
+                instructor_name:       gr.getDisplayValue('tocc_instructor'),
+                room:                  gr.getValue('tocc_room'),
+                room_name:             gr.getDisplayValue('tocc_room'),
                 start_datetime:        gr.getValue('start_datetime'),
                 start_display:         gr.getDisplayValue('start_datetime'),
                 end_datetime:          gr.getValue('end_datetime'),
@@ -296,7 +296,18 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         gr.setWorkflow(true);
         gr.update();
 
-        return JSON.stringify({ success: true, message: 'Reservation approved successfully.' });
+        var sync = new TrainingSessionService();
+        sync.syncFromReservation(gr);
+
+        gr.get(id);
+        if (!gr.getValue('training_session')) {
+            return JSON.stringify({
+                success: false,
+                message: 'Reservation was approved, but no training session was linked. Review required operational fields and sync rules.',
+            });
+        }
+
+        return JSON.stringify({ success: true, message: 'Reservation approved successfully.', training_session: gr.getValue('training_session') });
     },
 
     // -----------------------------------------------------------------------
@@ -651,13 +662,13 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
 
     _getReservationDataQualityIssues: function(gr) {
         var issues = [];
-        if (!gr.getValue('course')) {
+        if (!gr.getValue('tocc_course')) {
             issues.push('missing course');
         }
-        if (!gr.getValue('room')) {
+        if (!gr.getValue('tocc_room')) {
             issues.push('missing room');
         }
-        if (!gr.getValue('instructor')) {
+        if (!gr.getValue('tocc_instructor')) {
             issues.push('missing instructor');
         }
         if (!gr.getValue('start_datetime')) {

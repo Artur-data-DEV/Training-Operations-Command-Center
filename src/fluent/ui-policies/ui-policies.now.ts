@@ -49,8 +49,8 @@ UiPolicy({
     active: true,
     conditions: 'status=approved^ORstatus=rejected^ORstatus=cancelled',
     actions: [
-        { field: 'room', readOnly: true },
-        { field: 'course', readOnly: true },
+        { field: 'tocc_room', readOnly: true },
+        { field: 'tocc_course', readOnly: true },
         { field: 'start_datetime', readOnly: true },
         { field: 'end_datetime', readOnly: true },
         { field: 'expected_participants', readOnly: true },
@@ -71,7 +71,7 @@ UiPolicy({
     conditions: 'status=completed^ORstatus=cancelled',
     actions: [
         { field: 'room', readOnly: true },
-        { field: 'instructor', readOnly: true },
+        { field: 'tocc_instructor', readOnly: true },
         { field: 'start_datetime', readOnly: true },
         { field: 'end_datetime', readOnly: true },
         { field: 'total_seats', readOnly: true },

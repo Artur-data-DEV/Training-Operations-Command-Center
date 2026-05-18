@@ -27,10 +27,12 @@ TrainingConfigService.prototype = {
 
         var cacheKey = this._cachePrefix + name;
 
-        // GlideSessionCache persists for the lifetime of the current transaction/session.
-        var cached = GlideSessionCache.get(cacheKey);
-        if (cached !== null && cached !== undefined) {
-            return cached !== '' ? cached : defaultValue;
+        var hasSessionCache = typeof GlideSessionCache !== 'undefined' && GlideSessionCache;
+        if (hasSessionCache) {
+            var cached = GlideSessionCache.get(cacheKey);
+            if (cached !== null && cached !== undefined) {
+                return cached !== '' ? cached : defaultValue;
+            }
         }
 
         // 1) sys_properties override path (preferred when explicitly configured)
@@ -41,7 +43,9 @@ TrainingConfigService.prototype = {
             value = this._getTableValue(name, defaultValue);
         }
 
-        GlideSessionCache.put(cacheKey, value !== null && value !== undefined ? value : '');
+        if (hasSessionCache) {
+            GlideSessionCache.put(cacheKey, value !== null && value !== undefined ? value : '');
+        }
         return value;
     },
 

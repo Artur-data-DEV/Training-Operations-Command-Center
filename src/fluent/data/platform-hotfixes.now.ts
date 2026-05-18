@@ -409,13 +409,13 @@ Record({
                     changedSession = setIfChanged(session, 'number', number) || changedSession;
                 }
                 if (course) {
-                    changedSession = setIfChanged(session, 'course', course.getUniqueValue()) || changedSession;
+                    changedSession = setIfChanged(session, 'tocc_course', course.getUniqueValue()) || changedSession;
                 }
                 if (room) {
                     changedSession = setIfChanged(session, 'room', room.getUniqueValue()) || changedSession;
                 }
                 if (instructor) {
-                    changedSession = setIfChanged(session, 'instructor', instructor.getUniqueValue()) || changedSession;
+                    changedSession = setIfChanged(session, 'tocc_instructor', instructor.getUniqueValue()) || changedSession;
                 }
                 if (changedSession) {
                     session.update();

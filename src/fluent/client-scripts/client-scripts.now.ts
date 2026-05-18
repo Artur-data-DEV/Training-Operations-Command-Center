@@ -13,7 +13,7 @@ ClientScript({
     script: `function onLoad() {
     // Pre-fill instructor with the logged-in user on new records.
     if (g_form.isNewRecord()) {
-        g_form.setValue('instructor', g_user.userID, g_user.getFullName());
+        g_form.setValue('tocc_instructor', g_user.userID, g_user.getFullName());
     }
 }`,
 })
@@ -23,19 +23,19 @@ ClientScript({
     name: 'Reservation - Check Room Availability',
     table: 'x_783010_tocc_a1_room_reservation',
     type: 'onChange',
-    field: 'room,start_datetime,end_datetime',
+    field: 'tocc_room,start_datetime,end_datetime',
     active: true,
     script: `function onChange(control, oldValue, newValue, isLoading) {
     if (isLoading) {
         return;
     }
 
-    var room = g_form.getValue('room');
+    var room = g_form.getValue('tocc_room');
     var startDt = g_form.getValue('start_datetime');
     var endDt = g_form.getValue('end_datetime');
 
     if (!room || !startDt || !endDt) {
-        g_form.hideFieldMsg('room', true);
+        g_form.hideFieldMsg('tocc_room', true);
         return;
     }
 
@@ -50,9 +50,9 @@ ClientScript({
         try {
             var result = JSON.parse(answer);
             if (result.conflict) {
-                g_form.showFieldMsg('room', 'This room has a scheduling conflict in the selected period.', 'error');
+                g_form.showFieldMsg('tocc_room', 'This room has a scheduling conflict in the selected period.', 'error');
             } else {
-                g_form.hideFieldMsg('room', true);
+                g_form.hideFieldMsg('tocc_room', true);
             }
         } catch(e) {
             // Silent fail — server BR will enforce.
@@ -94,14 +94,14 @@ ClientScript({
     name: 'Reservation - Capacity Guard',
     table: 'x_783010_tocc_a1_room_reservation',
     type: 'onChange',
-    field: 'room,expected_participants',
+    field: 'tocc_room,expected_participants',
     active: true,
     script: `function onChange(control, oldValue, newValue, isLoading) {
     if (isLoading) {
         return;
     }
 
-    var roomId = g_form.getValue('room');
+    var roomId = g_form.getValue('tocc_room');
     if (!roomId) {
         return;
     }

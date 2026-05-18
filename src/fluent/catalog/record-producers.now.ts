@@ -26,7 +26,7 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
             referenceTable: 'x_783010_tocc_a1_room',
             referenceQual: 'status=active',
             mapToField: true,
-            field: 'room',
+            field: 'tocc_room',
         }),
         reservation_course: ReferenceVariable({
             question: 'Select Course',
@@ -35,7 +35,7 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
             referenceTable: 'x_783010_tocc_a1_course',
             referenceQual: 'status=active',
             mapToField: true,
-            field: 'course',
+            field: 'tocc_course',
         }),
         reservation_start_datetime: DateTimeVariable({
             question: 'Start Date/Time',
@@ -79,7 +79,7 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
         }),
     },
     script: `(function execute(producer, current) {
-    current.setValue('instructor', gs.getUserID());
+    current.setValue('tocc_instructor', gs.getUserID());
     current.setValue('status', 'submitted');
 
     function resolveBackofficeGroup() {
@@ -111,7 +111,7 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
         return '';
     }
 
-    var roomId = current.getValue('room') || producer.reservation_room;
+    var roomId = current.getValue('tocc_room') || producer.reservation_room;
     var participants = parseInt(producer.reservation_expected_participants, 10);
 
     if (isNaN(participants) || participants < 1) {
@@ -153,8 +153,8 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
     }
 
     current.setValue('expected_participants', participants);
-    current.setValue('room', roomId);
-    current.setValue('course', producer.reservation_course);
+    current.setValue('tocc_room', roomId);
+    current.setValue('tocc_course', producer.reservation_course);
 
     var backofficeGroup = resolveBackofficeGroup();
     if (backofficeGroup && gs.nil(current.getValue('assignment_group'))) {
@@ -202,7 +202,7 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
         selectedResources = [selectedResourcesRaw];
     }
 
-    var currentRoom = current.getValue('room');
+    var currentRoom = current.getValue('tocc_room');
     var insertedCount = 0;
 
     for (var i = 0; i < selectedResources.length; i++) {

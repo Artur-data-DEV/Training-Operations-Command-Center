@@ -48,7 +48,7 @@ RoomService.prototype = {
     },
 
     validateReservation: function(current) {
-        var roomId = current.getValue('room');
+        var roomId = current.getValue('tocc_room');
         var start = current.getValue('start_datetime');
         var end = current.getValue('end_datetime');
         var participants = current.getValue('expected_participants');

@@ -26,12 +26,52 @@ UiAction({
         return;
     }
 
+    var missing = [];
+    if (gs.nil(current.getValue('tocc_course'))) {
+        missing.push('course');
+    }
+    if (gs.nil(current.getValue('tocc_room'))) {
+        missing.push('room');
+    }
+    if (gs.nil(current.getValue('tocc_instructor'))) {
+        missing.push('instructor');
+    }
+    if (gs.nil(current.getValue('start_datetime'))) {
+        missing.push('start date/time');
+    }
+    if (gs.nil(current.getValue('end_datetime'))) {
+        missing.push('end date/time');
+    }
+    if ((parseInt(current.getValue('expected_participants'), 10) || 0) < 1) {
+        missing.push('expected participants');
+    }
+
+    if (missing.length > 0) {
+        gs.addErrorMessage('Cannot approve this reservation. Missing or invalid data: ' + missing.join(', ') + '.');
+        action.setRedirectURL(current);
+        return;
+    }
+
     current.setValue('status', 'approved');
     current.setValue('work_notes', 'Reservation approved by ' + gs.getUserDisplayName() + '.');
     current.setWorkflow(true);
-    current.update();
+    var updatedId = current.update();
 
-    gs.addInfoMessage('Reservation approved. Training session created.');
+    if (!updatedId) {
+        gs.addErrorMessage('Reservation approval failed. Check the required fields and room schedule.');
+        action.setRedirectURL(current);
+        return;
+    }
+
+    var sync = new TrainingSessionService();
+    sync.syncFromReservation(current);
+
+    var refreshed = new GlideRecord('x_783010_tocc_a1_room_reservation');
+    if (refreshed.get(current.getUniqueValue()) && !gs.nil(refreshed.getValue('training_session'))) {
+        gs.addInfoMessage('Reservation approved. Training session created: ' + refreshed.getDisplayValue('training_session') + '.');
+    } else {
+        gs.addErrorMessage('Reservation was approved, but no training session was linked. Review the Sync Training Session From Reservation business rule.');
+    }
     action.setRedirectURL(current);
 })();`,
 })

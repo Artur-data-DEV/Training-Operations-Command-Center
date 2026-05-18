@@ -18,9 +18,9 @@ BusinessRule({
         return;
     }
 
-    var courseLabel = String(current.getDisplayValue('course') || '').trim();
+    var courseLabel = String(current.getDisplayValue('tocc_course') || '').trim();
     if (gs.nil(courseLabel) || /^[0-9a-f]{32}$/i.test(courseLabel)) {
-        var courseId = current.getValue('course');
+        var courseId = current.getValue('tocc_course');
         if (!gs.nil(courseId)) {
             var course = new GlideRecord('x_783010_tocc_a1_course');
             if (course.get(courseId)) {
@@ -103,7 +103,7 @@ BusinessRule({
         return;
     }
 
-    var roomId = current.getValue('room');
+    var roomId = current.getValue('tocc_room');
     if (!gs.nil(roomId)) {
         var room = new GlideRecord('x_783010_tocc_a1_room');
         if (room.get(roomId)) {
@@ -161,9 +161,9 @@ BusinessRule({
     script: `(function executeRule(current, previous) {
     if (current.operation() == 'update') {
         var hasMaterialChange = current.status.changes() ||
-            current.course.changes() ||
-            current.room.changes() ||
-            current.instructor.changes() ||
+            current.tocc_course.changes() ||
+            current.tocc_room.changes() ||
+            current.tocc_instructor.changes() ||
             current.start_datetime.changes() ||
             current.end_datetime.changes() ||
             current.expected_participants.changes();

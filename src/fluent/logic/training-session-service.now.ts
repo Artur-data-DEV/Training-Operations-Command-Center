@@ -31,6 +31,13 @@ TrainingSessionService.prototype = {
         }
 
         if (!sessionId) {
+            sessionId = this._findSessionForReservation(current.getUniqueValue());
+            if (sessionId) {
+                this._linkReservationToSession(current.getUniqueValue(), sessionId);
+                this._updateSessionFromReservation(sessionId, current);
+                return;
+            }
+
             sessionId = this._createSession(current);
             if (!sessionId) {
                 gs.error('Failed to create Training Session for reservation ' + current.getValue('number'));
@@ -42,6 +49,24 @@ TrainingSessionService.prototype = {
         }
 
         this._updateSessionFromReservation(sessionId, current);
+    },
+
+    _findSessionForReservation: function(reservationId) {
+        if (!reservationId) {
+            return '';
+        }
+
+        var session = new GlideRecord(this.sessionTable);
+        session.addQuery('tocc_reservation', reservationId);
+        session.addQuery('status', '!=', 'cancelled');
+        session.orderByDesc('sys_created_on');
+        session.setLimit(1);
+        session.query();
+        if (!session.next()) {
+            return '';
+        }
+
+        return session.getUniqueValue();
     },
 
     _createSession: function(reservation) {
@@ -80,11 +105,11 @@ TrainingSessionService.prototype = {
             }
         }
 
-        session.setValue('reservation', reservation.getUniqueValue());
-        session.setValue('course', reservation.getValue('course'));
-        session.setValue('room', reservation.getValue('room'));
+        session.setValue('tocc_reservation', reservation.getUniqueValue());
+        session.setValue('tocc_course', reservation.getValue('tocc_course'));
+        session.setValue('room', reservation.getValue('tocc_room'));
         session.setValue('title', this._buildSessionTitle(reservation));
-        session.setValue('instructor', reservation.getValue('instructor'));
+        session.setValue('tocc_instructor', reservation.getValue('tocc_instructor'));
         session.setValue('start_datetime', reservation.getValue('start_datetime'));
         session.setValue('end_datetime', reservation.getValue('end_datetime'));
         session.setValue('total_seats', expectedParticipants);
@@ -112,7 +137,7 @@ TrainingSessionService.prototype = {
     },
 
     _buildSessionTitle: function(reservation) {
-        var courseName = reservation.getDisplayValue('course') || 'Training';
+        var courseName = reservation.getDisplayValue('tocc_course') || 'Training';
         return courseName + ' - ' + reservation.getDisplayValue('start_datetime');
     },
 
@@ -174,7 +199,7 @@ TrainingSessionService.prototype = {
             return '';
         }
 
-        var reservationId = current.getValue('reservation');
+        var reservationId = current.getValue('tocc_reservation');
         if (gs.nil(reservationId)) {
             return 'Training session requires a room.';
         }
@@ -184,19 +209,19 @@ TrainingSessionService.prototype = {
             return 'Linked reservation was not found for this training session.';
         }
 
-        var reservationRoom = reservation.getValue('room');
+        var reservationRoom = reservation.getValue('tocc_room');
         if (gs.nil(reservationRoom)) {
             return 'Linked reservation has no room defined.';
         }
 
         current.setValue('room', reservationRoom);
 
-        if (gs.nil(current.getValue('course')) && !gs.nil(reservation.getValue('course'))) {
-            current.setValue('course', reservation.getValue('course'));
+        if (gs.nil(current.getValue('tocc_course')) && !gs.nil(reservation.getValue('tocc_course'))) {
+            current.setValue('tocc_course', reservation.getValue('tocc_course'));
         }
 
-        if (gs.nil(current.getValue('instructor')) && !gs.nil(reservation.getValue('instructor'))) {
-            current.setValue('instructor', reservation.getValue('instructor'));
+        if (gs.nil(current.getValue('tocc_instructor')) && !gs.nil(reservation.getValue('tocc_instructor'))) {
+            current.setValue('tocc_instructor', reservation.getValue('tocc_instructor'));
         }
 
         if (gs.nil(current.getValue('start_datetime')) && !gs.nil(reservation.getValue('start_datetime'))) {
@@ -230,7 +255,7 @@ TrainingSessionService.prototype = {
         while (session.next()) {
             scanned++;
 
-            var reservationId = session.getValue('reservation');
+            var reservationId = session.getValue('tocc_reservation');
             if (gs.nil(reservationId)) {
                 skippedNoReservation++;
                 continue;
@@ -242,7 +267,7 @@ TrainingSessionService.prototype = {
                 continue;
             }
 
-            var reservationRoom = reservation.getValue('room');
+            var reservationRoom = reservation.getValue('tocc_room');
             if (gs.nil(reservationRoom)) {
                 skippedNoRoomInReservation++;
                 continue;
@@ -250,11 +275,11 @@ TrainingSessionService.prototype = {
 
             session.setValue('room', reservationRoom);
 
-            if (gs.nil(session.getValue('course')) && !gs.nil(reservation.getValue('course'))) {
-                session.setValue('course', reservation.getValue('course'));
+            if (gs.nil(session.getValue('tocc_course')) && !gs.nil(reservation.getValue('tocc_course'))) {
+                session.setValue('tocc_course', reservation.getValue('tocc_course'));
             }
-            if (gs.nil(session.getValue('instructor')) && !gs.nil(reservation.getValue('instructor'))) {
-                session.setValue('instructor', reservation.getValue('instructor'));
+            if (gs.nil(session.getValue('tocc_instructor')) && !gs.nil(reservation.getValue('tocc_instructor'))) {
+                session.setValue('tocc_instructor', reservation.getValue('tocc_instructor'));
             }
             if (gs.nil(session.getValue('start_datetime')) && !gs.nil(reservation.getValue('start_datetime'))) {
                 session.setValue('start_datetime', reservation.getValue('start_datetime'));
