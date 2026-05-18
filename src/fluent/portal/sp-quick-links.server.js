@@ -35,8 +35,35 @@
         request_enrollment: requestEnrollmentLink,
         help: pageLink('tocc_help'),
         sow_home: '/now/sow/home',
-        workspace_home: '/now/tocc-backoffice-ops/list/x_783010_tocc_a1_room_reservation',
+        workspace_home: '/x/783010/tocc-backoffice-ops/list',
     };
+
+    function countRecords(table, encodedQuery) {
+        var gr = new GlideRecordSecure(table);
+        if (encodedQuery) {
+            gr.addEncodedQuery(encodedQuery);
+        }
+        gr.query();
+        return gr.getRowCount();
+    }
+
+    data.desktopStats = [
+        {
+            label: 'Pending Reservations',
+            value: countRecords('x_783010_tocc_a1_room_reservation', 'status=submitted')
+        },
+        {
+            label: 'Sessions Today',
+            value: countRecords(
+                'x_783010_tocc_a1_training_session',
+                'start_datetimeONToday@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()'
+            )
+        },
+        {
+            label: 'Pending Enrollments',
+            value: countRecords('x_783010_tocc_a1_student_enrollment', 'status=pending')
+        }
+    ];
 
     data.actions = [];
 

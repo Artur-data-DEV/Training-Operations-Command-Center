@@ -85,7 +85,7 @@ Flow(
         flowPriority: 'HIGH',
     },
     wfa.trigger(
-        trigger.record.createdOrUpdated,
+        trigger.record.created,
         { $id: Now.ID['x_783010_tocc_a1_flow_reservation_intake_signal_trigger_v2'] },
         {
             table: 'x_783010_tocc_a1_room_reservation',
@@ -109,7 +109,7 @@ Flow(
             { $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_lookup_group'] },
             {
                 table: 'sys_user_group',
-                conditions: 'name=[TOCC] Backoffice',
+                conditions: 'name=[TOCC] Backoffice^ORname=TOCC Backoffice^ORnameLIKEBackoffice',
                 sort_type: 'sort_asc',
                 if_multiple_records_are_found_action: 'use_first_record',
                 dont_fail_flow_on_error: true,
@@ -119,22 +119,10 @@ Flow(
         wfa.flowLogic.if(
             {
                 $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_group_found'],
-                condition: `${wfa.dataPill(backofficeGroup.Record, 'string')}ISNOTEMPTY`,
+                condition: `${wfa.dataPill(backofficeGroup.Record.sys_id, 'string')}ISNOTEMPTY`,
                 annotation: 'Backoffice group found',
             },
             () => {
-                const currentReservation = wfa.action(
-                    action.core.lookUpRecord,
-                    { $id: Now.ID['x_783010_tocc_a1_flow_reservation_lookup_current_record'] },
-                    {
-                        table: 'x_783010_tocc_a1_room_reservation',
-                        conditions: `sys_id=${wfa.dataPill(params.trigger.current, 'string')}`,
-                        sort_type: 'sort_asc',
-                        if_multiple_records_are_found_action: 'use_first_record',
-                        dont_fail_flow_on_error: true,
-                    }
-                )
-
                 wfa.action(
                     action.core.updateRecord,
                     { $id: Now.ID['x_783010_tocc_a1_flow_reservation_set_assignment'] },
@@ -143,8 +131,7 @@ Flow(
                         record: wfa.dataPill(params.trigger.current, 'reference'),
                         values: TemplateValue({
                             assignment_group: wfa.dataPill(backofficeGroup.Record, 'string'),
-                            assigned_to: wfa.dataPill(currentReservation.Record.opened_by, 'string'),
-                            work_notes: '[FLOW-01] Assignment group and assignee set on reservation submission.',
+                            work_notes: '[FLOW-01] Assignment group set on reservation submission.',
                         }),
                     }
                 )

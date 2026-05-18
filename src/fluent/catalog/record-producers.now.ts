@@ -56,12 +56,12 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
             field: 'expected_participants',
         }),
         reservation_requested_resources: ListCollectorVariable({
-            question: 'Required Room Resources',
+            question: 'Optional Room Resources',
             order: 550,
             mandatory: false,
             listTable: 'x_783010_tocc_a1_room_resource',
             referenceQual: 'active=true',
-            helpText: 'Select the resources required for this reservation.',
+            helpText: 'Select the optional resources required for this reservation.',
         }),
         reservation_notes: MultiLineTextVariable({
             question: 'Additional Notes',
@@ -74,6 +74,35 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
     script: `(function execute(producer, current) {
     current.setValue('instructor', gs.getUserID());
     current.setValue('status', 'submitted');
+
+    function resolveBackofficeGroup() {
+        var group = new GlideRecord('sys_user_group');
+        group.addEncodedQuery('name=[TOCC] Backoffice^ORname=TOCC Backoffice^ORnameLIKEBackoffice');
+        group.orderBy('name');
+        group.setLimit(1);
+        group.query();
+        if (group.next()) {
+            return group;
+        }
+        return null;
+    }
+
+    function resolveBackofficeAssignee(groupSysId) {
+        if (gs.nil(groupSysId)) {
+            return '';
+        }
+
+        var member = new GlideRecord('sys_user_grmember');
+        member.addQuery('group', groupSysId);
+        member.addQuery('user.active', true);
+        member.orderBy('sys_created_on');
+        member.setLimit(1);
+        member.query();
+        if (member.next()) {
+            return String(member.getValue('user') || '');
+        }
+        return '';
+    }
 
     var roomId = current.getValue('room') || producer.reservation_room;
     var participants = parseInt(producer.reservation_expected_participants, 10);
@@ -117,11 +146,37 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
     }
 
     current.setValue('expected_participants', participants);
+    current.setValue('room', roomId);
+    current.setValue('course', producer.reservation_course);
 
-    if (gs.nil(current.getValue('short_description'))) {
+    var backofficeGroup = resolveBackofficeGroup();
+    if (backofficeGroup && gs.nil(current.getValue('assignment_group'))) {
+        current.setValue('assignment_group', backofficeGroup.getUniqueValue());
+    }
+    if (gs.nil(current.getValue('assigned_to'))) {
+        var backofficeAssignee = resolveBackofficeAssignee(current.getValue('assignment_group'));
+        if (!gs.nil(backofficeAssignee)) {
+            current.setValue('assigned_to', backofficeAssignee);
+        }
+    }
+
+    if (gs.nil(current.getValue('short_description')) || /for\\s+null$/i.test(String(current.getValue('short_description')))) {
+        var courseLabel = '';
+        var course = new GlideRecord('x_783010_tocc_a1_course');
+        if (course.get(producer.reservation_course)) {
+            courseLabel = String(course.getDisplayValue('course_name') || '').trim();
+            if (gs.nil(courseLabel)) {
+                courseLabel = String(course.getDisplayValue() || '').trim();
+            }
+        }
+
+        if (gs.nil(courseLabel)) {
+            courseLabel = 'selected course';
+        }
+
         current.setValue(
             'short_description',
-            'Room reservation request for ' + current.getDisplayValue('course')
+            'Room reservation request for ' + courseLabel
         );
     }
 })(producer, current);`,

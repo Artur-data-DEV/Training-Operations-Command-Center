@@ -1,8 +1,8 @@
-import { default_view, Form, Formatter } from '@servicenow/sdk/core'
+import { Form, Formatter } from '@servicenow/sdk/core'
 
 export const roomReservationDefaultForm = Form({
     table: 'x_783010_tocc_a1_room_reservation',
-    view: default_view,
+    view: Now.ref('sys_ui_view', { name: 'Default view' }),
     roles: ['x_783010_tocc_a1.admin', 'x_783010_tocc_a1.backoffice', 'admin'],
     sections: [
         {

@@ -1,8 +1,19 @@
 <div class="tocc-portal-container">
   <div class="tocc-hero-section">
-    <div class="tocc-hero-eyebrow">Training Operations Command Center</div>
-    <h1 class="tocc-hero-title">Training Operations</h1>
-    <p class="tocc-hero-subtitle">Gestão centralizada de reservas, sessões de treinamento e indicadores operacionais em tempo real.</p>
+    <div class="tocc-hero-shell">
+      <div class="tocc-hero-copy">
+        <div class="tocc-hero-eyebrow">Training Operations Command Center</div>
+        <h1 class="tocc-hero-title">Training Operations</h1>
+        <p class="tocc-hero-subtitle">Gestao centralizada de reservas, sessoes de treinamento e indicadores operacionais em tempo real.</p>
+      </div>
+
+      <div class="tocc-hero-stats">
+        <div class="tocc-stat-card" ng-repeat="stat in c.data.desktopStats track by $index">
+          <div class="tocc-stat-value">{{stat.value}}</div>
+          <div class="tocc-stat-label">{{stat.label}}</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="tocc-actions-section">

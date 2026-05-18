@@ -1,32 +1,45 @@
-/* TOCC Quick Links — Dark enterprise redesign */
+/* TOCC Quick Links */
 * { box-sizing: border-box; }
 
+.panel,
+.panel.panel-default {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin-bottom: 0 !important;
+}
+
+.panel.panel-default > .panel-heading {
+    display: none !important;
+}
+
+.panel.panel-default > .panel-body {
+    padding: 0 !important;
+}
+
 .tocc-portal-container {
-    background: #0B0E14;
-    color: #E4E8F0;
-    min-height: 100%;
-    padding: 0;
+    background: #070b14;
+    color: #e4e8f0;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: -16px;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    width: 100%;
 }
 
 .tocc-hero-section {
-    background: linear-gradient(135deg, #0D1117 0%, #131925 100%);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    padding: 72px 64px 64px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+    background: linear-gradient(130deg, #0d1320 0%, #101a2c 55%, #0a111d 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 58px 56px;
 }
 
-.tocc-hero-section::before {
-    content: '';
-    position: absolute;
-    top: -80px; left: 50%;
-    transform: translateX(-50%);
-    width: 600px; height: 300px;
-    background: radial-gradient(ellipse, rgba(124,143,255,0.1) 0%, transparent 70%);
-    pointer-events: none;
+.tocc-hero-shell {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 26px;
+    align-items: center;
+    max-width: 1440px;
+    margin: 0 auto;
 }
 
 .tocc-hero-eyebrow {
@@ -34,31 +47,59 @@
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #7C8FFF;
-    margin-bottom: 16px;
+    color: #88a0ff;
+    margin-bottom: 12px;
 }
 
 .tocc-hero-title {
-    font-size: 42px;
+    font-size: 54px;
     font-weight: 800;
-    color: #F0F3FF;
-    letter-spacing: -0.5px;
-    margin: 0 0 16px;
-    line-height: 1.1;
+    color: #f4f6ff;
+    line-height: 1.04;
+    margin: 0 0 14px;
+    letter-spacing: -0.7px;
 }
 
 .tocc-hero-subtitle {
-    font-size: 16px;
-    color: #6B7694;
-    max-width: 520px;
-    margin: 0 auto;
-    line-height: 1.65;
+    font-size: 18px;
+    color: #95a4c8;
+    margin: 0;
+    max-width: 680px;
+    line-height: 1.55;
+}
+
+.tocc-hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.tocc-stat-card {
+    background: rgba(12, 21, 37, 0.86);
+    border: 1px solid rgba(136, 160, 255, 0.22);
+    border-radius: 14px;
+    padding: 16px 14px;
+}
+
+.tocc-stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: #f4f6ff;
+    line-height: 1;
+    margin-bottom: 7px;
+}
+
+.tocc-stat-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8fa0ca;
 }
 
 .tocc-actions-section {
     max-width: 1440px;
     margin: 0 auto;
-    padding: 48px 64px 72px;
+    padding: 40px 56px 56px;
 }
 
 .tocc-section-title {
@@ -66,8 +107,8 @@
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #4A5375;
-    margin-bottom: 24px;
+    color: #4d5c84;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -77,87 +118,82 @@
     content: '';
     flex: 1;
     height: 1px;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .tocc-action-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px;
 }
 
 .tocc-action-card {
     display: flex;
     align-items: center;
-    background: #131925;
-    border: 1.5px solid rgba(255,255,255,0.06);
+    background: #121a2a;
+    border: 1px solid rgba(136, 160, 255, 0.18);
     border-radius: 14px;
-    padding: 22px 24px;
+    padding: 18px;
     text-decoration: none !important;
-    transition: all 0.22s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.tocc-action-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: #7C8FFF;
-    opacity: 0;
-    transition: opacity 0.22s;
+    transition: all 0.2s ease;
+    min-height: 104px;
 }
 
 .tocc-action-card:hover {
-    background: #161D2E;
-    border-color: rgba(124,143,255,0.3);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
-    text-decoration: none !important;
+    transform: translateY(-2px);
+    border-color: rgba(136, 160, 255, 0.38);
+    background: #172238;
+    box-shadow: 0 10px 24px rgba(7, 11, 20, 0.56);
 }
-
-.tocc-action-card:hover::before { opacity: 1; }
 
 .tocc-action-icon-wrapper {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    border: 1px solid rgba(136, 160, 255, 0.28);
+    background: rgba(136, 160, 255, 0.12);
     display: flex;
-    justify-content: center;
     align-items: center;
-    width: 52px; height: 52px;
-    background: rgba(124,143,255,0.1);
-    border: 1px solid rgba(124,143,255,0.2);
-    border-radius: 12px;
-    margin-right: 18px;
+    justify-content: center;
+    margin-right: 14px;
     flex-shrink: 0;
-    transition: background 0.22s;
-}
-
-.tocc-action-card:hover .tocc-action-icon-wrapper {
-    background: rgba(124,143,255,0.18);
 }
 
 .tocc-action-icon-wrapper i {
-    font-size: 22px;
-    color: #7C8FFF;
+    font-size: 20px;
+    color: #88a0ff;
 }
 
 .tocc-action-title {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
-    color: #E4E8F0;
-    margin: 0 0 5px;
+    color: #e8ecfb;
+    margin: 0 0 4px;
 }
 
 .tocc-action-desc {
     font-size: 13px;
-    color: #6B7694;
+    color: #95a4c8;
     margin: 0;
-    line-height: 1.4;
+    line-height: 1.45;
 }
 
 @media (max-width: 1280px) {
+    .tocc-hero-section {
+        padding: 48px 40px;
+    }
+
+    .tocc-hero-shell {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .tocc-hero-title {
+        font-size: 44px;
+    }
+
     .tocc-actions-section {
-        padding: 44px 40px 64px;
+        padding: 32px 40px 48px;
     }
 
     .tocc-action-grid {
@@ -166,12 +202,24 @@
 }
 
 @media (max-width: 768px) {
+    .tocc-portal-container {
+        margin-top: 0;
+    }
+
     .tocc-hero-section {
         padding: 56px 20px 44px;
     }
 
     .tocc-hero-title {
         font-size: 34px;
+    }
+
+    .tocc-hero-subtitle {
+        font-size: 16px;
+    }
+
+    .tocc-hero-stats {
+        grid-template-columns: 1fr;
     }
 
     .tocc-actions-section {

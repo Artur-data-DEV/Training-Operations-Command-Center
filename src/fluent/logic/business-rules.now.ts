@@ -11,7 +11,8 @@ BusinessRule({
     script: `(function executeRule(current, previous) {
     var shortDescription = String(current.getValue('short_description') || '').trim();
     var shouldNormalize = gs.nil(shortDescription) ||
-        /^Room reservation request for [0-9a-f]{32}$/i.test(shortDescription);
+        /^Room reservation request for [0-9a-f]{32}$/i.test(shortDescription) ||
+        /for\\s+null$/i.test(shortDescription);
 
     if (!shouldNormalize) {
         return;
@@ -37,6 +38,52 @@ BusinessRule({
     }
 
     current.setValue('short_description', 'Room reservation request for ' + courseLabel);
+})(current, previous);`,
+})
+
+BusinessRule({
+    $id: Now.ID['x_783010_tocc_a1_br_route_reservation_to_backoffice'],
+    table: 'x_783010_tocc_a1_room_reservation',
+    name: 'Route Reservation To Backoffice',
+    when: 'before',
+    action: ['insert', 'update'],
+    active: true,
+    order: 90,
+    script: `(function executeRule(current, previous) {
+    if (current.getValue('status') !== 'submitted') {
+        return;
+    }
+
+    var needsGroup = gs.nil(current.getValue('assignment_group'));
+    var needsAssignee = gs.nil(current.getValue('assigned_to'));
+    if (!needsGroup && !needsAssignee) {
+        return;
+    }
+
+    var group = new GlideRecord('sys_user_group');
+    group.addEncodedQuery('name=[TOCC] Backoffice^ORname=TOCC Backoffice^ORnameLIKEBackoffice');
+    group.orderBy('name');
+    group.setLimit(1);
+    group.query();
+    if (!group.next()) {
+        return;
+    }
+
+    if (needsGroup) {
+        current.setValue('assignment_group', group.getUniqueValue());
+    }
+
+    if (needsAssignee) {
+        var member = new GlideRecord('sys_user_grmember');
+        member.addQuery('group', group.getUniqueValue());
+        member.addQuery('user.active', true);
+        member.orderBy('sys_created_on');
+        member.setLimit(1);
+        member.query();
+        if (member.next()) {
+            current.setValue('assigned_to', member.getValue('user'));
+        }
+    }
 })(current, previous);`,
 })
 

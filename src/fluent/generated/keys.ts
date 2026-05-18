@@ -2086,6 +2086,10 @@ declare global {
                         id: '9805dbd980b94d5b8a650deb480bcb39'
                         deleted: true
                     }
+                    x_783010_tocc_a1_br_route_reservation_to_backoffice: {
+                        table: 'sys_script'
+                        id: '58e5e92bc14a406b8752edcc8ecd5a71'
+                    }
                     x_783010_tocc_a1_br_stamp_attendance_marking: {
                         table: 'sys_script'
                         id: 'ec92076ff61d4840a81f4c9c0e8edc42'
@@ -2375,6 +2379,7 @@ declare global {
                     x_783010_tocc_a1_flow_reservation_lookup_current_record: {
                         table: 'sys_hub_action_instance_v2'
                         id: 'd6a9f64ffe364adca7d53b35ece8395d'
+                        deleted: true
                     }
                     x_783010_tocc_a1_flow_reservation_set_assignment: {
                         table: 'sys_hub_action_instance_v2'
@@ -3558,6 +3563,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '02a6deb975cb4a8495ec312d6833ddc9'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '4918a7b079724dea80fae0b78a79c9b0'
@@ -3658,9 +3664,24 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_section'
+                        id: '03ef3e517f3b4141be8ebcd954914ec7'
+                        key: {
+                            name: 'x_783010_tocc_a1_room_reservation'
+                            caption: 'Notes'
+                            view: {
+                                id: '0d46539569824261a6e2ffc5bd556261'
+                                key: {
+                                    name: 'Default view'
+                                }
+                            }
+                            sys_domain: 'global'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '04114ad3d6d34d618de3da85975de24b'
-                        deleted: false
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '4918a7b079724dea80fae0b78a79c9b0'
@@ -4107,6 +4128,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '0b31087cb11144ed90a01b672326c82e'
+                        key: {
+                            sys_ui_section: {
+                                id: '03ef3e517f3b4141be8ebcd954914ec7'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Notes'
+                                    view: {
+                                        id: '16f1081c6c2c4709a709005d4ba7678a'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'short_description'
+                            position: '0'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '0b76f2f8e7ee4e5c9284fdfb349ec131'
                         deleted: true
@@ -4118,6 +4161,7 @@ declare global {
                     {
                         table: 'sys_ui_form_section'
                         id: '0b960b4f7b9e4e55b062bf3690d13ae9'
+                        deleted: true
                         key: {
                             sys_ui_form: {
                                 id: 'a17cad6cd31e480eb93dbb9e15fc5d01'
@@ -4380,6 +4424,28 @@ declare global {
                         key: {
                             sys_security_acl: 'b28df75ba105461984174d45503222b3'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '0fb9e4d46f9d4e9e97538867887b0121'
+                        key: {
+                            sys_ui_section: {
+                                id: 'f7858b575d9347b3a6e90fc3a0a35429'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Reservation Details'
+                                    view: {
+                                        id: '324f918376ca451fb6edf72ead8854cf'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'assignment_group'
+                            position: '3'
                         }
                     },
                     {
@@ -4934,6 +5000,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '1f709a0d6ea54ea18c873bbf68f2e2c2'
+                        key: {
+                            sys_ui_section: {
+                                id: 'f7858b575d9347b3a6e90fc3a0a35429'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Reservation Details'
+                                    view: {
+                                        id: '38938513da044b76b4ff3e53043ca8fc'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'number'
+                            position: '0'
+                        }
+                    },
+                    {
                         table: 'sys_ui_action_role'
                         id: '1fa7fb264b3b4434b6bde221aa8cb207'
                         key: {
@@ -4949,6 +5037,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '203295fa5f4b4e17987ce49919731aae'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '6a7c3dc7e9db402eabbbd85946c4f8c6'
@@ -5172,6 +5261,39 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_form_section'
+                        id: '24343058346a42c29508756880153729'
+                        key: {
+                            sys_ui_form: {
+                                id: '5f2da59e37d847f99c332ead3efb508f'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    view: {
+                                        id: '110524209452455299cdf10ee254eb37'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            sys_ui_section: {
+                                id: 'f7858b575d9347b3a6e90fc3a0a35429'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Reservation Details'
+                                    view: {
+                                        id: '2651040a71b347e8939d92687a618fa8'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '2455f99188b64b87b38d1d88735e5147'
                         key: {
@@ -5253,6 +5375,28 @@ declare global {
                         key: {
                             sys_security_acl: 'f0b5c4f20add414b9455f96f38ecc2e2'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '2703a5eba8d045bf94f316c78d9814eb'
+                        key: {
+                            sys_ui_section: {
+                                id: 'f7858b575d9347b3a6e90fc3a0a35429'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Reservation Details'
+                                    view: {
+                                        id: '1b5d6dd195cb4572ada88d5a4cfa413e'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'instructor'
+                            position: '6'
                         }
                     },
                     {
@@ -5629,6 +5773,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '30eb437acf984d0f9ec1c7bc325933c4'
+                        key: {
+                            sys_ui_section: {
+                                id: 'f7858b575d9347b3a6e90fc3a0a35429'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Reservation Details'
+                                    view: {
+                                        id: 'ed40b22f6feb4a998994ae328b2ad847'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'expected_participants'
+                            position: '9'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '3116d220ad9d4f128816b7643a9fa7f0'
                         key: {
@@ -5925,6 +6091,28 @@ declare global {
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: '188a32f71e6240fc8aee3a9dbce82531'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '36ed343cbb704d7bac474a13f7bfd190'
+                        key: {
+                            sys_ui_section: {
+                                id: 'f7858b575d9347b3a6e90fc3a0a35429'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Reservation Details'
+                                    view: {
+                                        id: '3631bb20f7894e9c9668ec95b426ac5e'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'start_datetime'
+                            position: '7'
                         }
                     },
                     {
@@ -6422,6 +6610,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '3e5f2dbfbfb94fc9946b0f9627a0c583'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '4918a7b079724dea80fae0b78a79c9b0'
@@ -6467,7 +6656,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '3e762b852dcf4b5ba68134669fbeb99e'
-                        deleted: false
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '4918a7b079724dea80fae0b78a79c9b0'
@@ -6485,6 +6674,15 @@ declare global {
                             }
                             element: 'training_session'
                             position: '10'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: '3ea96a4879174583947d548c07d44420'
+                        deleted: true
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: 'c42fbbf8bcf7401d8987064c46c8dbbf'
                         }
                     },
                     {
@@ -6955,6 +7153,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '46dfccffa45048dc9075bf7c3f1be382'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '4918a7b079724dea80fae0b78a79c9b0'
@@ -7129,6 +7328,7 @@ declare global {
                     {
                         table: 'sys_ui_section'
                         id: '4918a7b079724dea80fae0b78a79c9b0'
+                        deleted: true
                         key: {
                             name: 'x_783010_tocc_a1_room_reservation'
                             caption: 'Reservation Details'
@@ -7251,6 +7451,28 @@ declare global {
                             name: 'x_783010_tocc_a1_training_session'
                             element: 'status'
                             value: 'draft'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '4b6c5be576ac4dc4a4b8199287e337e6'
+                        key: {
+                            sys_ui_section: {
+                                id: 'f7858b575d9347b3a6e90fc3a0a35429'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Reservation Details'
+                                    view: {
+                                        id: '1f6371cbf67d469981ff3c2dfc80690e'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'training_session'
+                            position: '10'
                         }
                     },
                     {
@@ -7520,6 +7742,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '50e3e5ca3f9f4289a9ef54589f5afa67'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '4918a7b079724dea80fae0b78a79c9b0'
@@ -7895,6 +8118,28 @@ declare global {
                     },
                     {
                         table: 'sys_ui_element'
+                        id: '5b701d7802fd4cf3871114aa49c7c880'
+                        key: {
+                            sys_ui_section: {
+                                id: 'f7858b575d9347b3a6e90fc3a0a35429'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Reservation Details'
+                                    view: {
+                                        id: '5b7d5badb00c42feb0dae8e8718cff27'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'end_datetime'
+                            position: '8'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
                         id: '5b78d2fdb4524b95a79a2b64c09a813a'
                         deleted: true
                         key: {
@@ -8139,6 +8384,20 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_form'
+                        id: '5f2da59e37d847f99c332ead3efb508f'
+                        key: {
+                            name: 'x_783010_tocc_a1_room_reservation'
+                            view: {
+                                id: '039b24454aaf489892b2b5fedde539bb'
+                                key: {
+                                    name: 'Default view'
+                                }
+                            }
+                            sys_domain: 'global'
+                        }
+                    },
+                    {
                         table: 'm2m_sp_portal_catalog'
                         id: '5f3984c5ce7448c0837d8272db50bc1a'
                         deleted: true
@@ -8355,6 +8614,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '630e966597814bbab12d77a8ef81c6a5'
+                        key: {
+                            sys_ui_section: {
+                                id: '03ef3e517f3b4141be8ebcd954914ec7'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Notes'
+                                    view: {
+                                        id: '9854c979916f4d64bd96d2fdc38ce09e'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'description'
+                            position: '1'
+                        }
+                    },
+                    {
                         table: 'sys_element_mapping'
                         id: '633bbdb90e78488e8ad9ce256b116524'
                         key: {
@@ -8469,6 +8750,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '643bb3b37b594b14a89f6146c9e1f11b'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '6a7c3dc7e9db402eabbbd85946c4f8c6'
@@ -8553,6 +8835,39 @@ declare global {
                                 id: 'c6a2f8bcb8fb4333a28fc4f1f25610ef'
                                 key: {
                                     name: 'snc_internal'
+                                }
+                            }
+                        }
+                    },
+                    {
+                        table: 'sys_ui_form_section'
+                        id: '6528c6cc552d4e35ae92d0b84b39b58e'
+                        key: {
+                            sys_ui_form: {
+                                id: '5f2da59e37d847f99c332ead3efb508f'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    view: {
+                                        id: '40b9eff31ae74e7f88de91d2546de945'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            sys_ui_section: {
+                                id: '03ef3e517f3b4141be8ebcd954914ec7'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Notes'
+                                    view: {
+                                        id: 'e36341ab1ccb4301a88cdf481786bc4b'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
                                 }
                             }
                         }
@@ -8737,6 +9052,7 @@ declare global {
                     {
                         table: 'sys_ui_section'
                         id: '6a7c3dc7e9db402eabbbd85946c4f8c6'
+                        deleted: true
                         key: {
                             name: 'x_783010_tocc_a1_room_reservation'
                             caption: 'Notes'
@@ -9242,6 +9558,14 @@ declare global {
                                     name: 'admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: '769b62f6b62b4d63a4fd55730a920023'
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: 'a5f0cdfe32a449149a30352087982c31'
                         }
                     },
                     {
@@ -10019,7 +10343,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '884860a93feb4af4b4c6b5e5876bc5c4'
-                        deleted: false
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '4918a7b079724dea80fae0b78a79c9b0'
@@ -10125,6 +10449,28 @@ declare global {
                         key: {
                             field: 'script'
                             id: '76e76aeeb0ef4fabb08ac04328d34d11'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '89a43b25fe534b83b3f076bb6c6c86c1'
+                        key: {
+                            sys_ui_section: {
+                                id: 'f7858b575d9347b3a6e90fc3a0a35429'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Reservation Details'
+                                    view: {
+                                        id: 'd9dff8fa69254992b319664ae6c7eba0'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'assigned_to'
+                            position: '2'
                         }
                     },
                     {
@@ -11021,6 +11367,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '9dda6b65337a4e9a8b443427f16e0804'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '6a7c3dc7e9db402eabbbd85946c4f8c6'
@@ -11170,6 +11517,7 @@ declare global {
                     {
                         table: 'sys_ui_form'
                         id: 'a17cad6cd31e480eb93dbb9e15fc5d01'
+                        deleted: true
                         key: {
                             name: 'x_783010_tocc_a1_room_reservation'
                             view: {
@@ -11337,6 +11685,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'a4af3a17141e48db85ba39c6cadbea2b'
+                        deleted: true
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: '3e639f8aa9074dc2a93d56fcf71fd036'
@@ -11728,6 +12077,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: 'ab85a73a2ab544af9ad746b542b9361c'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '4918a7b079724dea80fae0b78a79c9b0'
@@ -11887,6 +12237,28 @@ declare global {
                             }
                             element: 'start_datetime'
                             position: '8'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'addfcd32a51342d08534d78b62746e99'
+                        key: {
+                            sys_ui_section: {
+                                id: '03ef3e517f3b4141be8ebcd954914ec7'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Notes'
+                                    view: {
+                                        id: '53be9240d948483ea9103c475f30654b'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'work_notes'
+                            position: '2'
                         }
                     },
                     {
@@ -12964,6 +13336,15 @@ declare global {
                     },
                     {
                         table: 'sc_cat_item_catalog'
+                        id: 'c2746c0466cf4397a7c3c8849b1a54fc'
+                        deleted: true
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '21cccf1125a4419ab5c8cde9c2fc64e9'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
                         id: 'c28ba6748d4c4b8ba4c51ea6cba96012'
                         deleted: true
                         key: {
@@ -13441,6 +13822,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: 'cb27c35f1a9d4e61a194a03a8c14d2e0'
+                        key: {
+                            sys_ui_section: {
+                                id: 'f7858b575d9347b3a6e90fc3a0a35429'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Reservation Details'
+                                    view: {
+                                        id: '2ae9db3062644e4e97e1d1399804f7b6'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'status'
+                            position: '1'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'cb34f9cccdc44f7ba082d5e83683c7da'
                         key: {
@@ -13455,6 +13858,14 @@ declare global {
                         key: {
                             sys_security_acl: '354124bb7d694aeaa44433a61b621a15'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'cb8816aeb39848dfa63a80dd2f75d2d5'
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: 'b9a95d82970046d1ad384abc3da1b211'
                         }
                     },
                     {
@@ -13497,6 +13908,28 @@ declare global {
                         key: {
                             sys_security_acl: '44624739006642a992f24ba5edbdd25d'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'cdc2d317736b4229b2f6b871594ddfda'
+                        key: {
+                            sys_ui_section: {
+                                id: 'f7858b575d9347b3a6e90fc3a0a35429'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Reservation Details'
+                                    view: {
+                                        id: '9e475fb8204c434aaf6c49430674ca5e'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'course'
+                            position: '4'
                         }
                     },
                     {
@@ -13614,6 +14047,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'cf9b130b0556490daa149c911225f661'
+                        deleted: true
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: 'f4e578daa0464450bc5a275b3a7df7b0'
@@ -13833,6 +14267,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: 'd26780d053334cd89566d69c0f999614'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '4918a7b079724dea80fae0b78a79c9b0'
@@ -14659,6 +15094,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: 'e49335293d5c4e458f4e9e6a8e8e400f'
+                        key: {
+                            sys_ui_section: {
+                                id: 'f7858b575d9347b3a6e90fc3a0a35429'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Reservation Details'
+                                    view: {
+                                        id: 'd3b75a3c95254f5da66095d8d577972c'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'room'
+                            position: '5'
+                        }
+                    },
+                    {
                         table: 'ua_table_licensing_config'
                         id: 'e4afcb1c611444dda6ae9fccece0c2cb'
                         key: {
@@ -15185,6 +15642,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: 'ee1730693614469b8c4fb8b58dd811bc'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '4918a7b079724dea80fae0b78a79c9b0'
@@ -15600,6 +16058,21 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_section'
+                        id: 'f7858b575d9347b3a6e90fc3a0a35429'
+                        key: {
+                            name: 'x_783010_tocc_a1_room_reservation'
+                            caption: 'Reservation Details'
+                            view: {
+                                id: 'dab3aa14c67b48a5aafbdfa0073259a4'
+                                key: {
+                                    name: 'Default view'
+                                }
+                            }
+                            sys_domain: 'global'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: 'f7c9e283c65b4f989095907b21d9300b'
                         key: {
@@ -15610,6 +16083,28 @@ declare global {
                                     name: 'admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'f7d433af1b6747e0aa11e49a1fd09079'
+                        key: {
+                            sys_ui_section: {
+                                id: '03ef3e517f3b4141be8ebcd954914ec7'
+                                key: {
+                                    name: 'x_783010_tocc_a1_room_reservation'
+                                    caption: 'Notes'
+                                    view: {
+                                        id: '66971ca0c97d48aa82f6b7299d23f27b'
+                                        key: {
+                                            name: 'Default view'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'activity.xml'
+                            position: '3'
                         }
                     },
                     {
@@ -15761,6 +16256,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: 'fa758d224d634936b3d3796e3124eac5'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '6a7c3dc7e9db402eabbbd85946c4f8c6'
@@ -15859,7 +16355,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: 'fced36b077c74e09803a45de4ebff8e3'
-                        deleted: false
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '4918a7b079724dea80fae0b78a79c9b0'
@@ -15952,6 +16448,7 @@ declare global {
                     {
                         table: 'sys_ui_form_section'
                         id: 'ff1ac00b01934a6db68bf5a94abf5a38'
+                        deleted: true
                         key: {
                             sys_ui_form: {
                                 id: 'a17cad6cd31e480eb93dbb9e15fc5d01'
