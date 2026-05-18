@@ -57,7 +57,7 @@
         create_course: createCourseLink,
         help: pageLink('tocc_help'),
         sow_home: '/now/sow/home',
-        workspace_home: '/now/nav/ui/classic/params/target/x_783010_tocc_a1_room_reservation_list.do?sysparm_query=status%3Dsubmitted',
+        workspace_home: '/x/783010/tocc-backoffice-ops/list',
     };
 
     function countRecords(table, encodedQuery) {
@@ -147,8 +147,8 @@
 
     if (isOpsPersona) {
         data.actions.push({
-            title: 'Backoffice Queue',
-            desc: 'Abra a fila operacional de reservas pendentes.',
+            title: 'Backoffice Workspace',
+            desc: 'Abra a experiencia operacional no UI Builder.',
             icon: 'fa-briefcase',
             href: data.links.workspace_home,
             kind: 'secondary'

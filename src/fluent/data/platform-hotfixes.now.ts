@@ -268,6 +268,32 @@ Record({
             }
         }
 
+        var canvasRole = new GlideRecord('sys_user_role');
+        canvasRole.addQuery('name', 'canvas_user');
+        canvasRole.setLimit(1);
+        canvasRole.query();
+        if (canvasRole.next()) {
+            var menuConfigAcl = new GlideRecord('sys_security_acl');
+            menuConfigAcl.addQuery('name', 'sys_ux_list_menu_config');
+            menuConfigAcl.addQuery('operation', 'read');
+            menuConfigAcl.setLimit(1);
+            menuConfigAcl.query();
+            if (menuConfigAcl.next()) {
+                var menuAclRole = new GlideRecord('sys_security_acl_role');
+                menuAclRole.addQuery('sys_security_acl', menuConfigAcl.getUniqueValue());
+                menuAclRole.addQuery('sys_user_role', canvasRole.getUniqueValue());
+                menuAclRole.setLimit(1);
+                menuAclRole.query();
+                if (!menuAclRole.next()) {
+                    menuAclRole.initialize();
+                    menuAclRole.setValue('sys_security_acl', menuConfigAcl.getUniqueValue());
+                    menuAclRole.setValue('sys_user_role', canvasRole.getUniqueValue());
+                    menuAclRole.insert();
+                    gs.info('[TOCC][FIX] Linked canvas_user role to sys_ux_list_menu_config read ACL.');
+                }
+            }
+        }
+
         var scopedTable = new GlideRecord('sys_db_object');
         scopedTable.addEncodedQuery('nameSTARTSWITHx_783010_tocc_a1_');
         scopedTable.query();
@@ -284,11 +310,11 @@ Record({
         backofficeModule.addQuery('application.name', 'x_783010_tocc_a1_tocc');
         backofficeModule.query();
         while (backofficeModule.next()) {
-            backofficeModule.setValue('title', 'Backoffice Queue');
-            backofficeModule.setValue('query', '/now/nav/ui/classic/params/target/x_783010_tocc_a1_room_reservation_list.do?sysparm_query=status%3Dsubmitted');
+            backofficeModule.setValue('title', 'Backoffice Workspace');
+            backofficeModule.setValue('query', '/x/783010/tocc-backoffice-ops/list');
             backofficeModule.setValue('active', true);
             backofficeModule.update();
-            gs.info('[TOCC][FIX] Backoffice module repointed to classic pending reservations queue.');
+            gs.info('[TOCC][FIX] Backoffice module mapped to workspace: /x/783010/tocc-backoffice-ops/list');
         }
     }
 })();`,

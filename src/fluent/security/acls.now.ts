@@ -291,4 +291,25 @@ Acl({
     active: true,
 })
 
+Acl({
+    $id: Now.ID['read_sys_ux_list_menu_config'],
+    type: 'record',
+    table: 'sys_ux_list_menu_config',
+    operation: 'read',
+    roles: rolesWorkspaceRoute,
+    decisionType: 'allow',
+    active: true,
+})
+
+Acl({
+    $id: Now.ID['read_sys_ux_list_menu_config_all_fields'],
+    type: 'record',
+    table: 'sys_ux_list_menu_config.*',
+    operation: 'read',
+    roles: rolesWorkspaceRoute,
+    decisionType: 'allow',
+    active: true,
+})
+
+
 
