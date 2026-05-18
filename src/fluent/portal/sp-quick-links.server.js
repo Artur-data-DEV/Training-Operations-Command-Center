@@ -31,7 +31,15 @@
         '/x_783010_tocc_a1_course.do?sys_id=-1'
     );
 
-    var isPlatformAdmin = gs.hasRole('admin');
+    var isImpersonating = false;
+    try {
+        isImpersonating = !!(gs.getSession() && gs.getSession().isImpersonating && gs.getSession().isImpersonating());
+    } catch (e) {
+        isImpersonating = false;
+    }
+
+    // Prevent admin-role leakage while impersonating persona users in validation sessions.
+    var isPlatformAdmin = gs.hasRole('admin') && !isImpersonating;
     var isAppAdmin = gs.hasRole('x_783010_tocc_a1.admin');
     var isBackoffice = gs.hasRole('x_783010_tocc_a1.backoffice');
     var isManager = gs.hasRole('x_783010_tocc_a1.manager');
@@ -49,7 +57,7 @@
         create_course: createCourseLink,
         help: pageLink('tocc_help'),
         sow_home: '/now/sow/home',
-        workspace_home: '/x/783010/tocc-backoffice-ops/list',
+        workspace_home: '/now/tocc-backoffice-ops/list',
     };
 
     function countRecords(table, encodedQuery) {

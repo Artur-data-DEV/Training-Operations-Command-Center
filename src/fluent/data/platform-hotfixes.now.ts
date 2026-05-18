@@ -12,7 +12,7 @@ Record({
             'Hides legacy default_view, removes legacy form artifacts for room reservation, and ensures backoffice group has scoped role.',
         script: `(function executeFixScript() {
     var LEGACY_VIEW_NAME = 'default_view';
-    var TARGET_VIEW_NAME = 'Default view';
+    var TARGET_VIEW_NAME = 'default';
     var TARGET_TABLE = 'x_783010_tocc_a1_room_reservation';
     var BACKOFFICE_GROUP_NAME = '[TOCC] Backoffice';
     var BACKOFFICE_USER_NAME = 'tocc.backoffice';
@@ -20,27 +20,28 @@ Record({
     var REQUIRED_USER_ROLE_NAMES = [
         'x_783010_tocc_a1.backoffice',
         'workspace_user',
-        'canvas_user',
-        'snc_internal'
+        'canvas_user'
     ];
     var WORKSPACE_ROUTE_PATTERNS = [
         'tocc-backoffice-ops.*',
+        'tocc-backoffice-ops/list',
         'now.tocc-backoffice-ops.*',
+        'now.tocc-backoffice-ops.list',
         'x.783010.tocc-backoffice-ops.*',
-        'x/783010/tocc-backoffice-ops/*'
+        'x/783010/tocc-backoffice-ops/*',
+        'x/783010/tocc-backoffice-ops/list',
+        '/x/783010/tocc-backoffice-ops/list'
     ];
 
+    var legacyViewIds = [];
     var legacyView = new GlideRecord('sys_ui_view');
     legacyView.addQuery('name', LEGACY_VIEW_NAME);
-    legacyView.setLimit(1);
     legacyView.query();
 
-    var legacyViewId = '';
-    if (legacyView.next()) {
-        legacyViewId = legacyView.getUniqueValue();
+    while (legacyView.next()) {
+        legacyViewIds.push(String(legacyView.getUniqueValue()));
         legacyView.setValue('hidden', true);
         legacyView.update();
-        gs.info('[TOCC][FIX] Legacy view hidden: ' + LEGACY_VIEW_NAME + ' (' + legacyViewId + ')');
     }
 
     var defaultView = new GlideRecord('sys_ui_view');
@@ -53,9 +54,9 @@ Record({
         gs.info('[TOCC][FIX] Default view forced visible: ' + TARGET_VIEW_NAME);
     }
 
-    if (legacyViewId) {
+    if (legacyViewIds.length > 0) {
         var uiElement = new GlideRecord('sys_ui_element');
-        uiElement.addEncodedQuery('sys_ui_section.name=' + TARGET_TABLE + '^sys_ui_section.view=' + legacyViewId);
+        uiElement.addEncodedQuery('sys_ui_section.name=' + TARGET_TABLE + '^sys_ui_section.viewIN' + legacyViewIds.join(','));
         uiElement.query();
         while (uiElement.next()) {
             uiElement.deleteRecord();
@@ -63,7 +64,7 @@ Record({
 
         var uiSection = new GlideRecord('sys_ui_section');
         uiSection.addQuery('name', TARGET_TABLE);
-        uiSection.addQuery('view', legacyViewId);
+        uiSection.addQuery('view', 'IN', legacyViewIds.join(','));
         uiSection.query();
         while (uiSection.next()) {
             uiSection.deleteRecord();
@@ -71,14 +72,68 @@ Record({
 
         var uiForm = new GlideRecord('sys_ui_form');
         uiForm.addQuery('name', TARGET_TABLE);
-        uiForm.addQuery('view', legacyViewId);
+        uiForm.addQuery('view', 'IN', legacyViewIds.join(','));
         uiForm.query();
         while (uiForm.next()) {
             uiForm.deleteRecord();
         }
 
+        var legacyViewCleanup = new GlideRecord('sys_ui_view');
+        legacyViewCleanup.addQuery('name', LEGACY_VIEW_NAME);
+        legacyViewCleanup.query();
+        while (legacyViewCleanup.next()) {
+            legacyViewCleanup.deleteRecord();
+        }
+
         gs.info('[TOCC][FIX] Legacy form artifacts removed for table: ' + TARGET_TABLE);
     }
+
+    var formCleanup = new GlideRecord('sys_ui_form');
+    formCleanup.addQuery('name', TARGET_TABLE);
+    formCleanup.query();
+    while (formCleanup.next()) {
+        var formView = String(formCleanup.getValue('view') || '');
+        if (formView !== 'default') {
+            formCleanup.setValue('view', 'default');
+            formCleanup.update();
+        }
+    }
+
+    var sectionCleanup = new GlideRecord('sys_ui_section');
+    sectionCleanup.addQuery('name', TARGET_TABLE);
+    sectionCleanup.query();
+
+    var keepByCaption = {};
+    while (sectionCleanup.next()) {
+        var caption = String(sectionCleanup.getValue('caption') || '').trim();
+        var sectionId = String(sectionCleanup.getUniqueValue());
+
+        if (gs.nil(caption)) {
+            var blankElement = new GlideRecord('sys_ui_element');
+            blankElement.addQuery('sys_ui_section', sectionId);
+            blankElement.query();
+            while (blankElement.next()) {
+                blankElement.deleteRecord();
+            }
+            sectionCleanup.deleteRecord();
+            continue;
+        }
+
+        var key = caption.toLowerCase();
+        if (!keepByCaption[key]) {
+            keepByCaption[key] = sectionId;
+            continue;
+        }
+
+        var duplicateElement = new GlideRecord('sys_ui_element');
+        duplicateElement.addQuery('sys_ui_section', sectionId);
+        duplicateElement.query();
+        while (duplicateElement.next()) {
+            duplicateElement.deleteRecord();
+        }
+        sectionCleanup.deleteRecord();
+    }
+    gs.info('[TOCC][FIX] Room reservation form sections normalized.');
 
     var backofficeGroup = new GlideRecord('sys_user_group');
     backofficeGroup.addQuery('name', BACKOFFICE_GROUP_NAME);
@@ -212,6 +267,17 @@ Record({
                 }
             }
         }
+
+        var scopedTable = new GlideRecord('sys_db_object');
+        scopedTable.addEncodedQuery('nameSTARTSWITHx_783010_tocc_a1_');
+        scopedTable.query();
+        while (scopedTable.next()) {
+            if (String(scopedTable.getValue('ws_access')) !== 'true') {
+                scopedTable.setValue('ws_access', true);
+                scopedTable.update();
+            }
+        }
+        gs.info('[TOCC][FIX] ws_access normalized for scoped TOCC tables.');
     }
 })();`,
     },

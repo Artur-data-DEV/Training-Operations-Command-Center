@@ -1,8 +1,8 @@
-import { Form, Formatter, Record } from '@servicenow/sdk/core'
+import { Form, Formatter } from '@servicenow/sdk/core'
 
 export const roomReservationDefaultForm = Form({
     table: 'x_783010_tocc_a1_room_reservation',
-    view: Now.ref('sys_ui_view', { name: 'Default view' }),
+    view: Now.ref('sys_ui_view', { name: 'default' }),
     roles: ['x_783010_tocc_a1.admin', 'x_783010_tocc_a1.backoffice', 'admin'],
     sections: [
         {
@@ -41,24 +41,4 @@ export const roomReservationDefaultForm = Form({
             ],
         },
     ],
-})
-
-Record({
-    $id: Now.ID['x_783010_tocc_a1_ui_view_default_view_hidden'],
-    table: 'sys_ui_view',
-    data: {
-        name: 'default_view',
-        title: 'default_view',
-        hidden: true,
-    },
-})
-
-Record({
-    $id: Now.ID['x_783010_tocc_a1_ui_view_default_view_visible'],
-    table: 'sys_ui_view',
-    data: {
-        name: 'Default view',
-        title: 'Default view',
-        hidden: false,
-    },
 })

@@ -44,16 +44,17 @@ CatalogClientScript({
             // Ignore browser storage issues.
         }
 
-        var participantControl = g_form.getControl('reservation_expected_participants');
-        if (participantControl && participantControl.setAttribute) {
-            participantControl.setAttribute('type', 'number');
-            participantControl.setAttribute('min', '1');
-            participantControl.setAttribute('max', String(capacity));
+        if (g_form.clearOptions && g_form.addOption) {
+            g_form.clearOptions('reservation_expected_participants');
+            g_form.addOption('reservation_expected_participants', '', '-- Select --', 0);
+            for (var seat = 1; seat <= capacity; seat++) {
+                g_form.addOption('reservation_expected_participants', String(seat), String(seat), seat);
+            }
         }
 
         var currentParticipants = parseInt(g_form.getValue('reservation_expected_participants'), 10) || 0;
         if (!currentParticipants || currentParticipants > capacity) {
-            g_form.setValue('reservation_expected_participants', String(capacity));
+            g_form.setValue('reservation_expected_participants', '1');
             g_form.showFieldMsg(
                 'reservation_expected_participants',
                 'Expected participants must be between 1 and room capacity (' + capacity + ').',

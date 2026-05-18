@@ -3,6 +3,7 @@ import {
     DateTimeVariable,
     ListCollectorVariable,
     MultiLineTextVariable,
+    SelectBoxVariable,
     SingleLineTextVariable,
     ReferenceVariable,
 } from '@servicenow/sdk/core'
@@ -23,6 +24,7 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
             order: 100,
             mandatory: true,
             referenceTable: 'x_783010_tocc_a1_room',
+            referenceQual: 'status=active',
             mapToField: true,
             field: 'room',
         }),
@@ -31,6 +33,7 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
             order: 200,
             mandatory: true,
             referenceTable: 'x_783010_tocc_a1_course',
+            referenceQual: 'status=active',
             mapToField: true,
             field: 'course',
         }),
@@ -48,12 +51,16 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
             mapToField: true,
             field: 'end_datetime',
         }),
-        reservation_expected_participants: SingleLineTextVariable({
+        reservation_expected_participants: SelectBoxVariable({
             question: 'Expected Participants',
             order: 500,
             mandatory: true,
             mapToField: true,
             field: 'expected_participants',
+            includeNone: true,
+            choices: {
+                1: { label: '1' },
+            },
         }),
         reservation_requested_resources: ListCollectorVariable({
             question: 'Optional Room Resources',

@@ -96,6 +96,32 @@ BusinessRule({
     active: true,
     order: 100,
     script: `(function executeRule(current, previous) {
+    var participants = parseInt(current.getValue('expected_participants'), 10) || 0;
+    if (participants < 1) {
+        gs.addErrorMessage('Expected participants must be greater than zero.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    var roomId = current.getValue('room');
+    if (!gs.nil(roomId)) {
+        var room = new GlideRecord('x_783010_tocc_a1_room');
+        if (room.get(roomId)) {
+            var capacity = parseInt(room.getValue('capacity'), 10) || 0;
+            if (capacity > 0 && participants > capacity) {
+                gs.addErrorMessage(
+                    'Expected participants (' +
+                        participants +
+                        ') cannot exceed room capacity (' +
+                        capacity +
+                        ').'
+                );
+                current.setAbortAction(true);
+                return;
+            }
+        }
+    }
+
     var svc = new RoomService();
     var error = svc.validateReservation(current);
 

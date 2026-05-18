@@ -1,5 +1,23 @@
-/* TOCC Session Browser — Dark enterprise redesign */
+﻿/* TOCC Session Browser - Dark enterprise redesign */
 * { box-sizing: border-box; }
+
+html,
+body,
+#sp_page,
+.sp-page-root,
+.sp-page-root .container-fluid,
+.sp-page-row,
+.sp-row-content.row {
+    background: #0B0E14 !important;
+}
+
+.sp-page-root .container-fluid,
+.sp-row-content.row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
 
 .panel,
 .panel.panel-default {
@@ -228,3 +246,4 @@
 .tocc-empty-icon { font-size: 44px; color: #2A3050; margin-bottom: 20px; }
 .tocc-empty-state h4 { color: #6B7694; font-size: 17px; margin-bottom: 8px; }
 .tocc-empty-state p { color: #4A5375; font-size: 14px; margin-bottom: 24px; }
+

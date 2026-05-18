@@ -15,16 +15,13 @@ const reservationSignalSubflow = Subflow(
             }),
         },
     },
-    (params) => {
+    () => {
         wfa.action(
-            action.core.fireEvent,
+            action.core.log,
             { $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_fire_event_v2'] },
             {
-                event_name: 'x_783010_tocc_a1.reservation.submitted',
-                table: 'x_783010_tocc_a1_room_reservation',
-                record: wfa.dataPill(params.inputs.reservationRecord, 'reference'),
-                parm1: 'reservation_submitted',
-                parm2: 'flow',
+                log_level: 'info',
+                log_message: '[TOCC] Reservation submitted signal handled by FLOW-01.',
             }
         )
     }
@@ -59,16 +56,13 @@ const sessionCancelledSignalSubflow = Subflow(
         wfa.flowLogic.forEach(
             wfa.dataPill(approvedEnrollments.Records, 'array.object'),
             { $id: Now.ID['x_783010_tocc_a1_subflow_session_cancelled_loop_enrollments_v2'] },
-            (enrollment) => {
+            () => {
                 wfa.action(
-                    action.core.fireEvent,
+                    action.core.log,
                     { $id: Now.ID['x_783010_tocc_a1_subflow_session_cancelled_fire_event_v2'] },
                     {
-                        event_name: 'x_783010_tocc_a1.session.cancelled',
-                        table: 'x_783010_tocc_a1_student_enrollment',
-                        record: wfa.dataPill(enrollment.sys_id, 'reference'),
-                        parm1: wfa.dataPill(params.inputs.sessionRecord, 'reference'),
-                        parm2: 'flow',
+                        log_level: 'info',
+                        log_message: '[TOCC] Session cancellation processed for approved enrollment.',
                     }
                 )
             }
@@ -186,14 +180,11 @@ Flow(
                 )
 
                 wfa.action(
-                    action.core.fireEvent,
+                    action.core.log,
                     { $id: Now.ID['x_783010_tocc_a1_flow_reservation_intake_signal_log'] },
                     {
-                        event_name: `x_783010_tocc_a1.reservation.${wfa.dataPill(reservationApproval.approval_state, 'string')}`,
-                        table: 'x_783010_tocc_a1_room_reservation',
-                        record: wfa.dataPill(params.trigger.current, 'reference'),
-                        parm1: wfa.dataPill(reservationApproval.approval_state, 'string'),
-                        parm2: 'flow',
+                        log_level: 'info',
+                        log_message: '[TOCC] Reservation decision applied by FLOW-01.',
                     }
                 )
             }
@@ -339,14 +330,11 @@ Flow(
                         )
 
                         wfa.action(
-                            action.core.fireEvent,
+                            action.core.log,
                             { $id: Now.ID['x_783010_tocc_a1_flow_session_reminder_fire_event'] },
                             {
-                                event_name: `x_783010_tocc_a1.enrollment.${wfa.dataPill(instructorApproval.approval_state, 'string')}`,
-                                table: 'x_783010_tocc_a1_student_enrollment',
-                                record: wfa.dataPill(params.trigger.current, 'reference'),
-                                parm1: wfa.dataPill(instructorApproval.approval_state, 'string'),
-                                parm2: 'flow',
+                                log_level: 'info',
+                                log_message: '[TOCC] Enrollment decision applied by FLOW-02.',
                             }
                         )
                     }
@@ -391,14 +379,11 @@ Flow(
                 )
 
                 wfa.action(
-                    action.core.fireEvent,
+                    action.core.log,
                     { $id: Now.ID['x_783010_tocc_a1_flow_attendance_confirmation_fire_event'] },
                     {
-                        event_name: 'x_783010_tocc_a1.enrollment.approved',
-                        table: 'x_783010_tocc_a1_student_enrollment',
-                        record: wfa.dataPill(params.trigger.current, 'reference'),
-                        parm1: 'enrollment_auto_approved',
-                        parm2: 'flow',
+                        log_level: 'info',
+                        log_message: '[TOCC] Enrollment auto-approved through FLOW-02.',
                     }
                 )
             }
@@ -512,16 +497,13 @@ Flow(
                 wfa.flowLogic.forEach(
                     wfa.dataPill(pendingConfirmations.Records, 'array.object'),
                     { $id: Now.ID['x_783010_tocc_a1_flow_attendance_confirmation_loop_enrollments_v2'] },
-                    (enrollment) => {
+                    () => {
                         wfa.action(
-                            action.core.fireEvent,
+                            action.core.log,
                             { $id: Now.ID['x_783010_tocc_a1_flow_attendance_confirmation_fire_event_v2'] },
                             {
-                                event_name: 'x_783010_tocc_a1.session.confirmation_request',
-                                table: 'x_783010_tocc_a1_student_enrollment',
-                                record: wfa.dataPill(enrollment.sys_id, 'reference'),
-                                parm1: wfa.dataPill(session.number, 'string'),
-                                parm2: 'flow',
+                                log_level: 'info',
+                                log_message: '[TOCC] Attendance confirmation reminder scheduled.',
                             }
                         )
                     }
@@ -586,16 +568,13 @@ Flow(
                 wfa.flowLogic.forEach(
                     wfa.dataPill(approvedEnrollments.Records, 'array.object'),
                     { $id: Now.ID['x_783010_tocc_a1_flow_session_reminder_loop_enrollments_v2'] },
-                    (enrollment) => {
+                    () => {
                         wfa.action(
-                            action.core.fireEvent,
+                            action.core.log,
                             { $id: Now.ID['x_783010_tocc_a1_flow_session_reminder_fire_event_v2'] },
                             {
-                                event_name: 'x_783010_tocc_a1.session.reminder',
-                                table: 'x_783010_tocc_a1_student_enrollment',
-                                record: wfa.dataPill(enrollment.sys_id, 'reference'),
-                                parm1: wfa.dataPill(session.number, 'string'),
-                                parm2: 'flow',
+                                log_level: 'info',
+                                log_message: '[TOCC] Session reminder scheduled.',
                             }
                         )
                     }

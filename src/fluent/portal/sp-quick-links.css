@@ -1,6 +1,24 @@
 /* TOCC Quick Links */
 * { box-sizing: border-box; }
 
+html,
+body,
+#sp_page,
+.sp-page-root,
+.sp-page-root .container-fluid,
+.sp-page-row,
+.sp-row-content.row {
+    background: #070b14 !important;
+}
+
+.sp-page-root .container-fluid,
+.sp-row-content.row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
 .panel,
 .panel.panel-default {
     background: transparent !important;

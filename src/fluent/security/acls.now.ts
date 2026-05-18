@@ -1,11 +1,11 @@
 import { Acl } from '@servicenow/sdk/core'
 import { toccAdminRole, toccBackofficeRole, toccInstructorRole, toccManagerRole, toccStudentRole } from './roles.now'
 
-const roleStudent = toccStudentRole.name
-const roleInstructor = toccInstructorRole.name
-const roleBackoffice = toccBackofficeRole.name
-const roleManager = toccManagerRole.name
-const roleAppAdmin = toccAdminRole.name
+const roleStudent = toccStudentRole
+const roleInstructor = toccInstructorRole
+const roleBackoffice = toccBackofficeRole
+const roleManager = toccManagerRole
+const roleAppAdmin = toccAdminRole
 const rolePlatformAdmin = 'admin'
 const roleInternal = 'snc_internal'
 
@@ -224,6 +224,67 @@ Acl({
     $id: Now.ID['execute_workspace_route_tocc_backoffice_ops_slash'],
     type: 'ux_route',
     name: 'x/783010/tocc-backoffice-ops/*',
+    operation: 'execute',
+    roles: rolesWorkspaceRoute,
+    decisionType: 'allow',
+    active: true,
+})
+
+// Explicit list-route aliases used by some instances/navigation entries.
+Acl({
+    $id: Now.ID['read_workspace_route_tocc_backoffice_ops_list'],
+    type: 'ux_route',
+    name: 'tocc-backoffice-ops/list',
+    operation: 'read',
+    roles: rolesWorkspaceRoute,
+    decisionType: 'allow',
+    active: true,
+})
+
+Acl({
+    $id: Now.ID['execute_workspace_route_tocc_backoffice_ops_list'],
+    type: 'ux_route',
+    name: 'tocc-backoffice-ops/list',
+    operation: 'execute',
+    roles: rolesWorkspaceRoute,
+    decisionType: 'allow',
+    active: true,
+})
+
+Acl({
+    $id: Now.ID['read_workspace_route_tocc_backoffice_ops_scoped_list'],
+    type: 'ux_route',
+    name: 'x/783010/tocc-backoffice-ops/list',
+    operation: 'read',
+    roles: rolesWorkspaceRoute,
+    decisionType: 'allow',
+    active: true,
+})
+
+Acl({
+    $id: Now.ID['execute_workspace_route_tocc_backoffice_ops_scoped_list'],
+    type: 'ux_route',
+    name: 'x/783010/tocc-backoffice-ops/list',
+    operation: 'execute',
+    roles: rolesWorkspaceRoute,
+    decisionType: 'allow',
+    active: true,
+})
+
+Acl({
+    $id: Now.ID['read_workspace_route_tocc_backoffice_ops_scoped_list_slash_prefix'],
+    type: 'ux_route',
+    name: '/x/783010/tocc-backoffice-ops/list',
+    operation: 'read',
+    roles: rolesWorkspaceRoute,
+    decisionType: 'allow',
+    active: true,
+})
+
+Acl({
+    $id: Now.ID['execute_workspace_route_tocc_backoffice_ops_scoped_list_slash_prefix'],
+    type: 'ux_route',
+    name: '/x/783010/tocc-backoffice-ops/list',
     operation: 'execute',
     roles: rolesWorkspaceRoute,
     decisionType: 'allow',

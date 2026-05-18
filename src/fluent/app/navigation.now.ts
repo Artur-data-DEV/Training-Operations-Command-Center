@@ -26,7 +26,7 @@ Record({
         application: toccNavigationMenu,
         title: 'Backoffice Workspace',
         link_type: 'DIRECT',
-        query: '/x/783010/tocc-backoffice-ops/list',
+        query: '/now/tocc-backoffice-ops/list',
         order: 100,
         active: true,
         roles: ['snc_internal', 'admin', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
