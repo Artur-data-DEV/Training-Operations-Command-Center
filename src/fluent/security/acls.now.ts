@@ -31,6 +31,7 @@ const rolesInstructorBackofficeStudentAndAdmin = [
     rolePlatformAdmin,
 ]
 const rolesConfigRead = [roleBackoffice, roleManager, roleAppAdmin, rolePlatformAdmin, roleInternal]
+const rolesWorkspaceRoute = [roleBackoffice, roleManager, roleAppAdmin, rolePlatformAdmin, roleInternal]
 
 // x_783010_tocc_a1_room
 Acl({ $id: Now.ID['read_x_783010_tocc_a1_room'], type: 'record', table: 'x_783010_tocc_a1_room', operation: 'read', roles: rolesReadAll, decisionType: 'allow', active: true })
@@ -133,6 +134,28 @@ Acl({
     name: 'x_783010_tocc_a1.TrainingContextAjax',
     operation: 'execute',
     roles: rolesReadAll,
+    decisionType: 'allow',
+    active: true,
+})
+
+// Workspace route ACL (required by Workspace API for path-based access control)
+Acl({
+    $id: Now.ID['read_workspace_route_tocc_backoffice_ops'],
+    type: 'ux_route',
+    name: 'tocc-backoffice-ops.*',
+    operation: 'read',
+    roles: rolesWorkspaceRoute,
+    decisionType: 'allow',
+    active: true,
+})
+
+// Compatibility alias for instances evaluating route name with `now.` prefix
+Acl({
+    $id: Now.ID['read_workspace_route_tocc_backoffice_ops_now_alias'],
+    type: 'ux_route',
+    name: 'now.tocc-backoffice-ops.*',
+    operation: 'read',
+    roles: rolesWorkspaceRoute,
     decisionType: 'allow',
     active: true,
 })

@@ -16,6 +16,11 @@ Record({
     var TARGET_TABLE = 'x_783010_tocc_a1_room_reservation';
     var BACKOFFICE_GROUP_NAME = '[TOCC] Backoffice';
     var BACKOFFICE_ROLE_NAME = 'x_783010_tocc_a1.backoffice';
+    var WORKSPACE_ROUTE_PATTERNS = [
+        'tocc-backoffice-ops.*',
+        'now.tocc-backoffice-ops.*',
+        'x.783010.tocc-backoffice-ops.*'
+    ];
 
     var legacyView = new GlideRecord('sys_ui_view');
     legacyView.addQuery('name', LEGACY_VIEW_NAME);
@@ -90,6 +95,46 @@ Record({
             groupRole.setValue('role', backofficeRole.getUniqueValue());
             groupRole.insert();
             gs.info('[TOCC][FIX] Backoffice role linked to group.');
+        }
+
+        for (var i = 0; i < WORKSPACE_ROUTE_PATTERNS.length; i++) {
+            var routeName = WORKSPACE_ROUTE_PATTERNS[i];
+            var acl = new GlideRecord('sys_security_acl');
+            acl.addQuery('type', 'ux_route');
+            acl.addQuery('operation', 'read');
+            acl.addQuery('name', routeName);
+            acl.setLimit(1);
+            acl.query();
+
+            var aclId = '';
+            if (acl.next()) {
+                aclId = acl.getUniqueValue();
+            } else {
+                acl.initialize();
+                acl.setValue('type', 'ux_route');
+                acl.setValue('operation', 'read');
+                acl.setValue('name', routeName);
+                acl.setValue('active', true);
+                acl.setValue('admin_overrides', true);
+                acl.setValue('decision_type', 'allow');
+                aclId = acl.insert();
+                gs.info('[TOCC][FIX] Created workspace route ACL: ' + routeName);
+            }
+
+            if (aclId) {
+                var aclRole = new GlideRecord('sys_security_acl_role');
+                aclRole.addQuery('sys_security_acl', aclId);
+                aclRole.addQuery('sys_user_role', backofficeRole.getUniqueValue());
+                aclRole.setLimit(1);
+                aclRole.query();
+                if (!aclRole.next()) {
+                    aclRole.initialize();
+                    aclRole.setValue('sys_security_acl', aclId);
+                    aclRole.setValue('sys_user_role', backofficeRole.getUniqueValue());
+                    aclRole.insert();
+                    gs.info('[TOCC][FIX] Linked backoffice role to workspace route ACL: ' + routeName);
+                }
+            }
         }
     }
 })();`,
