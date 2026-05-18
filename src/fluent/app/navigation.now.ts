@@ -24,9 +24,9 @@ Record({
     table: 'sys_app_module',
     data: {
         application: toccNavigationMenu,
-        title: 'Backoffice Workspace',
+        title: 'Backoffice Queue',
         link_type: 'DIRECT',
-        query: '/now/tocc-backoffice-ops/list',
+        query: '/now/nav/ui/classic/params/target/x_783010_tocc_a1_room_reservation_list.do?sysparm_query=status%3Dsubmitted',
         order: 100,
         active: true,
         roles: ['snc_internal', 'admin', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],

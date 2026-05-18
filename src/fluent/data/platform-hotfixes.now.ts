@@ -278,6 +278,18 @@ Record({
             }
         }
         gs.info('[TOCC][FIX] ws_access normalized for scoped TOCC tables.');
+
+        var backofficeModule = new GlideRecord('sys_app_module');
+        backofficeModule.addQuery('title', 'Backoffice Workspace');
+        backofficeModule.addQuery('application.name', 'x_783010_tocc_a1_tocc');
+        backofficeModule.query();
+        while (backofficeModule.next()) {
+            backofficeModule.setValue('title', 'Backoffice Queue');
+            backofficeModule.setValue('query', '/now/nav/ui/classic/params/target/x_783010_tocc_a1_room_reservation_list.do?sysparm_query=status%3Dsubmitted');
+            backofficeModule.setValue('active', true);
+            backofficeModule.update();
+            gs.info('[TOCC][FIX] Backoffice module repointed to classic pending reservations queue.');
+        }
     }
 })();`,
     },
