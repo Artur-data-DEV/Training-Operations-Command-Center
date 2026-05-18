@@ -160,4 +160,74 @@ Acl({
     active: true,
 })
 
+Acl({
+    $id: Now.ID['read_workspace_route_tocc_backoffice_ops_x_scope'],
+    type: 'ux_route',
+    name: 'x.783010.tocc-backoffice-ops.*',
+    operation: 'read',
+    roles: rolesWorkspaceRoute,
+    decisionType: 'allow',
+    active: true,
+})
+
+Acl({
+    $id: Now.ID['execute_workspace_route_tocc_backoffice_ops'],
+    type: 'ux_route',
+    name: 'tocc-backoffice-ops.*',
+    operation: 'execute',
+    roles: rolesWorkspaceRoute,
+    decisionType: 'allow',
+    active: true,
+})
+
+Acl({
+    $id: Now.ID['execute_workspace_route_tocc_backoffice_ops_now_alias'],
+    type: 'ux_route',
+    name: 'now.tocc-backoffice-ops.*',
+    operation: 'execute',
+    roles: rolesWorkspaceRoute,
+    decisionType: 'allow',
+    active: true,
+})
+
+Acl({
+    $id: Now.ID['execute_workspace_route_tocc_backoffice_ops_x_scope'],
+    type: 'ux_route',
+    name: 'x.783010.tocc-backoffice-ops.*',
+    operation: 'execute',
+    roles: rolesWorkspaceRoute,
+    decisionType: 'allow',
+    active: true,
+})
+
+Acl({
+    $id: Now.ID['read_workspace_page_tocc_backoffice_ops'],
+    type: 'ux_page',
+    name: 'tocc-backoffice-ops.*',
+    operation: 'read',
+    roles: rolesWorkspaceRoute,
+    decisionType: 'allow',
+    active: true,
+})
+
+Acl({
+    $id: Now.ID['read_workspace_route_tocc_backoffice_ops_slash'],
+    type: 'ux_route',
+    name: 'x/783010/tocc-backoffice-ops/*',
+    operation: 'read',
+    roles: rolesWorkspaceRoute,
+    decisionType: 'allow',
+    active: true,
+})
+
+Acl({
+    $id: Now.ID['execute_workspace_route_tocc_backoffice_ops_slash'],
+    type: 'ux_route',
+    name: 'x/783010/tocc-backoffice-ops/*',
+    operation: 'execute',
+    roles: rolesWorkspaceRoute,
+    decisionType: 'allow',
+    active: true,
+})
+
 

@@ -15,11 +15,19 @@ Record({
     var TARGET_VIEW_NAME = 'Default view';
     var TARGET_TABLE = 'x_783010_tocc_a1_room_reservation';
     var BACKOFFICE_GROUP_NAME = '[TOCC] Backoffice';
+    var BACKOFFICE_USER_NAME = 'tocc.backoffice';
     var BACKOFFICE_ROLE_NAME = 'x_783010_tocc_a1.backoffice';
+    var REQUIRED_USER_ROLE_NAMES = [
+        'x_783010_tocc_a1.backoffice',
+        'workspace_user',
+        'canvas_user',
+        'snc_internal'
+    ];
     var WORKSPACE_ROUTE_PATTERNS = [
         'tocc-backoffice-ops.*',
         'now.tocc-backoffice-ops.*',
-        'x.783010.tocc-backoffice-ops.*'
+        'x.783010.tocc-backoffice-ops.*',
+        'x/783010/tocc-backoffice-ops/*'
     ];
 
     var legacyView = new GlideRecord('sys_ui_view');
@@ -97,42 +105,110 @@ Record({
             gs.info('[TOCC][FIX] Backoffice role linked to group.');
         }
 
-        for (var i = 0; i < WORKSPACE_ROUTE_PATTERNS.length; i++) {
-            var routeName = WORKSPACE_ROUTE_PATTERNS[i];
-            var acl = new GlideRecord('sys_security_acl');
-            acl.addQuery('type', 'ux_route');
-            acl.addQuery('operation', 'read');
-            acl.addQuery('name', routeName);
-            acl.setLimit(1);
-            acl.query();
-
-            var aclId = '';
-            if (acl.next()) {
-                aclId = acl.getUniqueValue();
-            } else {
-                acl.initialize();
-                acl.setValue('type', 'ux_route');
-                acl.setValue('operation', 'read');
-                acl.setValue('name', routeName);
-                acl.setValue('active', true);
-                acl.setValue('admin_overrides', true);
-                acl.setValue('decision_type', 'allow');
-                aclId = acl.insert();
-                gs.info('[TOCC][FIX] Created workspace route ACL: ' + routeName);
+        var backofficeUser = new GlideRecord('sys_user');
+        backofficeUser.addQuery('user_name', BACKOFFICE_USER_NAME);
+        backofficeUser.setLimit(1);
+        backofficeUser.query();
+        if (backofficeUser.next()) {
+            var changed = false;
+            if (String(backofficeUser.getValue('active')) !== 'true') {
+                backofficeUser.setValue('active', true);
+                changed = true;
+            }
+            if (String(backofficeUser.getValue('locked_out')) === 'true') {
+                backofficeUser.setValue('locked_out', false);
+                changed = true;
+            }
+            if (String(backofficeUser.getValue('password_needs_reset')) === 'true') {
+                backofficeUser.setValue('password_needs_reset', false);
+                changed = true;
+            }
+            if (changed) {
+                backofficeUser.update();
+                gs.info('[TOCC][FIX] Backoffice user flags normalized.');
             }
 
-            if (aclId) {
-                var aclRole = new GlideRecord('sys_security_acl_role');
-                aclRole.addQuery('sys_security_acl', aclId);
-                aclRole.addQuery('sys_user_role', backofficeRole.getUniqueValue());
-                aclRole.setLimit(1);
-                aclRole.query();
-                if (!aclRole.next()) {
-                    aclRole.initialize();
-                    aclRole.setValue('sys_security_acl', aclId);
-                    aclRole.setValue('sys_user_role', backofficeRole.getUniqueValue());
-                    aclRole.insert();
-                    gs.info('[TOCC][FIX] Linked backoffice role to workspace route ACL: ' + routeName);
+            var membership = new GlideRecord('sys_user_grmember');
+            membership.addQuery('group', backofficeGroup.getUniqueValue());
+            membership.addQuery('user', backofficeUser.getUniqueValue());
+            membership.setLimit(1);
+            membership.query();
+            if (!membership.next()) {
+                membership.initialize();
+                membership.setValue('group', backofficeGroup.getUniqueValue());
+                membership.setValue('user', backofficeUser.getUniqueValue());
+                membership.insert();
+                gs.info('[TOCC][FIX] Backoffice user added to backoffice group.');
+            }
+
+            for (var r = 0; r < REQUIRED_USER_ROLE_NAMES.length; r++) {
+                var roleName = REQUIRED_USER_ROLE_NAMES[r];
+                var role = new GlideRecord('sys_user_role');
+                role.addQuery('name', roleName);
+                role.setLimit(1);
+                role.query();
+                if (!role.next()) {
+                    gs.error('[TOCC][FIX] Required role not found: ' + roleName);
+                    continue;
+                }
+
+                var userRole = new GlideRecord('sys_user_has_role');
+                userRole.addQuery('user', backofficeUser.getUniqueValue());
+                userRole.addQuery('role', role.getUniqueValue());
+                userRole.setLimit(1);
+                userRole.query();
+                if (!userRole.next()) {
+                    userRole.initialize();
+                    userRole.setValue('user', backofficeUser.getUniqueValue());
+                    userRole.setValue('role', role.getUniqueValue());
+                    userRole.insert();
+                    gs.info('[TOCC][FIX] Role granted to backoffice user: ' + roleName);
+                }
+            }
+        } else {
+            gs.error('[TOCC][FIX] Backoffice user not found: ' + BACKOFFICE_USER_NAME);
+        }
+
+        for (var i = 0; i < WORKSPACE_ROUTE_PATTERNS.length; i++) {
+            var routeName = WORKSPACE_ROUTE_PATTERNS[i];
+            var operations = ['read', 'execute'];
+            for (var o = 0; o < operations.length; o++) {
+                var operation = operations[o];
+                var acl = new GlideRecord('sys_security_acl');
+                acl.addQuery('type', 'ux_route');
+                acl.addQuery('operation', operation);
+                acl.addQuery('name', routeName);
+                acl.setLimit(1);
+                acl.query();
+
+                var aclId = '';
+                if (acl.next()) {
+                    aclId = acl.getUniqueValue();
+                } else {
+                    acl.initialize();
+                    acl.setValue('type', 'ux_route');
+                    acl.setValue('operation', operation);
+                    acl.setValue('name', routeName);
+                    acl.setValue('active', true);
+                    acl.setValue('admin_overrides', true);
+                    acl.setValue('decision_type', 'allow');
+                    aclId = acl.insert();
+                    gs.info('[TOCC][FIX] Created workspace route ACL: ' + routeName + ' (' + operation + ')');
+                }
+
+                if (aclId) {
+                    var aclRole = new GlideRecord('sys_security_acl_role');
+                    aclRole.addQuery('sys_security_acl', aclId);
+                    aclRole.addQuery('sys_user_role', backofficeRole.getUniqueValue());
+                    aclRole.setLimit(1);
+                    aclRole.query();
+                    if (!aclRole.next()) {
+                        aclRole.initialize();
+                        aclRole.setValue('sys_security_acl', aclId);
+                        aclRole.setValue('sys_user_role', backofficeRole.getUniqueValue());
+                        aclRole.insert();
+                        gs.info('[TOCC][FIX] Linked backoffice role to workspace route ACL: ' + routeName + ' (' + operation + ')');
+                    }
                 }
             }
         }

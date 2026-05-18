@@ -513,6 +513,22 @@ declare global {
                         table: 'sys_security_acl'
                         id: 'e506d79479fc451a91b25c79909c42c3'
                     }
+                    execute_workspace_route_tocc_backoffice_ops: {
+                        table: 'sys_security_acl'
+                        id: '1a5b401409c4458ca53fa6a20a462d2e'
+                    }
+                    execute_workspace_route_tocc_backoffice_ops_now_alias: {
+                        table: 'sys_security_acl'
+                        id: '2ab3eb4df06c4508bac60829ddd910aa'
+                    }
+                    execute_workspace_route_tocc_backoffice_ops_slash: {
+                        table: 'sys_security_acl'
+                        id: 'c6a90d30750a44f9a27f0090cbe20f73'
+                    }
+                    execute_workspace_route_tocc_backoffice_ops_x_scope: {
+                        table: 'sys_security_acl'
+                        id: 'a985f868cebf4a6bb8281b116bb26588'
+                    }
                     execute_x_783010_tocc_a1_portal_api_service: {
                         table: 'sys_security_acl'
                         id: '7e1c7e8986ab4e3592a5073bcfcd6bfa'
@@ -703,6 +719,10 @@ declare global {
                         id: 'dbb28b65ec394d01b3f55e8ff6b02b86'
                         deleted: true
                     }
+                    read_workspace_page_tocc_backoffice_ops: {
+                        table: 'sys_security_acl'
+                        id: '30507b2b5c87423fb76e46824c2106a8'
+                    }
                     read_workspace_route_tocc_backoffice_ops: {
                         table: 'sys_security_acl'
                         id: '6d8b010452754b21aa40f53fada19067'
@@ -710,6 +730,14 @@ declare global {
                     read_workspace_route_tocc_backoffice_ops_now_alias: {
                         table: 'sys_security_acl'
                         id: '19b80d44f63e4911bb8e85550b9dccc3'
+                    }
+                    read_workspace_route_tocc_backoffice_ops_slash: {
+                        table: 'sys_security_acl'
+                        id: 'f8784dc361db48deac57c7ca1cde5044'
+                    }
+                    read_workspace_route_tocc_backoffice_ops_x_scope: {
+                        table: 'sys_security_acl'
+                        id: 'e83cf042aef04945be2fd66e9f20a2bf'
                     }
                     read_x_783010_tocc_a1_attendance: {
                         table: 'sys_security_acl'
@@ -3489,6 +3517,14 @@ declare global {
                 composite: [
                     {
                         table: 'sys_security_acl_role'
+                        id: '00d5cbb67a23404ba94ce60544dc2207'
+                        key: {
+                            sys_security_acl: '1a5b401409c4458ca53fa6a20a462d2e'
+                            sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
                         id: '012c08f402794619904e4bd6e32e237a'
                         deleted: true
                         key: {
@@ -4116,6 +4152,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: '0ab47fefbe4d4434bd130dc3e7ee96fd'
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: '14d3568a6b3048d1aa1fd4a8a7f22a94'
+                        }
+                    },
+                    {
                         table: 'sys_db_object'
                         id: '0ab93e99e7c64a77aa4f081a11b8c2dc'
                         key: {
@@ -4431,6 +4475,14 @@ declare global {
                     },
                     {
                         table: 'sys_security_acl_role'
+                        id: '0ea5873ca45a4968bdc9047469f646c9'
+                        key: {
+                            sys_security_acl: 'e83cf042aef04945be2fd66e9f20a2bf'
+                            sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
                         id: '0eeee95b295c4dd9bf3cd71c49e41c27'
                         deleted: true
                         key: {
@@ -4629,6 +4681,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: '13b5b6d3eb0a4a6c9e49042d22d518ac'
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '8497755634fe46a791dcb0667b0eec8f'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '1494870d8043479b941c4043fb31f115'
                         key: {
@@ -4797,6 +4857,14 @@ declare global {
                         key: {
                             document_key: 'e9573d064f624dc5bc26a6a689644108'
                             variable: '42f2564b73031300440211d8faf6a777'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '19e3b8a37db84510b47fa8ec8a8ea476'
+                        key: {
+                            sys_security_acl: 'c6a90d30750a44f9a27f0090cbe20f73'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -4971,6 +5039,15 @@ declare global {
                         key: {
                             sys_security_acl: 'bf952ab97f494d79b3403d199626183c'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: '1e4c973bc9f940b39d3651ce91acbbde'
+                        deleted: true
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: '6cdbac1e278f4cf8a0a2106c9dace73e'
                         }
                     },
                     {
@@ -5633,6 +5710,19 @@ declare global {
                         key: {
                             sys_security_acl: '8ea9b00967ac402e87e93e5845f45b48'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '2bb114e9f8c040ffa8545da6374528dc'
+                        key: {
+                            sys_security_acl: '30507b2b5c87423fb76e46824c2106a8'
+                            sys_user_role: {
+                                id: '7976d53dc75c4ae9bfc4f6f2edeb358b'
+                                key: {
+                                    name: 'snc_internal'
+                                }
+                            }
                         }
                     },
                     {
@@ -6454,6 +6544,15 @@ declare global {
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: '08dad23ce2bb445f97ad77ad530a6924'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: '3be5a074a0bc48f99184adbf8e771f50'
+                        deleted: true
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: 'c66ca62b669743999702515c26da3e83'
                         }
                     },
                     {
@@ -7863,6 +7962,19 @@ declare global {
                     },
                     {
                         table: 'sys_security_acl_role'
+                        id: '51e57a641abc44bca46159bb390cc945'
+                        key: {
+                            sys_security_acl: 'a985f868cebf4a6bb8281b116bb26588'
+                            sys_user_role: {
+                                id: '808051adfe4d4086b13059c008fc8560'
+                                key: {
+                                    name: 'snc_internal'
+                                }
+                            }
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
                         id: '52eadbd5416349e1831032477a0943a6'
                         deleted: true
                         key: {
@@ -8062,6 +8174,19 @@ declare global {
                         key: {
                             sys_security_acl: 'f042f8a0f0654bbebe7ce23b873cd3ec'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '581fb9d21b8b407a9425da85843d7e94'
+                        key: {
+                            sys_security_acl: '1a5b401409c4458ca53fa6a20a462d2e'
+                            sys_user_role: {
+                                id: '0d617eb7b7cc459097c932eb630f04f5'
+                                key: {
+                                    name: 'admin'
+                                }
+                            }
                         }
                     },
                     {
@@ -9216,6 +9341,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '6c81762b64a64521aad193afcdaf34d8'
+                        key: {
+                            sys_security_acl: 'c6a90d30750a44f9a27f0090cbe20f73'
+                            sys_user_role: {
+                                id: '2577a92d264948bcb6594701037c2011'
+                                key: {
+                                    name: 'snc_internal'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '6c98c4b9b1ca4ddda73695d49cbf35fb'
                         key: {
@@ -9453,6 +9591,15 @@ declare global {
                                     name: 'admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: '721e31b394464aa6ac72bd8513ec49e0'
+                        deleted: true
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: 'e760e16013b14127b6f3fcd916197a7e'
                         }
                     },
                     {
@@ -10702,11 +10849,37 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '8c7b4bf4e6f44bc69ba28fb5a15e3cb4'
+                        key: {
+                            sys_security_acl: '2ab3eb4df06c4508bac60829ddd910aa'
+                            sys_user_role: {
+                                id: '552a99d04e734a0ab43ac6b821395ff7'
+                                key: {
+                                    name: 'snc_internal'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_element_mapping'
                         id: '8c90cfdb3b1e40b48b968a3179deb468'
                         key: {
                             field: 'field_values'
                             id: '4d1d816afefa46eeae55374e489f4381'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '8cc2433644ad4729aa42ac42cf2ec932'
+                        key: {
+                            sys_security_acl: '2ab3eb4df06c4508bac60829ddd910aa'
+                            sys_user_role: {
+                                id: '32286e69ea8d4ddabf34e460525eece6'
+                                key: {
+                                    name: 'admin'
+                                }
+                            }
                         }
                     },
                     {
@@ -10755,6 +10928,24 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_course'
                             element: 'status'
+                        }
+                    },
+                    {
+                        table: 'sys_user_role_contains'
+                        id: '8db278378a554120a05f556d11fed58e'
+                        key: {
+                            role: {
+                                id: 'caf9071c38484fc6a26a7b41a68fbfb3'
+                                key: {
+                                    name: 'x_783010_tocc_a1.admin'
+                                }
+                            }
+                            contains: {
+                                id: 'e6267065b8654e7b8491ffd4dc1d9f41'
+                                key: {
+                                    name: 'workspace_user'
+                                }
+                            }
                         }
                     },
                     {
@@ -11821,6 +12012,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'a4b6314e5f26444da28afeeeb7c500e7'
+                        key: {
+                            sys_security_acl: 'f8784dc361db48deac57c7ca1cde5044'
+                            sys_user_role: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sc_cat_item_catalog'
                         id: 'a4b6c1835789460786e0a219acc698c8'
                         deleted: true
@@ -11860,6 +12059,14 @@ declare global {
                         id: 'a5165a56ad0b4fdf97a985dc33c5845d'
                         key: {
                             sys_security_acl: 'b65d1102a55b43f28aab0504a64fa57a'
+                            sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'a539450d747b47c686efefd421dc4a83'
+                        key: {
+                            sys_security_acl: '30507b2b5c87423fb76e46824c2106a8'
                             sys_user_role: 'NULL'
                         }
                     },
@@ -12081,6 +12288,14 @@ declare global {
                         key: {
                             field: 'script'
                             id: '7c18f99e7cd44b609d884f8183edaf2b'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'aa5309a44425426ab5c96bc1c06141dd'
+                        key: {
+                            sys_security_acl: '2ab3eb4df06c4508bac60829ddd910aa'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -13134,6 +13349,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: 'ba81fa19750d4ab7b2ef7600a2f2a81e'
+                        deleted: true
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: 'fb7b4285ce2b4d6a989c159832fda3b1'
+                        }
+                    },
+                    {
                         table: 'sys_ui_action_role'
                         id: 'bae5eeffcdc249dd9d2c5ad00322b1c6'
                         key: {
@@ -13570,6 +13794,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'c36c733c7ffb44b6a94fa81911b78de6'
+                        key: {
+                            sys_security_acl: '1a5b401409c4458ca53fa6a20a462d2e'
+                            sys_user_role: {
+                                id: '1a0b1fb09c894f31a7ba69231a616c17'
+                                key: {
+                                    name: 'snc_internal'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_ui_action_role'
                         id: 'c3981a232b9a4f1fbe01bc382be1d7c5'
                         key: {
@@ -13681,6 +13918,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'c63e3f84b8364522996f26964ae16fd8'
+                        deleted: true
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: '2761dbbb4ba24592860b36bdc80092f6'
@@ -13711,6 +13949,19 @@ declare global {
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: '74aaa224249c48afbf64de24696f26b8'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'c71e76e63cf4455aaa15335b10e37bf6'
+                        key: {
+                            sys_security_acl: '30507b2b5c87423fb76e46824c2106a8'
+                            sys_user_role: {
+                                id: '98740c0db21244e0ab24324b12661e39'
+                                key: {
+                                    name: 'admin'
+                                }
+                            }
                         }
                     },
                     {
@@ -14040,6 +14291,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'cc14a80a9d414e3ea054033e2d159acb'
+                        deleted: true
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: 'fae4f0c3c02e4b09a049b2b525d6ca89'
@@ -14194,6 +14446,14 @@ declare global {
                                     name: 'snc_internal'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'cf43756367f64a2db7cb086d493618a2'
+                        key: {
+                            sys_security_acl: 'a985f868cebf4a6bb8281b116bb26588'
+                            sys_user_role: 'NULL'
                         }
                     },
                     {
@@ -14698,6 +14958,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'd8c949d3d1d64758a769f72996d404b1'
+                        key: {
+                            sys_security_acl: 'e83cf042aef04945be2fd66e9f20a2bf'
+                            sys_user_role: {
+                                id: '7ab084cc77974917af9be3351167fc70'
+                                key: {
+                                    name: 'snc_internal'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_ui_view'
                         id: 'd8ef3b3f21794a6397c1e9061643920b'
                         key: {
@@ -14967,6 +15240,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'ddf5c3ada2a34ab1abb9580df818de8b'
+                        key: {
+                            sys_security_acl: 'f8784dc361db48deac57c7ca1cde5044'
+                            sys_user_role: {
+                                id: '6bb461d6c0be47f2bad9d5cd2ef33ed3'
+                                key: {
+                                    name: 'snc_internal'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: 'de601688de8e4240b455c1a2d1e35d10'
                         key: {
@@ -15190,6 +15476,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'e2396ed6d54c4673989dc51e115f5348'
+                        key: {
+                            sys_security_acl: 'f8784dc361db48deac57c7ca1cde5044'
+                            sys_user_role: {
+                                id: '691f3a6958a54702b4836176e8057b6c'
+                                key: {
+                                    name: 'admin'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'e2b9de30066141b6bea21bf014019fd1'
                         deleted: true
@@ -15231,6 +15530,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'e3c6045c6a044de79c358a30b0704d14'
+                        key: {
+                            sys_security_acl: 'a985f868cebf4a6bb8281b116bb26588'
+                            sys_user_role: {
+                                id: '9996bc80ea9148bfbfc8690353f4fef1'
+                                key: {
+                                    name: 'admin'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: 'e3fdd17a32d24a598e941af0c1f0a8b8'
                         key: {
@@ -15245,6 +15557,19 @@ declare global {
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: '61a472d1bcd646d78cc8626ab491ab70'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'e4490194799a462aaa3e070aa9ef6957'
+                        key: {
+                            sys_security_acl: 'c6a90d30750a44f9a27f0090cbe20f73'
+                            sys_user_role: {
+                                id: 'a74db37490a34c589db81c95397c1008'
+                                key: {
+                                    name: 'admin'
+                                }
+                            }
                         }
                     },
                     {
@@ -15420,6 +15745,19 @@ declare global {
                         key: {
                             sys_security_acl: 'c5662c9ff9f74550ad985acce1162cf7'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'e6c7c4700af34d168d7155f7522f9e96'
+                        key: {
+                            sys_security_acl: 'e83cf042aef04945be2fd66e9f20a2bf'
+                            sys_user_role: {
+                                id: 'b7dcdb1a4f9a459796a4d78c83c9631d'
+                                key: {
+                                    name: 'admin'
+                                }
+                            }
                         }
                     },
                     {
@@ -15791,6 +16129,24 @@ declare global {
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: 'c26126bc13d4482fa6426a3c365c8488'
+                        }
+                    },
+                    {
+                        table: 'sys_user_role_contains'
+                        id: 'ed930ee0a7e84e2c92f06f2c6522b451'
+                        key: {
+                            role: {
+                                id: '75536d064a9f43848bef7feba7c07011'
+                                key: {
+                                    name: 'x_783010_tocc_a1.backoffice'
+                                }
+                            }
+                            contains: {
+                                id: '4552308383bb447481aafac7ae69428c'
+                                key: {
+                                    name: 'workspace_user'
+                                }
+                            }
                         }
                     },
                     {
@@ -16703,6 +17059,24 @@ declare global {
                                 id: 'c0a2602722a245bea7cee29bece8bdef'
                                 key: {
                                     name: 'snc_internal'
+                                }
+                            }
+                        }
+                    },
+                    {
+                        table: 'sys_user_role_contains'
+                        id: 'ffbaf04611bc4288a9593eb5d72e60cf'
+                        key: {
+                            role: {
+                                id: '9bf082f810f54fa5a1b3c29e006fd4b1'
+                                key: {
+                                    name: 'x_783010_tocc_a1.manager'
+                                }
+                            }
+                            contains: {
+                                id: '89850502bcdd4e25854d8b0c501f1ed8'
+                                key: {
+                                    name: 'workspace_user'
                                 }
                             }
                         }

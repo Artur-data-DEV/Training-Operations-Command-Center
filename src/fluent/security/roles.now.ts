@@ -13,18 +13,18 @@ export const toccInstructorRole = Role({
 export const toccBackofficeRole = Role({
     name: 'x_783010_tocc_a1.backoffice',
     description: 'Operations and approvals access',
-    containsRoles: ['canvas_user'],
+    containsRoles: ['canvas_user', 'workspace_user'],
 })
 
 export const toccManagerRole = Role({
     name: 'x_783010_tocc_a1.manager',
     description: 'Read-only KPI and reporting access',
-    containsRoles: ['canvas_user'],
+    containsRoles: ['canvas_user', 'workspace_user'],
 })
 
 export const toccAdminRole = Role({
     name: 'x_783010_tocc_a1.admin',
     description: 'Full administrative access',
-    containsRoles: ['canvas_user'],
+    containsRoles: ['canvas_user', 'workspace_user'],
     scopedAdmin: true,
 })
