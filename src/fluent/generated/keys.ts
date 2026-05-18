@@ -2708,6 +2708,10 @@ declare global {
                         id: '3c81fe7b11514eee9e4b35b3ef438508'
                         deleted: true
                     }
+                    x_783010_tocc_a1_record_producer_create_course: {
+                        table: 'sc_cat_item_producer'
+                        id: '87a653bbc0454299bb83894d8a227292'
+                    }
                     x_783010_tocc_a1_record_producer_create_room_reservation: {
                         table: 'sc_cat_item_producer'
                         id: 'c11dcd1c8a504596987690589d4b12b3'
@@ -4154,6 +4158,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: '0ab47fefbe4d4434bd130dc3e7ee96fd'
+                        deleted: true
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: '14d3568a6b3048d1aa1fd4a8a7f22a94'
@@ -4299,6 +4304,15 @@ declare global {
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: 'e17838e4a33e4b869027967feab44afc'
+                        }
+                    },
+                    {
+                        table: 'item_option_new'
+                        id: '0be95ca404254011b4df20d996322ccb'
+                        key: {
+                            cat_item: '87a653bbc0454299bb83894d8a227292'
+                            variable_set: 'NULL'
+                            name: 'course_description'
                         }
                     },
                     {
@@ -4683,6 +4697,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: '13b5b6d3eb0a4a6c9e49042d22d518ac'
+                        deleted: true
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: '8497755634fe46a791dcb0667b0eec8f'
@@ -4708,6 +4723,15 @@ declare global {
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: 'e6271d928d4b4a258bdc7dd8f06b3fe1'
+                        }
+                    },
+                    {
+                        table: 'item_option_new'
+                        id: '14c48b5ec9fd4150a28cdd55266526ed'
+                        key: {
+                            cat_item: '87a653bbc0454299bb83894d8a227292'
+                            variable_set: 'NULL'
+                            name: 'course_name'
                         }
                     },
                     {
@@ -4865,6 +4889,15 @@ declare global {
                         key: {
                             sys_security_acl: 'c6a90d30750a44f9a27f0090cbe20f73'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'item_option_new'
+                        id: '1a1f84e32f964e49a0072a24ead1b887'
+                        key: {
+                            cat_item: '87a653bbc0454299bb83894d8a227292'
+                            variable_set: 'NULL'
+                            name: 'course_delivery_category'
                         }
                     },
                     {
@@ -9764,6 +9797,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: '74cf534fd2c741abbe8983ecb778d621'
+                        deleted: true
+                        key: {
+                            sc_cat_item: '87a653bbc0454299bb83894d8a227292'
+                            sc_catalog: '420bfe04464b430fbd0cc972e7f21d83'
+                        }
+                    },
+                    {
                         table: 'par_dashboard_permission'
                         id: '7503e8c72c7145a4ad69ec7679792df5'
                         key: {
@@ -10870,6 +10912,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'item_option_new'
+                        id: '8cb8aba3925b45ca9a6a73d6b3dbf5ef'
+                        key: {
+                            cat_item: '87a653bbc0454299bb83894d8a227292'
+                            variable_set: 'NULL'
+                            name: 'course_duration_hours'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '8cc2433644ad4729aa42ac42cf2ec932'
                         key: {
@@ -11429,6 +11480,15 @@ declare global {
                                 }
                             }
                             field: 'start_datetime'
+                        }
+                    },
+                    {
+                        table: 'item_option_new'
+                        id: '98a5355141654a3ab266c0cb4ad255d2'
+                        key: {
+                            cat_item: '87a653bbc0454299bb83894d8a227292'
+                            variable_set: 'NULL'
+                            name: 'course_code'
                         }
                     },
                     {
@@ -12090,6 +12150,15 @@ declare global {
                                     name: 'snc_internal'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'a59d4c013f864e37ad3e355a6d2a8f24'
+                        deleted: true
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '2e88ff85698a44fcb0c7e0ffc72b3bb1'
                         }
                     },
                     {
@@ -13042,6 +13111,14 @@ declare global {
                                     name: 'admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'b413c346f07c4ed4bcc60c3928ade6f1'
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: '7e027e7681d64a468bcd2e168931a70f'
                         }
                     },
                     {
@@ -15413,6 +15490,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: 'e0f8d440f8a14b269305b6655d753146'
+                        key: {
+                            sc_cat_item: '87a653bbc0454299bb83894d8a227292'
+                            sc_catalog: '9142ec2f6732417bb60a31f57f8e756f'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: 'e10d9ac58455430fb911fa4c91e0accd'
                         deleted: true
@@ -16013,6 +16098,15 @@ declare global {
                                     name: 'snc_internal'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'ec5c0bc6d6ea4dc595d847cb22e95133'
+                        deleted: true
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: '1402cec6e8b14db092f10aa9274d2353'
                         }
                     },
                     {
@@ -16852,6 +16946,14 @@ declare global {
                                 }
                             }
                             field: 'checked_in_datetime'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'fbb3a030e64442258940dbaa5dae3126'
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '1a6ffae65cb64a50928de3d7c48621f1'
                         }
                     },
                     {

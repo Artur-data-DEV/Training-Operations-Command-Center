@@ -43,8 +43,8 @@ Acl({ $id: Now.ID['delete_x_783010_tocc_a1_room'], type: 'record', table: 'x_783
 // x_783010_tocc_a1_course
 Acl({ $id: Now.ID['read_x_783010_tocc_a1_course'], type: 'record', table: 'x_783010_tocc_a1_course', operation: 'read', roles: rolesReadAll, decisionType: 'allow', active: true })
 Acl({ $id: Now.ID['read_x_783010_tocc_a1_course_fields'], type: 'record', table: 'x_783010_tocc_a1_course.*', operation: 'read', roles: rolesReadAll, decisionType: 'allow', active: true })
-Acl({ $id: Now.ID['create_x_783010_tocc_a1_course'], type: 'record', table: 'x_783010_tocc_a1_course', operation: 'create', roles: rolesBackofficeAndAdmin, decisionType: 'allow', active: true })
-Acl({ $id: Now.ID['write_x_783010_tocc_a1_course'], type: 'record', table: 'x_783010_tocc_a1_course', operation: 'write', roles: rolesBackofficeAndAdmin, decisionType: 'allow', active: true })
+Acl({ $id: Now.ID['create_x_783010_tocc_a1_course'], type: 'record', table: 'x_783010_tocc_a1_course', operation: 'create', roles: rolesInstructorBackofficeAndAdmin, decisionType: 'allow', active: true })
+Acl({ $id: Now.ID['write_x_783010_tocc_a1_course'], type: 'record', table: 'x_783010_tocc_a1_course', operation: 'write', roles: rolesInstructorBackofficeAndAdmin, decisionType: 'allow', active: true })
 Acl({ $id: Now.ID['delete_x_783010_tocc_a1_course'], type: 'record', table: 'x_783010_tocc_a1_course', operation: 'delete', roles: rolesAdminOnly, decisionType: 'allow', active: true })
 
 // x_783010_tocc_a1_room_resource

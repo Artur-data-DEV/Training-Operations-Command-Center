@@ -274,12 +274,27 @@ export const requestTrainingEnrollmentProducer = CatalogItemRecordProducer({
     student.query();
 
     if (!student.next()) {
-        gs.addErrorMessage('Student profile not found for the logged-in user.');
-        current.setAbortAction(true);
-        return;
+        if (!(gs.hasRole('x_783010_tocc_a1.student') || gs.hasRole('admin') || gs.hasRole('x_783010_tocc_a1.admin'))) {
+            gs.addErrorMessage('Student profile not found for the logged-in user.');
+            current.setAbortAction(true);
+            return;
+        }
+
+        var newStudent = new GlideRecord('x_783010_tocc_a1_student');
+        newStudent.initialize();
+        newStudent.setValue('user', gs.getUserID());
+        newStudent.setValue('active', true);
+        var createdStudentId = newStudent.insert();
+        if (!createdStudentId) {
+            gs.addErrorMessage('Unable to create student profile for the logged-in user.');
+            current.setAbortAction(true);
+            return;
+        }
+        current.setValue('student', createdStudentId);
+    } else {
+        current.setValue('student', student.getUniqueValue());
     }
 
-    current.setValue('student', student.getUniqueValue());
     current.setValue('status', 'pending');
 
     if (gs.nil(current.getValue('short_description'))) {
@@ -287,6 +302,77 @@ export const requestTrainingEnrollmentProducer = CatalogItemRecordProducer({
             'short_description',
             'Enrollment request for ' + current.getDisplayValue('training_session')
         );
+    }
+})(producer, current);`,
+})
+
+export const createCourseProducer = CatalogItemRecordProducer({
+    $id: Now.ID['x_783010_tocc_a1_record_producer_create_course'],
+    name: 'Create Course',
+    table: 'x_783010_tocc_a1_course',
+    active: true,
+    state: 'published',
+    shortDescription: 'For instructors to create courses before reservation and session planning.',
+    meta: ['training', 'course', 'instructor'],
+    roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.admin'],
+    catalogs: [Now.ref('sc_catalog', { title: 'TOCC Self-Service Catalog' })],
+    variables: {
+        course_code: SingleLineTextVariable({
+            question: 'Course Code',
+            order: 100,
+            mandatory: true,
+            mapToField: true,
+            field: 'course_id',
+        }),
+        course_name: SingleLineTextVariable({
+            question: 'Course Name',
+            order: 200,
+            mandatory: true,
+            mapToField: true,
+            field: 'course_name',
+        }),
+        course_description: MultiLineTextVariable({
+            question: 'Course Description',
+            order: 300,
+            mandatory: true,
+            mapToField: true,
+            field: 'description',
+        }),
+        course_duration_hours: SingleLineTextVariable({
+            question: 'Duration (hours)',
+            order: 400,
+            mandatory: true,
+            mapToField: true,
+            field: 'duration_hours',
+        }),
+        course_delivery_category: SingleLineTextVariable({
+            question: 'Delivery Category (vilt or in_person)',
+            order: 500,
+            mandatory: true,
+            mapToField: true,
+            field: 'delivery_category',
+        }),
+    },
+    script: `(function execute(producer, current) {
+    var duration = parseInt(producer.course_duration_hours, 10);
+    if (isNaN(duration) || duration < 1) {
+        gs.addErrorMessage('Duration (hours) must be a positive number.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    var delivery = String(producer.course_delivery_category || '').trim().toLowerCase();
+    if (delivery !== 'vilt' && delivery !== 'in_person') {
+        gs.addErrorMessage('Delivery category must be either "vilt" or "in_person".');
+        current.setAbortAction(true);
+        return;
+    }
+
+    current.setValue('duration_hours', duration);
+    current.setValue('delivery_category', delivery);
+
+    if (gs.nil(current.getValue('status'))) {
+        current.setValue('status', 'draft');
     }
 })(producer, current);`,
 })

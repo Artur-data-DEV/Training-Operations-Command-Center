@@ -26,6 +26,19 @@
         'Request Training Enrollment',
         '?id=tocc_sessions'
     );
+    var createCourseLink = resolveProducerLink(
+        'Create Course',
+        '/x_783010_tocc_a1_course.do?sys_id=-1'
+    );
+
+    var isPlatformAdmin = gs.hasRole('admin');
+    var isAppAdmin = gs.hasRole('x_783010_tocc_a1.admin');
+    var isBackoffice = gs.hasRole('x_783010_tocc_a1.backoffice');
+    var isManager = gs.hasRole('x_783010_tocc_a1.manager');
+    var isInstructor = gs.hasRole('x_783010_tocc_a1.instructor');
+    var isStudent = gs.hasRole('x_783010_tocc_a1.student');
+    var isOpsPersona = isPlatformAdmin || isAppAdmin || isBackoffice || isManager;
+    var canManageInstruction = isInstructor || isBackoffice || isAppAdmin || isPlatformAdmin;
 
     data.links = {
         sessions: pageLink('tocc_sessions'),
@@ -33,6 +46,7 @@
         reservations: pageLink('tocc_my_reservations'),
         create_reservation: createReservationLink,
         request_enrollment: requestEnrollmentLink,
+        create_course: createCourseLink,
         help: pageLink('tocc_help'),
         sow_home: '/now/sow/home',
         workspace_home: '/x/783010/tocc-backoffice-ops/list',
@@ -47,23 +61,25 @@
         return gr.getRowCount();
     }
 
-    data.desktopStats = [
-        {
+    data.showOpsStats = isOpsPersona;
+    data.desktopStats = [];
+    if (data.showOpsStats) {
+        data.desktopStats.push({
             label: 'Pending Reservations',
             value: countRecords('x_783010_tocc_a1_room_reservation', 'status=submitted')
-        },
-        {
+        });
+        data.desktopStats.push({
             label: 'Sessions Today',
             value: countRecords(
                 'x_783010_tocc_a1_training_session',
                 'start_datetimeONToday@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()'
             )
-        },
-        {
+        });
+        data.desktopStats.push({
             label: 'Pending Enrollments',
             value: countRecords('x_783010_tocc_a1_student_enrollment', 'status=pending')
-        }
-    ];
+        });
+    }
 
     data.actions = [];
 
@@ -75,21 +91,43 @@
         kind: 'primary'
     });
 
-    data.actions.push({
-        title: 'Schedule Room',
-        desc: 'Reserve salas e laboratorios para novas turmas.',
-        icon: 'fa-calendar-plus-o',
-        href: data.links.create_reservation,
-        kind: 'secondary'
-    });
+    if (canManageInstruction) {
+        data.actions.push({
+            title: 'Schedule Room',
+            desc: 'Reserve salas e laboratorios para novas turmas.',
+            icon: 'fa-calendar-plus-o',
+            href: data.links.create_reservation,
+            kind: 'secondary'
+        });
 
-    data.actions.push({
-        title: 'Manage Schedule',
-        desc: 'Acompanhe o status de suas solicitacoes de reserva.',
-        icon: 'fa-list-alt',
-        href: data.links.reservations,
-        kind: 'secondary'
-    });
+        data.actions.push({
+            title: 'Manage Schedule',
+            desc: 'Acompanhe o status de suas solicitacoes de reserva.',
+            icon: 'fa-list-alt',
+            href: data.links.reservations,
+            kind: 'secondary'
+        });
+    }
+
+    if (isStudent) {
+        data.actions.push({
+            title: 'My Enrollments',
+            desc: 'Acompanhe inscricoes, confirmacoes e cancelamentos.',
+            icon: 'fa-check-square-o',
+            href: data.links.enrollments,
+            kind: 'secondary'
+        });
+    }
+
+    if (canManageInstruction) {
+        data.actions.push({
+            title: 'Create Course',
+            desc: 'Cadastre um novo curso para futuras sessoes.',
+            icon: 'fa-book',
+            href: data.links.create_course,
+            kind: 'secondary'
+        });
+    }
 
     data.actions.push({
         title: 'Support & Docs',
@@ -99,12 +137,7 @@
         kind: 'secondary'
     });
 
-    if (
-        gs.hasRole('admin') ||
-        gs.hasRole('x_783010_tocc_a1.admin') ||
-        gs.hasRole('x_783010_tocc_a1.backoffice') ||
-        gs.hasRole('x_783010_tocc_a1.manager')
-    ) {
+    if (isOpsPersona) {
         data.actions.push({
             title: 'Backoffice Workspace',
             desc: 'Abra a experiencia operacional no UI Builder.',

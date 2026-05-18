@@ -415,7 +415,21 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         student.addQuery('active', true);
         student.setLimit(1);
         student.query();
-        return student.next() ? student.getUniqueValue() : null;
+        if (student.next()) {
+            return student.getUniqueValue();
+        }
+
+        // Auto-provision student profile for student persona users to avoid enrollment dead-end.
+        if (!(gs.hasRole('x_783010_tocc_a1.student') || gs.hasRole('admin') || gs.hasRole('x_783010_tocc_a1.admin'))) {
+            return null;
+        }
+
+        var newStudent = new GlideRecord('x_783010_tocc_a1_student');
+        newStudent.initialize();
+        newStudent.setValue('user', gs.getUserID());
+        newStudent.setValue('active', true);
+        var studentId = newStudent.insert();
+        return studentId || null;
     },
 
     _getStudentEnrollmentForSession: function(sessionId) {

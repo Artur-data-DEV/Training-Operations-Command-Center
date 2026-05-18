@@ -7,7 +7,7 @@
         <p class="tocc-hero-subtitle">Gestao centralizada de reservas, sessoes de treinamento e indicadores operacionais em tempo real.</p>
       </div>
 
-      <div class="tocc-hero-stats">
+      <div class="tocc-hero-stats" ng-if="c.data.showOpsStats">
         <div class="tocc-stat-card" ng-repeat="stat in c.data.desktopStats track by $index">
           <div class="tocc-stat-value">{{stat.value}}</div>
           <div class="tocc-stat-label">{{stat.label}}</div>

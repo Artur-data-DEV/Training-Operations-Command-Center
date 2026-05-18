@@ -253,9 +253,24 @@ BusinessRule({
         current.setValue('student', grStudent.getUniqueValue());
         return;
     }
+    if (!(gs.hasRole('x_783010_tocc_a1.student') || gs.hasRole('admin') || gs.hasRole('x_783010_tocc_a1.admin'))) {
+        gs.addErrorMessage('No active student profile was found for the logged-in user.');
+        current.setAbortAction(true);
+        return;
+    }
 
-    gs.addErrorMessage('No active student profile was found for the logged-in user.');
-    current.setAbortAction(true);
+    var newStudent = new GlideRecord('x_783010_tocc_a1_student');
+    newStudent.initialize();
+    newStudent.setValue('user', gs.getUserID());
+    newStudent.setValue('active', true);
+    var studentId = newStudent.insert();
+    if (!studentId) {
+        gs.addErrorMessage('Unable to create a student profile for the logged-in user.');
+        current.setAbortAction(true);
+        return;
+    }
+
+    current.setValue('student', studentId);
 })(current, previous);`,
 })
 
