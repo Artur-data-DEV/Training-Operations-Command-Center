@@ -68,11 +68,15 @@
             <td class="text-right">
               <div class="tocc-row-actions">
                 <button class="btn tocc-btn-primary btn-sm"
-                        ng-if="session.status !== 'full' && c.data.persona.is_student"
+                        ng-if="session.status !== 'full' && c.data.persona.is_student && !session.my_enrollment_status"
                         ng-disabled="c.enrollingSession === session.sys_id"
                         ng-click="c.enroll(session.sys_id)">
                   {{c.enrollingSession === session.sys_id ? 'Submitting...' : 'Enroll Now'}}
                 </button>
+                <span class="tocc-status-pill tocc-status-open"
+                      ng-if="c.data.persona.is_student && session.my_enrollment_status">
+                  {{session.my_enrollment_status}}
+                </span>
                 <a class="btn tocc-btn-ghost btn-sm" href="?id=form&table=x_783010_tocc_a1_training_session&sys_id={{session.sys_id}}">
                   Details
                 </a>

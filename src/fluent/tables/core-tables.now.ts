@@ -206,6 +206,12 @@ export const x_783010_tocc_a1_student_enrollment = Table({
             referenceTable: 'x_783010_tocc_a1_training_session',
             mandatory: true,
         }),
+        tocc_student: ReferenceColumn({ label: 'Student', referenceTable: 'x_783010_tocc_a1_student', mandatory: true }),
+        tocc_training_session: ReferenceColumn({
+            label: 'Training Session',
+            referenceTable: 'x_783010_tocc_a1_training_session',
+            mandatory: true,
+        }),
         status: StringColumn({
             label: 'Status',
             mandatory: true,

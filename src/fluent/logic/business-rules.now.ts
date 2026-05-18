@@ -206,7 +206,7 @@ BusinessRule({
     active: true,
     order: 200,
     script: `(function executeRule(current, previous) {
-    var sessionId = current.getValue('training_session') || previous.getValue('training_session');
+    var sessionId = current.getValue('tocc_training_session') || previous.getValue('tocc_training_session');
     if (!sessionId) {
         return;
     }
@@ -265,7 +265,7 @@ BusinessRule({
     active: true,
     order: 50,
     script: `(function executeRule(current, previous) {
-    if (!gs.nil(current.getValue('student'))) {
+    if (!gs.nil(current.getValue('tocc_student'))) {
         return;
     }
 
@@ -276,7 +276,7 @@ BusinessRule({
     grStudent.query();
 
     if (grStudent.next()) {
-        current.setValue('student', grStudent.getUniqueValue());
+        current.setValue('tocc_student', grStudent.getUniqueValue());
         return;
     }
     if (!(gs.hasRole('x_783010_tocc_a1.student') || gs.hasRole('admin') || gs.hasRole('x_783010_tocc_a1.admin'))) {
@@ -296,7 +296,7 @@ BusinessRule({
         return;
     }
 
-    current.setValue('student', studentId);
+    current.setValue('tocc_student', studentId);
 })(current, previous);`,
 })
 
@@ -349,7 +349,7 @@ BusinessRule({
         return;
     }
 
-    var sessionId = enrollment.getValue('training_session');
+    var sessionId = enrollment.getValue('tocc_training_session');
     if (!sessionId) {
         gs.addErrorMessage('Training session was not found for this enrollment.');
         current.setAbortAction(true);
@@ -390,7 +390,7 @@ BusinessRule({
         if (!gs.nil(enrollmentId)) {
             var enrollmentForSession = new GlideRecord('x_783010_tocc_a1_student_enrollment');
             if (enrollmentForSession.get(enrollmentId)) {
-                sessionId = enrollmentForSession.getValue('training_session');
+                sessionId = enrollmentForSession.getValue('tocc_training_session');
                 if (!gs.nil(sessionId)) {
                     current.setValue('training_session', sessionId);
                 }

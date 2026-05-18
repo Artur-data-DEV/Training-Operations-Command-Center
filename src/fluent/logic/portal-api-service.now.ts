@@ -60,6 +60,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
                 continue;
             }
 
+            var myEnrollment = this._getStudentEnrollmentForSession(gr.getUniqueValue());
             sessions.push({
                 sys_id:               gr.getUniqueValue(),
                 number:               gr.getValue('number'),
@@ -81,6 +82,8 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
                 confirmation_deadline:gr.getValue('confirmation_deadline'),
                 data_quality_status:  'ready',
                 data_quality_issues:  [],
+                my_enrollment_id:     myEnrollment ? myEnrollment.sys_id : '',
+                my_enrollment_status: myEnrollment ? myEnrollment.status : '',
             });
         }
 
@@ -148,9 +151,9 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
 
         var enrollments = [];
         var gr = new GlideRecord('x_783010_tocc_a1_student_enrollment');
-        gr.addQuery('student', studentId);
+        gr.addQuery('tocc_student', studentId);
         if (statusFilter) { gr.addQuery('status', statusFilter); }
-        gr.orderBy('training_session.start_datetime');
+        gr.orderBy('tocc_training_session.start_datetime');
         gr.query();
 
         while (gr.next()) {
@@ -160,13 +163,13 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
                 status:           gr.getValue('status'),
                 status_display:   gr.getDisplayValue('status'),
                 confirmed:        gr.getValue('confirmed'),
-                training_session: gr.getValue('training_session'),
-                session_title:    gr.getDisplayValue('training_session'),
-                session_number:   gr.getDisplayValue('training_session.number'),
-                start_datetime:   gr.getValue('training_session.start_datetime'),
-                start_display:    gr.getDisplayValue('training_session.start_datetime'),
-                room_name:        gr.getDisplayValue('training_session.room'),
-                instructor_name:  gr.getDisplayValue('training_session.tocc_instructor'),
+                training_session: gr.getValue('tocc_training_session'),
+                session_title:    gr.getDisplayValue('tocc_training_session'),
+                session_number:   gr.getDisplayValue('tocc_training_session.number'),
+                start_datetime:   gr.getValue('tocc_training_session.start_datetime'),
+                start_display:    gr.getDisplayValue('tocc_training_session.start_datetime'),
+                room_name:        gr.getDisplayValue('tocc_training_session.room'),
+                instructor_name:  gr.getDisplayValue('tocc_training_session.tocc_instructor'),
             });
         }
 
@@ -360,7 +363,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
 
         // Ownership check — only the student themselves can confirm via this method.
         var studentId = this._getLoggedStudentId();
-        if (gr.getValue('student') !== studentId) {
+        if (gr.getValue('tocc_student') !== studentId) {
             return JSON.stringify({ success: false, message: 'You can only confirm your own enrollment.' });
         }
 
@@ -374,7 +377,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
 
         // Check confirmation deadline.
         var session = new GlideRecordSecure('x_783010_tocc_a1_training_session');
-        if (session.get(gr.getValue('training_session'))) {
+        if (session.get(gr.getValue('tocc_training_session'))) {
             var deadline = session.getValue('confirmation_deadline');
             if (deadline) {
                 var now = new GlideDateTime();
@@ -417,7 +420,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             return JSON.stringify({ success: false, message: 'Enrollment not found.' });
         }
 
-        if (gr.getValue('student') !== studentId) {
+        if (gr.getValue('tocc_student') !== studentId) {
             return JSON.stringify({ success: false, message: 'You can only cancel your own enrollment.' });
         }
 
@@ -434,7 +437,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         }
 
         if (status === 'approved') {
-            var lateWindow = this._isLateCancellationWindow(gr.getValue('training_session'));
+            var lateWindow = this._isLateCancellationWindow(gr.getValue('tocc_training_session'));
             if (lateWindow.blocked) {
                 return JSON.stringify({
                     success: false,
@@ -450,7 +453,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         gr.update();
 
         var enrollmentService = new EnrollmentService();
-        enrollmentService.syncSessionAfterEnrollmentChange(gr.getValue('training_session'));
+        enrollmentService.syncSessionAfterEnrollmentChange(gr.getValue('tocc_training_session'));
 
         var helper = new NotificationHelper();
         helper.sendEnrollmentDecision(enrollmentId);
@@ -524,11 +527,11 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             unconfirmed_approved_enrollments: this._countRecords('x_783010_tocc_a1_student_enrollment', function(gr) {
                 gr.addQuery('status', 'approved');
                 gr.addQuery('confirmed', false);
-                gr.addQuery('training_session.start_datetime', '>=', todayStart);
+                gr.addQuery('tocc_training_session.start_datetime', '>=', todayStart);
             }),
             in_progress_attendance_pending: this._countRecords('x_783010_tocc_a1_attendance', function(gr) {
                 gr.addQuery('attendance_status', 'pending');
-                gr.addQuery('training_session.status', 'in_progress');
+                gr.addQuery('tocc_training_session.status', 'in_progress');
             }),
             resources_missing_ci: this._countRecords('x_783010_tocc_a1_room_resource', function(gr) {
                 gr.addQuery('active', true);
@@ -588,8 +591,8 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         if (!studentId) { return null; }
 
         var gr = new GlideRecord('x_783010_tocc_a1_student_enrollment');
-        gr.addQuery('student', studentId);
-        gr.addQuery('training_session', sessionId);
+        gr.addQuery('tocc_student', studentId);
+        gr.addQuery('tocc_training_session', sessionId);
         gr.setLimit(1);
         gr.query();
 

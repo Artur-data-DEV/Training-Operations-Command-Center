@@ -33,6 +33,7 @@ RestApi({
         resources: [],
         reservations: [],
         approved_session: null,
+        student_enrollment: null,
         field_validity: {},
         queue_count: 0,
         dirty_queue_count: 0,
@@ -252,12 +253,15 @@ RestApi({
     function captureFieldValidity() {
         var reservation = new GlideRecord('x_783010_tocc_a1_room_reservation');
         var session = new GlideRecord('x_783010_tocc_a1_training_session');
-        var fields = ['course', 'room', 'instructor', 'training_session', 'reservation', 'tocc_course', 'tocc_room', 'tocc_instructor', 'tocc_reservation', 'start_datetime', 'end_datetime', 'expected_participants'];
+        var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+        var fields = ['course', 'room', 'instructor', 'training_session', 'reservation', 'student', 'tocc_course', 'tocc_room', 'tocc_instructor', 'tocc_reservation', 'tocc_student', 'tocc_training_session', 'start_datetime', 'end_datetime', 'expected_participants'];
         summary.field_validity.reservation = {};
         summary.field_validity.session = {};
+        summary.field_validity.enrollment = {};
         for (var f = 0; f < fields.length; f++) {
             summary.field_validity.reservation[fields[f]] = reservation.isValidField(fields[f]);
             summary.field_validity.session[fields[f]] = session.isValidField(fields[f]);
+            summary.field_validity.enrollment[fields[f]] = enrollment.isValidField(fields[f]);
         }
     }
 
@@ -364,8 +368,31 @@ RestApi({
                     instructor: String(session.getDisplayValue('tocc_instructor') || ''),
                     start: String(session.getDisplayValue('start_datetime') || ''),
                     seats: parseInt(session.getValue('total_seats'), 10) || 0,
-                    reservation: String(session.getDisplayValue('reservation') || '')
+                    reservation: String(session.getDisplayValue('tocc_reservation') || '')
                 };
+            }
+
+            var studentUser = findOne('sys_user', 'user_name', 'tocc.student');
+            var studentProfile = new GlideRecord('x_783010_tocc_a1_student');
+            studentProfile.addQuery('user', studentUser);
+            studentProfile.setLimit(1);
+            studentProfile.query();
+            if (!studentProfile.next()) {
+                studentProfile.initialize();
+                studentProfile.setValue('user', studentUser);
+                studentProfile.setValue('active', true);
+                var studentProfileId = studentProfile.insert();
+                if (!studentProfileId) {
+                    throw new Error('Unable to create student profile for enrollment validation.');
+                }
+                studentProfile.get(studentProfileId);
+            }
+
+            var enrollmentResult = new EnrollmentService().enroll(studentProfile.getUniqueValue(), sessionId);
+            summary.student_enrollment = enrollmentResult;
+            if (!enrollmentResult || !enrollmentResult.success) {
+                summary.success = false;
+                summary.notes.push('Student enrollment validation failed: ' + ((enrollmentResult && enrollmentResult.message) || 'unknown error'));
             }
         }
 

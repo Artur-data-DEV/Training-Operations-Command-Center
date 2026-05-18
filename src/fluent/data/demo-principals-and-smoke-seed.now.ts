@@ -739,7 +739,9 @@ Record({
     data: {
         short_description: 'TOCC Demo Enrollment (Approved - Open Session)',
         student: demoStudentProfileId,
+        tocc_student: demoStudentProfileId,
         training_session: demoSessionId,
+        tocc_training_session: demoSessionId,
         status: 'approved',
         confirmed: false,
         active: true,
@@ -752,7 +754,9 @@ Record({
     data: {
         short_description: 'TOCC Demo Enrollment (Pending Review)',
         student: demoStudentProfile2Id,
+        tocc_student: demoStudentProfile2Id,
         training_session: demoSessionId,
+        tocc_training_session: demoSessionId,
         status: 'pending',
         confirmed: false,
         active: true,
@@ -765,7 +769,9 @@ Record({
     data: {
         short_description: 'TOCC Demo Enrollment (Waitlisted - Full Session)',
         student: demoStudentProfile2Id,
+        tocc_student: demoStudentProfile2Id,
         training_session: demoSession2Id,
+        tocc_training_session: demoSession2Id,
         status: 'waitlisted',
         confirmed: false,
         active: true,
@@ -778,7 +784,9 @@ Record({
     data: {
         short_description: 'TOCC Demo Enrollment (Approved - In Progress)',
         student: demoStudentProfile3Id,
+        tocc_student: demoStudentProfile3Id,
         training_session: demoSession3Id,
+        tocc_training_session: demoSession3Id,
         status: 'approved',
         confirmed: true,
         check_in_datetime: '2026-05-15 09:05:00',
@@ -792,7 +800,9 @@ Record({
     data: {
         short_description: 'TOCC Demo Enrollment (Cancelled)',
         student: demoStudentProfile3Id,
+        tocc_student: demoStudentProfile3Id,
         training_session: demoSessionId,
+        tocc_training_session: demoSessionId,
         status: 'cancelled',
         confirmed: false,
         active: true,
@@ -805,7 +815,9 @@ Record({
     data: {
         short_description: 'TOCC Demo Enrollment (Approved - Completed Session)',
         student: demoStudentProfileId,
+        tocc_student: demoStudentProfileId,
         training_session: demoSession4Id,
+        tocc_training_session: demoSession4Id,
         status: 'approved',
         confirmed: true,
         check_in_datetime: '2026-04-20 08:55:00',

@@ -25,15 +25,15 @@ EnrollmentService.prototype = {
 
         var enrollment = new GlideRecord(this.enrollmentTable);
         enrollment.initialize();
-        enrollment.setValue('student', studentId);
-        enrollment.setValue('training_session', sessionId);
+        enrollment.setValue('tocc_student', studentId);
+        enrollment.setValue('tocc_training_session', sessionId);
         enrollment.setValue('status', 'pending');
 
         var enrollmentId = enrollment.insert();
         if (!enrollmentId) {
             return {
                 success: false,
-                message: gs.getErrorMessage() || 'Enrollment could not be created.'
+                message: enrollment.getLastErrorMessage() || 'Enrollment could not be created.'
             };
         }
 
@@ -73,11 +73,11 @@ EnrollmentService.prototype = {
         if (!updatedId) {
             return {
                 success: false,
-                message: gs.getErrorMessage() || 'Enrollment could not be approved.'
+                message: enrollment.getLastErrorMessage() || 'Enrollment could not be approved.'
             };
         }
 
-        this.syncSessionAfterEnrollmentChange(enrollment.getValue('training_session'));
+        this.syncSessionAfterEnrollmentChange(enrollment.getValue('tocc_training_session'));
 
         return {
             success: true,
@@ -119,7 +119,7 @@ EnrollmentService.prototype = {
         }
 
         if (currentStatus == 'approved') {
-            var session = this._loadSession(enrollment.getValue('training_session'));
+            var session = this._loadSession(enrollment.getValue('tocc_training_session'));
             if (!session) {
                 return {
                     success: false,
@@ -149,11 +149,11 @@ EnrollmentService.prototype = {
         if (!cancelledId) {
             return {
                 success: false,
-                message: gs.getErrorMessage() || 'Enrollment could not be cancelled.'
+                message: enrollment.getLastErrorMessage() || 'Enrollment could not be cancelled.'
             };
         }
 
-        this.syncSessionAfterEnrollmentChange(enrollment.getValue('training_session'));
+        this.syncSessionAfterEnrollmentChange(enrollment.getValue('tocc_training_session'));
 
         return {
             success: true,
@@ -163,8 +163,8 @@ EnrollmentService.prototype = {
     },
 
     validateBeforeSave: function(current, previous) {
-        var sessionId = current.getValue('training_session');
-        var studentId = current.getValue('student');
+        var sessionId = current.getValue('tocc_training_session');
+        var studentId = current.getValue('tocc_student');
         var status = current.getValue('status') || 'pending';
         var operation = current.operation() + '';
         var previousStatus = previous ? previous.getValue('status') : '';
@@ -282,8 +282,8 @@ EnrollmentService.prototype = {
 
     _hasDuplicate: function(sessionId, studentId, currentEnrollmentId) {
         var duplicate = new GlideRecord(this.enrollmentTable);
-        duplicate.addQuery('training_session', sessionId);
-        duplicate.addQuery('student', studentId);
+        duplicate.addQuery('tocc_training_session', sessionId);
+        duplicate.addQuery('tocc_student', studentId);
         duplicate.addQuery('sys_id', '!=', currentEnrollmentId);
         duplicate.query();
         return duplicate.next();
@@ -300,7 +300,7 @@ EnrollmentService.prototype = {
     _getApprovedCount: function(sessionId, currentEnrollmentId, currentStatus) {
         var count = 0;
         var agg = new GlideAggregate(this.enrollmentTable);
-        agg.addQuery('training_session', sessionId);
+        agg.addQuery('tocc_training_session', sessionId);
         agg.addQuery('status', 'approved');
 
         if (currentEnrollmentId) {
@@ -327,7 +327,7 @@ EnrollmentService.prototype = {
 
         var promoted = 0;
         var waitlisted = new GlideRecord(this.enrollmentTable);
-        waitlisted.addQuery('training_session', sessionId);
+        waitlisted.addQuery('tocc_training_session', sessionId);
         waitlisted.addQuery('status', 'waitlisted');
         waitlisted.orderBy('sys_created_on');
         waitlisted.query();

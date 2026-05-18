@@ -233,7 +233,7 @@ UiAction({
 
     // Validate confirmation deadline.
     var session = new GlideRecord('x_783010_tocc_a1_training_session');
-    if (session.get(current.getValue('training_session'))) {
+    if (session.get(current.getValue('tocc_training_session'))) {
         var deadline = session.getValue('confirmation_deadline');
         if (deadline) {
             var now = new GlideDateTime();
@@ -347,7 +347,7 @@ UiAction({
 
     // Auto-generate attendance records for all approved enrollments.
     var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
-    enrollment.addQuery('training_session', current.getUniqueValue());
+    enrollment.addQuery('tocc_training_session', current.getUniqueValue());
     enrollment.addQuery('status', 'approved');
     enrollment.query();
 

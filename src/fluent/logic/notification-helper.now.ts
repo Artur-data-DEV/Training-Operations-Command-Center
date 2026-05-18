@@ -103,7 +103,7 @@ NotificationHelper.prototype = {
         }
 
         var enrollment = new GlideRecord(this.enrollmentTable);
-        enrollment.addQuery('training_session', sessionId);
+        enrollment.addQuery('tocc_training_session', sessionId);
         enrollment.addQuery('status', 'approved');
         enrollment.query();
 
@@ -125,7 +125,7 @@ NotificationHelper.prototype = {
         }
 
         var enrollment = new GlideRecord(this.enrollmentTable);
-        enrollment.addQuery('training_session', sessionId);
+        enrollment.addQuery('tocc_training_session', sessionId);
         enrollment.addQuery('status', 'approved');
         enrollment.addQuery('confirmed', false);
         enrollment.query();
@@ -148,7 +148,7 @@ NotificationHelper.prototype = {
         }
 
         var enrollment = new GlideRecord(this.enrollmentTable);
-        enrollment.addQuery('training_session', sessionId);
+        enrollment.addQuery('tocc_training_session', sessionId);
         enrollment.addQuery('status', 'approved');
         enrollment.query();
 
@@ -170,7 +170,7 @@ NotificationHelper.prototype = {
         }
 
         var enrollment = new GlideRecord(this.enrollmentTable);
-        enrollment.addQuery('training_session', sessionId);
+        enrollment.addQuery('tocc_training_session', sessionId);
         enrollment.addQuery('status', 'approved');
         enrollment.query();
 
