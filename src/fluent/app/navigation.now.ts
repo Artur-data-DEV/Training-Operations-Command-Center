@@ -84,6 +84,34 @@ Record({
 })
 
 Record({
+    $id: Now.ID['x_783010_tocc_a1_app_module_my_courses_portal'],
+    table: 'sys_app_module',
+    data: {
+        application: toccNavigationMenu,
+        title: 'My Courses',
+        link_type: 'DIRECT',
+        query: '/tocc?id=tocc_my_courses',
+        order: 250,
+        active: true,
+        roles: ['snc_internal', 'admin', 'x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
+    },
+})
+
+Record({
+    $id: Now.ID['x_783010_tocc_a1_app_module_classic_my_courses'],
+    table: 'sys_app_module',
+    data: {
+        application: toccNavigationMenu,
+        title: 'Course Catalog',
+        link_type: 'LIST',
+        name: 'x_783010_tocc_a1_course',
+        order: 275,
+        active: true,
+        roles: ['snc_internal', 'admin', 'x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
+    },
+})
+
+Record({
     $id: Now.ID['x_783010_tocc_a1_app_module_training_sessions'],
     table: 'sys_app_module',
     data: {

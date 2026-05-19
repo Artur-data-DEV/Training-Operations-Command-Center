@@ -1,0 +1,89 @@
+<div class="tocc-my-courses">
+  <div class="tocc-page-header">
+    <div>
+      <h2 class="tocc-page-title m-t-0 m-b-xs">My Courses</h2>
+      <p class="tocc-page-subtitle m-b-0">Courses you own and can use for reservation and session planning.</p>
+    </div>
+    <div class="tocc-page-header__actions">
+      <a class="tocc-btn-outline" href="{{c.data.links.home}}">Back to Home</a>
+      <a class="tocc-btn-primary" href="{{c.data.links.create_course}}">Create Course</a>
+    </div>
+  </div>
+
+  <div class="row tocc-summary-row">
+    <div class="col-xs-6 col-sm-3">
+      <div class="tocc-summary-card">
+        <div class="tocc-summary-card__label">Total</div>
+        <div class="tocc-summary-card__value">{{c.data.summary.total || 0}}</div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="tocc-summary-card">
+        <div class="tocc-summary-card__label">Active</div>
+        <div class="tocc-summary-card__value">{{c.data.summary.active || 0}}</div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="tocc-summary-card">
+        <div class="tocc-summary-card__label">Draft</div>
+        <div class="tocc-summary-card__value">{{c.data.summary.draft || 0}}</div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="tocc-summary-card">
+        <div class="tocc-summary-card__label">Inactive</div>
+        <div class="tocc-summary-card__value">{{c.data.summary.inactive || 0}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tocc-course-panel">
+    <div class="tocc-panel-header">
+      <strong>Course Ownership</strong>
+      <span class="tocc-count-badge">{{(c.data.courses || []).length}}</span>
+    </div>
+
+    <div class="tocc-empty-state" ng-if="!(c.data.courses || []).length">
+      <h4 class="m-t-0">No courses yet</h4>
+      <p>Create a course before scheduling a reservation for a new training session.</p>
+      <div>
+        <a class="tocc-btn-primary" href="{{c.data.links.create_course}}">Create Course</a>
+        <a class="tocc-btn-outline" href="{{c.data.links.home}}">Go to Home</a>
+      </div>
+    </div>
+
+    <div class="table-responsive" ng-if="(c.data.courses || []).length">
+      <table class="table tocc-custom-table m-b-0">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Owner</th>
+            <th>Duration</th>
+            <th>Delivery</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="course in c.data.courses">
+            <td>
+              <a class="tocc-record-link" href="{{course.record_url}}">{{course.course_name}}</a>
+              <div class="tocc-muted">{{course.course_id}}</div>
+            </td>
+            <td>{{course.owner_name || 'Missing owner'}}</td>
+            <td>{{course.duration_hours}}h</td>
+            <td>{{course.delivery_category_display || course.delivery_category}}</td>
+            <td>
+              <span class="tocc-status" ng-class="'tocc-status--' + course.status">
+                {{course.status_display || course.status}}
+              </span>
+            </td>
+            <td>
+              <a class="tocc-btn-outline tocc-btn-sm" href="{{course.record_url}}">Open</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

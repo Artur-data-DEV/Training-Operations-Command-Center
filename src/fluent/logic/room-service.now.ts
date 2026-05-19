@@ -49,6 +49,8 @@ RoomService.prototype = {
 
     validateReservation: function(current) {
         var roomId = current.getValue('tocc_room');
+        var courseId = current.getValue('tocc_course');
+        var instructorId = current.getValue('tocc_instructor') || gs.getUserID();
         var start = current.getValue('start_datetime');
         var end = current.getValue('end_datetime');
         var participants = current.getValue('expected_participants');
@@ -63,6 +65,11 @@ RoomService.prototype = {
         // BR validations run only when core fields are already present.
         if (!roomId || !start || !end) {
             return '';
+        }
+
+        var courseOwnershipError = this.validateCourseOwnership(courseId, instructorId);
+        if (courseOwnershipError) {
+            return courseOwnershipError;
         }
 
         var startGdt = new GlideDateTime(start);
@@ -91,6 +98,42 @@ RoomService.prototype = {
         }
 
         return '';
+    },
+
+    validateCourseOwnership: function(courseId, instructorId) {
+        if (!courseId) {
+            return '';
+        }
+
+        if (this._canBypassCourseOwnership()) {
+            return '';
+        }
+
+        if (!gs.hasRole('x_783010_tocc_a1.instructor')) {
+            return '';
+        }
+
+        var course = new GlideRecord('x_783010_tocc_a1_course');
+        if (!course.get(courseId)) {
+            return 'Selected course was not found.';
+        }
+
+        var owner = course.getValue('tocc_owner');
+        if (!owner) {
+            return 'Selected course has no owner. Ask backoffice to assign a course owner before scheduling.';
+        }
+
+        if (String(owner) !== String(instructorId || gs.getUserID())) {
+            return 'You can only schedule sessions for courses you own.';
+        }
+
+        return '';
+    },
+
+    _canBypassCourseOwnership: function() {
+        return gs.hasRole('admin') ||
+            gs.hasRole('x_783010_tocc_a1.admin') ||
+            gs.hasRole('x_783010_tocc_a1.backoffice');
     },
 
     validateAdvanceNotice: function(startDateTime) {

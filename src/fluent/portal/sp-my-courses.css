@@ -1,0 +1,214 @@
+* { box-sizing: border-box; }
+
+html,
+body,
+#sp_page,
+.sp-page-root,
+.sp-page-root .container-fluid,
+.sp-page-row,
+.sp-row-content.row {
+  background: #0B0E14 !important;
+}
+
+.sp-page-root .container-fluid,
+.sp-row-content.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.panel,
+.panel.panel-default {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.panel.panel-default > .panel-heading {
+  display: none !important;
+}
+
+.panel.panel-default > .panel-body {
+  padding: 0 !important;
+}
+
+.tocc-my-courses {
+  background: #0B0E14;
+  min-height: 100vh;
+  padding: 32px 24px 48px;
+  color: #E4E8F0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.tocc-my-courses .tocc-page-header,
+.tocc-my-courses .tocc-course-panel {
+  max-width: 1200px;
+  margin: 0 auto 16px;
+  background: #131925;
+  border: 1px solid rgba(124,143,255,0.14);
+  border-radius: 16px;
+  box-shadow: none;
+}
+
+.tocc-my-courses .tocc-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+}
+
+.tocc-my-courses .tocc-page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #F0F3FF;
+}
+
+.tocc-my-courses .tocc-page-subtitle,
+.tocc-my-courses .tocc-muted {
+  color: #6B7694;
+}
+
+.tocc-my-courses .tocc-page-header__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tocc-my-courses .tocc-summary-row {
+  max-width: 1200px;
+  margin: 0 auto 6px;
+}
+
+.tocc-my-courses .tocc-summary-card {
+  border: 1px solid rgba(124,143,255,0.14);
+  border-radius: 12px;
+  background: #131925;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+
+.tocc-my-courses .tocc-summary-card__label {
+  color: #6B7694;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.tocc-my-courses .tocc-summary-card__value {
+  margin-top: 2px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #E4E8F0;
+}
+
+.tocc-my-courses .tocc-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(124,143,255,0.05);
+  padding: 18px 24px;
+  border-bottom: 1px solid rgba(124,143,255,0.1);
+  color: #F0F3FF;
+}
+
+.tocc-my-courses .tocc-count-badge {
+  background: rgba(124,143,255,0.12);
+  color: #7C8FFF;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 4px 9px;
+}
+
+.tocc-my-courses .tocc-empty-state {
+  padding: 32px 24px;
+  color: #9AA6C7;
+}
+
+.tocc-my-courses .tocc-custom-table > thead > tr > th {
+  border-bottom: 1px solid rgba(124,143,255,0.12);
+  color: #7C8FFF;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.tocc-my-courses .tocc-custom-table > tbody > tr > td {
+  border-top: 1px solid rgba(124,143,255,0.08);
+  color: #E4E8F0;
+  vertical-align: middle;
+}
+
+.tocc-my-courses .tocc-record-link {
+  color: #9FB0FF;
+  font-weight: 700;
+}
+
+.tocc-my-courses .tocc-status {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.tocc-my-courses .tocc-status--active {
+  background: rgba(74,222,128,0.12);
+  color: #4ADE80;
+}
+
+.tocc-my-courses .tocc-status--draft {
+  background: rgba(245,158,11,0.12);
+  color: #F59E0B;
+}
+
+.tocc-my-courses .tocc-status--inactive {
+  background: rgba(255,107,138,0.12);
+  color: #FF6B8A;
+}
+
+.tocc-my-courses .tocc-btn-primary,
+.tocc-my-courses .tocc-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.tocc-my-courses .tocc-btn-primary {
+  background: #7C8FFF;
+  color: #FFFFFF;
+  border: 1px solid #7C8FFF;
+}
+
+.tocc-my-courses .tocc-btn-outline {
+  background: transparent;
+  color: #9FB0FF;
+  border: 1px solid rgba(124,143,255,0.28);
+}
+
+.tocc-my-courses .tocc-btn-sm {
+  min-height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+@media (max-width: 767px) {
+  .tocc-my-courses {
+    padding: 20px 12px 32px;
+  }
+
+  .tocc-my-courses .tocc-page-header {
+    flex-direction: column;
+  }
+}

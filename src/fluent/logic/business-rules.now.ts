@@ -1,6 +1,25 @@
 import { BusinessRule } from '@servicenow/sdk/core'
 
 BusinessRule({
+    $id: Now.ID['x_783010_tocc_a1_br_default_course_owner'],
+    table: 'x_783010_tocc_a1_course',
+    name: 'Default Course Owner',
+    when: 'before',
+    action: ['insert'],
+    active: true,
+    order: 80,
+    script: `(function executeRule(current, previous) {
+    if (gs.nil(current.getValue('tocc_owner'))) {
+        current.setValue('tocc_owner', gs.getUserID());
+    }
+
+    if (gs.nil(current.getValue('status'))) {
+        current.setValue('status', 'draft');
+    }
+})(current, previous);`,
+})
+
+BusinessRule({
     $id: Now.ID['x_783010_tocc_a1_br_normalize_reservation_short_description'],
     table: 'x_783010_tocc_a1_room_reservation',
     name: 'Normalize Reservation Short Description',
@@ -189,6 +208,10 @@ BusinessRule({
     script: `(function executeRule(current, previous) {
     var svc = new TrainingSessionService();
     var error = svc.ensureSessionRoom(current);
+
+    if (!error) {
+        error = svc.validateCourseOwnership(current);
+    }
 
     if (error) {
         gs.addErrorMessage(error);

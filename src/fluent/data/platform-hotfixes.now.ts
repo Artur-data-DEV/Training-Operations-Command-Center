@@ -577,3 +577,395 @@ Record({
 })();`,
     },
 })
+
+Record({
+    $id: Now.ID['x_783010_tocc_a1_fix_catalog_producer_access_and_course_variables'],
+    table: 'sys_script_fix',
+    data: {
+        name: '[TOCC] Harden catalog producer access, categories, and course variables',
+        active: true,
+        run_once: false,
+        flush_cache: true,
+        description:
+            'Ensures TOCC record producers are categorized, have explicit Available For user criteria, and repairs stale Create Course duration/delivery variables left as table-backed choices.',
+        script: `(function executeFixScript() {
+    var CATALOG_TITLE = 'TOCC Self-Service Catalog';
+    var CATEGORY_TITLE = 'Training Operations';
+    var DEFAULT_COURSE_OWNER_USER_NAME = 'tocc.instructor';
+    var PRODUCERS = [
+        {
+            name: 'Create Room Reservation',
+            criteriaName: '[TOCC] Catalog - Instructors and Admins',
+            roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.admin']
+        },
+        {
+            name: 'Request Training Enrollment',
+            criteriaName: '[TOCC] Catalog - Students and Admins',
+            roles: ['x_783010_tocc_a1.student', 'x_783010_tocc_a1.admin']
+        },
+        {
+            name: 'Create Course',
+            criteriaName: '[TOCC] Catalog - Course Authors',
+            roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.admin']
+        }
+    ];
+
+    function findOne(tableName, fieldName, value) {
+        var gr = new GlideRecord(tableName);
+        gr.addQuery(fieldName, value);
+        gr.setLimit(1);
+        gr.query();
+        if (gr.next()) {
+            return gr;
+        }
+        return null;
+    }
+
+    function roleIds(roleNames) {
+        var ids = [];
+        for (var i = 0; i < roleNames.length; i++) {
+            var role = findOne('sys_user_role', 'name', roleNames[i]);
+            if (role) {
+                ids.push(String(role.getUniqueValue()));
+            } else {
+                gs.warn('[TOCC][FIX] Catalog user criteria role not found: ' + roleNames[i]);
+            }
+        }
+        return ids;
+    }
+
+    function ensureCatalog() {
+        var catalog = findOne('sc_catalog', 'title', CATALOG_TITLE);
+        if (catalog) {
+            if (String(catalog.getValue('active')) !== 'true') {
+                catalog.setValue('active', true);
+                catalog.update();
+            }
+            return String(catalog.getUniqueValue());
+        }
+
+        catalog = new GlideRecord('sc_catalog');
+        catalog.initialize();
+        catalog.setValue('title', CATALOG_TITLE);
+        catalog.setValue('description', 'Catalog for Training Operations Command Center self-service actions.');
+        catalog.setValue('active', true);
+        return String(catalog.insert() || '');
+    }
+
+    function ensureCategory(catalogId) {
+        var category = new GlideRecord('sc_category');
+        category.addQuery('title', CATEGORY_TITLE);
+        if (catalogId) {
+            category.addQuery('sc_catalog', catalogId);
+        }
+        category.setLimit(1);
+        category.query();
+        if (category.next()) {
+            if (String(category.getValue('active')) !== 'true') {
+                category.setValue('active', true);
+                category.update();
+            }
+            return String(category.getUniqueValue());
+        }
+
+        category.initialize();
+        category.setValue('title', CATEGORY_TITLE);
+        category.setValue('description', 'Reservation, enrollment, and course requests for TOCC.');
+        category.setValue('sc_catalog', catalogId);
+        category.setValue('active', true);
+        return String(category.insert() || '');
+    }
+
+    function ensureItemCategory(itemId, categoryId) {
+        if (!itemId || !categoryId) {
+            return;
+        }
+
+        var existing = new GlideRecord('sc_cat_item_category');
+        existing.addQuery('sc_cat_item', itemId);
+        existing.addQuery('sc_category', categoryId);
+        existing.setLimit(1);
+        existing.query();
+        if (existing.next()) {
+            return;
+        }
+
+        existing.initialize();
+        existing.setValue('sc_cat_item', itemId);
+        existing.setValue('sc_category', categoryId);
+        existing.insert();
+    }
+
+    function ensureCatalogLink(itemId, catalogId) {
+        if (!itemId || !catalogId) {
+            return;
+        }
+
+        var existing = new GlideRecord('sc_cat_item_catalog');
+        existing.addQuery('sc_cat_item', itemId);
+        existing.addQuery('sc_catalog', catalogId);
+        existing.setLimit(1);
+        existing.query();
+        if (existing.next()) {
+            return;
+        }
+
+        existing.initialize();
+        existing.setValue('sc_cat_item', itemId);
+        existing.setValue('sc_catalog', catalogId);
+        existing.insert();
+    }
+
+    function patchCourseOwners() {
+        var defaultOwner = findOne('sys_user', 'user_name', DEFAULT_COURSE_OWNER_USER_NAME);
+        if (!defaultOwner) {
+            gs.warn('[TOCC][FIX] Default course owner not found: ' + DEFAULT_COURSE_OWNER_USER_NAME);
+            return;
+        }
+
+        var course = new GlideRecord('x_783010_tocc_a1_course');
+        course.query();
+        while (course.next()) {
+            var currentOwner = course.getValue('tocc_owner');
+            var needsOwner = gs.nil(currentOwner);
+
+            if (!needsOwner) {
+                var owner = new GlideRecord('sys_user');
+                needsOwner = !owner.get(currentOwner);
+            }
+
+            if (needsOwner) {
+                course.setValue('tocc_owner', defaultOwner.getUniqueValue());
+                course.update();
+            }
+        }
+    }
+
+    function ensureUserCriteria(criteriaName, roles) {
+        var ids = roleIds(roles);
+        if (ids.length === 0) {
+            return '';
+        }
+
+        var created = false;
+        var criteria = findOne('user_criteria', 'name', criteriaName);
+        if (!criteria) {
+            criteria = new GlideRecord('user_criteria');
+            criteria.initialize();
+            criteria.setValue('name', criteriaName);
+            created = true;
+        }
+
+        criteria.setValue('active', true);
+        criteria.setValue('match_all', false);
+        criteria.setValue('advanced', false);
+        criteria.setValue('role', ids.join(','));
+
+        if (created) {
+            return String(criteria.insert() || '');
+        }
+
+        criteria.update();
+        return String(criteria.getUniqueValue());
+    }
+
+    function ensureAvailableFor(itemId, criteriaId) {
+        if (!itemId || !criteriaId) {
+            return;
+        }
+
+        var existing = new GlideRecord('sc_cat_item_user_criteria_mtom');
+        existing.addQuery('sc_cat_item', itemId);
+        existing.addQuery('user_criteria', criteriaId);
+        existing.setLimit(1);
+        existing.query();
+        if (existing.next()) {
+            return;
+        }
+
+        existing.initialize();
+        existing.setValue('sc_cat_item', itemId);
+        existing.setValue('user_criteria', criteriaId);
+        existing.insert();
+    }
+
+    function ensureChoice(questionId, value, label, order) {
+        var choice = new GlideRecord('question_choice');
+        choice.addQuery('question', questionId);
+        choice.addQuery('value', String(value));
+        choice.setLimit(1);
+        choice.query();
+        if (!choice.next()) {
+            choice.initialize();
+            choice.setValue('question', questionId);
+            choice.setValue('value', String(value));
+        }
+        choice.setValue('text', label);
+        choice.setValue('order', order);
+        if (choice.isValidField('inactive')) {
+            choice.setValue('inactive', false);
+        }
+        if (choice.isNewRecord()) {
+            choice.insert();
+        } else {
+            choice.update();
+        }
+    }
+
+    function dedupeChoices(questionId, allowedValues) {
+        var allowed = {};
+        for (var a = 0; a < allowedValues.length; a++) {
+            allowed[String(allowedValues[a])] = true;
+        }
+
+        var seen = {};
+        var choice = new GlideRecord('question_choice');
+        choice.addQuery('question', questionId);
+        choice.orderBy('order');
+        choice.orderBy('sys_created_on');
+        choice.query();
+        while (choice.next()) {
+            var value = String(choice.getValue('value') || '');
+            var shouldBeActive = allowed[value] && !seen[value];
+            seen[value] = true;
+            if (choice.isValidField('inactive') && String(choice.getValue('inactive')) === String(!shouldBeActive)) {
+                continue;
+            }
+            if (choice.isValidField('inactive')) {
+                choice.setValue('inactive', !shouldBeActive);
+                choice.update();
+            }
+        }
+    }
+
+    function normalizeSelectVariable(variable, name, questionText, fieldName, order) {
+        variable.setValue('name', name);
+        variable.setValue('question_text', questionText);
+        variable.setValue('type', '5');
+        variable.setValue('order', order);
+        variable.setValue('mandatory', true);
+        variable.setValue('map_to_field', true);
+        variable.setValue('field', fieldName);
+        variable.setValue('include_none', true);
+        variable.setValue('lookup_table', '');
+        variable.setValue('lookup_value', '');
+        variable.setValue('lookup_label', '');
+        variable.setValue('choice_table', '');
+        variable.setValue('choice_field', '');
+        variable.setValue('reference', '');
+        variable.setValue('active', true);
+        variable.update();
+    }
+
+    function findCourseVariable(courseItemId, names, questionText) {
+        var variable = new GlideRecord('item_option_new');
+        variable.addQuery('cat_item', courseItemId);
+        variable.addQuery('name', 'IN', names.join(','));
+        variable.orderBy('sys_created_on');
+        variable.setLimit(1);
+        variable.query();
+        if (variable.next()) {
+            return variable;
+        }
+
+        variable = new GlideRecord('item_option_new');
+        variable.addQuery('cat_item', courseItemId);
+        variable.addQuery('question_text', questionText);
+        variable.orderBy('sys_created_on');
+        variable.setLimit(1);
+        variable.query();
+        if (variable.next()) {
+            return variable;
+        }
+
+        variable.initialize();
+        variable.setValue('cat_item', courseItemId);
+        return variable;
+    }
+
+    function deactivateDuplicateCourseVariables(courseItemId, keepId, names, questionText) {
+        var duplicate = new GlideRecord('item_option_new');
+        duplicate.addQuery('cat_item', courseItemId);
+        duplicate.addEncodedQuery('nameIN' + names.join(',') + '^ORquestion_text=' + questionText);
+        duplicate.query();
+        while (duplicate.next()) {
+            if (String(duplicate.getUniqueValue()) === String(keepId)) {
+                continue;
+            }
+            duplicate.setValue('active', false);
+            duplicate.update();
+        }
+    }
+
+    function repairCreateCourseVariables(courseItemId) {
+        var duration = findCourseVariable(courseItemId, ['course_duration_hours', 'duration_hours'], 'Duration (hours)');
+        normalizeSelectVariable(duration, 'course_duration_hours', 'Duration (hours)', 'duration_hours', 400);
+        var durationId = String(duration.getUniqueValue());
+        deactivateDuplicateCourseVariables(courseItemId, durationId, ['course_duration_hours', 'duration_hours'], 'Duration (hours)');
+
+        var durationValues = [
+            ['1', '1h'],
+            ['2', '2h'],
+            ['3', '3h'],
+            ['4', '4h'],
+            ['5', '5h'],
+            ['6', '6h'],
+            ['8', '8h'],
+            ['12', '12h'],
+            ['16', '16h'],
+            ['24', '24h'],
+            ['32', '32h'],
+            ['40', '40h']
+        ];
+        for (var d = 0; d < durationValues.length; d++) {
+            ensureChoice(durationId, durationValues[d][0], durationValues[d][1], (d + 1) * 10);
+        }
+        dedupeChoices(durationId, ['1', '2', '3', '4', '5', '6', '8', '12', '16', '24', '32', '40']);
+
+        var delivery = findCourseVariable(courseItemId, ['course_delivery_category', 'delivery_category'], 'Delivery Category (Online or In Person)');
+        normalizeSelectVariable(delivery, 'course_delivery_category', 'Delivery Category (Online or In Person)', 'delivery_category', 500);
+        var deliveryId = String(delivery.getUniqueValue());
+        deactivateDuplicateCourseVariables(courseItemId, deliveryId, ['course_delivery_category', 'delivery_category'], 'Delivery Category (Online or In Person)');
+        ensureChoice(deliveryId, 'vilt', 'VILT', 10);
+        ensureChoice(deliveryId, 'in_person', 'In Person', 20);
+        dedupeChoices(deliveryId, ['vilt', 'in_person']);
+
+        gs.info('[TOCC][FIX] Create Course catalog variables normalized.');
+    }
+
+    var catalogId = ensureCatalog();
+    var categoryId = ensureCategory(catalogId);
+
+    for (var p = 0; p < PRODUCERS.length; p++) {
+        var producerDef = PRODUCERS[p];
+        var producer = findOne('sc_cat_item_producer', 'name', producerDef.name);
+        if (!producer) {
+            gs.warn('[TOCC][FIX] Catalog producer not found: ' + producerDef.name);
+            continue;
+        }
+
+        var itemId = String(producer.getUniqueValue());
+        producer.setValue('active', true);
+        producer.setValue('category', categoryId);
+        producer.setValue('roles', producerDef.roles.join(','));
+        producer.update();
+
+        ensureCatalogLink(itemId, catalogId);
+        ensureItemCategory(itemId, categoryId);
+        ensureAvailableFor(itemId, ensureUserCriteria(producerDef.criteriaName, producerDef.roles));
+
+        if (producerDef.name === 'Create Course') {
+            if (producer.isValidField('redirect_url')) {
+                producer.setValue('redirect_url', '?id=tocc_my_courses');
+                producer.update();
+            }
+            repairCreateCourseVariables(itemId);
+        }
+    }
+
+    patchCourseOwners();
+
+    gs.info('[TOCC][FIX] Catalog producer access and category hardening completed.');
+})();`,
+    },
+})

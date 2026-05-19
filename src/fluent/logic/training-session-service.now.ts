@@ -235,6 +235,44 @@ TrainingSessionService.prototype = {
         return '';
     },
 
+    validateCourseOwnership: function(current) {
+        if (this._canBypassCourseOwnership()) {
+            return '';
+        }
+
+        if (!gs.hasRole('x_783010_tocc_a1.instructor')) {
+            return '';
+        }
+
+        var courseId = current.getValue('tocc_course');
+        if (!courseId) {
+            return '';
+        }
+
+        var instructorId = current.getValue('tocc_instructor') || gs.getUserID();
+        var course = new GlideRecord('x_783010_tocc_a1_course');
+        if (!course.get(courseId)) {
+            return 'Selected course was not found.';
+        }
+
+        var owner = course.getValue('tocc_owner');
+        if (!owner) {
+            return 'Selected course has no owner. Ask backoffice to assign a course owner before publishing a session.';
+        }
+
+        if (String(owner) !== String(instructorId)) {
+            return 'You can only create or update sessions for courses you own.';
+        }
+
+        return '';
+    },
+
+    _canBypassCourseOwnership: function() {
+        return gs.hasRole('admin') ||
+            gs.hasRole('x_783010_tocc_a1.admin') ||
+            gs.hasRole('x_783010_tocc_a1.backoffice');
+    },
+
     repairMissingRooms: function(maxRecords) {
         var scanned = 0;
         var repaired = 0;

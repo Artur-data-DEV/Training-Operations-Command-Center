@@ -68,6 +68,7 @@ export const x_783010_tocc_a1_course = Table({
         course_id: StringColumn({ label: 'Course ID', mandatory: true, unique: true, maxLength: 40 }),
         course_name: StringColumn({ label: 'Course Name', mandatory: true, maxLength: 160 }),
         description: StringColumn({ label: 'Description', mandatory: true, maxLength: 4000 }),
+        tocc_owner: ReferenceColumn({ label: 'Course Owner', referenceTable: 'sys_user' }),
         duration_hours: IntegerColumn({ label: 'Duration (Hours)', mandatory: true }),
         delivery_category: StringColumn({
             label: 'Delivery Category',

@@ -52,6 +52,7 @@
         sessions: pageLink('tocc_sessions'),
         enrollments: pageLink('tocc_my_enrollments'),
         reservations: pageLink('tocc_my_reservations'),
+        courses: pageLink('tocc_my_courses'),
         backoffice_queue: pageLink('tocc_backoffice_queue'),
         create_reservation: createReservationLink,
         request_enrollment: requestEnrollmentLink,
@@ -117,6 +118,14 @@
                 kind: 'secondary'
             });
         }
+
+        data.actions.push({
+            title: 'My Courses',
+            desc: 'Gerencie os cursos que voce pode usar em novas sessoes.',
+            icon: 'fa-book',
+            href: data.links.courses,
+            kind: 'secondary'
+        });
     }
 
     if (isStudent) {
@@ -132,7 +141,7 @@
     if (canManageInstruction) {
         data.actions.push({
             title: 'Create Course',
-            desc: 'Cadastre um novo curso para futuras sessoes.',
+            desc: 'Cadastre um novo curso e volte para sua lista de cursos.',
             icon: 'fa-book',
             href: data.links.create_course,
             kind: 'secondary'

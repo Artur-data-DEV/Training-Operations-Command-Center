@@ -1,5 +1,5 @@
 import { CatalogClientScript } from '@servicenow/sdk/core'
-import { createRoomReservationProducer } from './record-producers.now'
+import { createCourseProducer, createRoomReservationProducer } from './record-producers.now'
 
 CatalogClientScript({
     $id: Now.ID['x_783010_tocc_a1_ccs_room_reservation_room_capacity_guard'],
@@ -88,6 +88,89 @@ CatalogClientScript({
             // List collector APIs vary by UI; server-side checks still apply.
         }
     });
+}`,
+})
+
+CatalogClientScript({
+    $id: Now.ID['x_783010_tocc_a1_ccs_create_course_validate_submit'],
+    name: 'TOCC - Validate Create Course (onSubmit)',
+    catalogItem: createCourseProducer,
+    type: 'onSubmit',
+    uiType: 'all',
+    active: true,
+    script: `function onSubmit() {
+    g_form.hideAllFieldMsgs();
+    g_form.clearMessages();
+
+    function firstValue(names) {
+        for (var i = 0; i < names.length; i++) {
+            var value = g_form.getValue(names[i]);
+            if (value) {
+                return String(value).trim();
+            }
+        }
+        return '';
+    }
+
+    function parsePositiveInteger(value) {
+        var match = String(value || '').match(/\\d+/);
+        if (!match) {
+            return 0;
+        }
+        return parseInt(match[0], 10) || 0;
+    }
+
+    function showFieldMessage(names, message) {
+        var shown = false;
+        for (var i = 0; i < names.length; i++) {
+            try {
+                if (g_form.getControl(names[i])) {
+                    g_form.showFieldMsg(names[i], message, 'error');
+                    shown = true;
+                }
+            } catch (e) {
+                // Some catalog renderers do not expose getControl for variables.
+            }
+        }
+        if (!shown) {
+            g_form.addErrorMessage(message);
+        }
+    }
+
+    var code = g_form.getValue('course_code');
+    var name = g_form.getValue('course_name');
+    var description = g_form.getValue('course_description');
+    var duration = parsePositiveInteger(firstValue(['course_duration_hours', 'duration_hours']));
+    var delivery = firstValue(['course_delivery_category', 'delivery_category']).toLowerCase();
+    var hasError = false;
+
+    if (!code) {
+        g_form.showFieldMsg('course_code', 'Course code is required.', 'error');
+        hasError = true;
+    }
+    if (!name) {
+        g_form.showFieldMsg('course_name', 'Course name is required.', 'error');
+        hasError = true;
+    }
+    if (!description) {
+        g_form.showFieldMsg('course_description', 'Course description is required.', 'error');
+        hasError = true;
+    }
+    if (duration < 1) {
+        showFieldMessage(['course_duration_hours', 'duration_hours'], 'Duration must be a positive number.');
+        hasError = true;
+    }
+    if (delivery !== 'vilt' && delivery !== 'in_person') {
+        showFieldMessage(['course_delivery_category', 'delivery_category'], 'Select VILT or In Person.');
+        hasError = true;
+    }
+
+    if (hasError) {
+        g_form.addErrorMessage('Please review the highlighted fields.');
+        return false;
+    }
+
+    return true;
 }`,
 })
 

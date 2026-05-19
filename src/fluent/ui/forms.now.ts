@@ -42,3 +42,28 @@ export const roomReservationDefaultForm = Form({
         },
     ],
 })
+
+export const courseDefaultForm = Form({
+    table: 'x_783010_tocc_a1_course',
+    view: Now.ref('sys_ui_view', { name: 'default' }),
+    roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.admin', 'admin'],
+    sections: [
+        {
+            caption: 'Course',
+            content: [
+                {
+                    layout: 'one-column',
+                    elements: [
+                        { type: 'table_field', field: 'status' },
+                        { type: 'table_field', field: 'tocc_owner' },
+                        { type: 'table_field', field: 'course_name' },
+                        { type: 'table_field', field: 'course_id' },
+                        { type: 'table_field', field: 'description' },
+                        { type: 'table_field', field: 'duration_hours' },
+                        { type: 'table_field', field: 'delivery_category' },
+                    ],
+                },
+            ],
+        },
+    ],
+})

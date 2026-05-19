@@ -345,30 +345,71 @@ export const createCourseProducer = CatalogItemRecordProducer({
             mapToField: true,
             field: 'description',
         }),
-        course_duration_hours: SingleLineTextVariable({
+        course_duration_hours: SelectBoxVariable({
             question: 'Duration (hours)',
             order: 400,
             mandatory: true,
             mapToField: true,
             field: 'duration_hours',
+            includeNone: true,
+            choices: {
+                1: { label: '1h' },
+                2: { label: '2h' },
+                3: { label: '3h' },
+                4: { label: '4h' },
+                5: { label: '5h' },
+                6: { label: '6h' },
+                8: { label: '8h' },
+                12: { label: '12h' },
+                16: { label: '16h' },
+                24: { label: '24h' },
+                32: { label: '32h' },
+                40: { label: '40h' },
+            },
         }),
-        course_delivery_category: SingleLineTextVariable({
-            question: 'Delivery Category (vilt or in_person)',
+        course_delivery_category: SelectBoxVariable({
+            question: 'Delivery Category (Online or In Person)',
             order: 500,
             mandatory: true,
             mapToField: true,
             field: 'delivery_category',
+            includeNone: true,
+            choices: {
+                vilt: { label: 'VILT' },
+                in_person: { label: 'In Person' },
+            },
         }),
     },
     script: `(function execute(producer, current) {
-    var duration = parseInt(producer.course_duration_hours, 10);
+    current.setValue('tocc_owner', gs.getUserID());
+
+    function firstProducerValue(names) {
+        for (var i = 0; i < names.length; i++) {
+            var value = producer[names[i]];
+            if (!gs.nil(value)) {
+                return String(value).trim();
+            }
+        }
+        return '';
+    }
+
+    function parsePositiveInteger(value) {
+        var raw = String(value || '').trim();
+        var match = raw.match(/\\d+/);
+        if (!match) {
+            return NaN;
+        }
+        return parseInt(match[0], 10);
+    }
+
+    var duration = parsePositiveInteger(firstProducerValue(['course_duration_hours', 'duration_hours']));
     if (isNaN(duration) || duration < 1) {
         gs.addErrorMessage('Duration (hours) must be a positive number.');
         current.setAbortAction(true);
         return;
     }
 
-    var delivery = String(producer.course_delivery_category || '').trim().toLowerCase();
+    var delivery = firstProducerValue(['course_delivery_category', 'delivery_category']).toLowerCase();
     if (delivery !== 'vilt' && delivery !== 'in_person') {
         gs.addErrorMessage('Delivery category must be either "vilt" or "in_person".');
         current.setAbortAction(true);
@@ -381,5 +422,8 @@ export const createCourseProducer = CatalogItemRecordProducer({
     if (gs.nil(current.getValue('status'))) {
         current.setValue('status', 'draft');
     }
+
+    producer.portal_redirect = '?id=tocc_my_courses';
+    producer.redirect = '?id=tocc_my_courses';
 })(producer, current);`,
 })

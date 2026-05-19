@@ -39,6 +39,15 @@ const toccMyReservationsWidget = SPWidget({
     serverScript: Now.include('./sp-my-reservations.server.js'),
 })
 
+const toccMyCoursesWidget = SPWidget({
+    $id: Now.ID['x_783010_tocc_a1_sp_widget_my_courses'],
+    id: 'x_783010_tocc_a1-my-courses',
+    name: 'TOCC - My Courses',
+    htmlTemplate: Now.include('./sp-my-courses.html'),
+    customCss: Now.include('./sp-my-courses.css'),
+    serverScript: Now.include('./sp-my-courses.server.js'),
+})
+
 const toccBackofficeQueueWidget = SPWidget({
     $id: Now.ID['x_783010_tocc_a1_sp_widget_backoffice_queue'],
     id: 'x_783010_tocc_a1-backoffice-queue',
@@ -231,6 +240,40 @@ SPPage({
 })
 
 SPPage({
+    pageId: 'tocc_my_courses',
+    title: 'My Courses',
+    shortDescription: 'Instructor-owned courses available for reservation and session planning.',
+    roles: ['snc_internal', 'admin', 'x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
+    containers: [
+        {
+            $id: Now.ID['x_783010_tocc_a1_sp_container_my_courses_main'],
+            width: 'container-fluid',
+            order: 100,
+            rows: [
+                {
+                    $id: Now.ID['x_783010_tocc_a1_sp_row_my_courses_main'],
+                    order: 100,
+                    columns: [
+                        {
+                            $id: Now.ID['x_783010_tocc_a1_sp_col_my_courses_main'],
+                            size: 12,
+                            instances: [
+                                {
+                                    $id: Now.ID['x_783010_tocc_a1_sp_inst_my_courses_main'],
+                                    widget: toccMyCoursesWidget,
+                                    title: 'My Courses',
+                                    order: 100,
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+})
+
+SPPage({
     pageId: 'tocc_backoffice_queue',
     title: 'Backoffice Queue',
     shortDescription: 'Backoffice approval queue for submitted room reservations.',
@@ -379,6 +422,16 @@ const toccMainMenu = SPMenu({
             active: true,
             roles: ['admin', 'x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.admin'],
             glyph: 'building-o',
+        },
+        {
+            $id: Now.ID['x_783010_tocc_a1_sp_main_menu_item_my_courses'],
+            label: 'My Courses',
+            type: 'page',
+            page: Now.ref('sp_page', { id: 'tocc_my_courses' }),
+            order: 425,
+            active: true,
+            roles: ['admin', 'x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
+            glyph: 'book',
         },
         {
             $id: Now.ID['x_783010_tocc_a1_sp_main_menu_item_backoffice_queue'],
