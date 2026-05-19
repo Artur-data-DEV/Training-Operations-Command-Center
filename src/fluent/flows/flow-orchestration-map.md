@@ -8,10 +8,10 @@ This map reflects the current implementation in:
 | Flow | Trigger | Purpose |
 |---|---|---|
 | Reservation Approval | Reservation `status=submitted` | Backoffice approval and reservation decision application |
-| Enrollment Approval | Enrollment created with `status=pending` | Direct approval or instructor-gated approval |
+| Enrollment Approval | Enrollment created with `status=pending` | Instructor-gated approval for enrollments that remain pending after `EnrollmentService` evaluates configuration |
 | Session Cancelled | Session status changed to `cancelled` | Notify approved enrollments |
-| Attendance Confirmation Cadence | Daily 08:00 | Send confirmation requests for due sessions |
-| Session Reminder Cadence | Daily 07:00 | Send reminder notifications for tomorrow sessions |
+| Attendance Confirmation Cadence | Daily 08:00 | Scaffold/log-only cadence for due confirmation work; real notifications are owned by scheduled jobs and `NotificationHelper` |
+| Session Reminder Cadence | Daily 07:00 | Scaffold/log-only cadence for reminder visibility; real notifications are owned by scheduled jobs and `NotificationHelper` |
 
 ## Subflows
 
@@ -30,13 +30,12 @@ flowchart TD
     R4 --> R5[Emit reservation.<approval_state> event]
     R2 -->|Missing| R6[Create manual fallback task]
 
-    E1[Enrollment pending on create] --> E2[Read enrollment_approval_mode from training_config]
-    E2 -->|instructor_approval| E3[Resolve session instructor]
+    E1[Enrollment pending on create] --> E2[EnrollmentService already evaluated TrainingConfigService]
+    E2 --> E3[Resolve session via tocc_training_session]
     E3 -->|Found| E4[Ask for Approval]
     E4 --> E5[Apply enrollment status from approval_state]
     E5 --> E6[Emit enrollment.<approval_state> event]
     E3 -->|Missing| E7[Create manual fallback task]
-    E2 -->|direct| E8[Set approved and emit enrollment.approved]
 
     C1[Session cancelled] --> C2[Subflow: notify approved enrollments]
 ```
@@ -44,5 +43,8 @@ flowchart TD
 ## Notes
 
 - Reservation and enrollment approval decisions are now Flow-native (`action.core.askForApproval`).
+- Enrollment configuration is not read directly by Flow. `EnrollmentService` and `TrainingConfigService` decide whether a record remains `pending`; the Flow only handles those pending records.
+- Flow enrollment and cancellation lookups use `tocc_training_session`, not legacy `training_session`.
 - Seat recalculation remains in business-rule/service layer (`EnrollmentService.syncSessionAfterEnrollmentChange`).
 - Session creation/cascade remains in service layer (`TrainingSessionService.syncFromReservation`).
+- Reminder and confirmation cadence flows are operational scaffolds. Production notification dispatch remains `ScheduledScript -> NotificationHelper -> eventQueue -> EmailNotification`.

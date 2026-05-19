@@ -162,6 +162,59 @@ EnrollmentService.prototype = {
         };
     },
 
+    releaseUnconfirmedSeat: function(enrollmentId) {
+        if (!enrollmentId) {
+            return {
+                success: false,
+                message: 'Enrollment ID is required.'
+            };
+        }
+
+        var enrollment = new GlideRecord(this.enrollmentTable);
+        if (!enrollment.get(enrollmentId)) {
+            return {
+                success: false,
+                message: 'Enrollment not found.'
+            };
+        }
+
+        if (enrollment.getValue('status') != 'approved') {
+            return {
+                success: false,
+                message: 'Only approved enrollments can be released automatically.'
+            };
+        }
+
+        if (enrollment.getValue('confirmed') == 'true' || enrollment.getValue('confirmed') === true) {
+            return {
+                success: false,
+                message: 'Confirmed enrollment must not be released automatically.'
+            };
+        }
+
+        var sessionId = enrollment.getValue('tocc_training_session');
+        enrollment.setValue('status', 'cancelled');
+        enrollment.setValue('confirmed', false);
+        enrollment.setValue('work_notes', 'Seat automatically released: student did not confirm attendance before the deadline.');
+        enrollment.setWorkflow(false);
+
+        var updatedId = enrollment.update();
+        if (!updatedId) {
+            return {
+                success: false,
+                message: enrollment.getLastErrorMessage() || 'Enrollment could not be released.'
+            };
+        }
+
+        this.syncSessionAfterEnrollmentChange(sessionId);
+
+        return {
+            success: true,
+            enrollmentId: enrollmentId,
+            status: 'cancelled'
+        };
+    },
+
     validateBeforeSave: function(current, previous) {
         var sessionId = current.getValue('tocc_training_session');
         var studentId = current.getValue('tocc_student');

@@ -66,6 +66,8 @@ ScheduledScript({
     session.query();
 
     var released = 0;
+    var skipped = 0;
+    var enrollmentService = new EnrollmentService();
 
     while (session.next()) {
         var sessionId = session.getUniqueValue();
@@ -77,15 +79,17 @@ ScheduledScript({
         enrollment.query();
 
         while (enrollment.next()) {
-            enrollment.setValue('status', 'cancelled');
-            enrollment.setValue('work_notes', 'Seat automatically released: student did not confirm attendance before the deadline.');
-            enrollment.setWorkflow(true);
-            enrollment.update();
-            released++;
+            var result = enrollmentService.releaseUnconfirmedSeat(enrollment.getUniqueValue());
+            if (result && result.success) {
+                released++;
+            } else {
+                skipped++;
+                gs.warn('[TOCC] ReleaseUnconfirmedSeats skipped ' + enrollment.getValue('number') + ': ' + ((result && result.message) || 'unknown error'));
+            }
         }
     }
 
-    gs.info('[TOCC] ReleaseUnconfirmedSeats: released ' + released + ' seat(s).');
+    gs.info('[TOCC] ReleaseUnconfirmedSeats: released ' + released + ' seat(s), skipped ' + skipped + ' enrollment(s).');
 })();`,
 })
 

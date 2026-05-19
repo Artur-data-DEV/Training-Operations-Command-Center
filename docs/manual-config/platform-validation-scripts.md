@@ -134,7 +134,8 @@ For user-specific methods (`getMyEnrollments`, `confirmAttendance`, `cancelEnrol
     '[TOCC] Send Session Reminders',
     '[TOCC] Release Unconfirmed Seats',
     '[TOCC] Close Past Training Sessions',
-    '[TOCC] Detect Stale Pending Approvals'
+    '[TOCC] Detect Stale Pending Approvals',
+    '[TOCC] Repair Sessions Missing Room'
   ];
 
   for (var i = 0; i < names.length; i++) {
@@ -229,3 +230,100 @@ Expected (policy baseline):
 - Student create `student_enrollment` = true
 - Instructor create `room_reservation` = true
 - Manager write `room_reservation` = false
+
+## 8) TrainingConfigService property override and table fallback smoke
+
+```javascript
+(function() {
+  var propertyName = 'x_783010_tocc_a1.config.minimum_advance_notice_hours';
+  var original = gs.getProperty(propertyName, '');
+
+  gs.setProperty(propertyName, '72');
+  var overrideCfg = new x_783010_tocc_a1.TrainingConfigService();
+  gs.info('[CONFIG-SMOKE] override minimum_advance_notice_hours=' + overrideCfg.getMinimumAdvanceNoticeHours() + ' expected=72');
+
+  gs.setProperty(propertyName, '');
+  var fallbackCfg = new x_783010_tocc_a1.TrainingConfigService();
+  gs.info('[CONFIG-SMOKE] fallback minimum_advance_notice_hours=' + fallbackCfg.getMinimumAdvanceNoticeHours() + ' expected=training_config value or default');
+
+  gs.setProperty(propertyName, original || '');
+})();
+```
+
+Expected:
+- Override read returns `72`.
+- Empty property falls back to `x_783010_tocc_a1_training_config`.
+- Original property value is restored at the end.
+
+## 9) Flow and subflow active smoke
+
+```javascript
+(function() {
+  var names = [
+    '[TOCC][FLOW] Reservation Approval',
+    '[TOCC][FLOW] Enrollment Approval',
+    '[TOCC][FLOW] Session Cancelled',
+    '[TOCC][FLOW] Attendance Confirmation Cadence',
+    '[TOCC][FLOW] Session Reminder Cadence',
+    '[TOCC][SF] Reservation Intake Processing',
+    '[TOCC][SF] Session Cancelled Processing'
+  ];
+
+  for (var i = 0; i < names.length; i++) {
+    var flow = new GlideRecord('sys_hub_flow');
+    flow.addQuery('name', names[i]);
+    flow.setLimit(1);
+    flow.query();
+    if (flow.next()) {
+      gs.info('[FLOW-SMOKE] ' + names[i] + ' -> active=' + flow.getValue('active') + ', sys_id=' + flow.getUniqueValue());
+    } else {
+      gs.info('[FLOW-SMOKE] ' + names[i] + ' -> NOT FOUND');
+    }
+  }
+})();
+```
+
+Expected:
+- All listed flows/subflows are found.
+- Active state matches the release decision. Reminder/confirmation cadence flows are scaffold/log-only; real notification dispatch is scheduled-job based.
+
+## 10) Enrollment/session field model smoke for flow queries
+
+```javascript
+(function() {
+  var invalid = 0;
+  var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
+  enrollment.addNotNullQuery('tocc_training_session');
+  enrollment.query();
+
+  while (enrollment.next()) {
+    var session = new GlideRecord('x_783010_tocc_a1_training_session');
+    if (!session.get(enrollment.getValue('tocc_training_session'))) {
+      invalid++;
+      gs.info('[FIELD-SMOKE] Invalid tocc_training_session on enrollment ' + enrollment.getValue('number'));
+    }
+  }
+
+  gs.info('[FIELD-SMOKE] invalid tocc_training_session references=' + invalid);
+})();
+```
+
+Expected:
+- `invalid tocc_training_session references=0`.
+
+## 11) Release unconfirmed seats service smoke
+
+Run this in a sandbox/test record only. Replace `<ENROLLMENT_SYS_ID>` with an approved, unconfirmed enrollment whose linked session has passed `confirmation_deadline`.
+
+```javascript
+(function() {
+  var enrollmentId = '<ENROLLMENT_SYS_ID>';
+  var result = new x_783010_tocc_a1.EnrollmentService().releaseUnconfirmedSeat(enrollmentId);
+  gs.info('[RELEASE-SMOKE] ' + JSON.stringify(result));
+})();
+```
+
+Expected:
+- `success=true`
+- Enrollment status becomes `cancelled`.
+- Linked session seats are recalculated by `EnrollmentService.syncSessionAfterEnrollmentChange()`.

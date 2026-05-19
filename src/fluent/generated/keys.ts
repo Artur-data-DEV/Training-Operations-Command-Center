@@ -2379,7 +2379,7 @@ declare global {
                     x_783010_tocc_a1_flow_attendance_confirmation_fire_event: {
                         table: 'sys_hub_action_instance_v2'
                         id: '1fdfc9dc11964d9e96cab01e33e1cd06'
-                        deleted: false
+                        deleted: true
                     }
                     x_783010_tocc_a1_flow_attendance_confirmation_fire_event_v2: {
                         table: 'sys_hub_action_instance_v2'
@@ -2388,7 +2388,7 @@ declare global {
                     x_783010_tocc_a1_flow_attendance_confirmation_lookup_enrollments: {
                         table: 'sys_hub_action_instance_v2'
                         id: '24acf38eb8204c94b30100d55fd7bde9'
-                        deleted: false
+                        deleted: true
                     }
                     x_783010_tocc_a1_flow_attendance_confirmation_lookup_enrollments_v2: {
                         table: 'sys_hub_action_instance_v2'
@@ -2406,7 +2406,7 @@ declare global {
                     x_783010_tocc_a1_flow_attendance_confirmation_loop_enrollments: {
                         table: 'sys_hub_flow_logic_instance_v2'
                         id: 'fa35bf63d5ff467a99cea4886719fadd'
-                        deleted: false
+                        deleted: true
                     }
                     x_783010_tocc_a1_flow_attendance_confirmation_loop_enrollments_v2: {
                         table: 'sys_hub_flow_logic_instance_v2'
@@ -2415,7 +2415,7 @@ declare global {
                     x_783010_tocc_a1_flow_attendance_confirmation_loop_sessions: {
                         table: 'sys_hub_flow_logic_instance_v2'
                         id: 'f29570ba8143449d93feeb25ff52d035'
-                        deleted: false
+                        deleted: true
                     }
                     x_783010_tocc_a1_flow_attendance_confirmation_loop_sessions_v2: {
                         table: 'sys_hub_flow_logic_instance_v2'
@@ -2429,6 +2429,7 @@ declare global {
                     x_783010_tocc_a1_flow_daily_kpi_refresh_lookup_snapshots_v2: {
                         table: 'sys_hub_action_instance_v2'
                         id: '2b87e3fd55b24e82926f699b2cb3417f'
+                        deleted: true
                     }
                     x_783010_tocc_a1_flow_daily_kpi_refresh_signal: {
                         table: 'sys_hub_flow'
@@ -12421,6 +12422,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: '62464b25bd3f4be19c8863164a6d65f8'
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: 'c801ccc07bd041ebad1d24217b43221a'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '624e7eceb7a644b88078d7f291a8149c'
                         deleted: true
@@ -15159,6 +15168,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: '8139c2dfac4f406195981b78a8f342eb'
+                        deleted: true
                         key: {
                             sc_cat_item: '87a653bbc0454299bb83894d8a227292'
                             sc_catalog: '4394631fed774ce699695a83911ecb0c'
@@ -19937,6 +19947,14 @@ declare global {
                     },
                     {
                         table: 'sc_cat_item_catalog'
+                        id: 'b705113a68d745199635573b1f3e85c9'
+                        key: {
+                            sc_cat_item: '87a653bbc0454299bb83894d8a227292'
+                            sc_catalog: 'b5225f10cdf54b55839f1e828020611c'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
                         id: 'b7872fc5c6c546b68ab83d3013802573'
                         deleted: true
                         key: {
@@ -21832,6 +21850,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'cc222980c7d2418fab64ffd0e6df66c1'
+                        deleted: true
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: '4c142ea766c547cea7005c441469da76'
@@ -22819,6 +22838,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'd7350ca4cf4644a191711ea6bca4e778'
+                        deleted: true
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: '0ddae732187c4fa6a42da76fa04ff01f'
@@ -24998,6 +25018,14 @@ declare global {
                         key: {
                             document_key: 'ad0c312425214c1a98e14cbdd03b5f50'
                             variable: 'dd54cf535320220002c6435723dc34fd'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'ee281e74ef444ee889c306a65c1c22e0'
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '4744a95857c54efeba5bac8e96244b2f'
                         }
                     },
                     {
