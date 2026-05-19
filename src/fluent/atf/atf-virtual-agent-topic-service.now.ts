@@ -235,8 +235,8 @@ Test(
 
                 var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
                 enrollment.initialize();
-                enrollment.setValue('student', studentId);
-                enrollment.setValue('training_session', sessionId);
+                enrollment.setValue('tocc_student', studentId);
+                enrollment.setValue('tocc_training_session', sessionId);
                 enrollment.setValue('status', 'approved');
                 enrollment.setValue('confirmed', false);
                 var enrollmentId = enrollment.insert();
@@ -313,16 +313,16 @@ Test(
 
                 var approvedNotConfirmed = new GlideRecord('x_783010_tocc_a1_student_enrollment');
                 approvedNotConfirmed.initialize();
-                approvedNotConfirmed.setValue('student', studentId);
-                approvedNotConfirmed.setValue('training_session', sessionId);
+                approvedNotConfirmed.setValue('tocc_student', studentId);
+                approvedNotConfirmed.setValue('tocc_training_session', sessionId);
                 approvedNotConfirmed.setValue('status', 'approved');
                 approvedNotConfirmed.setValue('confirmed', false);
                 approvedNotConfirmed.insert();
 
                 var waitlisted = new GlideRecord('x_783010_tocc_a1_student_enrollment');
                 waitlisted.initialize();
-                waitlisted.setValue('student', studentId);
-                waitlisted.setValue('training_session', sessionId);
+                waitlisted.setValue('tocc_student', studentId);
+                waitlisted.setValue('tocc_training_session', sessionId);
                 waitlisted.setValue('status', 'waitlisted');
                 waitlisted.setValue('confirmed', false);
                 waitlisted.insert();

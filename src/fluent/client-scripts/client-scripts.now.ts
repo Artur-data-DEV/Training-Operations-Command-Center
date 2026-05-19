@@ -195,7 +195,7 @@ ClientScript({
         try {
             var result = JSON.parse(answer);
             if (result.success) {
-                g_form.setValue('student', result.student_sys_id);
+                g_form.setValue('tocc_student', result.student_sys_id);
             }
         } catch(e) {
             // Silent fail — BR will enforce student resolution.

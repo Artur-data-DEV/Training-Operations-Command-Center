@@ -39,9 +39,9 @@ Test(
                 // Create reservation in approved status â€” BR should fire and create session
                 var reservation = new GlideRecord('x_783010_tocc_a1_room_reservation');
                 reservation.initialize();
-                reservation.setValue('course', courseId);
-                reservation.setValue('room', roomId);
-                reservation.setValue('instructor', gs.getUserID());
+                reservation.setValue('tocc_course', courseId);
+                reservation.setValue('tocc_room', roomId);
+                reservation.setValue('tocc_instructor', gs.getUserID());
                 reservation.setValue('start_datetime', '2037-03-01 09:00:00');
                 reservation.setValue('end_datetime', '2037-03-01 11:00:00');
                 reservation.setValue('expected_participants', 12);
@@ -52,7 +52,7 @@ Test(
                 // BR_SyncTrainingSession should have created a session
                 // Allow a short delay for workflow to complete if async â€” but BRs are sync.
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
-                session.addQuery('reservation', reservationId);
+                session.addQuery('tocc_reservation', reservationId);
                 session.setLimit(1);
                 session.query();
 
@@ -101,9 +101,9 @@ Test(
                 // Create approved reservation â†’ session auto-created
                 var reservation = new GlideRecord('x_783010_tocc_a1_room_reservation');
                 reservation.initialize();
-                reservation.setValue('course', courseId);
-                reservation.setValue('room', roomId);
-                reservation.setValue('instructor', gs.getUserID());
+                reservation.setValue('tocc_course', courseId);
+                reservation.setValue('tocc_room', roomId);
+                reservation.setValue('tocc_instructor', gs.getUserID());
                 reservation.setValue('start_datetime', '2037-04-01 09:00:00');
                 reservation.setValue('end_datetime', '2037-04-01 11:00:00');
                 reservation.setValue('expected_participants', 10);
@@ -113,7 +113,7 @@ Test(
 
                 // Confirm session was created
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
-                session.addQuery('reservation', reservationId);
+                session.addQuery('tocc_reservation', reservationId);
                 session.setLimit(1);
                 session.query();
                 gs.assertTrue(session.next(), 'Session not found after reservation approval.');
@@ -173,9 +173,9 @@ Test(
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session FULL2');
-                session.setValue('course', courseId);
+                session.setValue('tocc_course', courseId);
                 session.setValue('room', roomId);
-                session.setValue('instructor', gs.getUserID());
+                session.setValue('tocc_instructor', gs.getUserID());
                 session.setValue('start_datetime', '2037-05-01 09:00:00');
                 session.setValue('end_datetime', '2037-05-01 11:00:00');
                 session.setValue('total_seats', 1);

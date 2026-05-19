@@ -106,8 +106,8 @@ UiPolicy({
     active: true,
     conditions: 'status=cancelled^ORstatus=rejected',
     actions: [
-        { field: 'student', readOnly: true },
-        { field: 'training_session', readOnly: true },
+        { field: 'tocc_student', readOnly: true },
+        { field: 'tocc_training_session', readOnly: true },
         { field: 'confirmed', readOnly: true },
     ],
     reverseIfFalse: true,

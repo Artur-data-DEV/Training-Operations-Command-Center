@@ -263,7 +263,7 @@ export const requestTrainingEnrollmentProducer = CatalogItemRecordProducer({
             useReferenceQualifier: 'simple',
             referenceQualCondition: 'statusINopen,full',
             mapToField: true,
-            field: 'training_session',
+            field: 'tocc_training_session',
         }),
         enrollment_notes: MultiLineTextVariable({
             question: 'Additional Notes',
@@ -297,9 +297,9 @@ export const requestTrainingEnrollmentProducer = CatalogItemRecordProducer({
             current.setAbortAction(true);
             return;
         }
-        current.setValue('student', createdStudentId);
+        current.setValue('tocc_student', createdStudentId);
     } else {
-        current.setValue('student', student.getUniqueValue());
+        current.setValue('tocc_student', student.getUniqueValue());
     }
 
     current.setValue('status', 'pending');
@@ -307,7 +307,7 @@ export const requestTrainingEnrollmentProducer = CatalogItemRecordProducer({
     if (gs.nil(current.getValue('short_description'))) {
         current.setValue(
             'short_description',
-            'Enrollment request for ' + current.getDisplayValue('training_session')
+            'Enrollment request for ' + current.getDisplayValue('tocc_training_session')
         );
     }
 })(producer, current);`,

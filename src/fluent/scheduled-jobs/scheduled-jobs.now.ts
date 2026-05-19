@@ -71,7 +71,7 @@ ScheduledScript({
         var sessionId = session.getUniqueValue();
 
         var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
-        enrollment.addQuery('training_session', sessionId);
+        enrollment.addQuery('tocc_training_session', sessionId);
         enrollment.addQuery('status', 'approved');
         enrollment.addQuery('confirmed', false);
         enrollment.query();

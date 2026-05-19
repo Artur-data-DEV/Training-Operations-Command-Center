@@ -41,8 +41,8 @@ Test(
                 session.initialize();
                 session.setValue('title', 'ATF Attendance Present');
                 session.setValue('room', roomId);
-                session.setValue('course', courseId);
-                session.setValue('instructor', gs.getUserID());
+                session.setValue('tocc_course', courseId);
+                session.setValue('tocc_instructor', gs.getUserID());
                 session.setValue('start_datetime', '2040-01-10 09:00:00');
                 session.setValue('end_datetime', '2040-01-10 11:00:00');
                 session.setValue('total_seats', 10);
@@ -66,8 +66,8 @@ Test(
 
                 var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
                 enrollment.initialize();
-                enrollment.setValue('student', studentId);
-                enrollment.setValue('training_session', sessionId);
+                enrollment.setValue('tocc_student', studentId);
+                enrollment.setValue('tocc_training_session', sessionId);
                 enrollment.setValue('status', 'approved');
                 var enrollmentId = enrollment.insert();
 
@@ -131,8 +131,8 @@ Test(
                 session.initialize();
                 session.setValue('title', 'ATF Attendance Block');
                 session.setValue('room', roomId);
-                session.setValue('course', courseId);
-                session.setValue('instructor', gs.getUserID());
+                session.setValue('tocc_course', courseId);
+                session.setValue('tocc_instructor', gs.getUserID());
                 session.setValue('start_datetime', '2040-02-10 09:00:00');
                 session.setValue('end_datetime', '2040-02-10 11:00:00');
                 session.setValue('total_seats', 10);
@@ -156,8 +156,8 @@ Test(
 
                 var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
                 enrollment.initialize();
-                enrollment.setValue('student', studentId);
-                enrollment.setValue('training_session', sessionId);
+                enrollment.setValue('tocc_student', studentId);
+                enrollment.setValue('tocc_training_session', sessionId);
                 enrollment.setValue('status', 'approved');
                 var enrollmentId = enrollment.insert();
 
@@ -219,8 +219,8 @@ Test(
                 session.initialize();
                 session.setValue('title', 'ATF Attendance Absent');
                 session.setValue('room', roomId);
-                session.setValue('course', courseId);
-                session.setValue('instructor', gs.getUserID());
+                session.setValue('tocc_course', courseId);
+                session.setValue('tocc_instructor', gs.getUserID());
                 session.setValue('start_datetime', '2040-03-10 09:00:00');
                 session.setValue('end_datetime', '2040-03-10 11:00:00');
                 session.setValue('total_seats', 10);
@@ -244,8 +244,8 @@ Test(
 
                 var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
                 enrollment.initialize();
-                enrollment.setValue('student', studentId);
-                enrollment.setValue('training_session', sessionId);
+                enrollment.setValue('tocc_student', studentId);
+                enrollment.setValue('tocc_training_session', sessionId);
                 enrollment.setValue('status', 'approved');
                 var enrollmentId = enrollment.insert();
 

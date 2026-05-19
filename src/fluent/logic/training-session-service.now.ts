@@ -124,7 +124,7 @@ TrainingSessionService.prototype = {
         }
 
         var agg = new GlideAggregate('x_783010_tocc_a1_student_enrollment');
-        agg.addQuery('training_session', sessionId);
+        agg.addQuery('tocc_training_session', sessionId);
         agg.addQuery('status', 'approved');
         agg.addAggregate('COUNT');
         agg.query();

@@ -44,9 +44,9 @@ Test(
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session DUP');
-                session.setValue('course', courseId);
+                session.setValue('tocc_course', courseId);
                 session.setValue('room', roomId);
-                session.setValue('instructor', gs.getUserID());
+                session.setValue('tocc_instructor', gs.getUserID());
                 session.setValue('start_datetime', '2036-01-10 09:00:00');
                 session.setValue('end_datetime', '2036-01-10 11:00:00');
                 session.setValue('total_seats', 10);
@@ -90,17 +90,17 @@ Test(
 
                     var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
                     enrollment.initialize();
-                    enrollment.setValue('student', studentId);
-                    enrollment.setValue('training_session', sessionId);
+                    enrollment.setValue('tocc_student', studentId);
+                    enrollment.setValue('tocc_training_session', sessionId);
                     enrollment.setValue('status', 'pending');
 
                     var enrollmentId = enrollment.insert();
                     if (!enrollmentId) {
                         var insertMessage = '';
                         try {
-                            insertMessage = enrollment.getLastErrorMessage() || gs.getErrorMessage() || '';
+                            insertMessage = enrollment.getLastErrorMessage() || '';
                         } catch (e) {
-                            insertMessage = gs.getErrorMessage() || '';
+                            insertMessage = '';
                         }
                         return {
                             success: false,
@@ -166,9 +166,9 @@ Test(
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session CANCELLED');
-                session.setValue('course', courseId);
+                session.setValue('tocc_course', courseId);
                 session.setValue('room', roomId);
-                session.setValue('instructor', gs.getUserID());
+                session.setValue('tocc_instructor', gs.getUserID());
                 session.setValue('start_datetime', '2036-02-01 09:00:00');
                 session.setValue('end_datetime', '2036-02-01 11:00:00');
                 session.setValue('total_seats', 10);
@@ -199,17 +199,17 @@ Test(
 
                     var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
                     enrollment.initialize();
-                    enrollment.setValue('student', studentId);
-                    enrollment.setValue('training_session', sessionId);
+                    enrollment.setValue('tocc_student', studentId);
+                    enrollment.setValue('tocc_training_session', sessionId);
                     enrollment.setValue('status', 'pending');
 
                     var enrollmentId = enrollment.insert();
                     if (!enrollmentId) {
                         var insertMessage = '';
                         try {
-                            insertMessage = enrollment.getLastErrorMessage() || gs.getErrorMessage() || '';
+                            insertMessage = enrollment.getLastErrorMessage() || '';
                         } catch (e) {
-                            insertMessage = gs.getErrorMessage() || '';
+                            insertMessage = '';
                         }
                         return {
                             success: false,
@@ -279,9 +279,9 @@ Test(
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session FULL-WL');
-                session.setValue('course', courseId);
+                session.setValue('tocc_course', courseId);
                 session.setValue('room', roomId);
-                session.setValue('instructor', gs.getUserID());
+                session.setValue('tocc_instructor', gs.getUserID());
                 session.setValue('start_datetime', '2036-03-01 09:00:00');
                 session.setValue('end_datetime', '2036-03-01 11:00:00');
                 session.setValue('total_seats', 1);
@@ -313,17 +313,17 @@ Test(
 
                     var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
                     enrollment.initialize();
-                    enrollment.setValue('student', studentId);
-                    enrollment.setValue('training_session', sessionId);
+                    enrollment.setValue('tocc_student', studentId);
+                    enrollment.setValue('tocc_training_session', sessionId);
                     enrollment.setValue('status', 'pending');
 
                     var enrollmentId = enrollment.insert();
                     if (!enrollmentId) {
                         var insertMessage = '';
                         try {
-                            insertMessage = enrollment.getLastErrorMessage() || gs.getErrorMessage() || '';
+                            insertMessage = enrollment.getLastErrorMessage() || '';
                         } catch (e) {
-                            insertMessage = gs.getErrorMessage() || '';
+                            insertMessage = '';
                         }
                         return {
                             success: false,
@@ -395,9 +395,9 @@ Test(
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session FULL-BLK');
-                session.setValue('course', courseId);
+                session.setValue('tocc_course', courseId);
                 session.setValue('room', roomId);
-                session.setValue('instructor', gs.getUserID());
+                session.setValue('tocc_instructor', gs.getUserID());
                 session.setValue('start_datetime', '2036-04-01 09:00:00');
                 session.setValue('end_datetime', '2036-04-01 11:00:00');
                 session.setValue('total_seats', 1);
@@ -428,17 +428,17 @@ Test(
 
                     var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
                     enrollment.initialize();
-                    enrollment.setValue('student', studentId);
-                    enrollment.setValue('training_session', sessionId);
+                    enrollment.setValue('tocc_student', studentId);
+                    enrollment.setValue('tocc_training_session', sessionId);
                     enrollment.setValue('status', 'pending');
 
                     var enrollmentId = enrollment.insert();
                     if (!enrollmentId) {
                         var insertMessage = '';
                         try {
-                            insertMessage = enrollment.getLastErrorMessage() || gs.getErrorMessage() || '';
+                            insertMessage = enrollment.getLastErrorMessage() || '';
                         } catch (e) {
-                            insertMessage = gs.getErrorMessage() || '';
+                            insertMessage = '';
                         }
                         return {
                             success: false,
@@ -505,9 +505,9 @@ Test(
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session SEATS');
-                session.setValue('course', courseId);
+                session.setValue('tocc_course', courseId);
                 session.setValue('room', roomId);
-                session.setValue('instructor', gs.getUserID());
+                session.setValue('tocc_instructor', gs.getUserID());
                 session.setValue('start_datetime', '2036-05-01 09:00:00');
                 session.setValue('end_datetime', '2036-05-01 11:00:00');
                 session.setValue('total_seats', 10);
@@ -538,17 +538,17 @@ Test(
 
                     var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
                     enrollment.initialize();
-                    enrollment.setValue('student', studentId);
-                    enrollment.setValue('training_session', sessionId);
+                    enrollment.setValue('tocc_student', studentId);
+                    enrollment.setValue('tocc_training_session', sessionId);
                     enrollment.setValue('status', 'pending');
 
                     var enrollmentId = enrollment.insert();
                     if (!enrollmentId) {
                         var insertMessage = '';
                         try {
-                            insertMessage = enrollment.getLastErrorMessage() || gs.getErrorMessage() || '';
+                            insertMessage = enrollment.getLastErrorMessage() || '';
                         } catch (e) {
-                            insertMessage = gs.getErrorMessage() || '';
+                            insertMessage = '';
                         }
                         return {
                             success: false,
@@ -618,9 +618,9 @@ Test(
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session FREE');
-                session.setValue('course', courseId);
+                session.setValue('tocc_course', courseId);
                 session.setValue('room', roomId);
-                session.setValue('instructor', gs.getUserID());
+                session.setValue('tocc_instructor', gs.getUserID());
                 session.setValue('start_datetime', '2037-01-10 09:00:00');
                 session.setValue('end_datetime', '2037-01-10 11:00:00');
                 session.setValue('total_seats', 5);
@@ -650,17 +650,17 @@ Test(
 
                     var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
                     enrollment.initialize();
-                    enrollment.setValue('student', studentId);
-                    enrollment.setValue('training_session', sessionId);
+                    enrollment.setValue('tocc_student', studentId);
+                    enrollment.setValue('tocc_training_session', sessionId);
                     enrollment.setValue('status', 'pending');
 
                     var enrollmentId = enrollment.insert();
                     if (!enrollmentId) {
                         var insertMessage = '';
                         try {
-                            insertMessage = enrollment.getLastErrorMessage() || gs.getErrorMessage() || '';
+                            insertMessage = enrollment.getLastErrorMessage() || '';
                         } catch (e) {
-                            insertMessage = gs.getErrorMessage() || '';
+                            insertMessage = '';
                         }
                         return {
                             success: false,
@@ -732,9 +732,9 @@ Test(
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session PROMO');
-                session.setValue('course', courseId);
+                session.setValue('tocc_course', courseId);
                 session.setValue('room', roomId);
-                session.setValue('instructor', gs.getUserID());
+                session.setValue('tocc_instructor', gs.getUserID());
                 session.setValue('start_datetime', '2037-02-01 09:00:00');
                 session.setValue('end_datetime', '2037-02-01 11:00:00');
                 session.setValue('total_seats', 1);
@@ -768,17 +768,17 @@ Test(
 
                     var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
                     enrollment.initialize();
-                    enrollment.setValue('student', studentId);
-                    enrollment.setValue('training_session', sessionId);
+                    enrollment.setValue('tocc_student', studentId);
+                    enrollment.setValue('tocc_training_session', sessionId);
                     enrollment.setValue('status', 'pending');
 
                     var enrollmentId = enrollment.insert();
                     if (!enrollmentId) {
                         var insertMessage = '';
                         try {
-                            insertMessage = enrollment.getLastErrorMessage() || gs.getErrorMessage() || '';
+                            insertMessage = enrollment.getLastErrorMessage() || '';
                         } catch (e) {
-                            insertMessage = gs.getErrorMessage() || '';
+                            insertMessage = '';
                         }
                         return {
                             success: false,
@@ -861,9 +861,9 @@ Test(
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.initialize();
                 session.setValue('title', 'ATF Session LATE');
-                session.setValue('course', courseId);
+                session.setValue('tocc_course', courseId);
                 session.setValue('room', roomId);
-                session.setValue('instructor', gs.getUserID());
+                session.setValue('tocc_instructor', gs.getUserID());
                 session.setValue('start_datetime', start.getValue());
                 session.setValue('end_datetime', end.getValue());
                 session.setValue('total_seats', 10);
@@ -888,17 +888,17 @@ Test(
 
                     var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
                     enrollment.initialize();
-                    enrollment.setValue('student', studentId);
-                    enrollment.setValue('training_session', sessionId);
+                    enrollment.setValue('tocc_student', studentId);
+                    enrollment.setValue('tocc_training_session', sessionId);
                     enrollment.setValue('status', 'pending');
 
                     var enrollmentId = enrollment.insert();
                     if (!enrollmentId) {
                         var insertMessage = '';
                         try {
-                            insertMessage = enrollment.getLastErrorMessage() || gs.getErrorMessage() || '';
+                            insertMessage = enrollment.getLastErrorMessage() || '';
                         } catch (e) {
-                            insertMessage = gs.getErrorMessage() || '';
+                            insertMessage = '';
                         }
                         return {
                             success: false,

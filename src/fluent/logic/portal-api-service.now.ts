@@ -47,7 +47,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         gr.addQuery('start_datetime', '>=', new GlideDateTime().getValue());
         gr.addQuery('total_seats', '>', 0);
 
-        if (courseFilter)   { gr.addQuery('course', courseFilter); }
+        if (courseFilter)   { gr.addQuery('tocc_course', courseFilter); }
         if (locationFilter) { gr.addQuery('room.location', locationFilter); }
         if (fromDate)       { gr.addQuery('start_datetime', '>=', fromDate); }
 
@@ -183,7 +183,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
     getMyReservations: function() {
         var reservations = [];
         var gr = new GlideRecord('x_783010_tocc_a1_room_reservation');
-        var ownership = gr.addQuery('instructor', gs.getUserID());
+        var ownership = gr.addQuery('tocc_instructor', gs.getUserID());
         ownership.addOrCondition('opened_by', gs.getUserID());
         gr.orderByDesc('start_datetime');
         gr.query();
