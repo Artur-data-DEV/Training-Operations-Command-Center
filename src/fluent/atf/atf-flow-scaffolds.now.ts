@@ -34,9 +34,9 @@ Test(
                     assertTrue(gr.next(), 'Flow not found: ' + flowName);
                 }
 
-                assertFlowExists('[TOCC][FLOW] Reservation Intake');
+                assertFlowExists('[TOCC][FLOW] Reservation Approval');
                 assertFlowExists('[TOCC][FLOW] Session Cancelled');
-                assertFlowExists('[TOCC][FLOW] Daily KPI Refresh Observation');
+                assertFlowExists('[TOCC][FLOW] Enrollment Approval');
                 assertFlowExists('[TOCC][FLOW] Attendance Confirmation Cadence');
                 assertFlowExists('[TOCC][FLOW] Session Reminder Cadence');
             `,
@@ -73,8 +73,7 @@ Test(
                     assertTrue(gr.next(), 'Subflow not found: ' + flowName);
                 }
 
-                assertFlowExists('[TOCC][SF] Reservation Intake Processing');
-                assertFlowExists('[TOCC][SF] Session Cancelled Processing');
+                assertFlowExists('[TOCC][SF] Reservation Approval Routing');
             `,
         })
     }
@@ -113,7 +112,7 @@ Test(
                 var flowCount = countByPrefix('[TOCC][FLOW]');
                 var subflowCount = countByPrefix('[TOCC][SF]');
                 assertTrue(flowCount >= 5, 'Expected at least 5 [TOCC][FLOW] records, got: ' + flowCount);
-                assertTrue(subflowCount >= 2, 'Expected at least 2 [TOCC][SF] records, got: ' + subflowCount);
+                assertTrue(subflowCount >= 1, 'Expected at least 1 [TOCC][SF] record, got: ' + subflowCount);
             `,
         })
     }

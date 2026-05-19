@@ -13,8 +13,9 @@ The SDK now materializes these records in `sys_hub_flow`:
 - `[TOCC][FLOW] Daily KPI Refresh Observation`
 - `[TOCC][FLOW] Attendance Confirmation Cadence`
 - `[TOCC][FLOW] Session Reminder Cadence`
-- `[TOCC][SF] Reservation Intake Processing`
-- `[TOCC][SF] Session Cancelled Processing`
+- `[TOCC][SF] Reservation Approval Routing`
+
+Log-only subflows are intentionally not part of the active baseline. A subflow should encapsulate reusable operational logic with one responsibility; otherwise keep the logic in the owning flow.
 
 ## Activation sequence
 

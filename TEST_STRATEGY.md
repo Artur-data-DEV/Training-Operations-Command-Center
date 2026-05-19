@@ -1,9 +1,12 @@
 # TEST_STRATEGY.md - Training Operations Command Center
 
-> Version: 1.2 - Stabilization Sprint
+> Version: 1.3 - Platform Closure
 > ATF coverage target: >= 70% of core Script Include behaviors
 > Current status: ATF suite is implemented and being stabilized against live schema and BR-driven flows.
 > Execution status: Pending validated run in instance after latest ATF alignment.
+
+Operational reading and manual homologation plan:
+`docs/manual-config/project-operational-map-and-test-plan.md`
 
 ---
 
@@ -55,8 +58,8 @@ gs.assertFalse(hasConflict, 'Expected no conflict for non-overlapping reservatio
 ```javascript
 var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
 enrollment.initialize();
-enrollment.setValue('student', studentId);
-enrollment.setValue('training_session', sessionId);
+enrollment.setValue('tocc_student', studentId);
+enrollment.setValue('tocc_training_session', sessionId);
 var id = enrollment.insert();
 gs.assertNotNull(id, 'Enrollment should be created or blocked by BR with clear error');
 ```
@@ -80,6 +83,11 @@ gs.resetSession();
 - M-03 Late cancellation block and backoffice override
 - M-04 Unconfirmed seat release scheduled job
 - M-05 Role isolation and ACL matrix
+- M-06 Backoffice Queue data-quality gate
+- M-07 Property override and training_config fallback
+- M-08 Flow/subflow field model (`tocc_training_session`)
+- M-09 CMDB room resource CI linkage
+- M-10 Portal publishability filter for sessions
 
 Expected outcome: no server errors, valid status transitions, event and notification traceability.
 
@@ -107,3 +115,4 @@ Current note:
 ---
 
 Last updated: 2026-05-14
+Updated for platform closure docs: 2026-05-19

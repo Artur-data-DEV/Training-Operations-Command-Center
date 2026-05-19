@@ -1,11 +1,11 @@
 import { action, Flow, Subflow, trigger, wfa } from '@servicenow/sdk/automation'
 import { ReferenceColumn } from '@servicenow/sdk/core'
 
-const reservationSignalSubflow = Subflow(
+const reservationApprovalRoutingSubflow = Subflow(
     {
         $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_signal_v2'],
-        name: '[TOCC][SF] Reservation Intake Processing',
-        description: 'Queues reservation submitted notification.',
+        name: '[TOCC][SF] Reservation Approval Routing',
+        description: 'Routes a submitted room reservation to the TOCC Backoffice group, requests approval, and applies the decision.',
         runAs: 'system',
         inputs: {
             reservationRecord: ReferenceColumn({
@@ -15,89 +15,7 @@ const reservationSignalSubflow = Subflow(
             }),
         },
     },
-    () => {
-        wfa.action(
-            action.core.log,
-            { $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_fire_event_v2'] },
-            {
-                log_level: 'info',
-                log_message: '[TOCC] Reservation submitted signal handled by FLOW-01.',
-            }
-        )
-    }
-)
-
-const sessionCancelledSignalSubflow = Subflow(
-    {
-        $id: Now.ID['x_783010_tocc_a1_subflow_session_cancelled_signal_v2'],
-        name: '[TOCC][SF] Session Cancelled Processing',
-        description: 'Dispatches cancellation notifications for approved enrollments in a cancelled session.',
-        runAs: 'system',
-        inputs: {
-            sessionRecord: ReferenceColumn({
-                label: 'Training Session Record',
-                referenceTable: 'x_783010_tocc_a1_training_session',
-                mandatory: true,
-            }),
-        },
-    },
     (params) => {
-        const approvedEnrollments = wfa.action(
-            action.core.lookUpRecords,
-            { $id: Now.ID['x_783010_tocc_a1_subflow_session_cancelled_lookup_enrollments_v2'] },
-            {
-                table: 'x_783010_tocc_a1_student_enrollment',
-                conditions: `tocc_training_session=${wfa.dataPill(params.inputs.sessionRecord, 'reference')}^status=approved`,
-                max_results: 10000,
-                sort_type: 'sort_asc',
-            }
-        )
-
-        wfa.flowLogic.forEach(
-            wfa.dataPill(approvedEnrollments.Records, 'array.object'),
-            { $id: Now.ID['x_783010_tocc_a1_subflow_session_cancelled_loop_enrollments_v2'] },
-            () => {
-                wfa.action(
-                    action.core.log,
-                    { $id: Now.ID['x_783010_tocc_a1_subflow_session_cancelled_fire_event_v2'] },
-                    {
-                        log_level: 'info',
-                        log_message: '[TOCC] Session cancellation processed for approved enrollment.',
-                    }
-                )
-            }
-        )
-    }
-)
-
-Flow(
-    {
-        $id: Now.ID['x_783010_tocc_a1_flow_reservation_intake_signal_v2'],
-        name: '[TOCC][FLOW] Reservation Approval',
-        description: 'On submitted reservation, route to backoffice approval and apply decision.',
-        runAs: 'system',
-        flowPriority: 'HIGH',
-    },
-    wfa.trigger(
-        trigger.record.created,
-        { $id: Now.ID['x_783010_tocc_a1_flow_reservation_intake_signal_trigger_v2'] },
-        {
-            table: 'x_783010_tocc_a1_room_reservation',
-            condition: 'status=submitted',
-            run_flow_in: 'background',
-            trigger_strategy: 'once',
-        }
-    ),
-    (params) => {
-        wfa.subflow(
-            reservationSignalSubflow,
-            { $id: Now.ID['x_783010_tocc_a1_flow_reservation_intake_signal_subflow_call_v2'] },
-            {
-                reservationRecord: wfa.dataPill(params.trigger.current, 'reference'),
-                waitForCompletion: true,
-            }
-        )
-
         const backofficeGroup = wfa.action(
             action.core.lookUpRecord,
             { $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_lookup_group'] },
@@ -122,7 +40,7 @@ Flow(
                     { $id: Now.ID['x_783010_tocc_a1_flow_reservation_set_assignment'] },
                     {
                         table_name: 'x_783010_tocc_a1_room_reservation',
-                        record: wfa.dataPill(params.trigger.current, 'reference'),
+                        record: wfa.dataPill(params.inputs.reservationRecord, 'reference'),
                         values: TemplateValue({
                             assignment_group: wfa.dataPill(backofficeGroup.Record, 'string'),
                             work_notes: '[FLOW-01] Assignment group set on reservation submission.',
@@ -134,7 +52,7 @@ Flow(
                     action.core.askForApproval,
                     { $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_create_task_group'] },
                     {
-                        record: wfa.dataPill(params.trigger.current, 'reference'),
+                        record: wfa.dataPill(params.inputs.reservationRecord, 'reference'),
                         table: 'x_783010_tocc_a1_room_reservation',
                         approval_reason: 'Backoffice approval required for room reservation submission.',
                         approval_conditions: wfa.approvalRules({
@@ -171,20 +89,11 @@ Flow(
                     { $id: Now.ID['x_783010_tocc_a1_subflow_reservation_intake_create_task_fallback'] },
                     {
                         table_name: 'x_783010_tocc_a1_room_reservation',
-                        record: wfa.dataPill(params.trigger.current, 'reference'),
+                        record: wfa.dataPill(params.inputs.reservationRecord, 'reference'),
                         values: TemplateValue({
                             status: wfa.dataPill(reservationApproval.approval_state, 'string'),
                             work_notes: `Reservation decision applied by FLOW-01 (${wfa.dataPill(reservationApproval.approval_state, 'string')}).`,
                         }),
-                    }
-                )
-
-                wfa.action(
-                    action.core.log,
-                    { $id: Now.ID['x_783010_tocc_a1_flow_reservation_intake_signal_log'] },
-                    {
-                        log_level: 'info',
-                        log_message: '[TOCC] Reservation decision applied by FLOW-01.',
                     }
                 )
             }
@@ -203,10 +112,40 @@ Flow(
                             short_description: 'TOCC reservation pending manual routing',
                             description:
                                 'Backoffice group [TOCC] Backoffice was not found. Route this reservation manually.',
-                            parent: wfa.dataPill(params.trigger.current, 'reference'),
+                            parent: wfa.dataPill(params.inputs.reservationRecord, 'reference'),
                         }),
                     }
                 )
+            }
+        )
+    }
+)
+
+Flow(
+    {
+        $id: Now.ID['x_783010_tocc_a1_flow_reservation_intake_signal_v2'],
+        name: '[TOCC][FLOW] Reservation Approval',
+        description: 'On submitted reservation, route to backoffice approval and apply decision.',
+        runAs: 'system',
+        flowPriority: 'HIGH',
+    },
+    wfa.trigger(
+        trigger.record.created,
+        { $id: Now.ID['x_783010_tocc_a1_flow_reservation_intake_signal_trigger_v2'] },
+        {
+            table: 'x_783010_tocc_a1_room_reservation',
+            condition: 'status=submitted',
+            run_flow_in: 'background',
+            trigger_strategy: 'once',
+        }
+    ),
+    (params) => {
+        wfa.subflow(
+            reservationApprovalRoutingSubflow,
+            { $id: Now.ID['x_783010_tocc_a1_flow_reservation_intake_signal_subflow_call_v2'] },
+            {
+                reservationRecord: wfa.dataPill(params.trigger.current, 'reference'),
+                waitForCompletion: true,
             }
         )
 
@@ -372,12 +311,29 @@ Flow(
         }
     ),
     (params) => {
-        wfa.subflow(
-            sessionCancelledSignalSubflow,
-            { $id: Now.ID['x_783010_tocc_a1_flow_session_cancelled_signal_subflow_call_v2'] },
+        const approvedEnrollments = wfa.action(
+            action.core.lookUpRecords,
+            { $id: Now.ID['x_783010_tocc_a1_subflow_session_cancelled_lookup_enrollments_v2'] },
             {
-                sessionRecord: wfa.dataPill(params.trigger.current, 'reference'),
-                waitForCompletion: true,
+                table: 'x_783010_tocc_a1_student_enrollment',
+                conditions: `tocc_training_session=${wfa.dataPill(params.trigger.current, 'reference')}^status=approved`,
+                max_results: 10000,
+                sort_type: 'sort_asc',
+            }
+        )
+
+        wfa.flowLogic.forEach(
+            wfa.dataPill(approvedEnrollments.Records, 'array.object'),
+            { $id: Now.ID['x_783010_tocc_a1_subflow_session_cancelled_loop_enrollments_v2'] },
+            () => {
+                wfa.action(
+                    action.core.log,
+                    { $id: Now.ID['x_783010_tocc_a1_subflow_session_cancelled_fire_event_v2'] },
+                    {
+                        log_level: 'info',
+                        log_message: '[TOCC] Session cancellation processed for approved enrollment.',
+                    }
+                )
             }
         )
 

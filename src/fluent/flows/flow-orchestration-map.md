@@ -17,14 +17,14 @@ This map reflects the current implementation in:
 
 | Subflow | Purpose |
 |---|---|
-| Reservation Intake Processing | Emit reservation submitted event |
-| Session Cancelled Processing | Iterate approved enrollments and emit cancellation events |
+| Reservation Approval Routing | Reusable single-responsibility route: find Backoffice group, assign reservation, request approval, apply decision, or create fallback task |
 
 ## High-level sequence
 
 ```mermaid
 flowchart TD
-    R1[Reservation submitted] --> R2[Find [TOCC] Backoffice group]
+    R1[Reservation submitted] --> R0[Subflow: Reservation Approval Routing]
+    R0 --> R2[Find [TOCC] Backoffice group]
     R2 -->|Found| R3[Ask for Approval]
     R3 --> R4[Apply reservation status from approval_state]
     R4 --> R5[Emit reservation.<approval_state> event]
@@ -37,12 +37,13 @@ flowchart TD
     E5 --> E6[Emit enrollment.<approval_state> event]
     E3 -->|Missing| E7[Create manual fallback task]
 
-    C1[Session cancelled] --> C2[Subflow: notify approved enrollments]
+    C1[Session cancelled] --> C2[Flow lookup: approved enrollments by tocc_training_session]
 ```
 
 ## Notes
 
 - Reservation and enrollment approval decisions are now Flow-native (`action.core.askForApproval`).
+- Reservation approval routing is encapsulated in a real reusable subflow. Log-only subflows were removed to avoid fake reuse.
 - Enrollment configuration is not read directly by Flow. `EnrollmentService` and `TrainingConfigService` decide whether a record remains `pending`; the Flow only handles those pending records.
 - Flow enrollment and cancellation lookups use `tocc_training_session`, not legacy `training_session`.
 - Seat recalculation remains in business-rule/service layer (`EnrollmentService.syncSessionAfterEnrollmentChange`).

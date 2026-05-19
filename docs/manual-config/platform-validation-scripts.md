@@ -265,8 +265,7 @@ Expected:
     '[TOCC][FLOW] Session Cancelled',
     '[TOCC][FLOW] Attendance Confirmation Cadence',
     '[TOCC][FLOW] Session Reminder Cadence',
-    '[TOCC][SF] Reservation Intake Processing',
-    '[TOCC][SF] Session Cancelled Processing'
+    '[TOCC][SF] Reservation Approval Routing'
   ];
 
   for (var i = 0; i < names.length; i++) {
@@ -285,6 +284,7 @@ Expected:
 
 Expected:
 - All listed flows/subflows are found.
+- Only reusable subflows are listed. Log-only subflows were intentionally removed.
 - Active state matches the release decision. Reminder/confirmation cadence flows are scaffold/log-only; real notification dispatch is scheduled-job based.
 
 ## 10) Enrollment/session field model smoke for flow queries

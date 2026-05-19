@@ -35,6 +35,7 @@ Baseline for scoped app `x_783010_tocc_a1` on ServiceNow instance:
 - Platform alignment (VA/PA/CMDB/Workspace): `docs/manual-config/platform-alignment-runbook.md`
 - Platform homologation checklist (US-33..US-38): `docs/manual-config/platform-homologation-checklist.md`
 - Platform background validation scripts: `docs/manual-config/platform-validation-scripts.md`
+- Operational map and business test plan: `docs/manual-config/project-operational-map-and-test-plan.md`
 - Novas US de finalizacao: `docs/backlog/platform-finalization-user-stories.md`
 
 ## Foundation Baselines
