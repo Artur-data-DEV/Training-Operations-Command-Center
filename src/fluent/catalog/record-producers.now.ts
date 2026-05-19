@@ -8,6 +8,7 @@ import {
     ReferenceVariable,
     MultipleChoiceVariable,
 } from '@servicenow/sdk/core'
+import { toccServiceCatalog, toccServiceCategory } from './catalog-structure.now'
 
 export const createRoomReservationProducer = CatalogItemRecordProducer({
     $id: Now.ID['x_783010_tocc_a1_record_producer_create_room_reservation'],
@@ -18,7 +19,8 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
     shortDescription: 'For instructors to submit room reservation requests.',
     meta: ['training', 'room', 'reservation', 'instructor'],
     roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.admin'],
-    catalogs: [Now.ref('sc_catalog', { title: 'TOCC Self-Service Catalog' })],
+    catalogs: [toccServiceCatalog],
+    categories: [toccServiceCategory],
     variables: {
         reservation_room: ReferenceVariable({
             question: 'Select Room',
@@ -255,7 +257,8 @@ export const requestTrainingEnrollmentProducer = CatalogItemRecordProducer({
     shortDescription: 'For students to request enrollment in training sessions.',
     meta: ['training', 'enrollment', 'student', 'session'],
     roles: ['x_783010_tocc_a1.student', 'x_783010_tocc_a1.admin'],
-    catalogs: [Now.ref('sc_catalog', { title: 'TOCC Self-Service Catalog' })],
+    catalogs: [toccServiceCatalog],
+    categories: [toccServiceCategory],
     variables: {
         enrollment_training_session: ReferenceVariable({
             question: 'Training Session',
@@ -324,7 +327,9 @@ export const createCourseProducer = CatalogItemRecordProducer({
     shortDescription: 'For instructors to create courses before reservation and session planning.',
     meta: ['training', 'course', 'instructor'],
     roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.admin'],
-    catalogs: [Now.ref('sc_catalog', { title: 'TOCC Self-Service Catalog' })],
+    catalogs: [toccServiceCatalog],
+    categories: [toccServiceCategory],
+    redirectUrl: 'catalogHomePage',
     variables: {
         course_code: SingleLineTextVariable({
             question: 'Course Code',
@@ -421,4 +426,8 @@ export const createCourseProducer = CatalogItemRecordProducer({
     producer.portal_redirect = '?id=tocc_my_courses';
     producer.redirect = '?id=tocc_my_courses';
 })(producer, current);`,
+    postInsertScript: `(function execute(producer, current, cat_item) {
+    producer.portal_redirect = '?id=tocc_my_courses';
+    producer.redirect = '?id=tocc_my_courses';
+})(producer, current, cat_item);`,
 })

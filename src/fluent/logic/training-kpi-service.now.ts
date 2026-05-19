@@ -419,33 +419,43 @@ TrainingKpiService.prototype = {
     },
 
     _countKbViews: function(startValue, endValue) {
-        var gr = new GlideRecord('kb_view');
-        this._addDateRange(gr, 'sys_created_on', startValue, endValue);
-        if (gr.isValidField('kb_knowledge_base')) {
-            gr.addNotNullQuery('kb_knowledge_base');
-        }
-        gr.query();
+        try {
+            var gr = new GlideRecord('kb_view');
+            this._addDateRange(gr, 'sys_created_on', startValue, endValue);
+            if (gr.isValidField('kb_knowledge_base')) {
+                gr.addNotNullQuery('kb_knowledge_base');
+            }
+            gr.query();
 
-        var count = 0;
-        while (gr.next()) {
-            count = count + 1;
+            var count = 0;
+            while (gr.next()) {
+                count = count + 1;
+            }
+            return count;
+        } catch (e) {
+            gs.warn('[TOCC][TrainingKpiService] _countKbViews failed (likely missing cross-scope privilege): ' + this._toErrorMessage(e));
+            return 0;
         }
-        return count;
     },
 
     _countJournalContains: function(tableName, text, startValue, endValue) {
-        var gr = new GlideRecord('sys_journal_field');
-        gr.addQuery('name', tableName);
-        gr.addQuery('element', 'work_notes');
-        this._addDateRange(gr, 'sys_created_on', startValue, endValue);
-        gr.addQuery('value', 'CONTAINS', text);
-        gr.query();
+        try {
+            var gr = new GlideRecord('sys_journal_field');
+            gr.addQuery('name', tableName);
+            gr.addQuery('element', 'work_notes');
+            this._addDateRange(gr, 'sys_created_on', startValue, endValue);
+            gr.addQuery('value', 'CONTAINS', text);
+            gr.query();
 
-        var count = 0;
-        while (gr.next()) {
-            count = count + 1;
+            var count = 0;
+            while (gr.next()) {
+                count = count + 1;
+            }
+            return count;
+        } catch (e) {
+            gs.warn('[TOCC][TrainingKpiService] _countJournalContains failed (likely missing cross-scope privilege): ' + this._toErrorMessage(e));
+            return 0;
         }
-        return count;
     },
 
     _countSimple: function(tableName, queryFn) {

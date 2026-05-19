@@ -1,9 +1,9 @@
 # Implementation & Configuration Guide
 
-# SERVICE_PORTAL.md — Training Operations Command Center
+# Service Portal Configuration
 
 > **Sprint:** 5
-> **Strategy:** SDK-assisted — `PortalApiService` Script Include is SDK-first.
+> **Strategy:** SDK-assisted - `PortalApiService` Script Include is SDK-first.
 > Portal structure (pages/widgets/portal) is versioned in Fluent metadata under `src/fluent/portal/`.
 > This document is the operational runbook for validation and optional instance-level adjustments.
 
@@ -26,21 +26,24 @@
 
 ```
 Service Portal (AngularJS 1.x widgets)
-        │
-        ├── GlideAjax → PortalApiService (SDK-deployed Script Include)
-        │       ├── getAvailableSessions()
-        │       ├── getSessionDetail()
-        │       ├── getMyEnrollments()
-        │       ├── getMyReservations()
-        │       └── confirmMyAttendance()
-        │
-        ├── GlideAjax → TrainingContextAjax (SDK-deployed)
-        │       ├── checkRoomAvailability()
-        │       └── getAvailableRoomsByLocation()
-        │
-        └── Service Catalog → Record Producers (SDK-deployed)
-                ├── Create Room Reservation
-                └── Request Training Enrollment
+        |
+        +-- GlideAjax -> PortalApiService (SDK-deployed Script Include)
+        |       +-- getAvailableSessions()
+        |       +-- getSessionDetail()
+        |       +-- getMyEnrollments()
+        |       +-- getMyReservations()
+        |       +-- getMyCourses()
+        |       +-- getOperationsSnapshot()
+        |       +-- confirmMyAttendance()
+        |
+        +-- GlideAjax -> TrainingContextAjax (SDK-deployed)
+        |       +-- checkRoomAvailability()
+        |       +-- getAvailableRoomsByLocation()
+        |
+        +-- Service Catalog -> Record Producers (SDK-deployed)
+                +-- Create Room Reservation
+                +-- Request Training Enrollment
+                +-- Create Course
 ```
 
 **Widget data flow:**
@@ -215,12 +218,13 @@ Set script-based criteria using `gs.hasRole('x_783010_tocc_a1.student')` pattern
 
 ## Catalog Integration
 
-Both Record Producers deployed via SDK are surfaced in the portal:
+All Record Producers deployed via SDK are surfaced in the portal:
 
 | Record Producer | Portal Entry Point | Audience |
 |---|---|---|
 | Create Room Reservation | My Reservations page → "New Reservation" button → opens catalog item | Instructors |
 | Request Training Enrollment | Session Detail page → "Enroll" button → opens catalog item | Students |
+| Create Course | My Courses page or Home quick action -> "Create Course" button -> opens catalog item | Instructors |
 
 To link a catalog item in a portal widget, use the standard SP `catalog-item` URL:
 ```
@@ -282,7 +286,7 @@ Impersonate a user with each role (Student, Instructor, Backoffice) and walk thr
 
 ---
 
-# VIRTUAL_AGENT_DESIGN.md — Training Operations Command Center
+# Virtual Agent Design
 
 > **Version:** 1.1 — Sprint 7
 > **Strategy:** Manual configuration required on instance.
@@ -523,7 +527,7 @@ Here are the current Training Operations policies:
 📅 Room reservations must be submitted at least [X] hours in advance.
 🚫 Cancellations are not allowed within [X] hours of session start.
 ✅ Attendance confirmation is required [X] hours before the session.
-⏳ Waitlist: if a session is full, you are automatically placed on a waitlist
+ Waitlist: if a session is full, you are automatically placed on a waitlist
    and promoted when a seat opens.
 
 For the full policy guide, visit the Knowledge Base:
@@ -546,12 +550,12 @@ When user first opens the Virtual Agent with no specific intent:
 ```
 Hi! I'm the TOCC Assistant. How can I help you today?
 
-1. 🔍 Find training sessions
+1.  Find training sessions
 2. 📋 View my enrollments
 3. ✅ Confirm my attendance
-4. ❌ Cancel an enrollment
+4.  Cancel an enrollment
 5. 📖 Training policies
-6. 🧑‍💼 Talk to Backoffice
+6. 🧑💼 Talk to Backoffice
 ```
 
 ---
@@ -604,7 +608,7 @@ Set the bot identity to TOCC Assistant.
 
 ---
 
-# KNOWLEDGE_BASE_PLAN.md — Training Operations Command Center
+# Knowledge Base Plan
 
 > **Version:** 1.1 — Sprint 7
 > **Strategy:** SDK-assisted — KB structure configured on instance; article content authored in instance UI.
@@ -858,11 +862,11 @@ After Sprint 7 VA configuration, link each topic's fallback response to the rele
 
 ---
 
-# PLATFORM_ANALYTICS_KPIS.md — Training Operations Command Center
+# Platform Analytics KPIs
 
-> **Version:** 1.1 — Sprint 9
-> **Strategy:** SDK-assisted. Indicator definitions configured on instance via Performance Analytics.
-> Dashboard layout composed in Analytics Hub UI, with app-scoped KPI daily collector for baseline persistence.
+> **Version:** 1.2 — Sprint 14
+> **Strategy:** SDK-defined Platform Analytics dashboard plus app-scoped KPI snapshot collector.
+> The same operational snapshot feeds the portal home for Backoffice, Manager, and Admin personas.
 
 ---
 
@@ -873,7 +877,14 @@ After Sprint 7 VA configuration, link each topic's fallback response to the rele
 | Dashboard Name | Training Operations Performance Dashboard |
 | Audience | Manager (primary), Backoffice (secondary), Admin |
 | Refresh Cadence | Daily (automated) |
-| Data Source | All `x_783010_tocc_a1_*` scoped app tables |
+| Data Source | Operational tables plus `x_783010_tocc_a1_kpi_snapshot` |
+
+The dashboard is defined in `src/fluent/dashboards/platform-analytics-dashboard.now.ts` and is exposed from:
+
+- Portal home: `?id=tocc_home` for Backoffice, Manager, and Admin roles.
+- Portal menu: `Analytics`.
+- App Navigator module: `Platform Analytics Dashboard`.
+- Classic dashboard record: `Training Operations Performance Dashboard`.
 
 ---
 
@@ -1091,27 +1102,24 @@ After Sprint 7 VA configuration, link each topic's fallback response to the rele
 ## 3. Dashboard Layout
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│  ROW 1 — Executive Summary (4 score widgets)                    │
-│  [Occupancy Rate] [Fill Rate] [No-Show Rate] [Avg Approval Time]│
-├─────────────────────────────────────────────────────────────────┤
-│  ROW 2 — Session & Reservation Pipeline (2 charts)              │
-│  [Sessions by Status — donut] [Reservations by Status — bar]    │
-├─────────────────────────────────────────────────────────────────┤
-│  ROW 3 — Enrollment Health (3 widgets)                          │
-│  [Confirmation Rate] [Cancellation Rate] [Waitlist Conversion]  │
-├─────────────────────────────────────────────────────────────────┤
-│  ROW 4 — Room & Resource Intelligence (2 charts)                │
-│  [Most Used Rooms — bar] [Most Requested Resources — bar]       │
-├─────────────────────────────────────────────────────────────────┤
-│  ROW 5 — Self-Service & Satisfaction (2 widgets)                │
-│  [Feedback Avg Rating — gauge] [KB Article Views — trend]       │
-└─────────────────────────────────────────────────────────────────┘
+Tab: Executive Summary
+- Pending Reservations
+- Sessions Today
+- Pending Enrollments
+- Resources Missing CMDB CI
+- Sessions by Status
+- Reservations by Status
+
+Tab: Operational Intelligence
+- Latest KPI Snapshot
+- Most Requested Resources
+- Attendance by Status
+- Course Catalog Readiness
 ```
 
 ---
 
-## 4. Manual Configuration Steps
+## 4. Configuration and Validation Steps
 
 ### Step 0 - Validate App-Scoped KPI Collector
 Run in **Scripts - Background**:
@@ -1126,39 +1134,38 @@ Confirm 16 rows in `x_783010_tocc_a1_kpi_snapshot` for current `snapshot_date`.
 ### Step 1 — Enable Performance Analytics
 Navigate to **Performance Analytics → Activate** if not already enabled on the PDI.
 
-### Step 2 — Create Indicators
-Navigate to **Performance Analytics → Indicators → New** for each KPI.
-Set source table, formula type (percentage / count / average), and filters per definitions above.
+### Step 2 — Verify SDK Dashboard
+The dashboard scaffold is source-controlled in `src/fluent/dashboards/platform-analytics-dashboard.now.ts`.
+After deploy, confirm `Training Operations Performance Dashboard` exists with 2 tabs and 10 widgets.
 
-### Step 3 — Schedule Data Collection
-Navigate to **Performance Analytics → Data Collector → New**
-Set each indicator to collect daily at midnight.
+### Step 3 — Validate KPI Snapshot Collector
+The app-scoped collector writes daily rows to `x_783010_tocc_a1_kpi_snapshot`.
+Run `[TOCC] Collect KPI Snapshots` or the background script in Step 0, then confirm the latest snapshot has 16 KPI rows.
 
-### Step 4 — Build Dashboard
-Navigate to **Performance Analytics → Dashboards → New**
-- Name: `Training Operations Performance Dashboard`
-- Add widgets per layout in section 3
-- Set audience visibility to roles: `x_783010_tocc_a1.manager`, `x_783010_tocc_a1.backoffice`, `x_783010_tocc_a1.admin`
+### Step 4 — Validate Persona Entry Points
+- Backoffice, Manager and Admin can open `?id=tocc_home` and see the Operations Dashboard section.
+- Portal menu item `Analytics` opens the Platform Analytics dashboard.
+- App Navigator module `Platform Analytics Dashboard` opens the same dashboard.
 
 ### Step 5 — Validate with Real Data
 After first data collection run, verify each KPI value is plausible given the test data in the dev instance.
 
 ---
 
-*Last updated: Sprint 12 — 16 KPIs defined, dashboard layout, and app-scoped collector integrated.*
+*Last updated: Sprint 14 — Platform Analytics dashboard linked to portal home and app navigation.*
 
 
 ---
 
-# TEST_STRATEGY.md - Training Operations Command Center
+# Test Strategy
 
 > Version: 1.3 - Platform Closure
 > ATF coverage target: >= 70% of core Script Include behaviors
-> Current status: ATF suite is implemented and being stabilized against live schema and BR-driven flows.
-> Execution status: Pending validated run in instance after latest ATF alignment.
+> Current status: code-defined ATF coverage is implemented across the core operational areas and must be executed in the target instance after each deploy.
+> Current source count: 63 `Test(` definitions under `src/fluent/atf/` and `src/fluent/tests/`.
+> Execution status: pending a validated full-suite run after the latest catalog and course-ownership cleanup.
 
-Operational reading and manual homologation plan:
-`docs/manual-config/project-operational-map-and-test-plan.md`
+Operational reading and manual homologation plan: use the checklist in this guide together with the architecture and rule references in `docs/TECHNICAL_DESIGN_DOCUMENT.md`.
 
 ---
 
@@ -1272,7 +1279,7 @@ Updated for platform closure docs: 2026-05-19
 
 ---
 
-# DEPLOYMENT_GUIDE.md — Training Operations Command Center
+# Deployment Guide
 
 > **Version:** 2.0 — v1 Release Readiness
 > **Target Instance:** `https://dev372264.service-now.com`
@@ -1367,7 +1374,7 @@ Expected output:
 
 ### 3.3 — Event Registry
 Navigate to **System Policy → Events → Event Registry**
-Create one entry for each event in `FLOWS_AND_SUBFLOWS.md → Event Registry`:
+Create one entry for each event listed below:
 
 - [ ] `x_783010_tocc_a1.reservation.submitted`
 - [ ] `x_783010_tocc_a1.reservation.approved`
@@ -1444,8 +1451,11 @@ Navigate to **Now Experience → UI Builder**
 Navigate to **Performance Analytics → Dashboards**
 - [ ] `Training Operations Performance Dashboard` visible
 - [ ] 2 tabs present: Executive Summary, Operational Intelligence
-- [ ] Widgets render (may show empty data before collection runs)
-- [ ] Create data collectors for each indicator
+- [ ] 10 dashboard widgets render against operational tables or `x_783010_tocc_a1_kpi_snapshot`
+- [ ] App Navigator module `Platform Analytics Dashboard` opens the dashboard
+- [ ] Portal menu item `Analytics` opens the dashboard for Backoffice, Manager and Admin
+- [ ] Portal home shows Operations Dashboard cards for Backoffice, Manager and Admin
+- [ ] If KPI highlights are empty, run scheduled job `[TOCC] Collect KPI Snapshots` and reload the portal home
 
 ---
 
@@ -1463,20 +1473,18 @@ now-sdk atf:run --suite x_783010_tocc_a1_atf_suite
 # Click: Run Suite
 ```
 
-Expected: **36 tests pass, 0 failures**
-
-| Group | Tests | Expected |
+| Group | Coverage Area | Expected |
 |---|---|---|
-| Smoke (CRUD + ACL) | TEST-001–003 | ✓ Pass |
-| TrainingConfigService | TEST-004–007 | ✓ Pass |
-| RoomService | TEST-008–012 | ✓ Pass |
-| EnrollmentService | TEST-013–020 | ✓ Pass |
-| TrainingSessionService | TEST-021–023 | ✓ Pass |
-| NotificationHelper | TEST-024–026 | ✓ Pass |
-| PortalApiService | TEST-027–030 | ✓ Pass |
-| KnowledgeBaseBootstrapService | TEST-031 | ✓ Pass |
-| Attendance BRs | TEST-032–034 | ✓ Pass |
-| CmdbResourceService | TEST-035–036 | ✓ Pass |
+| Smoke | CRUD and ACL baseline | Pass |
+| TrainingConfigService | sys_property override and training_config fallback | Pass |
+| RoomService | reservation validation, conflicts, duration and lead time | Pass |
+| EnrollmentService | duplicate enrollment, waitlist, cancellation and seat accounting | Pass |
+| TrainingSessionService | reservation sync, session state and cancellation cascade | Pass |
+| Notification/Portal | events, portal filters, confirmation and cancellation APIs | Pass |
+| Knowledge Base | bootstrap and active article availability | Pass |
+| Attendance | attendance status transitions and validation | Pass |
+| CMDB Resources | room-resource CI validation and enrichment | Pass |
+| Workspace/KPI/VA/Flows | scaffolds and service contracts | Pass |
 
 - [ ] ATF suite completes with 0 failures
 - [ ] Review any test output warnings even if tests pass
@@ -1485,7 +1493,7 @@ Expected: **36 tests pass, 0 failures**
 
 ## 5. Manual Smoke Tests (Post-Deploy)
 
-Execute each scenario as described in `TEST_STRATEGY.md`.
+Execute each scenario below after every deployment that changes catalog, portal, service, flow, scheduled job, ACL, or table behavior.
 
 | Scenario | Persona | Steps |
 |---|---|---|
@@ -1493,7 +1501,7 @@ Execute each scenario as described in `TEST_STRATEGY.md`.
 | M-02: Waitlist and promotion | Student A + Student B | Fill session → B waitlisted → A cancels → B promoted |
 | M-03: Late cancellation block | Student | Try cancel within 4h window → blocked → Backoffice override succeeds |
 | M-04: Unconfirmed seat release | System | Trigger SCH-002 manually → unconfirmed seat released → waitlist promoted |
-| M-05: Security role isolation | All personas | Impersonate each role → verify access matrix from `SECURITY_MODEL.md` |
+| M-05: Security role isolation | All personas | Impersonate each role and verify the access matrix in `docs/TECHNICAL_DESIGN_DOCUMENT.md` |
 
 - [ ] M-01 completed end-to-end without errors
 - [ ] M-02 waitlist promotion confirmed
@@ -1536,7 +1544,7 @@ now-sdk install --auth dev
 |---|---|---|
 | `now-sdk build` passes clean | | |
 | `now-sdk install` completes | | |
-| ATF suite pass (target: >= 70% coverage, current baseline ~51 tests) | | |
+| ATF suite pass recorded from the target instance after latest deploy | | |
 | KB bootstrapped (10 categories, 13 articles) | | |
 | 12 events registered | | |
 | 12 notifications bound | | |
@@ -1556,4 +1564,3 @@ now-sdk install --auth dev
 
 
 ---
-

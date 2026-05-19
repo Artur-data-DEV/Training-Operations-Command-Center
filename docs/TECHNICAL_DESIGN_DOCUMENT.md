@@ -1,6 +1,6 @@
 # Technical Design Document (TDD)
 
-# PRD.md — Training Operations Command Center
+# Product Requirements
 
 > **Version:** 1.1 — v1 Release Alignment
 > **App Scope:** `x_783010_tocc_a1` (legacy alias: `x_tocc`)
@@ -298,7 +298,7 @@ A unified ServiceNow Scoped Application that orchestrates the full lifecycle of 
 
 ---
 
-# ARCHITECTURE.md — Training Operations Command Center
+# Architecture
 
 > **Version:** 1.1 — v1 Release Alignment
 > **App Scope:** `x_783010_tocc_a1` (legacy alias: `x_tocc`)
@@ -415,6 +415,10 @@ Vendor:      [Your Organization]
 - Entry points for self-service requests
 - Variables map to table fields
 - Execution of catalog items triggers Flows or creates records directly
+- SDK-deployed Record Producers:
+  - Create Course
+  - Create Room Reservation
+  - Request Training Enrollment
 
 ### 3.3 Automation Layer (Flows, Subflows, Scheduled Jobs)
 - Orchestration, approval routing, notification dispatch
@@ -472,7 +476,7 @@ Vendor:      [Your Organization]
 
 ## 6. Security Architecture Summary
 
-> Full detail in `SECURITY_MODEL.md`
+> This section consolidates the security model that was previously maintained as a separate security document.
 
 | Role | Prefix | Purpose |
 |---|---|---|
@@ -526,7 +530,7 @@ The following features require validation against the actual instance release (`
 
 ---
 
-# DATA_MODEL.md — Training Operations Command Center
+# Data Model
 
 > **Version:** 1.1 — Sprint 1
 > **Scope:** `x_783010_tocc_a1`
@@ -798,7 +802,7 @@ TrainingConfigService checks x_783010_tocc_a1.config.<key> first. If property va
 
 ---
 
-# CMDB_MODEL.md — Training Operations Command Center
+# CMDB Model
 
 > **Version:** 1.1 — Sprint 8
 > **Strategy:** CMDB light — only room-level assets tracked.
@@ -926,7 +930,7 @@ Run a CI relationship report for one room asset and confirm the chain:
 
 ---
 
-# SECURITY_MODEL.md — Training Operations Command Center
+# Security Model
 
 > **Version:** 1.1 — Sprint 4
 > **Scope:** `x_783010_tocc_a1`
@@ -1117,7 +1121,7 @@ Run after each deploy. Impersonate a user with only the target role.
 
 ---
 
-# FLOWS_AND_SUBFLOWS.md - Training Operations Command Center
+# Flows and Subflows
 
 > Scope: `x_783010_tocc_a1`
 > Source of truth: `src/fluent/flows/training-orchestration-flows.now.ts`
@@ -1200,4 +1204,3 @@ Run after each deploy. Impersonate a user with only the target role.
 
 
 ---
-

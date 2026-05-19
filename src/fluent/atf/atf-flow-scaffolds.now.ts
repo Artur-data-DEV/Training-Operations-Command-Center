@@ -35,6 +35,7 @@ Test(
                 }
 
                 assertFlowExists('[TOCC][FLOW] Reservation Approval');
+                assertFlowExists('[TOCC][FLOW] Reservation Decision Applied');
                 assertFlowExists('[TOCC][FLOW] Session Cancelled');
                 assertFlowExists('[TOCC][FLOW] Enrollment Approval');
                 assertFlowExists('[TOCC][FLOW] Attendance Confirmation Cadence');
@@ -111,7 +112,7 @@ Test(
 
                 var flowCount = countByPrefix('[TOCC][FLOW]');
                 var subflowCount = countByPrefix('[TOCC][SF]');
-                assertTrue(flowCount >= 5, 'Expected at least 5 [TOCC][FLOW] records, got: ' + flowCount);
+                assertTrue(flowCount >= 6, 'Expected at least 6 [TOCC][FLOW] records, got: ' + flowCount);
                 assertTrue(subflowCount >= 1, 'Expected at least 1 [TOCC][SF] record, got: ' + subflowCount);
             `,
         })

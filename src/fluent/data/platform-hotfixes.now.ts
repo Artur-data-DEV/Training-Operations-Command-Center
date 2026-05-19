@@ -608,6 +608,7 @@ Record({
         },
         {
             name: 'Create Course',
+            sourceSysId: '87a653bbc0454299bb83894d8a227292',
             criteriaName: '[TOCC] Catalog - Course Authors',
             roles: ['x_783010_tocc_a1.instructor', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.admin']
         }
@@ -622,6 +623,47 @@ Record({
             return gr;
         }
         return null;
+    }
+
+    function findProducer(producerDef) {
+        if (producerDef.sourceSysId) {
+            var source = new GlideRecord('sc_cat_item_producer');
+            if (source.get(producerDef.sourceSysId)) {
+                return source;
+            }
+        }
+
+        var producer = new GlideRecord('sc_cat_item_producer');
+        producer.addQuery('name', producerDef.name);
+        producer.addQuery('active', true);
+        producer.orderByDesc('sys_updated_on');
+        producer.setLimit(1);
+        producer.query();
+        if (producer.next()) {
+            return producer;
+        }
+
+        return findOne('sc_cat_item_producer', 'name', producerDef.name);
+    }
+
+    function deactivateDuplicateProducers(producerDef, keepId) {
+        if (!keepId) {
+            return;
+        }
+
+        var duplicate = new GlideRecord('sc_cat_item_producer');
+        duplicate.addQuery('name', producerDef.name);
+        duplicate.addQuery('active', true);
+        duplicate.query();
+        while (duplicate.next()) {
+            if (String(duplicate.getUniqueValue()) === String(keepId)) {
+                continue;
+            }
+            duplicate.setWorkflow(false);
+            duplicate.setValue('active', false);
+            duplicate.update();
+            gs.info('[TOCC][FIX] Deactivated duplicate catalog producer ' + producerDef.name + ': ' + duplicate.getUniqueValue());
+        }
     }
 
     function roleIds(roleNames) {
@@ -843,15 +885,15 @@ Record({
         }
     }
 
-    function normalizeSelectVariable(variable, name, questionText, fieldName, order) {
+    function normalizeChoiceVariable(variable, name, questionText, fieldName, order) {
         variable.setValue('name', name);
         variable.setValue('question_text', questionText);
-        variable.setValue('type', '5');
+        variable.setValue('type', '3');
         variable.setValue('order', order);
         variable.setValue('mandatory', true);
         variable.setValue('map_to_field', true);
         variable.setValue('field', fieldName);
-        variable.setValue('include_none', true);
+        variable.setValue('include_none', false);
         variable.setValue('lookup_table', '');
         variable.setValue('lookup_value', '');
         variable.setValue('lookup_label', '');
@@ -904,7 +946,7 @@ Record({
 
     function repairCreateCourseVariables(courseItemId) {
         var duration = findCourseVariable(courseItemId, ['course_duration_hours', 'duration_hours'], 'Duration (hours)');
-        normalizeSelectVariable(duration, 'course_duration_hours', 'Duration (hours)', 'duration_hours', 400);
+        normalizeChoiceVariable(duration, 'course_duration_hours', 'Duration (hours)', 'duration_hours', 400);
         var durationId = String(duration.getUniqueValue());
         deactivateDuplicateCourseVariables(courseItemId, durationId, ['course_duration_hours', 'duration_hours'], 'Duration (hours)');
 
@@ -914,24 +956,18 @@ Record({
             ['3', '3h'],
             ['4', '4h'],
             ['5', '5h'],
-            ['6', '6h'],
-            ['8', '8h'],
-            ['12', '12h'],
-            ['16', '16h'],
-            ['24', '24h'],
-            ['32', '32h'],
-            ['40', '40h']
+            ['6', '6h']
         ];
         for (var d = 0; d < durationValues.length; d++) {
             ensureChoice(durationId, durationValues[d][0], durationValues[d][1], (d + 1) * 10);
         }
-        dedupeChoices(durationId, ['1', '2', '3', '4', '5', '6', '8', '12', '16', '24', '32', '40']);
+        dedupeChoices(durationId, ['1', '2', '3', '4', '5', '6']);
 
         var delivery = findCourseVariable(courseItemId, ['course_delivery_category', 'delivery_category'], 'Delivery Category (Online or In Person)');
-        normalizeSelectVariable(delivery, 'course_delivery_category', 'Delivery Category (Online or In Person)', 'delivery_category', 500);
+        normalizeChoiceVariable(delivery, 'course_delivery_category', 'Delivery Category (Online or In Person)', 'delivery_category', 500);
         var deliveryId = String(delivery.getUniqueValue());
         deactivateDuplicateCourseVariables(courseItemId, deliveryId, ['course_delivery_category', 'delivery_category'], 'Delivery Category (Online or In Person)');
-        ensureChoice(deliveryId, 'vilt', 'VILT', 10);
+        ensureChoice(deliveryId, 'vilt', 'Online (VILT)', 10);
         ensureChoice(deliveryId, 'in_person', 'In Person', 20);
         dedupeChoices(deliveryId, ['vilt', 'in_person']);
 
@@ -943,17 +979,19 @@ Record({
 
     for (var p = 0; p < PRODUCERS.length; p++) {
         var producerDef = PRODUCERS[p];
-        var producer = findOne('sc_cat_item_producer', 'name', producerDef.name);
+        var producer = findProducer(producerDef);
         if (!producer) {
             gs.warn('[TOCC][FIX] Catalog producer not found: ' + producerDef.name);
             continue;
         }
 
         var itemId = String(producer.getUniqueValue());
+        producer.setWorkflow(false);
         producer.setValue('active', true);
         producer.setValue('category', categoryId);
         producer.setValue('roles', producerDef.roles.join(','));
         producer.update();
+        deactivateDuplicateProducers(producerDef, itemId);
 
         ensureCatalogLink(itemId, catalogId);
         ensureItemCategory(itemId, categoryId);

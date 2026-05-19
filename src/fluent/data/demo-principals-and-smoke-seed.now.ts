@@ -84,6 +84,7 @@ Record({
         title: 'Training Student',
         time_zone: 'America/Sao_Paulo',
         user_password: 'Training2026!',
+        notification: 2,
         active: true,
     },
 })
@@ -99,6 +100,7 @@ Record({
         title: 'Training Student',
         time_zone: 'America/Sao_Paulo',
         user_password: 'Training2026!',
+        notification: 2,
         active: true,
     },
 })
@@ -114,6 +116,7 @@ Record({
         title: 'Training Student',
         time_zone: 'America/Sao_Paulo',
         user_password: 'Training2026!',
+        notification: 2,
         active: true,
     },
 })
@@ -129,6 +132,7 @@ Record({
         title: 'Training Instructor',
         time_zone: 'America/Sao_Paulo',
         user_password: 'Training2026!',
+        notification: 2,
         active: true,
     },
 })

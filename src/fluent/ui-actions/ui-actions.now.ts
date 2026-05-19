@@ -63,9 +63,6 @@ UiAction({
         return;
     }
 
-    var sync = new TrainingSessionService();
-    sync.syncFromReservation(current);
-
     var refreshed = new GlideRecord('x_783010_tocc_a1_room_reservation');
     if (refreshed.get(current.getUniqueValue()) && !gs.nil(refreshed.getValue('training_session'))) {
         gs.addInfoMessage('Reservation approved. Training session created: ' + refreshed.getDisplayValue('training_session') + '.');
@@ -102,9 +99,6 @@ UiAction({
     current.setValue('work_notes', 'Reservation rejected by ' + gs.getUserDisplayName() + '.');
     current.setWorkflow(true);
     current.update();
-
-    var helper = new NotificationHelper();
-    helper.sendReservationDecision(current.getUniqueValue());
 
     gs.addInfoMessage('Reservation rejected.');
     action.setRedirectURL(current);

@@ -3,15 +3,21 @@
         return '?id=' + pageId;
     }
 
-    function resolveProducerLink(name, fallback) {
+    function resolveProducerLink(name, fallback, preferredRedirect) {
         var item = new GlideRecordSecure('sc_cat_item_producer');
         item.addQuery('name', name);
         item.addQuery('active', true);
+        if (preferredRedirect) {
+            item.addQuery('redirect_url', preferredRedirect);
+        }
         item.orderByDesc('sys_updated_on');
         item.setLimit(1);
         item.query();
         if (item.next()) {
             return '?id=sc_cat_item&sys_id=' + item.getUniqueValue();
+        }
+        if (preferredRedirect) {
+            return resolveProducerLink(name, fallback, '');
         }
         return fallback;
     }
@@ -23,7 +29,7 @@
 
     data.links = {
         home: pageLink('tocc_home'),
-        create_course: resolveProducerLink('Create Course', pageLink('tocc_home')),
+        create_course: resolveProducerLink('Create Course', pageLink('tocc_home'), '?id=tocc_my_courses'),
     };
     data.courses = [];
     data.summary = {

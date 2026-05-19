@@ -444,6 +444,16 @@ const toccMainMenu = SPMenu({
             glyph: 'tasks',
         },
         {
+            $id: Now.ID['x_783010_tocc_a1_sp_main_menu_item_platform_analytics'],
+            label: 'Analytics',
+            type: 'url',
+            url: '/now/nav/ui/classic/params/target/par_dashboard.do?sys_id=0e91812dc4884f8cb00e6fe9fce50337',
+            order: 475,
+            active: true,
+            roles: ['admin', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
+            glyph: 'bar-chart',
+        },
+        {
             $id: Now.ID['x_783010_tocc_a1_sp_main_menu_item_catalog'],
             label: 'Self-Service Home',
             type: 'page',

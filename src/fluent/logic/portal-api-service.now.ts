@@ -791,10 +791,24 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         latest.query();
 
         if (!latest.next()) {
-            return {
-                snapshot_date: '',
-                metrics: [],
-            };
+            try {
+                new TrainingKpiService().collectDailySnapshot(30);
+            } catch (collectEx) {
+                gs.warn('[TOCC][PortalApiService] Unable to collect KPI snapshot for operations home: ' + this._toErrorMessage(collectEx));
+            }
+
+            latest = new GlideRecord('x_783010_tocc_a1_kpi_snapshot');
+            latest.addQuery('active', true);
+            latest.orderByDesc('snapshot_date');
+            latest.setLimit(1);
+            latest.query();
+
+            if (!latest.next()) {
+                return {
+                    snapshot_date: '',
+                    metrics: [],
+                };
+            }
         }
 
         var snapshotDate = latest.getValue('snapshot_date');
@@ -803,7 +817,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         var gr = new GlideRecordSecure('x_783010_tocc_a1_kpi_snapshot');
         gr.addQuery('active', true);
         gr.addQuery('snapshot_date', snapshotDate);
-        gr.addQuery('kpi_key', 'IN', keys.join(','));
+        gr.addQuery('kpi_key', 'IN', keys);
         gr.query();
 
         while (gr.next()) {

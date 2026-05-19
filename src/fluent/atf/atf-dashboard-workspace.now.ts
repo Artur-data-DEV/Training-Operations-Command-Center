@@ -49,6 +49,27 @@ Test(
                 widget.query();
                 while (widget.next()) { widgetCount++; }
                 assertTrue(widgetCount === 10, 'Expected 10 dashboard widgets, got: ' + widgetCount);
+
+                var kpiWidget = new GlideRecord('par_dashboard_widget');
+                kpiWidget.addQuery('canvas.dashboard', dashboardId);
+                kpiWidget.addQuery('component_props', 'CONTAINS', 'Latest KPI Snapshot');
+                kpiWidget.setLimit(1);
+                kpiWidget.query();
+                assertTrue(kpiWidget.next(), 'Dashboard must include Latest KPI Snapshot widget.');
+
+                var ciWidget = new GlideRecord('par_dashboard_widget');
+                ciWidget.addQuery('canvas.dashboard', dashboardId);
+                ciWidget.addQuery('component_props', 'CONTAINS', 'Resources Missing CMDB CI');
+                ciWidget.setLimit(1);
+                ciWidget.query();
+                assertTrue(ciWidget.next(), 'Dashboard must include CMDB resource readiness widget.');
+
+                var module = new GlideRecord('sys_app_module');
+                module.addQuery('title', 'Platform Analytics Dashboard');
+                module.addQuery('query', 'CONTAINS', dashboardId);
+                module.setLimit(1);
+                module.query();
+                assertTrue(module.next(), 'App Navigator module for Platform Analytics Dashboard not found.');
             `,
         })
     }

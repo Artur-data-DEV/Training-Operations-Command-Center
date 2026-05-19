@@ -198,6 +198,32 @@ BusinessRule({
 })
 
 BusinessRule({
+    $id: Now.ID['x_783010_tocc_a1_br_notify_reservation_decision'],
+    table: 'x_783010_tocc_a1_room_reservation',
+    name: 'Notify Reservation Decision',
+    when: 'before',
+    action: ['update'],
+    active: true,
+    order: 290,
+    script: `(function executeRule(current, previous) {
+    if (!current.status.changes()) {
+        return;
+    }
+
+    var status = current.getValue('status');
+    if (status !== 'approved' && status !== 'rejected') {
+        return;
+    }
+
+    var eventName = status === 'approved'
+        ? 'x_783010_tocc_a1.reservation.approved'
+        : 'x_783010_tocc_a1.reservation.rejected';
+
+    gs.eventQueue(eventName, current, current.getDisplayValue('number'), gs.getUserID());
+})(current, previous);`,
+})
+
+BusinessRule({
     $id: Now.ID['x_783010_tocc_a1_br_validate_training_session_room'],
     table: 'x_783010_tocc_a1_training_session',
     name: 'Validate Training Session Room',

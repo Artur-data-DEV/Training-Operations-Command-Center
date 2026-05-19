@@ -34,4 +34,42 @@
       </a>
     </div>
   </div>
+
+  <div class="tocc-ops-section" ng-if="c.data.showOpsStats">
+    <div class="tocc-ops-header">
+      <div>
+        <h3 class="tocc-section-title">Operations Dashboard</h3>
+        <p class="tocc-ops-subtitle">Backoffice, manager and admin view using the latest operational snapshot and KPI collector.</p>
+      </div>
+      <div class="tocc-ops-actions">
+        <a class="tocc-ops-link" href="{{c.data.links.backoffice_queue}}">Review Queue</a>
+        <a class="tocc-ops-link tocc-ops-link-primary" href="{{c.data.operations.dashboard_link}}">Platform Analytics</a>
+      </div>
+    </div>
+
+    <div class="tocc-ops-grid">
+      <div class="tocc-ops-card" ng-repeat="item in c.data.operations.queues track by $index">
+        <div class="tocc-ops-value" ng-class="'tocc-tone-' + item.tone">{{item.value}}</div>
+        <div class="tocc-ops-label">{{item.label}}</div>
+      </div>
+    </div>
+
+    <div class="tocc-kpi-panel">
+      <div class="tocc-kpi-panel-header">
+        <span>Platform Analytics KPI Highlights</span>
+        <small ng-if="c.data.operations.kpi_snapshot_date">Snapshot {{c.data.operations.kpi_snapshot_date}}</small>
+      </div>
+
+      <div class="tocc-kpi-grid" ng-if="c.data.operations.has_kpis">
+        <div class="tocc-kpi-card" ng-repeat="kpi in c.data.operations.kpis track by $index">
+          <div class="tocc-kpi-value">{{kpi.value}}</div>
+          <div class="tocc-kpi-label">{{kpi.label}}</div>
+        </div>
+      </div>
+
+      <div class="tocc-kpi-empty" ng-if="!c.data.operations.has_kpis">
+        KPI snapshot not collected yet. Run <strong>[TOCC] Collect KPI Snapshots</strong> or wait for the daily collector.
+      </div>
+    </div>
+  </div>
 </div>

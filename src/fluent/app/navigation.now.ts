@@ -70,6 +70,20 @@ Record({
 })
 
 Record({
+    $id: Now.ID['x_783010_tocc_a1_app_module_platform_analytics_dashboard'],
+    table: 'sys_app_module',
+    data: {
+        application: toccNavigationMenu,
+        title: 'Platform Analytics Dashboard',
+        link_type: 'DIRECT',
+        query: '/now/nav/ui/classic/params/target/par_dashboard.do?sys_id=0e91812dc4884f8cb00e6fe9fce50337',
+        order: 175,
+        active: true,
+        roles: ['snc_internal', 'admin', 'x_783010_tocc_a1.backoffice', 'x_783010_tocc_a1.manager', 'x_783010_tocc_a1.admin'],
+    },
+})
+
+Record({
     $id: Now.ID['x_783010_tocc_a1_app_module_room_reservations'],
     table: 'sys_app_module',
     data: {

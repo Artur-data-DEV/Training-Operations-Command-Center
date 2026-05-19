@@ -162,6 +162,48 @@ Flow(
 
 Flow(
     {
+        $id: Now.ID['x_783010_tocc_a1_flow_reservation_decision_applied_v1'],
+        name: '[TOCC][FLOW] Reservation Decision Applied',
+        description: 'Runs when Backoffice/Admin applies an approved or rejected decision to a room reservation.',
+        runAs: 'system',
+        flowPriority: 'HIGH',
+    },
+    wfa.trigger(
+        trigger.record.updated,
+        { $id: Now.ID['x_783010_tocc_a1_flow_reservation_decision_applied_trigger_v1'] },
+        {
+            table: 'x_783010_tocc_a1_room_reservation',
+            condition: 'statusINapproved,rejected',
+            run_flow_in: 'background',
+            trigger_strategy: 'once',
+        }
+    ),
+    (params) => {
+        wfa.action(
+            action.core.updateRecord,
+            { $id: Now.ID['x_783010_tocc_a1_flow_reservation_decision_applied_note_v1'] },
+            {
+                table_name: 'x_783010_tocc_a1_room_reservation',
+                record: wfa.dataPill(params.trigger.current, 'reference'),
+                values: TemplateValue({
+                    work_notes: 'Reservation decision observed by FLOW-02.',
+                }),
+            }
+        )
+
+        wfa.action(
+            action.core.log,
+            { $id: Now.ID['x_783010_tocc_a1_flow_reservation_decision_applied_log_v1'] },
+            {
+                log_level: 'info',
+                log_message: '[TOCC] Reservation decision flow executed.',
+            }
+        )
+    }
+)
+
+Flow(
+    {
         $id: Now.ID['x_783010_tocc_a1_flow_daily_kpi_refresh_signal_v2'],
         name: '[TOCC][FLOW] Enrollment Approval',
         description:

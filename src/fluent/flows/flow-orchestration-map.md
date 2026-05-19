@@ -7,7 +7,8 @@ This map reflects the current implementation in:
 
 | Flow | Trigger | Purpose |
 |---|---|---|
-| Reservation Approval | Reservation `status=submitted` | Backoffice approval and reservation decision application |
+| Reservation Approval | Reservation created with `status=submitted` | Intake routing: assign Backoffice group and request approval |
+| Reservation Decision Applied | Reservation updated to `approved` or `rejected` | Post-decision visibility flow so Backoffice/Admin approvals create a Flow Designer execution |
 | Enrollment Approval | Enrollment created with `status=pending` | Instructor-gated approval for enrollments that remain pending after `EnrollmentService` evaluates configuration |
 | Session Cancelled | Session status changed to `cancelled` | Notify approved enrollments |
 | Attendance Confirmation Cadence | Daily 08:00 | Scaffold/log-only cadence for due confirmation work; real notifications are owned by scheduled jobs and `NotificationHelper` |
@@ -27,8 +28,9 @@ flowchart TD
     R0 --> R2[Find [TOCC] Backoffice group]
     R2 -->|Found| R3[Ask for Approval]
     R3 --> R4[Apply reservation status from approval_state]
-    R4 --> R5[Emit reservation.<approval_state> event]
-    R2 -->|Missing| R6[Create manual fallback task]
+    R4 --> R5[Reservation Decision Applied flow]
+    R5 --> R6[Notify Reservation Decision business rule emits event]
+    R2 -->|Missing| R7[Create manual fallback task]
 
     E1[Enrollment pending on create] --> E2[EnrollmentService already evaluated TrainingConfigService]
     E2 --> E3[Resolve session via tocc_training_session]
@@ -42,7 +44,9 @@ flowchart TD
 
 ## Notes
 
-- Reservation and enrollment approval decisions are now Flow-native (`action.core.askForApproval`).
+- Reservation intake remains Flow-native (`action.core.askForApproval`) when the reservation is created as submitted.
+- Manual approval through the Backoffice Queue or UI Action updates the reservation directly; `[TOCC][FLOW] Reservation Decision Applied` now provides the post-approval Flow Designer execution.
+- Reservation decision notification is centralized in the `Notify Reservation Decision` business rule so portal approvals and UI Actions do not diverge.
 - Reservation approval routing is encapsulated in a real reusable subflow. Log-only subflows were removed to avoid fake reuse.
 - Enrollment configuration is not read directly by Flow. `EnrollmentService` and `TrainingConfigService` decide whether a record remains `pending`; the Flow only handles those pending records.
 - Flow enrollment and cancellation lookups use `tocc_training_session`, not legacy `training_session`.

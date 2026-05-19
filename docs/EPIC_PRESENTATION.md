@@ -30,10 +30,10 @@ A centralized ServiceNow scoped application that orchestrates the entire trainin
    - My Courses, My Sessions, Knowledge Base, and Quick Links.
    - Distinct views based on roles (Instructor vs. Student).
 2. **Catalog & Record Producers**
-   - **Create Course:** Now fully modernized with *Radio Button* selections for `Duration` (1h to 6h) and `Delivery Category` (Online (VILT) / In Person), preventing bad data entry.
+   - **Create Course:** Uses controlled choices for `Duration` (1h to 6h) and `Delivery Category` (Online (VILT) / In Person), assigns the current instructor as course owner, and redirects back to `My Courses` after submit.
    - **Room Reservation:** Connected directly to CMDB-lite room data (`x_783010_tocc_a1_room`).
 3. **Automated Testing (ATF)**
-   - Suite of 8 robust, code-first ATF tests ensuring stability (ACL validations, Client Scripts, Script Includes).
+   - Code-defined ATF coverage exists for the core services, ACLs, portal APIs, workflows, CMDB resource checks, and operational closure scenarios. Present only the latest instance execution result, not a planned pass count.
 4. **Platform Analytics & Workspaces**
    - **TOCC Workspace:** Centralized view of pending approvals, active courses, and upcoming sessions.
    - Data visualization for room utilization and session fill-rates.
@@ -48,7 +48,7 @@ A centralized ServiceNow scoped application that orchestrates the entire trainin
 1. Navigate to the **TOCC Portal** (`/tocc`).
 2. Click **"Create Course"** under Quick Links.
 3. Show the dynamic Catalog Item form.
-   - *Talking Point:* "Notice how the Delivery Category and Duration are now intuitive Radio Buttons, restricting invalid inputs and ensuring data quality right at the source."
+   - *Talking Point:* "Notice how Delivery Category and Duration are controlled choices. Invalid free text is blocked before it becomes bad operational data."
 4. Fill out the course details (e.g., "Advanced ServiceNow SDK", 4h, Online (VILT)).
 5. Submit the form and show the redirect to "My Courses".
 
@@ -76,7 +76,7 @@ A centralized ServiceNow scoped application that orchestrates the entire trainin
 1. Open the **Automated Test Framework (ATF)** module.
 2. Show the TOCC Smoke Test Suite.
    - *Talking Point:* "To ensure zero regression, we built code-first ATF tests using the Fluent SDK. Every catalog item, ACL, and client script is automatically validated upon deployment."
-3. Run the ATF suite to show a 100% pass rate in real-time.
+3. Show the latest ATF execution evidence. If the suite has not been run after the latest deploy, present it as pending validation instead of claiming a pass rate.
 
 ---
 
