@@ -6,6 +6,7 @@ import {
     SelectBoxVariable,
     SingleLineTextVariable,
     ReferenceVariable,
+    MultipleChoiceVariable,
 } from '@servicenow/sdk/core'
 
 export const createRoomReservationProducer = CatalogItemRecordProducer({
@@ -346,13 +347,12 @@ export const createCourseProducer = CatalogItemRecordProducer({
             mapToField: true,
             field: 'description',
         }),
-        course_duration_hours: SelectBoxVariable({
+        course_duration_hours: MultipleChoiceVariable({
             question: 'Duration (hours)',
             order: 400,
             mandatory: true,
             mapToField: true,
             field: 'duration_hours',
-            includeNone: true,
             choices: {
                 1: { label: '1h' },
                 2: { label: '2h' },
@@ -360,23 +360,17 @@ export const createCourseProducer = CatalogItemRecordProducer({
                 4: { label: '4h' },
                 5: { label: '5h' },
                 6: { label: '6h' },
-                8: { label: '8h' },
-                12: { label: '12h' },
-                16: { label: '16h' },
-                24: { label: '24h' },
-                32: { label: '32h' },
-                40: { label: '40h' },
             },
         }),
-        course_delivery_category: SelectBoxVariable({
+        course_delivery_category: MultipleChoiceVariable({
             question: 'Delivery Category (Online or In Person)',
             order: 500,
             mandatory: true,
             mapToField: true,
             field: 'delivery_category',
-            includeNone: true,
+            
             choices: {
-                vilt: { label: 'VILT' },
+                vilt: { label: 'Online (VILT)' },
                 in_person: { label: 'In Person' },
             },
         }),
