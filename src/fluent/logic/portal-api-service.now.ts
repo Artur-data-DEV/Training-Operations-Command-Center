@@ -59,6 +59,12 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             if (!this._isActiveRoom(gr.getValue('room'))) {
                 continue;
             }
+            if (!this._recordExists('x_783010_tocc_a1_course', gr.getValue('tocc_course'))) {
+                continue;
+            }
+            if (!this._isActiveUser(gr.getValue('tocc_instructor'))) {
+                continue;
+            }
 
             var myEnrollment = this._getStudentEnrollmentForSession(gr.getUniqueValue());
             sessions.push({
@@ -223,10 +229,12 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
     // Access: backoffice, manager, scoped admin, or platform admin.
     // -----------------------------------------------------------------------
     getBackofficeReservationQueue: function() {
-        if (!this._canManageReservationQueue()) {
+        if (!this._canViewReservationQueue()) {
             return JSON.stringify({ success: false, message: 'Access denied.' });
         }
 
+        var canApprove = this._canApproveReservation();
+        var canReject = this._canRejectReservation();
         var reservations = [];
         var gr = new GlideRecord('x_783010_tocc_a1_room_reservation');
         gr.addQuery('status', 'submitted');
@@ -256,10 +264,20 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
                 portal_record_url:     '?id=form&table=x_783010_tocc_a1_room_reservation&sys_id=' + gr.getUniqueValue(),
                 data_quality_status:   issues.length ? 'needs_review' : 'ready',
                 data_quality_issues:   issues,
+                can_approve:           canApprove && issues.length === 0,
+                can_reject:            canReject,
             });
         }
 
-        return JSON.stringify({ success: true, reservations: reservations, count: reservations.length });
+        return JSON.stringify({
+            success: true,
+            reservations: reservations,
+            count: reservations.length,
+            permissions: {
+                can_approve: canApprove,
+                can_reject: canReject,
+            },
+        });
     },
 
     // -----------------------------------------------------------------------
@@ -267,7 +285,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
     // Approves one submitted reservation from the backoffice queue.
     // -----------------------------------------------------------------------
     approveReservation: function(reservationId) {
-        if (!this._canManageReservationQueue()) {
+        if (!this._canApproveReservation()) {
             return JSON.stringify({ success: false, message: 'Access denied.' });
         }
 
@@ -299,9 +317,6 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         gr.setWorkflow(true);
         gr.update();
 
-        var sync = new TrainingSessionService();
-        sync.syncFromReservation(gr);
-
         gr.get(id);
         if (!gr.getValue('training_session')) {
             return JSON.stringify({
@@ -318,7 +333,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
     // Rejects one submitted reservation from the backoffice queue.
     // -----------------------------------------------------------------------
     rejectReservation: function(reservationId, reason) {
-        if (!this._canManageReservationQueue()) {
+        if (!this._canRejectReservation()) {
             return JSON.stringify({ success: false, message: 'Access denied.' });
         }
 
@@ -652,7 +667,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         );
     },
 
-    _canManageReservationQueue: function() {
+    _canViewReservationQueue: function() {
         if (gs.hasRole('admin')) {
             return true;
         }
@@ -663,16 +678,40 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         );
     },
 
+    _canApproveReservation: function() {
+        if (gs.hasRole('admin')) {
+            return true;
+        }
+        return (
+            gs.hasRole('x_783010_tocc_a1.admin') ||
+            gs.hasRole('x_783010_tocc_a1.backoffice')
+        );
+    },
+
+    _canRejectReservation: function() {
+        return this._canApproveReservation();
+    },
+
     _getReservationDataQualityIssues: function(gr) {
         var issues = [];
-        if (!gr.getValue('tocc_course')) {
+        var courseId = gr.getValue('tocc_course');
+        var roomId = gr.getValue('tocc_room');
+        var instructorId = gr.getValue('tocc_instructor');
+
+        if (!courseId) {
             issues.push('missing course');
+        } else if (!this._recordExists('x_783010_tocc_a1_course', courseId)) {
+            issues.push('invalid course');
         }
-        if (!gr.getValue('tocc_room')) {
+        if (!roomId) {
             issues.push('missing room');
+        } else if (!this._isActiveRoom(roomId)) {
+            issues.push('invalid or inactive room');
         }
-        if (!gr.getValue('tocc_instructor')) {
+        if (!instructorId) {
             issues.push('missing instructor');
+        } else if (!this._isActiveUser(instructorId)) {
+            issues.push('invalid or inactive instructor');
         }
         if (!gr.getValue('start_datetime')) {
             issues.push('missing start');
@@ -684,6 +723,28 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             issues.push('invalid participants');
         }
         return issues;
+    },
+
+    _recordExists: function(tableName, sysId) {
+        if (!sysId) {
+            return false;
+        }
+
+        var gr = new GlideRecord(tableName);
+        return gr.get(sysId);
+    },
+
+    _isActiveUser: function(userId) {
+        if (!userId) {
+            return false;
+        }
+
+        var user = new GlideRecord('sys_user');
+        if (!user.get(userId)) {
+            return false;
+        }
+
+        return String(user.getValue('active')) === 'true';
     },
 
     _isActiveRoom: function(roomId) {

@@ -11,7 +11,7 @@ api.controller = function($scope, spUtil) {
     };
 
     c.approve = function(reservation) {
-        if (!reservation || !reservation.sys_id || c.submitting[reservation.sys_id]) {
+        if (!reservation || !reservation.sys_id || !reservation.can_approve || c.submitting[reservation.sys_id] || c.hasIssues(reservation)) {
             return;
         }
 
@@ -31,7 +31,7 @@ api.controller = function($scope, spUtil) {
     };
 
     c.reject = function(reservation) {
-        if (!reservation || !reservation.sys_id || c.submitting[reservation.sys_id]) {
+        if (!reservation || !reservation.sys_id || !reservation.can_reject || c.submitting[reservation.sys_id]) {
             return;
         }
 

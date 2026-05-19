@@ -75,10 +75,10 @@
             </td>
             <td class="text-right">
               <div class="tocc-row-actions">
-                <button type="button" class="tocc-btn-primary" ng-click="c.approve(reservation)" ng-disabled="c.submitting[reservation.sys_id] || c.hasIssues(reservation)">
+                <button type="button" class="tocc-btn-primary" ng-click="c.approve(reservation)" ng-disabled="c.submitting[reservation.sys_id] || !reservation.can_approve || c.hasIssues(reservation)">
                   Approve
                 </button>
-                <button type="button" class="tocc-btn-danger" ng-click="c.reject(reservation)" ng-disabled="c.submitting[reservation.sys_id]">
+                <button type="button" class="tocc-btn-danger" ng-click="c.reject(reservation)" ng-disabled="c.submitting[reservation.sys_id] || !reservation.can_reject">
                   Reject
                 </button>
                 <a class="tocc-btn-outline" href="{{reservation.record_url}}">Open</a>

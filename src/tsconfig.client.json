@@ -9,9 +9,8 @@
         "allowJs": true,
         "noEmit": true,
         "noEmitHelpers": true,
-        "esModuleInterop": false,
-        "module": "None",
-        "moduleResolution": "node",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
         "skipLibCheck": true,
         "types": [
             "@servicenow/glide"

@@ -5246,6 +5246,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '107dbf568db04323b1b19b1c0c7b915a'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '46'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '10873d00560747a09daa4db7fe3dc967'
                         deleted: false
@@ -5417,6 +5433,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '1312dbc2e50348d09f79f4abc7525cbf'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '6'
+                        }
+                    },
+                    {
                         table: 'sc_cat_item_catalog'
                         id: '134b65d5e47b4e83ab5dee05b9a980ae'
                         deleted: true
@@ -5450,6 +5482,22 @@ declare global {
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: '8497755634fe46a791dcb0667b0eec8f'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: '13b8740f5dbd4c55af7f8f6764176744'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '8'
                         }
                     },
                     {
@@ -6783,6 +6831,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '24e84388f3da4c3ca379fa06ea33f522'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '23'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '2534629f73fd4aed86488818c44dd284'
                         deleted: true
@@ -6842,6 +6906,22 @@ declare global {
                                     name: 'x_783010_tocc_a1.admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: '25e02afc1e1246aa8db0c6b8288b6b0d'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '24'
                         }
                     },
                     {
@@ -7288,6 +7368,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '2a7cca15872640d48882f18c9d461f8c'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '31'
+                        }
+                    },
+                    {
                         table: 'sp_page'
                         id: '2a91978b8add41ebbeb3d73e3f60a47a'
                         key: {
@@ -7430,6 +7526,22 @@ declare global {
                         key: {
                             sys_security_acl: 'a183b649e79d484d9ba56ee81de309f2'
                             sys_user_role: '376acc52350942c1a87fa17d8e3f6973'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: '2d43fa98747e4c32a9e97c42b1bbce29'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '2'
                         }
                     },
                     {
@@ -7615,6 +7727,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '2f9ccb0e5fbf4cdc87ab692dd50158ee'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '36'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '2fadfb25a6914b1cb16255d3e287570f'
                         deleted: true
@@ -7643,6 +7771,22 @@ declare global {
                                     name: 'x_783010_tocc_a1.backoffice'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: '2fcf339c32c2443faafd1d1f46e83a18'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '5'
                         }
                     },
                     {
@@ -8271,6 +8415,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '37b3b1a4d0d94381aeb31c8fc17d8f49'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '37'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '37dd3b10253641bdb3be4b2dd317c219'
                         key: {
@@ -8737,6 +8897,22 @@ declare global {
                         key: {
                             sys_security_acl: 'ad664b97fe004138af9cf1e942a799f3'
                             sys_user_role: '1bcc331a5bae4e5c8335e52a80550d3b'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: '3c34186734214d44ac347a47be718ac0'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '22'
                         }
                     },
                     {
@@ -9240,6 +9416,22 @@ declare global {
                         key: {
                             table: 'x_783010_tocc_a1_attendance'
                             short_description: 'Attendance - Show check-in metadata when Present'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: '40420ab63c1a45b1a6817f0a82825790'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '21'
                         }
                     },
                     {
@@ -10046,6 +10238,22 @@ declare global {
                         key: {
                             document_key: 'ec015678dbb0401fad19cd42bd1a72a7'
                             variable: '989d9e235324220002c6435723dc3484'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: '4904968c279c405897178e1ff4fd6959'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '28'
                         }
                     },
                     {
@@ -11209,6 +11417,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '576c8dec881f4cd19a03adac3a1fc607'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '50'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '579ed30b17cf473b90f696ff408ec766'
                         key: {
@@ -11653,6 +11877,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '5cd4d6b93aaf423db238e543bacd7157'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '44'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: '5ce0ebb824f94b7aba558ccb63e21879'
                         key: {
@@ -11965,6 +12205,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '5fd841395ebd490e83498c4a89245381'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '10'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '5fde0bdc8a0e410588fd307a782344d7'
                         key: {
@@ -11984,6 +12240,22 @@ declare global {
                             name: 'x_783010_tocc_a1_kpi_snapshot'
                             element: 'kpi_key'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: '6065568f4f9d4c798b7cce377da31fd7'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '12'
                         }
                     },
                     {
@@ -12426,6 +12698,22 @@ declare global {
                         key: {
                             name: 'x_783010_tocc_a1_room_reservation'
                             element: 'status'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: '645ff8ac34db40f7b8cdbb05c6c5abcc'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '30'
                         }
                     },
                     {
@@ -13071,6 +13359,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '6ade07f98fa545319fe91e8c47c78b71'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '27'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '6b01c67160904c1b8ac2878f864755e8'
                         deleted: true
@@ -13321,6 +13625,22 @@ declare global {
                         key: {
                             sys_security_acl: '168819f3208946a18333d4a4e4962eb9'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: '6d85597403994db693a7e4002ea7a4a5'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '33'
                         }
                     },
                     {
@@ -13997,12 +14317,37 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '76e95d64498b4bdcb832a6fed5f913e2'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '48'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '76ee251e8fed4a5a9de19bdca3c177e1'
                         deleted: true
                         key: {
                             sys_security_acl: '1a5f2ca2db7a493e995c779bc563700f'
                             sys_user_role: '87066ac15c2a4387a238a356bc49a370'
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: '76f35f0be5c1407098c2ca5b0a071c75'
+                        deleted: true
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: '481d2973310e4c348a3fb8b9785356e5'
                         }
                     },
                     {
@@ -14400,6 +14745,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '7c2f26b4b84340718d4900bd5482037b'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '13'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: '7c50c186609e4ec7a0a3ae66e0208292'
                         key: {
@@ -14700,6 +15061,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '7fe129f1dabc4c3a8bc0ce50119f4e1c'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '20'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: '7ff25f3e46304810910dcdd1d6aa7fd0'
                         deleted: false
@@ -14777,6 +15154,14 @@ declare global {
                                     name: 'x_783010_tocc_a1.admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: '8139c2dfac4f406195981b78a8f342eb'
+                        key: {
+                            sc_cat_item: '87a653bbc0454299bb83894d8a227292'
+                            sc_catalog: '4394631fed774ce699695a83911ecb0c'
                         }
                     },
                     {
@@ -16254,6 +16639,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '9161b8c9f6374bafb5f5794a64259026'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '14'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: '9189680026bb4ea2971aacb006fbbb53'
                         key: {
@@ -16473,6 +16874,22 @@ declare global {
                                 }
                             }
                             sys_domain: 'global'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: '94a019bbd8544c26ac8a9bc48c9d5bb6'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '9'
                         }
                     },
                     {
@@ -16836,6 +17253,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: '99b4b2198d0c45f8b0a012659d14b826'
+                        deleted: true
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '0de1ec7c2f184c3991296350d2b650d1'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '99c28eec4561498e97ef40c9bcb8153f'
                         deleted: false
@@ -17088,6 +17514,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '9cf169031f3b42e5b1a9e489750d1741'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '38'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '9d341cd2de164008829f457b0c90fd8c'
                         deleted: true
@@ -17169,6 +17611,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '9deda6e787c745708a8c2d4595c940fc'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '47'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '9e5776ed5de44116be41b676d4f55fbe'
                         deleted: true
@@ -17195,6 +17653,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '9ec2646387fe4eee83bbe1532850e903'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '42'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '9ed12406cc724d728d73fb91934a4bff'
                         key: {
@@ -17210,6 +17684,22 @@ declare global {
                         key: {
                             sys_security_acl: 'cb9ecb2bd374465f96b0f9b55cba2da9'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: '9ee71206152848fe85d1d6ab12502b4d'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '4'
                         }
                     },
                     {
@@ -17254,6 +17744,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '9fb9d518ea4547cea2205f193c8842fc'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '16'
+                        }
+                    },
+                    {
                         table: 'sc_cat_item_catalog'
                         id: '9fc6eec7bde1461bae25aec7ace93e2a'
                         deleted: true
@@ -17282,6 +17788,22 @@ declare global {
                                     name: 'x_783010_tocc_a1.instructor'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'a038f372f3034f0f8f47ad42ad4d6c38'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '40'
                         }
                     },
                     {
@@ -17550,6 +18072,22 @@ declare global {
                         key: {
                             sys_security_acl: '2105eeb2fbf04087b3f0434769a1783d'
                             sys_user_role: 'd33cfe9d95cc4bf186c48a6b79a80e8c'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'a3d13937d9a74dae84b4759da318b8d8'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '11'
                         }
                     },
                     {
@@ -18377,6 +18915,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: 'ada31f7e8ad240909626d2156b8422b0'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '19'
+                        }
+                    },
+                    {
                         table: 'sc_cat_item_catalog'
                         id: 'adafd5c8d07d40b982cbae47ea9ff1f5'
                         deleted: true
@@ -18392,6 +18946,22 @@ declare global {
                         key: {
                             sys_security_acl: '868640b84bfe41f08cd59023cb313a57'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'adda7893fee74dfbbdbcfda5b1870ba9'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '39'
                         }
                     },
                     {
@@ -18499,6 +19069,22 @@ declare global {
                         id: 'ae20e339932243dd8e830ba8735cb100'
                         key: {
                             name: 'x_783010_tocc_a1_room_reservation'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'ae258282aa06477cace1dc5de41c57e5'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '7'
                         }
                     },
                     {
@@ -18646,6 +19232,22 @@ declare global {
                         key: {
                             sys_security_acl: 'cd8dfb3e85d94dcca55dabe6398f49f4'
                             sys_user_role: '7e2f730bc359443b83831d3b8c93103d'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'af12bb337aca464895166360a93e93aa'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '41'
                         }
                     },
                     {
@@ -18872,6 +19474,22 @@ declare global {
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: '9a3ecdc873fc4faeaff50ed4425842b4'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'b08a903e028244d4bf18315946d96882'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '49'
                         }
                     },
                     {
@@ -19141,6 +19759,22 @@ declare global {
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: '7e027e7681d64a468bcd2e168931a70f'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'b42aa35b05044a0a8455ec50d70c0af9'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '29'
                         }
                     },
                     {
@@ -19702,6 +20336,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: 'baf02bfa2fe74268a0841a319eb5c3ad'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '34'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: 'bb08a4a8aaba4781a799f60b8ca0aad9'
                         deleted: true
@@ -19866,6 +20516,22 @@ declare global {
                         key: {
                             sys_security_acl: '0f56c4f9002f4b01ab6b44125d43a950'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'bd1d4482fcd64bbc99cefc6af3a855c3'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '35'
                         }
                     },
                     {
@@ -20441,6 +21107,22 @@ declare global {
                         key: {
                             document_key: '69d5c66948384fa3b7362555af549c1f'
                             variable: 'd13d0b935320220002c6435723dc34c8'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'c34bae1d82784921932239d90259b62e'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '17'
                         }
                     },
                     {
@@ -21148,6 +21830,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: 'cc222980c7d2418fab64ffd0e6df66c1'
+                        key: {
+                            sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
+                            sc_catalog: '4c142ea766c547cea7005c441469da76'
+                        }
+                    },
+                    {
                         table: 'item_option_new'
                         id: 'cc22a2e1669b41e4b085b69b3726c3ef'
                         deleted: true
@@ -21228,6 +21918,22 @@ declare global {
                         key: {
                             sys_security_acl: '44624739006642a992f24ba5edbdd25d'
                             sys_user_role: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'cdb13bd49a354491a50e3080d939eb04'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '43'
                         }
                     },
                     {
@@ -21742,6 +22448,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: 'd26a620bd9d44f98aed678dbe1831961'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '32'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'd290620f9d9f4cd99b8b2ed8c548b690'
                         key: {
@@ -21882,6 +22604,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'd438437dc8c7415a8e2c45f113cb1a12'
+                        deleted: true
                         key: {
                             sc_cat_item: '2ffecad2bac04aec8f76f48ddce4d406'
                             sc_catalog: '9ecdd9583f1946e9b3429d00aa03344a'
@@ -22091,6 +22814,14 @@ declare global {
                                     name: 'x_783010_tocc_a1.backoffice'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sc_cat_item_catalog'
+                        id: 'd7350ca4cf4644a191711ea6bca4e778'
+                        key: {
+                            sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                            sc_catalog: '0ddae732187c4fa6a42da76fa04ff01f'
                         }
                     },
                     {
@@ -22345,6 +23076,22 @@ declare global {
                                     name: 'admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'da5f8d00dd6c4e12a19ed962bef87a9d'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '3'
                         }
                     },
                     {
@@ -22709,6 +23456,22 @@ declare global {
                                     name: 'snc_internal'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'de073120b3f3450eba694cba1d865dd9'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '26'
                         }
                     },
                     {
@@ -23642,6 +24405,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sc_cat_item_catalog'
+                        id: 'e9081a4c33244e8b94dda5c61aef2d6e'
+                        deleted: true
+                        key: {
+                            sc_cat_item: '87a653bbc0454299bb83894d8a227292'
+                            sc_catalog: '849076b99772459d990cd5c4f44b59ca'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'e957f7887be1488b8ebef0d0b8fe7f12'
                         deleted: true
@@ -23662,6 +24434,38 @@ declare global {
                             }
                             element: 'training_session'
                             position: '11'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'e976cbbcd8f8439187a2473eee629dd1'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '25'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'e9ae647eb9c64b1491ea0d82ce4ef9be'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '15'
                         }
                     },
                     {
@@ -23699,6 +24503,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'e9ecd587f25c44b989e00884d5048924'
+                        deleted: true
                         key: {
                             sc_cat_item: 'c11dcd1c8a504596987690589d4b12b3'
                             sc_catalog: '558171ceddd94d8793d0f468f06b4fcf'
@@ -24224,6 +25029,7 @@ declare global {
                     {
                         table: 'sc_cat_item_catalog'
                         id: 'eefb699e6bc245bab787ba268c8b8981'
+                        deleted: true
                         key: {
                             sc_cat_item: '87a653bbc0454299bb83894d8a227292'
                             sc_catalog: '2495a8f81ac24b7a9a53c5db6bb8faa3'
@@ -24428,6 +25234,22 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: 'f1956c2f32e441babc6c09ad47eaae80'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '18'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: 'f1a5d702d3b744bc837a5c18e62767c7'
                         deleted: true
@@ -24542,6 +25364,22 @@ declare global {
                                     name: 'admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'f307a384d9dd4ced81ae00c6ebc93474'
+                        deleted: true
+                        key: {
+                            question: {
+                                id: 'b2cfcc961b21401a89df6e6e34d44a28'
+                                key: {
+                                    cat_item: 'c11dcd1c8a504596987690589d4b12b3'
+                                    variable_set: 'NULL'
+                                    name: 'reservation_expected_participants'
+                                }
+                            }
+                            value: '45'
                         }
                     },
                     {

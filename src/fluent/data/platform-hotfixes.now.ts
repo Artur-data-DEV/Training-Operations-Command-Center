@@ -9,7 +9,7 @@ Record({
         run_once: false,
         flush_cache: true,
         description:
-            'Hides legacy default_view, removes legacy form artifacts for room reservation, and ensures backoffice group has scoped role.',
+            'Hides legacy default_view, migrates legacy operational references, removes legacy form/list artifacts, and ensures backoffice group has scoped role.',
         script: `(function executeFixScript() {
     var LEGACY_VIEW_NAME = 'default_view';
     var TARGET_VIEW_NAME = 'default';
@@ -336,6 +336,99 @@ Record({
             return record.next() ? record : null;
         }
 
+        function migrateLegacyReferenceFields(tableName, fieldPairs) {
+            var gr = new GlideRecord(tableName);
+            gr.query();
+
+            var migrated = 0;
+            while (gr.next()) {
+                var changedRecord = false;
+                for (var p = 0; p < fieldPairs.length; p++) {
+                    var pair = fieldPairs[p];
+                    if (!gr.isValidField(pair.legacy) || !gr.isValidField(pair.target)) {
+                        continue;
+                    }
+
+                    var legacyValue = gr.getValue(pair.legacy);
+                    var targetValue = gr.getValue(pair.target);
+                    if (!gs.nil(legacyValue) && gs.nil(targetValue)) {
+                        gr.setValue(pair.target, legacyValue);
+                        changedRecord = true;
+                    }
+                }
+
+                if (changedRecord) {
+                    gr.setWorkflow(false);
+                    gr.update();
+                    migrated++;
+                }
+            }
+
+            if (migrated > 0) {
+                gs.info('[TOCC][FIX] Migrated legacy references for ' + tableName + ': ' + migrated);
+            }
+        }
+
+        function removeLegacyFieldsFromForms(tableName, fields) {
+            var sections = new GlideRecord('sys_ui_section');
+            sections.addQuery('name', tableName);
+            sections.query();
+
+            var sectionIds = [];
+            while (sections.next()) {
+                sectionIds.push(String(sections.getUniqueValue()));
+            }
+
+            if (sectionIds.length === 0) {
+                return;
+            }
+
+            for (var f = 0; f < fields.length; f++) {
+                var element = new GlideRecord('sys_ui_element');
+                element.addQuery('sys_ui_section', 'IN', sectionIds.join(','));
+                element.addQuery('element', fields[f]);
+                element.query();
+                while (element.next()) {
+                    element.deleteRecord();
+                }
+            }
+        }
+
+        function removeLegacyFieldsFromLists(tableName, fields) {
+            for (var f = 0; f < fields.length; f++) {
+                var list = new GlideRecord('sys_ui_list');
+                list.addQuery('name', tableName);
+                list.addQuery('element', fields[f]);
+                list.query();
+                while (list.next()) {
+                    list.deleteRecord();
+                }
+            }
+        }
+
+        function hideLegacyOperationalFields() {
+            var layouts = [
+                {
+                    table: 'x_783010_tocc_a1_room_reservation',
+                    fields: ['course', 'room', 'instructor']
+                },
+                {
+                    table: 'x_783010_tocc_a1_training_session',
+                    fields: ['course', 'instructor', 'reservation']
+                },
+                {
+                    table: 'x_783010_tocc_a1_student_enrollment',
+                    fields: ['student', 'training_session']
+                }
+            ];
+
+            for (var i = 0; i < layouts.length; i++) {
+                removeLegacyFieldsFromForms(layouts[i].table, layouts[i].fields);
+                removeLegacyFieldsFromLists(layouts[i].table, layouts[i].fields);
+            }
+            gs.info('[TOCC][FIX] Legacy operational fields removed from generated forms/lists.');
+        }
+
         function ensureCi(tableName, name, location) {
             var ci = new GlideRecord(tableName);
             ci.addQuery('name', name);
@@ -461,6 +554,22 @@ Record({
         patchSession('TOCC Demo Session - Lab Intensive', 'SES0000002', 'TOCC-DEMO-201', 'TOCC-DEMO-LAB-01', 'tocc.instructor');
         patchSession('TOCC Demo Session - Leadership Briefing Live', 'SES0000003', 'TOCC-DEMO-301', 'TOCC-DEMO-AUD-01', 'tocc.instructor');
         patchSession('TOCC Demo Session - Completed Cohort', 'SES0000004', 'TOCC-DEMO-101', 'TOCC-DEMO-AUD-01', 'tocc.instructor');
+
+        migrateLegacyReferenceFields('x_783010_tocc_a1_room_reservation', [
+            { legacy: 'course', target: 'tocc_course' },
+            { legacy: 'room', target: 'tocc_room' },
+            { legacy: 'instructor', target: 'tocc_instructor' }
+        ]);
+        migrateLegacyReferenceFields('x_783010_tocc_a1_training_session', [
+            { legacy: 'course', target: 'tocc_course' },
+            { legacy: 'instructor', target: 'tocc_instructor' },
+            { legacy: 'reservation', target: 'tocc_reservation' }
+        ]);
+        migrateLegacyReferenceFields('x_783010_tocc_a1_student_enrollment', [
+            { legacy: 'student', target: 'tocc_student' },
+            { legacy: 'training_session', target: 'tocc_training_session' }
+        ]);
+        hideLegacyOperationalFields();
 
         forceUiActionButtons('approve_reservation', 'primary', 'primary');
         forceUiActionButtons('reject_reservation', 'destructive', 'destructive');
