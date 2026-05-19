@@ -31,7 +31,8 @@ Test(
                 dashboard.setLimit(1);
                 dashboard.query();
                 assertTrue(dashboard.next(), 'Dashboard not found.');
-                assertTrue(String(dashboard.getValue('active')) === 'true', 'Dashboard must be active.');
+                var dashActive = dashboard.getValue('active');
+                assertTrue(dashActive == true || String(dashActive) === 'true', 'Dashboard must be active.');
 
                 var dashboardId = dashboard.getUniqueValue();
 
@@ -80,14 +81,16 @@ Test(
                 workspace.setLimit(1);
                 workspace.query();
                 assertTrue(workspace.next(), 'Workspace registry not found.');
-                assertTrue(String(workspace.getValue('active')) === 'true', 'Workspace registry must be active.');
+                var wsActive = workspace.getValue('active');
+                assertTrue(wsActive == true || String(wsActive) === 'true', 'Workspace registry must be active.');
 
                 var config = new GlideRecord('sys_ux_list_menu_config');
                 config.addQuery('name', 'TOCC Backoffice List Configuration');
                 config.setLimit(1);
                 config.query();
                 assertTrue(config.next(), 'Workspace list menu config not found.');
-                assertTrue(String(config.getValue('active')) === 'true', 'Workspace list menu config must be active.');
+                var cfgActive = config.getValue('active');
+                assertTrue(cfgActive == true || String(cfgActive) === 'true', 'Workspace list menu config must be active.');
 
                 var configId = config.getUniqueValue();
 

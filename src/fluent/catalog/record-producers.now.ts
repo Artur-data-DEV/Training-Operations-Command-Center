@@ -216,7 +216,8 @@ export const createRoomReservationProducer = CatalogItemRecordProducer({
             continue;
         }
 
-        if (roomResource.getValue('active') != 'true') {
+        var activeVal = roomResource.getValue('active');
+        if (!(activeVal == true || String(activeVal) === 'true')) {
             continue;
         }
 

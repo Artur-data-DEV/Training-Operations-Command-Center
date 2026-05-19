@@ -744,7 +744,8 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             return false;
         }
 
-        return String(user.getValue('active')) === 'true';
+        var activeVal = user.getValue('active');
+        return activeVal == true || String(activeVal) === 'true';
     },
 
     _isActiveRoom: function(roomId) {
@@ -757,7 +758,8 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             return false;
         }
 
-        return room.getValue('status') === 'active';
+        var status = room.getValue('status');
+        return status && status.toString().toLowerCase() === 'active';
     },
 
     _countRecords: function(tableName, queryFn) {

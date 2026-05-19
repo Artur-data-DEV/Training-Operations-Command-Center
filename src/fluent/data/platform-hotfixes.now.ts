@@ -166,15 +166,18 @@ Record({
         backofficeUser.query();
         if (backofficeUser.next()) {
             var changed = false;
-            if (String(backofficeUser.getValue('active')) !== 'true') {
+            var activeVal = backofficeUser.getValue('active');
+            if (!(activeVal == true || String(activeVal) === 'true')) {
                 backofficeUser.setValue('active', true);
                 changed = true;
             }
-            if (String(backofficeUser.getValue('locked_out')) === 'true') {
+            var lockedVal = backofficeUser.getValue('locked_out');
+            if (lockedVal == true || String(lockedVal) === 'true') {
                 backofficeUser.setValue('locked_out', false);
                 changed = true;
             }
-            if (String(backofficeUser.getValue('password_needs_reset')) === 'true') {
+            var pwdResetVal = backofficeUser.getValue('password_needs_reset');
+            if (pwdResetVal == true || String(pwdResetVal) === 'true') {
                 backofficeUser.setValue('password_needs_reset', false);
                 changed = true;
             }
@@ -637,7 +640,8 @@ Record({
     function ensureCatalog() {
         var catalog = findOne('sc_catalog', 'title', CATALOG_TITLE);
         if (catalog) {
-            if (String(catalog.getValue('active')) !== 'true') {
+            var activeVal = catalog.getValue('active');
+            if (!(activeVal == true || String(activeVal) === 'true')) {
                 catalog.setValue('active', true);
                 catalog.update();
             }
@@ -661,7 +665,8 @@ Record({
         category.setLimit(1);
         category.query();
         if (category.next()) {
-            if (String(category.getValue('active')) !== 'true') {
+            var activeVal = category.getValue('active');
+            if (!(activeVal == true || String(activeVal) === 'true')) {
                 category.setValue('active', true);
                 category.update();
             }
