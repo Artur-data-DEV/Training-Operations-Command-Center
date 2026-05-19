@@ -17,7 +17,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_notif_res_approved_script'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-NOTIF1');
                 room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
@@ -66,7 +75,7 @@ Test(
                 evAfter.setLimit(1);
                 evAfter.query();
 
-                gs.assertTrue(
+                assertTrue(
                     evAfter.next(),
                     'Expected reservation.approved event to be queued after sendReservationDecision call.'
                 );
@@ -87,7 +96,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_portal_cancel_success_script'],
             script: `
-                var suffix = new GlideDateTime().getNumericValue() + '';
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var suffix = new GlideDateTime().getNumericValue() + '';
 
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
@@ -149,16 +167,16 @@ Test(
                 var result = JSON.parse(svc.cancelMyEnrollment());
                 gs.resetSession();
 
-                gs.assertTrue(result.success === true, 'Expected cancellation success. Got: ' + JSON.stringify(result));
+                assertTrue(result.success === true, 'Expected cancellation success. Got: ' + JSON.stringify(result));
 
                 var enCheck = new GlideRecord('x_783010_tocc_a1_student_enrollment');
-                gs.assertTrue(enCheck.get(enrollmentId), 'Enrollment not found after cancellation.');
-                gs.assertTrue(enCheck.getValue('status') === 'cancelled', 'Enrollment should be cancelled.');
+                assertTrue(enCheck.get(enrollmentId), 'Enrollment not found after cancellation.');
+                assertTrue(enCheck.getValue('status') === 'cancelled', 'Enrollment should be cancelled.');
 
                 var sessionCheck = new GlideRecord('x_783010_tocc_a1_training_session');
-                gs.assertTrue(sessionCheck.get(sessionId), 'Session not found after cancellation.');
-                gs.assertTrue(sessionCheck.getValue('available_seats') == '1', 'Seat should be released to 1.');
-                gs.assertTrue(sessionCheck.getValue('status') === 'open', 'Session should reopen after seat release.');
+                assertTrue(sessionCheck.get(sessionId), 'Session not found after cancellation.');
+                assertTrue(sessionCheck.getValue('available_seats') == '1', 'Seat should be released to 1.');
+                assertTrue(sessionCheck.getValue('status') === 'open', 'Session should reopen after seat release.');
             `,
         })
     }
@@ -176,7 +194,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_portal_cancel_late_block_script'],
             script: `
-                var suffix = new GlideDateTime().getNumericValue() + '';
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var suffix = new GlideDateTime().getNumericValue() + '';
 
                 // Force deterministic cancellation window for this test.
                 var cfg = new GlideRecord('x_783010_tocc_a1_training_config');
@@ -256,11 +283,11 @@ Test(
                 var result = JSON.parse(svc.cancelMyEnrollment());
                 gs.resetSession();
 
-                gs.assertTrue(result.success === false, 'Expected cancellation block in late window.');
+                assertTrue(result.success === false, 'Expected cancellation block in late window.');
 
                 var enCheck = new GlideRecord('x_783010_tocc_a1_student_enrollment');
-                gs.assertTrue(enCheck.get(enrollmentId), 'Enrollment missing after late-window attempt.');
-                gs.assertTrue(enCheck.getValue('status') === 'approved', 'Enrollment should remain approved.');
+                assertTrue(enCheck.get(enrollmentId), 'Enrollment missing after late-window attempt.');
+                assertTrue(enCheck.getValue('status') === 'approved', 'Enrollment should remain approved.');
 
                 // Restore config
                 var cfgRestore = new GlideRecord('x_783010_tocc_a1_training_config');
@@ -288,19 +315,28 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_portal_policy_payload_script'],
             script: `
-                var svc = new x_783010_tocc_a1.PortalApiService();
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var svc = new x_783010_tocc_a1.PortalApiService();
                 var result = JSON.parse(svc.getTrainingPolicies());
 
-                gs.assertTrue(result.success === true, 'Expected success from getTrainingPolicies.');
-                gs.assertTrue(result.policies !== undefined, 'Policies object must exist.');
-                gs.assertTrue(result.policies.late_cancellation_window_hours !== undefined, 'Missing late cancellation policy.');
-                gs.assertTrue(result.policies.confirmation_lead_hours !== undefined, 'Missing confirmation policy.');
-                gs.assertTrue(result.links !== undefined, 'Links object must exist.');
-                gs.assertTrue(result.links.kb !== undefined && result.links.kb !== '', 'KB link must be present.');
-                gs.assertTrue(result.links.support_page !== undefined && result.links.support_page !== '', 'Support page link must be present.');
-                gs.assertTrue(result.links.support_catalog_url !== undefined && result.links.support_catalog_url !== '', 'Support catalog link must be present.');
-                gs.assertTrue(result.links.va_url !== undefined && result.links.va_url !== '', 'VA URL must be present.');
-                gs.assertTrue(result.links.backoffice_email !== undefined && result.links.backoffice_email !== '', 'Backoffice email must be present.');
+                assertTrue(result.success === true, 'Expected success from getTrainingPolicies.');
+                assertTrue(result.policies !== undefined, 'Policies object must exist.');
+                assertTrue(result.policies.late_cancellation_window_hours !== undefined, 'Missing late cancellation policy.');
+                assertTrue(result.policies.confirmation_lead_hours !== undefined, 'Missing confirmation policy.');
+                assertTrue(result.links !== undefined, 'Links object must exist.');
+                assertTrue(result.links.kb !== undefined && result.links.kb !== '', 'KB link must be present.');
+                assertTrue(result.links.support_page !== undefined && result.links.support_page !== '', 'Support page link must be present.');
+                assertTrue(result.links.support_catalog_url !== undefined && result.links.support_catalog_url !== '', 'Support catalog link must be present.');
+                assertTrue(result.links.va_url !== undefined && result.links.va_url !== '', 'VA URL must be present.');
+                assertTrue(result.links.backoffice_email !== undefined && result.links.backoffice_email !== '', 'Backoffice email must be present.');
             `,
         })
     }
@@ -318,15 +354,24 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_portal_help_center_context_script'],
             script: `
-                var svc = new x_783010_tocc_a1.PortalApiService();
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var svc = new x_783010_tocc_a1.PortalApiService();
                 var result = JSON.parse(svc.getHelpCenterContext());
 
-                gs.assertTrue(result.success === true, 'Expected success from getHelpCenterContext.');
-                gs.assertTrue(result.kb_url !== undefined && result.kb_url !== '', 'KB URL must be present.');
-                gs.assertTrue(result.va_url !== undefined && result.va_url !== '', 'VA URL must be present.');
-                gs.assertTrue(result.support_page !== undefined && result.support_page !== '', 'Support page must be present.');
-                gs.assertTrue(result.support_catalog_url !== undefined && result.support_catalog_url !== '', 'Support catalog URL must be present.');
-                gs.assertTrue(result.backoffice_email !== undefined && result.backoffice_email !== '', 'Backoffice email must be present.');
+                assertTrue(result.success === true, 'Expected success from getHelpCenterContext.');
+                assertTrue(result.kb_url !== undefined && result.kb_url !== '', 'KB URL must be present.');
+                assertTrue(result.va_url !== undefined && result.va_url !== '', 'VA URL must be present.');
+                assertTrue(result.support_page !== undefined && result.support_page !== '', 'Support page must be present.');
+                assertTrue(result.support_catalog_url !== undefined && result.support_catalog_url !== '', 'Support catalog URL must be present.');
+                assertTrue(result.backoffice_email !== undefined && result.backoffice_email !== '', 'Backoffice email must be present.');
             `,
         })
     }
@@ -344,7 +389,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_portal_operations_snapshot_payload_script'],
             script: `
-                var suffix = new GlideDateTime().getNumericValue() + '';
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var suffix = new GlideDateTime().getNumericValue() + '';
 
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
@@ -473,16 +527,16 @@ Test(
                 var svc = new x_783010_tocc_a1.PortalApiService();
                 var result = JSON.parse(svc.getOperationsSnapshot());
 
-                gs.assertTrue(result.success === true, 'Expected success from getOperationsSnapshot.');
-                gs.assertTrue(result.snapshot !== undefined, 'Snapshot payload missing.');
-                gs.assertTrue(result.snapshot.pending_reservations >= 1, 'Expected pending reservation count >= 1.');
-                gs.assertTrue(result.snapshot.todays_sessions >= 1, 'Expected today sessions count >= 1.');
-                gs.assertTrue(result.snapshot.pending_enrollments >= 1, 'Expected pending enrollments count >= 1.');
-                gs.assertTrue(result.snapshot.unconfirmed_approved_enrollments >= 1, 'Expected unconfirmed approved count >= 1.');
-                gs.assertTrue(result.snapshot.in_progress_attendance_pending >= 1, 'Expected in-progress attendance pending count >= 1.');
-                gs.assertTrue(result.snapshot.resources_missing_ci >= 1, 'Expected resources missing CI count >= 1.');
-                gs.assertTrue(result.kpi_highlights !== undefined, 'Expected KPI highlights payload.');
-                gs.assertTrue((result.kpi_highlights.metrics || []).length >= 1, 'Expected KPI highlight metrics.');
+                assertTrue(result.success === true, 'Expected success from getOperationsSnapshot.');
+                assertTrue(result.snapshot !== undefined, 'Snapshot payload missing.');
+                assertTrue(result.snapshot.pending_reservations >= 1, 'Expected pending reservation count >= 1.');
+                assertTrue(result.snapshot.todays_sessions >= 1, 'Expected today sessions count >= 1.');
+                assertTrue(result.snapshot.pending_enrollments >= 1, 'Expected pending enrollments count >= 1.');
+                assertTrue(result.snapshot.unconfirmed_approved_enrollments >= 1, 'Expected unconfirmed approved count >= 1.');
+                assertTrue(result.snapshot.in_progress_attendance_pending >= 1, 'Expected in-progress attendance pending count >= 1.');
+                assertTrue(result.snapshot.resources_missing_ci >= 1, 'Expected resources missing CI count >= 1.');
+                assertTrue(result.kpi_highlights !== undefined, 'Expected KPI highlights payload.');
+                assertTrue((result.kpi_highlights.metrics || []).length >= 1, 'Expected KPI highlight metrics.');
             `,
         })
     }
@@ -500,7 +554,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_portal_operations_snapshot_access_denied_script'],
             script: `
-                var suffix = new GlideDateTime().getNumericValue() + '';
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var suffix = new GlideDateTime().getNumericValue() + '';
                 var user = new GlideRecord('sys_user');
                 user.initialize();
                 user.setValue('user_name', 'atf_snapshot_denied_' + suffix);
@@ -513,8 +576,8 @@ Test(
                 var result = JSON.parse(svc.getOperationsSnapshot());
                 gs.resetSession();
 
-                gs.assertTrue(result.success === false, 'Expected access denied for unauthorized role.');
-                gs.assertTrue(
+                assertTrue(result.success === false, 'Expected access denied for unauthorized role.');
+                assertTrue(
                     (result.message || '').indexOf('Access denied') > -1,
                     'Expected access denied message, got: ' + JSON.stringify(result)
                 );
@@ -535,7 +598,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_notif_res_rejected_script'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-NOTIF2');
                 room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
@@ -575,7 +647,7 @@ Test(
                 evAfter.setLimit(1);
                 evAfter.query();
 
-                gs.assertTrue(
+                assertTrue(
                     evAfter.next(),
                     'Expected reservation.rejected event to be queued after sendReservationDecision call.'
                 );
@@ -596,7 +668,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_notif_enrollment_events_script'],
             script: `
-                // Create minimal fixtures
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                // Create minimal fixtures
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-NOTIF3');
@@ -658,7 +739,7 @@ Test(
                     ev.setLimit(1);
                     ev.query();
 
-                    gs.assertTrue(
+                    assertTrue(
                         ev.next(),
                         'Expected event ' + expectedEvent + ' to be queued for status: ' + status
                     );
@@ -690,7 +771,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_portal_sessions_filter_script'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-PORTAL1');
                 room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
@@ -730,12 +820,12 @@ Test(
                 var resultJson = svc.getAvailableSessions();
                 var result = JSON.parse(resultJson);
 
-                gs.assertTrue(result.success === true, 'getAvailableSessions failed: ' + resultJson);
+                assertTrue(result.success === true, 'getAvailableSessions failed: ' + resultJson);
 
                 // Verify only open/full sessions in results
                 for (var j = 0; j < result.sessions.length; j++) {
                     var sessionStatus = result.sessions[j].status;
-                    gs.assertTrue(
+                    assertTrue(
                         sessionStatus === 'open' || sessionStatus === 'full',
                         'Non-open/full session returned: ' + sessionStatus
                     );
@@ -757,7 +847,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_portal_my_enrollments_script'],
             script: `
-                // Create two users with student profiles
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                // Create two users with student profiles
                 var userJ = new GlideRecord('sys_user');
                 userJ.initialize(); userJ.setValue('user_name', 'atf_user_' + gs.generateGUID().substring(0, 8)); userJ.setValue('first_name', 'ATF'); userJ.setValue('last_name', 'J');
                 var userJId = userJ.insert();
@@ -828,7 +927,7 @@ Test(
                         // All returned enrollments must belong to Student J
                         var enRec = new GlideRecord('x_783010_tocc_a1_student_enrollment');
                         enRec.get(result.enrollments[i].sys_id);
-                        gs.assertTrue(
+                        assertTrue(
                             enRec.getValue('tocc_student') === studentJId,
                             'Enrollment from another student returned for User J: ' + result.enrollments[i].sys_id
                         );
@@ -851,7 +950,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_portal_confirm_deadline_script'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-PORTAL3');
                 room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
@@ -911,8 +1019,8 @@ Test(
                 var result = JSON.parse(svc.confirmMyAttendance());
                 gs.resetSession();
 
-                gs.assertTrue(result.success === false, 'Confirmation should be blocked after deadline.');
-                gs.assertTrue(
+                assertTrue(result.success === false, 'Confirmation should be blocked after deadline.');
+                assertTrue(
                     (result.message || '').indexOf('deadline') > -1,
                     'Expected deadline-related message, got: ' + JSON.stringify(result)
                 );
@@ -933,7 +1041,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_portal_confirm_wrong_student_script'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-PORTAL4');
                 room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
@@ -997,8 +1114,8 @@ Test(
                 var result = JSON.parse(svc.confirmMyAttendance());
                 gs.resetSession();
 
-                gs.assertTrue(result.success === false, 'Expected wrong-student confirmation block.');
-                gs.assertTrue(
+                assertTrue(result.success === false, 'Expected wrong-student confirmation block.');
+                assertTrue(
                     (result.message || '').indexOf('own enrollment') > -1,
                     'Expected ownership-related message, got: ' + JSON.stringify(result)
                 );

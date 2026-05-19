@@ -17,7 +17,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_cmdb_resource_invalid_ci_script'],
             script: `
-                var suffix = new GlideDateTime().getNumericValue() + '';
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var suffix = new GlideDateTime().getNumericValue() + '';
 
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
@@ -27,7 +36,7 @@ Test(
                 room.setValue('room_type', 'classroom');
                 room.setValue('status', 'active');
                 var roomId = room.insert();
-                gs.assertTrue(!gs.nil(roomId), 'Room fixture was not created.');
+                assertTrue(!gs.nil(roomId), 'Room fixture was not created.');
 
                 var resource = new GlideRecord('x_783010_tocc_a1_room_resource');
                 resource.initialize();
@@ -38,7 +47,7 @@ Test(
                 resource.setValue('active', true);
                 var resourceId = resource.insert();
 
-                gs.assertTrue(gs.nil(resourceId), 'Insert should be blocked for invalid CI reference.');
+                assertTrue(gs.nil(resourceId), 'Insert should be blocked for invalid CI reference.');
             `,
         })
     }
@@ -56,7 +65,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_cmdb_resource_enrichment_script'],
             script: `
-                var suffix = new GlideDateTime().getNumericValue() + '';
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var suffix = new GlideDateTime().getNumericValue() + '';
 
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
@@ -66,13 +84,13 @@ Test(
                 room.setValue('room_type', 'classroom');
                 room.setValue('status', 'active');
                 var roomId = room.insert();
-                gs.assertTrue(!gs.nil(roomId), 'Room fixture was not created.');
+                assertTrue(!gs.nil(roomId), 'Room fixture was not created.');
 
                 var ci = new GlideRecord('cmdb_ci_computer');
                 ci.initialize();
                 ci.setValue('name', 'ATF CMDB Computer ' + suffix);
                 var ciId = ci.insert();
-                gs.assertTrue(!gs.nil(ciId), 'CMDB CI fixture was not created.');
+                assertTrue(!gs.nil(ciId), 'CMDB CI fixture was not created.');
 
                 var resource = new GlideRecord('x_783010_tocc_a1_room_resource');
                 resource.initialize();
@@ -80,12 +98,12 @@ Test(
                 resource.setValue('ci_reference', ciId);
                 resource.setValue('active', true);
                 var resourceId = resource.insert();
-                gs.assertTrue(!gs.nil(resourceId), 'Resource should be inserted with valid CI.');
+                assertTrue(!gs.nil(resourceId), 'Resource should be inserted with valid CI.');
 
                 var check = new GlideRecord('x_783010_tocc_a1_room_resource');
-                gs.assertTrue(check.get(resourceId), 'Inserted room resource record not found.');
-                gs.assertTrue(!gs.nil(check.getValue('resource_name')), 'resource_name should be auto-populated.');
-                gs.assertTrue(
+                assertTrue(check.get(resourceId), 'Inserted room resource record not found.');
+                assertTrue(!gs.nil(check.getValue('resource_name')), 'resource_name should be auto-populated.');
+                assertTrue(
                     check.getValue('resource_type') === 'computer',
                     'resource_type should be inferred as computer. Got: ' + check.getValue('resource_type')
                 );

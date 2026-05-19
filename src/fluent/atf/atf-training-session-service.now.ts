@@ -17,7 +17,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_session_approval_script'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-SESS');
                 room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
@@ -56,9 +65,9 @@ Test(
                 session.setLimit(1);
                 session.query();
 
-                gs.assertTrue(session.next(), 'Training session should have been created on reservation approval.');
-                gs.assertTrue(session.getValue('room') === roomId, 'Session room should match reservation room.');
-                gs.assertTrue(
+                assertTrue(session.next(), 'Training session should have been created on reservation approval.');
+                assertTrue(session.getValue('room') === roomId, 'Session room should match reservation room.');
+                assertTrue(
                     parseInt(session.getValue('total_seats'), 10) === 12,
                     'Session total_seats should match expected_participants. Got: ' + session.getValue('total_seats')
                 );
@@ -79,7 +88,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_session_cancel_script'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-CXL2');
                 room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
@@ -116,7 +134,7 @@ Test(
                 session.addQuery('tocc_reservation', reservationId);
                 session.setLimit(1);
                 session.query();
-                gs.assertTrue(session.next(), 'Session not found after reservation approval.');
+                assertTrue(session.next(), 'Session not found after reservation approval.');
                 var sessionId = session.getUniqueValue();
 
                 // Now cancel the reservation
@@ -130,7 +148,7 @@ Test(
                 // Session should be cancelled
                 var sess = new GlideRecord('x_783010_tocc_a1_training_session');
                 sess.get(sessionId);
-                gs.assertTrue(
+                assertTrue(
                     sess.getValue('status') === 'cancelled',
                     'Session should be cancelled after reservation cancellation. Got: ' + sess.getValue('status')
                 );
@@ -151,7 +169,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_session_full_status_script'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-FULL2');
                 room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
@@ -198,7 +225,7 @@ Test(
                 // Session should now be Full
                 var sess = new GlideRecord('x_783010_tocc_a1_training_session');
                 sess.get(sessionId);
-                gs.assertTrue(
+                assertTrue(
                     sess.getValue('status') === 'full',
                     'Session should be Full when available_seats = 0. Got: ' + sess.getValue('status')
                 );

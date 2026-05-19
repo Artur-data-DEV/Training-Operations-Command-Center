@@ -17,12 +17,21 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_flow_scaffold_presence_script'],
             script: `
-                function assertFlowExists(flowName) {
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                function assertFlowExists(flowName) {
                     var gr = new GlideRecord('sys_hub_flow');
                     gr.addQuery('name', flowName);
                     gr.setLimit(1);
                     gr.query();
-                    gs.assertTrue(gr.next(), 'Flow not found: ' + flowName);
+                    assertTrue(gr.next(), 'Flow not found: ' + flowName);
                 }
 
                 assertFlowExists('[TOCC][FLOW] Reservation Intake');
@@ -47,12 +56,21 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_subflow_scaffold_presence_script'],
             script: `
-                function assertFlowExists(flowName) {
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                function assertFlowExists(flowName) {
                     var gr = new GlideRecord('sys_hub_flow');
                     gr.addQuery('name', flowName);
                     gr.setLimit(1);
                     gr.query();
-                    gs.assertTrue(gr.next(), 'Subflow not found: ' + flowName);
+                    assertTrue(gr.next(), 'Subflow not found: ' + flowName);
                 }
 
                 assertFlowExists('[TOCC][SF] Reservation Intake Processing');
@@ -74,7 +92,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_flow_scaffold_count_script'],
             script: `
-                function countByPrefix(prefix) {
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                function countByPrefix(prefix) {
                     var count = 0;
                     var gr = new GlideRecord('sys_hub_flow');
                     gr.addQuery('name', 'STARTSWITH', prefix);
@@ -85,8 +112,8 @@ Test(
 
                 var flowCount = countByPrefix('[TOCC][FLOW]');
                 var subflowCount = countByPrefix('[TOCC][SF]');
-                gs.assertTrue(flowCount >= 5, 'Expected at least 5 [TOCC][FLOW] records, got: ' + flowCount);
-                gs.assertTrue(subflowCount >= 2, 'Expected at least 2 [TOCC][SF] records, got: ' + subflowCount);
+                assertTrue(flowCount >= 5, 'Expected at least 5 [TOCC][FLOW] records, got: ' + flowCount);
+                assertTrue(subflowCount >= 2, 'Expected at least 2 [TOCC][SF] records, got: ' + subflowCount);
             `,
         })
     }

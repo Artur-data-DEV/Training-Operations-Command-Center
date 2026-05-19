@@ -33,11 +33,25 @@ Test(
             assert: 'record_successfully_inserted',
         })
 
+        const course = atf.server.recordInsert({
+            $id: Now.ID['x_783010_tocc_a1_atf_room_no_conflict_course'],
+            table: 'x_783010_tocc_a1_course',
+            fieldValues: {
+                course_id: roomRnd.random_string,
+                course_name: roomRnd.random_string,
+                description: 'ATF room conflict fixture course',
+                duration_hours: 2,
+                delivery_category: 'in_person',
+                status: 'active',
+            },
+            enforceSecurity: false,
+            assert: 'record_successfully_inserted',
+        })
         // First reservation: 09:00–11:00
         atf.server.recordInsert({
             $id: Now.ID['x_783010_tocc_a1_atf_room_no_conflict_res1'],
             table: 'x_783010_tocc_a1_room_reservation',
-            fieldValues: { room: room.record_id, start_datetime: '2035-06-01 09:00:00', end_datetime: '2035-06-01 11:00:00', status: 'approved', expected_participants: 10, short_description: 'ATF res1' },
+            fieldValues: { tocc_course: course.record_id, tocc_room: room.record_id, tocc_instructor: '6816f79cc0a8016401c5a33be04be441', start_datetime: '2035-06-01 09:00:00', end_datetime: '2035-06-01 11:00:00', status: 'approved', expected_participants: 10, short_description: 'ATF res1' },
             enforceSecurity: false,
             assert: 'record_successfully_inserted',
         })
@@ -46,9 +60,18 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_room_no_conflict_check'],
             script: `
-                var svc = new x_783010_tocc_a1.RoomService();
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var svc = new x_783010_tocc_a1.RoomService();
                 var result = svc.hasConflict('${room.record_id}', '2035-06-01 11:00:00', '2035-06-01 13:00:00', null);
-                gs.assertFalse(result, 'Expected no conflict for non-overlapping slot. Got: ' + result);
+                assertFalse(result, 'Expected no conflict for non-overlapping slot. Got: ' + result);
             `,
         })
     }
@@ -82,10 +105,25 @@ Test(
             assert: 'record_successfully_inserted',
         })
 
+        const course = atf.server.recordInsert({
+            $id: Now.ID['x_783010_tocc_a1_atf_room_conflict_course'],
+            table: 'x_783010_tocc_a1_course',
+            fieldValues: {
+                course_id: roomRnd.random_string,
+                course_name: roomRnd.random_string,
+                description: 'ATF room conflict fixture course',
+                duration_hours: 2,
+                delivery_category: 'in_person',
+                status: 'active',
+            },
+            enforceSecurity: false,
+            assert: 'record_successfully_inserted',
+        })
+
         atf.server.recordInsert({
             $id: Now.ID['x_783010_tocc_a1_atf_room_conflict_res1'],
             table: 'x_783010_tocc_a1_room_reservation',
-            fieldValues: { room: room.record_id, start_datetime: '2035-07-01 09:00:00', end_datetime: '2035-07-01 11:00:00', status: 'approved', expected_participants: 10, short_description: 'ATF conflict base' },
+            fieldValues: { tocc_course: course.record_id, tocc_room: room.record_id, tocc_instructor: '6816f79cc0a8016401c5a33be04be441', start_datetime: '2035-07-01 09:00:00', end_datetime: '2035-07-01 11:00:00', status: 'approved', expected_participants: 10, short_description: 'ATF conflict base' },
             enforceSecurity: false,
             assert: 'record_successfully_inserted',
         })
@@ -93,10 +131,19 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_room_conflict_check'],
             script: `
-                var svc = new x_783010_tocc_a1.RoomService();
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var svc = new x_783010_tocc_a1.RoomService();
                 // 10:00–12:00 overlaps with 09:00–11:00
                 var result = svc.hasConflict('${room.record_id}', '2035-07-01 10:00:00', '2035-07-01 12:00:00', null);
-                gs.assertTrue(result === true, 'Expected conflict for overlapping slot. Got: ' + result);
+                assertTrue(result === true, 'Expected conflict for overlapping slot. Got: ' + result);
             `,
         })
     }
@@ -130,10 +177,25 @@ Test(
             assert: 'record_successfully_inserted',
         })
 
+        const course = atf.server.recordInsert({
+            $id: Now.ID['x_783010_tocc_a1_atf_room_ignore_cancelled_course'],
+            table: 'x_783010_tocc_a1_course',
+            fieldValues: {
+                course_id: roomRnd.random_string,
+                course_name: roomRnd.random_string,
+                description: 'ATF room conflict fixture course',
+                duration_hours: 2,
+                delivery_category: 'in_person',
+                status: 'active',
+            },
+            enforceSecurity: false,
+            assert: 'record_successfully_inserted',
+        })
+
         atf.server.recordInsert({
             $id: Now.ID['x_783010_tocc_a1_atf_room_ignore_cancelled_res'],
             table: 'x_783010_tocc_a1_room_reservation',
-            fieldValues: { room: room.record_id, start_datetime: '2035-08-01 09:00:00', end_datetime: '2035-08-01 11:00:00', status: 'cancelled', expected_participants: 10, short_description: 'ATF cancelled res' },
+            fieldValues: { tocc_course: course.record_id, tocc_room: room.record_id, tocc_instructor: '6816f79cc0a8016401c5a33be04be441', start_datetime: '2035-08-01 09:00:00', end_datetime: '2035-08-01 11:00:00', status: 'cancelled', expected_participants: 10, short_description: 'ATF cancelled res' },
             enforceSecurity: false,
             assert: 'record_successfully_inserted',
         })
@@ -141,9 +203,18 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_room_ignore_cancelled_check'],
             script: `
-                var svc = new x_783010_tocc_a1.RoomService();
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var svc = new x_783010_tocc_a1.RoomService();
                 var result = svc.hasConflict('${room.record_id}', '2035-08-01 09:00:00', '2035-08-01 11:00:00', null);
-                gs.assertFalse(result, 'Cancelled reservation should not cause a conflict. Got: ' + result);
+                assertFalse(result, 'Cancelled reservation should not cause a conflict. Got: ' + result);
             `,
         })
     }
@@ -161,13 +232,22 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_room_advance_notice_script'],
             script: `
-                var svc = new x_783010_tocc_a1.RoomService();
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var svc = new x_783010_tocc_a1.RoomService();
                 // Start 1 hour from now — well within the 24h minimum advance notice
                 var start = new GlideDateTime();
                 start.addSeconds(3600);
 
                 var result = svc.validateAdvanceNotice(start.getValue());
-                gs.assertTrue(result !== '', 'Expected advance notice error message. Got empty string.');
+                assertTrue(result !== '', 'Expected advance notice error message. Got empty string.');
             `,
         })
     }
@@ -204,10 +284,19 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_room_capacity_script'],
             script: `
-                var svc = new x_783010_tocc_a1.RoomService();
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var svc = new x_783010_tocc_a1.RoomService();
                 // 25 participants for a room with capacity 10
                 var result = svc.validateCapacity('${room.record_id}', 25);
-                gs.assertTrue(result !== '', 'Expected capacity error message. Got empty string.');
+                assertTrue(result !== '', 'Expected capacity error message. Got empty string.');
             `,
         })
     }

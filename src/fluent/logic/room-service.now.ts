@@ -17,7 +17,7 @@ RoomService.prototype = {
 
     hasConflict: function(roomId, startDateTime, endDateTime, excludeId) {
         var gr = new GlideRecord(this.reservationTable);
-        gr.addQuery('room', roomId);
+        gr.addQuery('tocc_room', roomId);
         gr.addQuery('status', '!=', 'cancelled');
 
         if (excludeId) {

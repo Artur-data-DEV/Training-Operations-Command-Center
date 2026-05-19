@@ -22,7 +22,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_enroll_dup_fixtures'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-DUP');
                 room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
@@ -68,18 +77,27 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_enroll_dup_test'],
             script: `
-                // Find the session and student created above
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                // Find the session and student created above
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
                 session.addQuery('title', 'ATF Session DUP');
                 session.setLimit(1);
                 session.query();
-                if (!session.next()) { gs.assertTrue(false, 'ATF session not found'); }
+                if (!session.next()) { assertTrue(false, 'ATF session not found'); }
 
                 var student = new GlideRecord('x_783010_tocc_a1_student');
                 student.addQuery('user', gs.getUserID());
                 student.setLimit(1);
                 student.query();
-                if (!student.next()) { gs.assertTrue(false, 'ATF student not found'); }
+                if (!student.next()) { assertTrue(false, 'ATF student not found'); }
 
                 var svc = new x_783010_tocc_a1.EnrollmentService();
 
@@ -122,11 +140,11 @@ Test(
 
                 // First enrollment â€” should succeed
                 var result1 = enrollViaInsert(student.getUniqueValue(), session.getUniqueValue());
-                gs.assertTrue(result1.success === true, 'First enrollment should succeed. Got: ' + JSON.stringify(result1));
+                assertTrue(result1.success === true, 'First enrollment should succeed. Got: ' + JSON.stringify(result1));
 
                 // Second enrollment â€” must be blocked as duplicate
                 var result2 = enrollViaInsert(student.getUniqueValue(), session.getUniqueValue());
-                gs.assertTrue(result2.success === false, 'Duplicate enrollment should be blocked. Got: ' + JSON.stringify(result2));
+                assertTrue(result2.success === false, 'Duplicate enrollment should be blocked. Got: ' + JSON.stringify(result2));
             `,
         })
     }
@@ -144,7 +162,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_enroll_cancelled_script'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-CANCEL');
                 room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
@@ -229,7 +256,7 @@ Test(
                     };
                 }
                 var result = enrollViaInsert(student.getUniqueValue(), sessionId);
-                gs.assertTrue(result.success === false, 'Enroll in cancelled session should fail. Got: ' + JSON.stringify(result));
+                assertTrue(result.success === false, 'Enroll in cancelled session should fail. Got: ' + JSON.stringify(result));
             `,
         })
     }
@@ -247,7 +274,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_enroll_waitlist_script'],
             script: `
-                // Ensure waitlist_mode = waitlist
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                // Ensure waitlist_mode = waitlist
                 var cfg = new GlideRecord('x_783010_tocc_a1_training_config');
                 cfg.addQuery('name', 'waitlist_mode');
                 cfg.setLimit(1);
@@ -344,8 +380,8 @@ Test(
                 }
                 var result = enrollViaInsert(studentAId, sessionId);
 
-                gs.assertTrue(result.success === true, 'Waitlist enrollment should succeed. Got: ' + JSON.stringify(result));
-                gs.assertTrue(result.status === 'waitlisted', 'Status should be waitlisted. Got: ' + result.status);
+                assertTrue(result.success === true, 'Waitlist enrollment should succeed. Got: ' + JSON.stringify(result));
+                assertTrue(result.status === 'waitlisted', 'Status should be waitlisted. Got: ' + result.status);
             `,
         })
     }
@@ -363,7 +399,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_enroll_block_mode_script'],
             script: `
-                // Temporarily set waitlist_mode = block
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                // Temporarily set waitlist_mode = block
                 var cfg = new GlideRecord('x_783010_tocc_a1_training_config');
                 cfg.addQuery('name', 'waitlist_mode');
                 cfg.setLimit(1);
@@ -458,7 +503,7 @@ Test(
                     };
                 }
                 var result = enrollViaInsert(studentBId, sessionId);
-                gs.assertTrue(result.success === false, 'Block mode should reject full session enrollment. Got: ' + JSON.stringify(result));
+                assertTrue(result.success === false, 'Block mode should reject full session enrollment. Got: ' + JSON.stringify(result));
 
                 // Restore waitlist_mode
                 var restore = new GlideRecord('x_783010_tocc_a1_training_config');
@@ -483,7 +528,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_enroll_seats_decrement_script'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-SEATS');
                 room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
@@ -568,7 +622,7 @@ Test(
                     };
                 }
                 var enResult = enrollViaInsert(studentCId, sessionId);
-                gs.assertTrue(enResult.success === true, 'Enrollment failed: ' + JSON.stringify(enResult));
+                assertTrue(enResult.success === true, 'Enrollment failed: ' + JSON.stringify(enResult));
 
                 // Approve if pending
                 if (enResult.status === 'pending') {
@@ -578,7 +632,7 @@ Test(
                 var sess = new GlideRecord('x_783010_tocc_a1_training_session');
                 sess.get(sessionId);
                 var seats = parseInt(sess.getValue('available_seats'), 10);
-                gs.assertTrue(seats === 9, 'Expected 9 available seats after 1 enrollment, got: ' + seats);
+                assertTrue(seats === 9, 'Expected 9 available seats after 1 enrollment, got: ' + seats);
             `,
         })
     }
@@ -596,7 +650,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_enroll_cancel_seats_script'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-FREE');
                 room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
@@ -685,14 +748,14 @@ Test(
                 // Confirm seats dropped
                 var sess = new GlideRecord('x_783010_tocc_a1_training_session');
                 sess.get(sessionId);
-                gs.assertTrue(parseInt(sess.getValue('available_seats'), 10) === 4, 'Seat not decremented before cancel');
+                assertTrue(parseInt(sess.getValue('available_seats'), 10) === 4, 'Seat not decremented before cancel');
 
                 // Now cancel
                 svc.cancel(enResult.enrollmentId, 'ATF cancellation test', true);
 
                 sess = new GlideRecord('x_783010_tocc_a1_training_session');
                 sess.get(sessionId);
-                gs.assertTrue(parseInt(sess.getValue('available_seats'), 10) === 5, 'Expected seat freed after cancel. Got: ' + sess.getValue('available_seats'));
+                assertTrue(parseInt(sess.getValue('available_seats'), 10) === 5, 'Expected seat freed after cancel. Got: ' + sess.getValue('available_seats'));
             `,
         })
     }
@@ -710,7 +773,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_enroll_promotion_script'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-PROMO');
                 room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
@@ -801,18 +873,18 @@ Test(
                 // E enrolls and gets the seat
                 var resE = enrollViaInsert(studentEId, sessionId);
                 if (resE.status === 'pending') { svc.approve(resE.enrollmentId); }
-                gs.assertTrue(resE.success === true, 'Student E enrollment failed');
+                assertTrue(resE.success === true, 'Student E enrollment failed');
 
                 // F enrolls and is waitlisted
                 var resF = enrollViaInsert(studentFId, sessionId);
-                gs.assertTrue(resF.status === 'waitlisted', 'Student F should be waitlisted. Got: ' + resF.status);
+                assertTrue(resF.status === 'waitlisted', 'Student F should be waitlisted. Got: ' + resF.status);
 
                 // E cancels â€” F should be promoted
                 svc.cancel(resE.enrollmentId, 'ATF promotion test', true);
 
                 var enrollF = new GlideRecord('x_783010_tocc_a1_student_enrollment');
                 enrollF.get(resF.enrollmentId);
-                gs.assertTrue(
+                assertTrue(
                     enrollF.getValue('status') === 'approved',
                     'Student F should be promoted to approved after E cancels. Got: ' + enrollF.getValue('status')
                 );
@@ -833,7 +905,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_enroll_late_cancel_script'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-LATE');
                 room.setValue('room_code', 'ATF-ROOM-' + gs.generateGUID().substring(0, 8));
@@ -922,7 +1003,7 @@ Test(
 
                 // isBackoffice = false â†’ should be blocked
                 var cancelResult = svc.cancel(enResult.enrollmentId, 'ATF late cancel test', false);
-                gs.assertTrue(
+                assertTrue(
                     cancelResult.success === false,
                     'Late cancellation should be blocked for non-backoffice. Got: ' + JSON.stringify(cancelResult)
                 );

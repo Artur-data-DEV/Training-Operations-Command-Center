@@ -18,7 +18,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_attendance_present_script'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-ATT-PRESENT');
                 room.setValue('room_code', 'ATF-ATT-P1-' + gs.generateGUID().substring(0, 8));
@@ -86,11 +95,11 @@ Test(
                 var check = new GlideRecord('x_783010_tocc_a1_attendance');
                 check.get(attendanceId);
 
-                gs.assertTrue(check.getValue('attendance_status') === 'present', 'Expected status present');
-                gs.assertTrue(!gs.nil(check.getValue('checked_by')), 'checked_by should be stamped');
-                gs.assertTrue(!gs.nil(check.getValue('checked_in_datetime')), 'checked_in_datetime should be stamped');
-                gs.assertTrue(!gs.nil(check.getValue('recorded_by')), 'recorded_by should be stamped');
-                gs.assertTrue(!gs.nil(check.getValue('recorded_at')), 'recorded_at should be stamped');
+                assertTrue(check.getValue('attendance_status') === 'present', 'Expected status present');
+                assertTrue(!gs.nil(check.getValue('checked_by')), 'checked_by should be stamped');
+                assertTrue(!gs.nil(check.getValue('checked_in_datetime')), 'checked_in_datetime should be stamped');
+                assertTrue(!gs.nil(check.getValue('recorded_by')), 'recorded_by should be stamped');
+                assertTrue(!gs.nil(check.getValue('recorded_at')), 'recorded_at should be stamped');
             `,
         })
     }
@@ -108,7 +117,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_attendance_blocked_script'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-ATT-BLOCK');
                 room.setValue('room_code', 'ATF-ATT-B1-' + gs.generateGUID().substring(0, 8));
@@ -175,7 +193,7 @@ Test(
 
                 var check = new GlideRecord('x_783010_tocc_a1_attendance');
                 check.get(attendanceId);
-                gs.assertTrue(
+                assertTrue(
                     check.getValue('attendance_status') === 'pending',
                     'Attendance should remain pending when session status is open'
                 );
@@ -196,7 +214,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_attendance_absent_script'],
             script: `
-                var room = new GlideRecord('x_783010_tocc_a1_room');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
                 room.setValue('room_name', 'ATF-Room-ATT-ABS');
                 room.setValue('room_code', 'ATF-ATT-A1-' + gs.generateGUID().substring(0, 8));
@@ -268,8 +295,8 @@ Test(
 
                 var check = new GlideRecord('x_783010_tocc_a1_attendance');
                 check.get(attendanceId);
-                gs.assertTrue(check.getValue('attendance_status') === 'absent', 'Expected status absent');
-                gs.assertTrue(
+                assertTrue(check.getValue('attendance_status') === 'absent', 'Expected status absent');
+                assertTrue(
                     gs.nil(check.getValue('checked_in_datetime')),
                     'checked_in_datetime should be cleared when status is absent'
                 );

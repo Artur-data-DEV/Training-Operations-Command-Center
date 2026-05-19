@@ -166,9 +166,9 @@ Test(
             $id: Now.ID['x_783010_tocc_a1_atf_smoke_acl_instructor_insert_reservation'],
             table: 'x_783010_tocc_a1_room_reservation',
             fieldValues: {
-                course: course.record_id,
-                instructor: instructorUser.user,
-                room: room.record_id,
+                tocc_course: course.record_id,
+                tocc_instructor: instructorUser.user,
+                tocc_room: room.record_id,
                 start_datetime: '2030-01-15 10:00:00',
                 end_datetime: '2030-01-15 12:00:00',
                 expected_participants: 20,

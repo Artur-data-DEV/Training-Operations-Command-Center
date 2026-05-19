@@ -17,26 +17,35 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_va_topic_menu_contract_script'],
             script: `
-                var svc = new x_783010_tocc_a1.VirtualAgentTopicService();
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var svc = new x_783010_tocc_a1.VirtualAgentTopicService();
                 var payload = svc.getMainMenu();
 
-                gs.assertTrue(payload && payload.success === true, 'Main menu should return success.');
-                gs.assertTrue(payload.menu && payload.menu.length === 6, 'Expected 6 main menu options.');
+                assertTrue(payload && payload.success === true, 'Main menu should return success.');
+                assertTrue(payload.menu && payload.menu.length === 6, 'Expected 6 main menu options.');
 
                 var keys = {};
                 for (var i = 0; i < payload.menu.length; i++) {
                     var item = payload.menu[i];
-                    gs.assertTrue(!gs.nil(item.key), 'Menu item key is mandatory.');
-                    gs.assertTrue(!gs.nil(item.label), 'Menu item label is mandatory.');
+                    assertTrue(!gs.nil(item.key), 'Menu item key is mandatory.');
+                    assertTrue(!gs.nil(item.label), 'Menu item label is mandatory.');
                     keys[item.key] = true;
                 }
 
-                gs.assertTrue(keys.find_sessions === true, 'find_sessions option missing.');
-                gs.assertTrue(keys.my_enrollments === true, 'my_enrollments option missing.');
-                gs.assertTrue(keys.confirm_attendance === true, 'confirm_attendance option missing.');
-                gs.assertTrue(keys.cancel_enrollment === true, 'cancel_enrollment option missing.');
-                gs.assertTrue(keys.training_policies === true, 'training_policies option missing.');
-                gs.assertTrue(keys.escalate_backoffice === true, 'escalate_backoffice option missing.');
+                assertTrue(keys.find_sessions === true, 'find_sessions option missing.');
+                assertTrue(keys.my_enrollments === true, 'my_enrollments option missing.');
+                assertTrue(keys.confirm_attendance === true, 'confirm_attendance option missing.');
+                assertTrue(keys.cancel_enrollment === true, 'cancel_enrollment option missing.');
+                assertTrue(keys.training_policies === true, 'training_policies option missing.');
+                assertTrue(keys.escalate_backoffice === true, 'escalate_backoffice option missing.');
             `,
         })
     }
@@ -54,7 +63,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_va_topic_escalation_property_binding_script'],
             script: `
-                var suffix = new GlideDateTime().getNumericValue() + '';
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var suffix = new GlideDateTime().getNumericValue() + '';
 
                 function upsertProperty(name, value) {
                     var gr = new GlideRecord('sys_properties');
@@ -115,11 +133,11 @@ Test(
                     var svc = new x_783010_tocc_a1.VirtualAgentTopicService();
                     var escalation = svc.getBackofficeEscalation();
 
-                    gs.assertTrue(escalation.success === true, 'Escalation payload must return success.');
-                    gs.assertTrue(escalation.email === expectedEmail, 'Escalation email should match property override.');
-                    gs.assertTrue(escalation.portal_support_page === expectedSupportPage, 'Support page should match property override.');
-                    gs.assertTrue(escalation.support_catalog_url === expectedSupportCatalog, 'Support catalog should match property override.');
-                    gs.assertTrue(escalation.va_url === expectedVaUrl, 'VA URL should match property override.');
+                    assertTrue(escalation.success === true, 'Escalation payload must return success.');
+                    assertTrue(escalation.email === expectedEmail, 'Escalation email should match property override.');
+                    assertTrue(escalation.portal_support_page === expectedSupportPage, 'Support page should match property override.');
+                    assertTrue(escalation.support_catalog_url === expectedSupportCatalog, 'Support catalog should match property override.');
+                    assertTrue(escalation.va_url === expectedVaUrl, 'VA URL should match property override.');
                 } finally {
                     restoreProperty(propEmail, originalEmail);
                     restoreProperty(propSupportPage, originalSupportPage);
@@ -143,31 +161,40 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_va_topic_policies_and_escalation_script'],
             script: `
-                var svc = new x_783010_tocc_a1.VirtualAgentTopicService();
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var svc = new x_783010_tocc_a1.VirtualAgentTopicService();
                 var payload = svc.getTrainingPolicies();
 
-                gs.assertTrue(payload && payload.success === true, 'Policy payload should return success.');
-                gs.assertTrue(payload.policies, 'Policy payload must include policies object.');
-                gs.assertTrue(payload.links, 'Policy payload must include links object.');
-                gs.assertTrue(payload.escalation, 'Policy payload must include escalation object.');
+                assertTrue(payload && payload.success === true, 'Policy payload should return success.');
+                assertTrue(payload.policies, 'Policy payload must include policies object.');
+                assertTrue(payload.links, 'Policy payload must include links object.');
+                assertTrue(payload.escalation, 'Policy payload must include escalation object.');
 
-                gs.assertTrue(
+                assertTrue(
                     payload.policies.minimum_advance_notice_hours !== undefined,
                     'minimum_advance_notice_hours is required.'
                 );
-                gs.assertTrue(
+                assertTrue(
                     payload.policies.late_cancellation_window_hours !== undefined,
                     'late_cancellation_window_hours is required.'
                 );
-                gs.assertTrue(
+                assertTrue(
                     payload.policies.waitlist_mode !== undefined,
                     'waitlist_mode is required.'
                 );
-                gs.assertTrue(
+                assertTrue(
                     payload.links.kb !== undefined && payload.links.kb !== '',
                     'KB link should be present.'
                 );
-                gs.assertTrue(
+                assertTrue(
                     payload.escalation.email !== undefined && payload.escalation.email !== '',
                     'Escalation email should be present.'
                 );
@@ -188,7 +215,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_va_topic_confirm_by_number_script'],
             script: `
-                var suffix = new GlideDateTime().getNumericValue() + '';
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var suffix = new GlideDateTime().getNumericValue() + '';
 
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
@@ -248,11 +284,11 @@ Test(
                 var result = svc.confirmAttendance(enrollmentNumber);
                 gs.resetSession();
 
-                gs.assertTrue(result.success === true, 'Expected confirmAttendance success by enrollment number.');
+                assertTrue(result.success === true, 'Expected confirmAttendance success by enrollment number.');
 
                 var check = new GlideRecord('x_783010_tocc_a1_student_enrollment');
-                gs.assertTrue(check.get(enrollmentId), 'Enrollment missing after confirmation.');
-                gs.assertTrue(check.getValue('confirmed') == 'true', 'Enrollment should be confirmed.');
+                assertTrue(check.get(enrollmentId), 'Enrollment missing after confirmation.');
+                assertTrue(check.getValue('confirmed') == 'true', 'Enrollment should be confirmed.');
             `,
         })
     }
@@ -270,7 +306,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_va_topic_actionable_enrollments_script'],
             script: `
-                var suffix = new GlideDateTime().getNumericValue() + '';
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var suffix = new GlideDateTime().getNumericValue() + '';
 
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
@@ -333,10 +378,10 @@ Test(
                 var cancelCandidates = svc.getActionableEnrollments('cancel_enrollment', 10);
                 gs.resetSession();
 
-                gs.assertTrue(confirmCandidates.success === true, 'Expected success for confirm_attendance candidates.');
-                gs.assertTrue(confirmCandidates.count >= 1, 'Expected at least one confirm_attendance candidate.');
-                gs.assertTrue(cancelCandidates.success === true, 'Expected success for cancel_enrollment candidates.');
-                gs.assertTrue(cancelCandidates.count >= 2, 'Expected at least two cancel_enrollment candidates.');
+                assertTrue(confirmCandidates.success === true, 'Expected success for confirm_attendance candidates.');
+                assertTrue(confirmCandidates.count >= 1, 'Expected at least one confirm_attendance candidate.');
+                assertTrue(cancelCandidates.success === true, 'Expected success for cancel_enrollment candidates.');
+                assertTrue(cancelCandidates.count >= 2, 'Expected at least two cancel_enrollment candidates.');
             `,
         })
     }

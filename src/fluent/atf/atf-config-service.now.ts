@@ -31,9 +31,18 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_config_get_value_script'],
             script: `
-                var svc = new x_783010_tocc_a1.TrainingConfigService();
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var svc = new x_783010_tocc_a1.TrainingConfigService();
                 var val = svc.getValue('atf_test_string_key', 'fallback');
-                gs.assertTrue(val === 'hello_atf', 'Expected hello_atf, got: ' + val);
+                assertTrue(val === 'hello_atf', 'Expected hello_atf, got: ' + val);
 
                 // Cleanup
                 var gr = new GlideRecord('x_783010_tocc_a1_training_config');
@@ -56,7 +65,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_config_property_override_precedence_script'],
             script: `
-                var suffix = new GlideDateTime().getNumericValue() + '';
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var suffix = new GlideDateTime().getNumericValue() + '';
                 var key = 'atf_prop_override_' + suffix;
                 var propertyName = 'x_783010_tocc_a1.config.' + key;
 
@@ -77,7 +95,7 @@ Test(
 
                 var svc = new x_783010_tocc_a1.TrainingConfigService();
                 var result = svc.getValue(key, 'fallback');
-                gs.assertTrue(result === 'property_value', 'Expected property override, got: ' + result);
+                assertTrue(result === 'property_value', 'Expected property override, got: ' + result);
 
                 var delCfg = new GlideRecord('x_783010_tocc_a1_training_config');
                 delCfg.addQuery('name', key);
@@ -103,7 +121,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_config_empty_property_falls_back_to_table_script'],
             script: `
-                var suffix = new GlideDateTime().getNumericValue() + '';
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var suffix = new GlideDateTime().getNumericValue() + '';
                 var key = 'atf_prop_fallback_' + suffix;
                 var propertyName = 'x_783010_tocc_a1.config.' + key;
 
@@ -124,7 +151,7 @@ Test(
 
                 var svc = new x_783010_tocc_a1.TrainingConfigService();
                 var result = svc.getValue(key, 'fallback');
-                gs.assertTrue(result === 'table_fallback', 'Expected table fallback, got: ' + result);
+                assertTrue(result === 'table_fallback', 'Expected table fallback, got: ' + result);
 
                 var delCfg = new GlideRecord('x_783010_tocc_a1_training_config');
                 delCfg.addQuery('name', key);
@@ -150,11 +177,20 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_config_get_number_script'],
             script: `
-                var svc = new x_783010_tocc_a1.TrainingConfigService();
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var svc = new x_783010_tocc_a1.TrainingConfigService();
                 // Uses seed: minimum_advance_notice_hours = '48'
                 var hours = svc.getMinimumAdvanceNoticeHours();
-                gs.assertTrue(typeof hours === 'number', 'Expected number type');
-                gs.assertTrue(hours === 48, 'Expected 48, got: ' + hours);
+                assertTrue(typeof hours === 'number', 'Expected number type');
+                assertTrue(hours === 48, 'Expected 48, got: ' + hours);
             `,
         })
     }
@@ -172,7 +208,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_config_get_boolean_script'],
             script: `
-                var svc = new x_783010_tocc_a1.TrainingConfigService();
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var svc = new x_783010_tocc_a1.TrainingConfigService();
 
                 // Insert test booleans
                 var gr = new GlideRecord('x_783010_tocc_a1_training_config');
@@ -196,9 +241,9 @@ Test(
                 gr.setValue('active', true);
                 gr.insert();
 
-                gs.assertTrue(svc.getBoolean('atf_bool_true', false) === true, 'true string should return true');
-                gs.assertTrue(svc.getBoolean('atf_bool_one', false) === true, '1 string should return true');
-                gs.assertTrue(svc.getBoolean('atf_bool_false', true) === false, 'false string should return false');
+                assertTrue(svc.getBoolean('atf_bool_true', false) === true, 'true string should return true');
+                assertTrue(svc.getBoolean('atf_bool_one', false) === true, '1 string should return true');
+                assertTrue(svc.getBoolean('atf_bool_false', true) === false, 'false string should return false');
 
                 // Cleanup
                 var del = new GlideRecord('x_783010_tocc_a1_training_config');
@@ -221,9 +266,18 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_config_advance_notice_script'],
             script: `
-                var svc = new x_783010_tocc_a1.TrainingConfigService();
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var svc = new x_783010_tocc_a1.TrainingConfigService();
                 var result = svc.getMinimumAdvanceNoticeHours();
-                gs.assertTrue(result === 48, 'Expected 48h advance notice, got: ' + result);
+                assertTrue(result === 48, 'Expected 48h advance notice, got: ' + result);
             `,
         })
     }

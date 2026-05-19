@@ -19,21 +19,30 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_operational_fields_valid_script'],
             script: `
-                var reservation = new GlideRecord('x_783010_tocc_a1_room_reservation');
-                gs.assertTrue(reservation.isValidField('tocc_course'), 'Reservation must expose tocc_course.');
-                gs.assertTrue(reservation.isValidField('tocc_room'), 'Reservation must expose tocc_room.');
-                gs.assertTrue(reservation.isValidField('tocc_instructor'), 'Reservation must expose tocc_instructor.');
-                gs.assertTrue(reservation.isValidField('training_session'), 'Reservation must expose training_session link.');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var reservation = new GlideRecord('x_783010_tocc_a1_room_reservation');
+                assertTrue(reservation.isValidField('tocc_course'), 'Reservation must expose tocc_course.');
+                assertTrue(reservation.isValidField('tocc_room'), 'Reservation must expose tocc_room.');
+                assertTrue(reservation.isValidField('tocc_instructor'), 'Reservation must expose tocc_instructor.');
+                assertTrue(reservation.isValidField('training_session'), 'Reservation must expose training_session link.');
 
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
-                gs.assertTrue(session.isValidField('tocc_course'), 'Session must expose tocc_course.');
-                gs.assertTrue(session.isValidField('room'), 'Session must expose room.');
-                gs.assertTrue(session.isValidField('tocc_instructor'), 'Session must expose tocc_instructor.');
-                gs.assertTrue(session.isValidField('tocc_reservation'), 'Session must expose tocc_reservation.');
+                assertTrue(session.isValidField('tocc_course'), 'Session must expose tocc_course.');
+                assertTrue(session.isValidField('room'), 'Session must expose room.');
+                assertTrue(session.isValidField('tocc_instructor'), 'Session must expose tocc_instructor.');
+                assertTrue(session.isValidField('tocc_reservation'), 'Session must expose tocc_reservation.');
 
                 var enrollment = new GlideRecord('x_783010_tocc_a1_student_enrollment');
-                gs.assertTrue(enrollment.isValidField('tocc_student'), 'Enrollment must expose tocc_student.');
-                gs.assertTrue(enrollment.isValidField('tocc_training_session'), 'Enrollment must expose tocc_training_session.');
+                assertTrue(enrollment.isValidField('tocc_student'), 'Enrollment must expose tocc_student.');
+                assertTrue(enrollment.isValidField('tocc_training_session'), 'Enrollment must expose tocc_training_session.');
             `,
         })
     }
@@ -51,7 +60,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_approve_reservation_idempotent_script'],
             script: `
-                var suffix = gs.generateGUID().substring(0, 8);
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var suffix = gs.generateGUID().substring(0, 8);
 
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
@@ -61,7 +79,7 @@ Test(
                 room.setValue('room_type', 'classroom');
                 room.setValue('status', 'active');
                 var roomId = room.insert();
-                gs.assertTrue(!!roomId, 'Room fixture must be created.');
+                assertTrue(!!roomId, 'Room fixture must be created.');
 
                 var course = new GlideRecord('x_783010_tocc_a1_course');
                 course.initialize();
@@ -72,7 +90,7 @@ Test(
                 course.setValue('delivery_category', 'in_person');
                 course.setValue('status', 'active');
                 var courseId = course.insert();
-                gs.assertTrue(!!courseId, 'Course fixture must be created.');
+                assertTrue(!!courseId, 'Course fixture must be created.');
 
                 var reservation = new GlideRecord('x_783010_tocc_a1_room_reservation');
                 reservation.initialize();
@@ -85,7 +103,7 @@ Test(
                 reservation.setValue('status', 'submitted');
                 reservation.setValue('short_description', 'ATF closure reservation approval');
                 var reservationId = reservation.insert();
-                gs.assertTrue(!!reservationId, 'Reservation fixture must be created.');
+                assertTrue(!!reservationId, 'Reservation fixture must be created.');
 
                 reservation.get(reservationId);
                 reservation.setValue('status', 'approved');
@@ -98,7 +116,7 @@ Test(
 
                 reservation.get(reservationId);
                 var linkedSession = reservation.getValue('training_session');
-                gs.assertTrue(!!linkedSession, 'Approved reservation must be linked to a session.');
+                assertTrue(!!linkedSession, 'Approved reservation must be linked to a session.');
 
                 var count = 0;
                 var session = new GlideRecord('x_783010_tocc_a1_training_session');
@@ -108,15 +126,15 @@ Test(
                 while (session.next()) {
                     count++;
                     sessionId = session.getUniqueValue();
-                    gs.assertTrue(session.getValue('tocc_course') === courseId, 'Session course must match reservation course.');
-                    gs.assertTrue(session.getValue('room') === roomId, 'Session room must match reservation room.');
-                    gs.assertTrue(session.getValue('tocc_instructor') === gs.getUserID(), 'Session instructor must match reservation instructor.');
-                    gs.assertTrue(parseInt(session.getValue('total_seats'), 10) === 11, 'Session seats must match expected participants.');
-                    gs.assertTrue(session.getValue('status') === 'open', 'Approved reservation should create an open session.');
+                    assertTrue(session.getValue('tocc_course') === courseId, 'Session course must match reservation course.');
+                    assertTrue(session.getValue('room') === roomId, 'Session room must match reservation room.');
+                    assertTrue(session.getValue('tocc_instructor') === gs.getUserID(), 'Session instructor must match reservation instructor.');
+                    assertTrue(parseInt(session.getValue('total_seats'), 10) === 11, 'Session seats must match expected participants.');
+                    assertTrue(session.getValue('status') === 'open', 'Approved reservation should create an open session.');
                 }
 
-                gs.assertTrue(count === 1, 'Approval sync must create exactly one session. Got: ' + count);
-                gs.assertTrue(linkedSession === sessionId, 'Reservation training_session must point to the created session.');
+                assertTrue(count === 1, 'Approval sync must create exactly one session. Got: ' + count);
+                assertTrue(linkedSession === sessionId, 'Reservation training_session must point to the created session.');
             `,
         })
     }
@@ -134,7 +152,16 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_student_enrollment_flow_script'],
             script: `
-                var suffix = gs.generateGUID().substring(0, 8);
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var suffix = gs.generateGUID().substring(0, 8);
 
                 var room = new GlideRecord('x_783010_tocc_a1_room');
                 room.initialize();
@@ -168,26 +195,26 @@ Test(
                 session.setValue('status', 'open');
                 session.setValue('active', true);
                 var sessionId = session.insert();
-                gs.assertTrue(!!sessionId, 'Session fixture must be created.');
+                assertTrue(!!sessionId, 'Session fixture must be created.');
 
                 var student = new GlideRecord('x_783010_tocc_a1_student');
                 student.initialize();
                 student.setValue('user', gs.getUserID());
                 student.setValue('active', true);
                 var studentId = student.insert();
-                gs.assertTrue(!!studentId, 'Student fixture must be created.');
+                assertTrue(!!studentId, 'Student fixture must be created.');
 
                 var svc = new EnrollmentService();
                 var first = svc.enroll(studentId, sessionId);
-                gs.assertTrue(first && first.success === true, 'First enrollment must succeed: ' + JSON.stringify(first));
-                gs.assertTrue(first.status === 'approved', 'Direct enrollment should be approved. Got: ' + first.status);
+                assertTrue(first && first.success === true, 'First enrollment must succeed: ' + JSON.stringify(first));
+                assertTrue(first.status === 'approved', 'Direct enrollment should be approved. Got: ' + first.status);
 
                 session.get(sessionId);
-                gs.assertTrue(parseInt(session.getValue('available_seats'), 10) === 1, 'Available seats should decrement to 1.');
+                assertTrue(parseInt(session.getValue('available_seats'), 10) === 1, 'Available seats should decrement to 1.');
 
                 var second = svc.enroll(studentId, sessionId);
-                gs.assertTrue(second && second.success === false, 'Duplicate enrollment must be blocked.');
-                gs.assertTrue(String(second.message || '').indexOf('already enrolled') > -1, 'Duplicate message should explain existing enrollment.');
+                assertTrue(second && second.success === false, 'Duplicate enrollment must be blocked.');
+                assertTrue(String(second.message || '').indexOf('already enrolled') > -1, 'Duplicate message should explain existing enrollment.');
             `,
         })
     }

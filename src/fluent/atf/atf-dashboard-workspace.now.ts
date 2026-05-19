@@ -17,12 +17,21 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_dashboard_scaffold_script'],
             script: `
-                var dashboard = new GlideRecord('par_dashboard');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var dashboard = new GlideRecord('par_dashboard');
                 dashboard.addQuery('name', 'Training Operations Performance Dashboard');
                 dashboard.setLimit(1);
                 dashboard.query();
-                gs.assertTrue(dashboard.next(), 'Dashboard not found.');
-                gs.assertTrue(String(dashboard.getValue('active')) === 'true', 'Dashboard must be active.');
+                assertTrue(dashboard.next(), 'Dashboard not found.');
+                assertTrue(String(dashboard.getValue('active')) === 'true', 'Dashboard must be active.');
 
                 var dashboardId = dashboard.getUniqueValue();
 
@@ -31,14 +40,14 @@ Test(
                 tab.addQuery('dashboard', dashboardId);
                 tab.query();
                 while (tab.next()) { tabCount++; }
-                gs.assertTrue(tabCount === 2, 'Expected 2 dashboard tabs, got: ' + tabCount);
+                assertTrue(tabCount === 2, 'Expected 2 dashboard tabs, got: ' + tabCount);
 
                 var widgetCount = 0;
                 var widget = new GlideRecord('par_dashboard_widget');
                 widget.addQuery('canvas.dashboard', dashboardId);
                 widget.query();
                 while (widget.next()) { widgetCount++; }
-                gs.assertTrue(widgetCount === 10, 'Expected 10 dashboard widgets, got: ' + widgetCount);
+                assertTrue(widgetCount === 10, 'Expected 10 dashboard widgets, got: ' + widgetCount);
             `,
         })
     }
@@ -56,20 +65,29 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_workspace_scaffold_script'],
             script: `
-                var workspace = new GlideRecord('sys_ux_page_registry');
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                var workspace = new GlideRecord('sys_ux_page_registry');
                 workspace.addQuery('title', 'TOCC Backoffice Operations Workspace');
                 workspace.addQuery('path', 'tocc-backoffice-ops');
                 workspace.setLimit(1);
                 workspace.query();
-                gs.assertTrue(workspace.next(), 'Workspace registry not found.');
-                gs.assertTrue(String(workspace.getValue('active')) === 'true', 'Workspace registry must be active.');
+                assertTrue(workspace.next(), 'Workspace registry not found.');
+                assertTrue(String(workspace.getValue('active')) === 'true', 'Workspace registry must be active.');
 
                 var config = new GlideRecord('sys_ux_list_menu_config');
                 config.addQuery('name', 'TOCC Backoffice List Configuration');
                 config.setLimit(1);
                 config.query();
-                gs.assertTrue(config.next(), 'Workspace list menu config not found.');
-                gs.assertTrue(String(config.getValue('active')) === 'true', 'Workspace list menu config must be active.');
+                assertTrue(config.next(), 'Workspace list menu config not found.');
+                assertTrue(String(config.getValue('active')) === 'true', 'Workspace list menu config must be active.');
 
                 var configId = config.getUniqueValue();
 
@@ -78,14 +96,14 @@ Test(
                 category.addQuery('configuration', configId);
                 category.query();
                 while (category.next()) { categoryCount++; }
-                gs.assertTrue(categoryCount === 5, 'Expected 5 workspace categories, got: ' + categoryCount);
+                assertTrue(categoryCount === 5, 'Expected 5 workspace categories, got: ' + categoryCount);
 
                 var listCount = 0;
                 var list = new GlideRecord('sys_ux_list');
                 list.addQuery('configuration', configId);
                 list.query();
                 while (list.next()) { listCount++; }
-                gs.assertTrue(listCount === 10, 'Expected 10 workspace lists, got: ' + listCount);
+                assertTrue(listCount === 10, 'Expected 10 workspace lists, got: ' + listCount);
             `,
         })
     }
@@ -103,14 +121,23 @@ Test(
         atf.server.runServerSideScript({
             $id: Now.ID['x_783010_tocc_a1_atf_workspace_lists_core_tables_script'],
             script: `
-                function assertTableCoverage(tableName, expectedMin) {
+                function assertTrue(condition, message) {
+                    if (!condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }
+                function assertFalse(condition, message) {
+                    if (condition) {
+                        throw new Error(message || 'Assertion failed');
+                    }
+                }                function assertTableCoverage(tableName, expectedMin) {
                     var count = 0;
                     var gr = new GlideRecord('sys_ux_list');
                     gr.addQuery('table', tableName);
                     gr.addQuery('configuration.name', 'TOCC Backoffice List Configuration');
                     gr.query();
                     while (gr.next()) { count++; }
-                    gs.assertTrue(
+                    assertTrue(
                         count >= expectedMin,
                         'Expected at least ' + expectedMin + ' list(s) for table ' + tableName + ', got: ' + count
                     );
