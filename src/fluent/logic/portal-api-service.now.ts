@@ -546,7 +546,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             }),
             in_progress_attendance_pending: this._countRecords('x_783010_tocc_a1_attendance', function(gr) {
                 gr.addQuery('attendance_status', 'pending');
-                gr.addQuery('tocc_training_session.status', 'in_progress');
+                gr.addQuery('training_session.status', 'in_progress');
             }),
             resources_missing_ci: this._countRecords('x_783010_tocc_a1_room_resource', function(gr) {
                 gr.addQuery('active', true);
@@ -817,7 +817,7 @@ PortalApiService.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         var gr = new GlideRecordSecure('x_783010_tocc_a1_kpi_snapshot');
         gr.addQuery('active', true);
         gr.addQuery('snapshot_date', snapshotDate);
-        gr.addQuery('kpi_key', 'IN', keys);
+        gr.addQuery('kpi_key', 'IN', keys.join(','));
         gr.query();
 
         while (gr.next()) {

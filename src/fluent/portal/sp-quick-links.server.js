@@ -1,4 +1,4 @@
-(function() {
+(function () {
     function pageLink(pageId) {
         return '?id=' + pageId;
     }
@@ -57,15 +57,7 @@
     var canManageInstruction = isInstructor || isBackoffice || isAppAdmin || isPlatformAdmin;
 
     function resolveDashboardLink() {
-        var dashboard = new GlideRecordSecure('par_dashboard');
-        dashboard.addQuery('name', 'Training Operations Performance Dashboard');
-        dashboard.addQuery('active', true);
-        dashboard.setLimit(1);
-        dashboard.query();
-        if (dashboard.next()) {
-            return '/now/nav/ui/classic/params/target/par_dashboard.do?sys_id=' + dashboard.getUniqueValue();
-        }
-        return '/now/analytics-center/home';
+        return 'https://dev372264.service-now.com/now/platform-analytics-workspace/dashboards/params/edit/false/filter/1779236952612/sys-id/0e91812dc4884f8cb00e6fe9fce50337';
     }
 
     data.links = {

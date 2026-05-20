@@ -13,7 +13,7 @@ ScheduledScript({
     active: true,
     runAs: 'system',
     frequency: 'periodically',
-    executionInterval: { hours: 1 },
+    executionInterval: Duration({ hours: 1 }),
     executionStart: '2026-01-01 00:00:00',
     script: `(function sendSessionReminders() {
     var config = new TrainingConfigService();
@@ -54,7 +54,7 @@ ScheduledScript({
     active: true,
     runAs: 'system',
     frequency: 'periodically',
-    executionInterval: { hours: 1 },
+    executionInterval: Duration({ hours: 1 }),
     executionStart: '2026-01-01 00:30:00',
     script: `(function releaseUnconfirmedSeats() {
     var now = new GlideDateTime();
@@ -102,7 +102,7 @@ ScheduledScript({
     active: true,
     runAs: 'system',
     frequency: 'daily',
-    executionTime: { hours: 2, minutes: 0, seconds: 0 },
+    executionTime: Time({ hours: 2, minutes: 0, seconds: 0 }),
     script: `(function closePastSessions() {
     var now = new GlideDateTime();
 
@@ -137,7 +137,7 @@ ScheduledScript({
     active: true,
     runAs: 'system',
     frequency: 'daily',
-    executionTime: { hours: 6, minutes: 0, seconds: 0 },
+    executionTime: Time({ hours: 6, minutes: 0, seconds: 0 }),
     script: `(function detectStaleApprovals() {
     var config = new TrainingConfigService();
     var staleHours = config.getStaleApprovalHours();
@@ -184,7 +184,7 @@ ScheduledScript({
     active: true,
     runAs: 'system',
     frequency: 'daily',
-    executionTime: { hours: 1, minutes: 15, seconds: 0 },
+    executionTime: Time({ hours: 1, minutes: 15, seconds: 0 }),
     script: `(function collectKpiSnapshots() {
     var svc = new TrainingKpiService();
     var result = svc.collectDailySnapshot(30);
@@ -206,7 +206,7 @@ ScheduledScript({
     active: true,
     runAs: 'system',
     frequency: 'daily',
-    executionTime: { hours: 1, minutes: 40, seconds: 0 },
+    executionTime: Time({ hours: 1, minutes: 40, seconds: 0 }),
     script: `(function repairSessionsMissingRoom() {
     var svc = new TrainingSessionService();
     var result = svc.repairMissingRooms(500);
